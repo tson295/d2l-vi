@@ -238,7 +238,6 @@ gợi ý rằng bộ mã hóa T5 một mình có thể hiệu quả
 biểu diễn văn bản ngay cả mà không cần tinh chỉnh.
 
 ![Ví dụ văn bản sang ảnh của mô hình Imagen, bộ mã hóa văn bản là từ T5 (hình lấy từ saharia2022photorealistic).](../img/imagen.png)
-:width:`700px`
 <a id="fig_imagen"></a>
 
 
@@ -315,7 +314,6 @@ khi không có, một và một vài ví dụ đầu vào--đầu ra cụ thể 
 
 
 ![Hiệu suất tổng hợp của GPT-3 cho tất cả 42 benchmark được đo bằng độ chính xác (chú thích được điều chỉnh và hình lấy từ brown2020language).](../img/gpt3-xshot-scaling.png)
-:width:`400px`
 <a id="fig_gpt3-xshot-scaling"></a>
 
 Ba cài đặt này đã được kiểm tra trong GPT-3 [brown2020language],
@@ -346,7 +344,6 @@ về khả năng mở rộng của Transformer đã dẫn các nhà nghiên cứ
 trong việc huấn luyện các Transformer lớn hơn với nhiều dữ liệu và tính toán hơn [kaplan2020scaling].
 
 ![Hiệu suất mô hình ngôn ngữ Transformer cải thiện trơn tru khi chúng ta tăng kích thước mô hình, kích thước tập dữ liệu và lượng tính toán dùng để huấn luyện. Để có hiệu suất tối ưu, cả ba yếu tố phải được mở rộng cùng nhau. Hiệu suất thực nghiệm có quan hệ quy luật lũy thừa với từng yếu tố riêng lẻ khi không bị giới hạn bởi hai yếu tố còn lại (chú thích được điều chỉnh và hình lấy từ kaplan2020scaling).](../img/scaling-power-law.png)
-:width:`700px`
 <a id="fig_scaling-power-law3"></a>
 
 Như được hiển thị trong [fig_scaling-power-law3](#fig_scaling-power-law3),
@@ -359,14 +356,12 @@ Tuy nhiên, *làm thế nào* để tăng chúng cùng nhau
 vẫn còn là vấn đề gây tranh cãi [hoffmann2022training].
 
 ![Các lần chạy huấn luyện mô hình ngôn ngữ Transformer (hình lấy từ kaplan2020scaling).](../img/scaling-sample-conv.png)
-:width:`700px`
 <a id="fig_scaling-sample-conv"></a>
 
 Ngoài hiệu suất tăng, các mô hình lớn cũng có hiệu quả mẫu tốt hơn các mô hình nhỏ. [fig_scaling-sample-conv](#fig_scaling-sample-conv) cho thấy rằng các mô hình lớn cần ít mẫu huấn luyện hơn (token được xử lý) để đạt hiệu suất ở cùng mức mà các mô hình nhỏ đạt được, và hiệu suất được mở rộng trơn tru với tính toán.
 
 
 ![Hiệu suất GPT-3 (mất mát xác thực entropy chéo) tuân theo xu hướng quy luật lũy thừa với lượng tính toán được sử dụng cho huấn luyện. Hành vi quy luật lũy thừa quan sát được trong kaplan2020scaling tiếp tục thêm hai bậc độ lớn với chỉ các độ lệch nhỏ khỏi đường cong dự đoán. Các tham số embedding bị loại trừ khỏi số đếm tính toán và tham số (chú thích được điều chỉnh và hình lấy từ brown2020language).](../img/scaling-gpt3.png)
-:width:`250px`
 <a id="fig_scaling-gpt3"></a>
 
 
@@ -437,7 +432,6 @@ một Parti lớn hơn có khả năng tạo ảnh độ trung thực cao và hi
 
 
 ![Ví dụ ảnh được tạo từ cùng văn bản bởi mô hình Parti với kích thước tăng dần (350M, 750M, 3B, 20B) (ví dụ lấy từ yu2022scaling).](../img/parti.png)
-:width:`700px`
 <a id="fig_parti"></a>
 
 

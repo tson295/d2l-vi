@@ -1,0 +1,2854 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_appendix-mathematics-for-deep-learning/random-variables/">
+      
+      
+        <link rel="prev" href="../integral-calculus/">
+      
+      
+        <link rel="next" href="../maximum-likelihood/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Biến ngẫu nhiên - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bien-ngau-nhien" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Biến ngẫu nhiên
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Toán học
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geometry-linear-algebraic-ops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hình học và Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eigendecomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích trị riêng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-variable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích một biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multivariable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích nhiều biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integral-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích tích phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biến ngẫu nhiên
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biến ngẫu nhiên
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bien-ngau-nhien-lien-tuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biến Ngẫu Nhiên Liên Tục
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Biến Ngẫu Nhiên Liên Tục">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tu-roi-rac-en-lien-tuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Từ Rời Rạc Đến Liên Tục
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-mat-o-xac-suat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Mật Độ Xác Suất
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-phan-phoi-tich-luy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Phân Phối Tích Lũy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trung-binh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trung Bình
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phuong-sai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phương Sai
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-lech-chuan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Độ Lệch Chuẩn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trung-binh-va-phuong-sai-trong-mien-lien-tuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trung Bình Và Phương Sai Trong Miền Liên Tục
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-mat-o-ong-thoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Mật Độ Đồng Thời
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phan-phoi-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân Phối Biên
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hiep-phuong-sai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hiệp Phương Sai
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuong-quan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tương Quan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maximum-likelihood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maximum Likelihood
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../naive-bayes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Naive Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thống kê
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../information-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lý thuyết thông tin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#bien-ngau-nhien-lien-tuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biến Ngẫu Nhiên Liên Tục
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Biến Ngẫu Nhiên Liên Tục">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tu-roi-rac-en-lien-tuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Từ Rời Rạc Đến Liên Tục
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-mat-o-xac-suat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Mật Độ Xác Suất
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-phan-phoi-tich-luy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Phân Phối Tích Lũy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trung-binh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trung Bình
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phuong-sai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phương Sai
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-lech-chuan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Độ Lệch Chuẩn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trung-binh-va-phuong-sai-trong-mien-lien-tuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trung Bình Và Phương Sai Trong Miền Liên Tục
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-mat-o-ong-thoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Mật Độ Đồng Thời
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phan-phoi-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân Phối Biên
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hiep-phuong-sai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hiệp Phương Sai
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuong-quan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tương Quan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="bien-ngau-nhien">Biến Ngẫu Nhiên<a class="headerlink" href="#bien-ngau-nhien" title="Permanent link">&para;</a></h1>
+<p><a id="sec_random_variables"></a></p>
+<p>Trong <a href="#sec_prob">sec_prob</a>, chúng ta đã thấy những kiến thức cơ bản về cách làm việc với các biến ngẫu nhiên rời rạc, trong trường hợp của chúng ta là những biến ngẫu nhiên chỉ nhận một tập hữu hạn các giá trị có thể có, hoặc các số nguyên. Trong phần này, chúng ta phát triển lý thuyết về <em>biến ngẫu nhiên liên tục</em>, tức các biến ngẫu nhiên có thể nhận bất kỳ giá trị thực nào.</p>
+<h2 id="bien-ngau-nhien-lien-tuc">Biến Ngẫu Nhiên Liên Tục<a class="headerlink" href="#bien-ngau-nhien-lien-tuc" title="Permanent link">&para;</a></h2>
+<p>Biến ngẫu nhiên liên tục là một chủ đề tinh tế hơn đáng kể so với biến ngẫu nhiên rời rạc. Một phép tương tự khá công bằng là bước nhảy kỹ thuật ở đây có thể so sánh với bước nhảy từ việc cộng các danh sách số sang việc tích phân các hàm. Vì vậy, chúng ta sẽ cần dành chút thời gian để phát triển lý thuyết.</p>
+<h3 id="tu-roi-rac-en-lien-tuc">Từ Rời Rạc Đến Liên Tục<a class="headerlink" href="#tu-roi-rac-en-lien-tuc" title="Permanent link">&para;</a></h3>
+<p>Để hiểu những thách thức kỹ thuật bổ sung gặp phải khi làm việc với biến ngẫu nhiên liên tục, hãy thực hiện một thí nghiệm tưởng tượng. Giả sử chúng ta đang ném phi tiêu vào bảng phi tiêu, và muốn biết xác suất để mũi phi tiêu rơi đúng cách tâm bảng <span class="arithmatex">\(2 \textrm{cm}\)</span>.</p>
+<p>Trước hết, ta tưởng tượng mình đo với độ chính xác một chữ số, tức là dùng các khoảng cho <span class="arithmatex">\(0 \textrm{cm}\)</span>, <span class="arithmatex">\(1 \textrm{cm}\)</span>, <span class="arithmatex">\(2 \textrm{cm}\)</span>, v.v. Ta ném chẳng hạn <span class="arithmatex">\(100\)</span> mũi phi tiêu vào bảng, và nếu <span class="arithmatex">\(20\)</span> mũi rơi vào khoảng ứng với <span class="arithmatex">\(2\textrm{cm}\)</span> thì ta kết luận rằng <span class="arithmatex">\(20\%\)</span> số mũi phi tiêu ta ném trúng bảng ở vị trí cách tâm <span class="arithmatex">\(2 \textrm{cm}\)</span>.</p>
+<p>Tuy nhiên, khi nhìn kỹ hơn, điều này không khớp với câu hỏi của ta! Ta muốn bằng đúng giá trị đó, trong khi các khoảng này chứa mọi mũi rơi vào giữa, chẳng hạn, <span class="arithmatex">\(1.5\textrm{cm}\)</span> và <span class="arithmatex">\(2.5\textrm{cm}\)</span>.</p>
+<p>Không nản chí, ta tiếp tục. Ta đo chính xác hơn nữa, chẳng hạn <span class="arithmatex">\(1.9\textrm{cm}\)</span>, <span class="arithmatex">\(2.0\textrm{cm}\)</span>, <span class="arithmatex">\(2.1\textrm{cm}\)</span>, và giờ thấy có lẽ <span class="arithmatex">\(3\)</span> trong <span class="arithmatex">\(100\)</span> mũi phi tiêu trúng bảng trong nhóm <span class="arithmatex">\(2.0\textrm{cm}\)</span>. Vì vậy ta kết luận xác suất là <span class="arithmatex">\(3\%\)</span>.</p>
+<p>Tuy nhiên, điều này cũng không giải quyết được gì! Ta chỉ đẩy vấn đề xuống thêm một chữ số. Hãy trừu tượng hóa một chút. Tưởng tượng ta biết xác suất để <span class="arithmatex">\(k\)</span> chữ số đầu tiên khớp với <span class="arithmatex">\(2.00000\ldots\)</span>, và ta muốn biết xác suất để nó khớp ở <span class="arithmatex">\(k+1\)</span> chữ số đầu tiên. Khá hợp lý khi giả định rằng chữ số thứ <span class="arithmatex">\({k+1}^{\textrm{th}}\)</span> về cơ bản là một lựa chọn ngẫu nhiên từ tập <span class="arithmatex">\(\{0, 1, 2, \ldots, 9\}\)</span>. Ít nhất, ta khó hình dung một quá trình vật lý có ý nghĩa nào lại buộc số micromet cách tâm phải ưu tiên kết thúc bằng <span class="arithmatex">\(7\)</span> thay vì <span class="arithmatex">\(3\)</span>.</p>
+<p>Điều này có nghĩa là, về bản chất, mỗi chữ số chính xác bổ sung mà ta yêu cầu sẽ làm xác suất khớp giảm đi một hệ số <span class="arithmatex">\(10\)</span>. Nói cách khác, ta kỳ vọng rằng</p>
+<div class="arithmatex">\[
+P(\textrm{distance is}\; 2.00\ldots, \;\textrm{to}\; k \;\textrm{digits} ) \approx p\cdot10^{-k}.
+\]</div>
+<p>Giá trị <span class="arithmatex">\(p\)</span> về cơ bản mã hóa điều xảy ra với vài chữ số đầu, còn <span class="arithmatex">\(10^{-k}\)</span> xử lý phần còn lại.</p>
+<p>Lưu ý rằng nếu ta biết vị trí chính xác đến <span class="arithmatex">\(k=4\)</span> chữ số sau dấu thập phân, điều đó có nghĩa là ta biết giá trị nằm trong khoảng, chẳng hạn, <span class="arithmatex">\([1.99995,2.00005]\)</span>, là một khoảng có độ dài <span class="arithmatex">\(2.00005-1.99995 = 10^{-4}\)</span>. Vì vậy, nếu gọi độ dài của khoảng này là <span class="arithmatex">\(\epsilon\)</span>, ta có thể nói</p>
+<div class="arithmatex">\[
+P(\textrm{distance is in an}\; \epsilon\textrm{-sized interval around}\; 2 ) \approx \epsilon \cdot p.
+\]</div>
+<p>Hãy đi thêm một bước cuối cùng. Từ đầu đến giờ ta chỉ nghĩ về điểm <span class="arithmatex">\(2\)</span>, mà chưa nghĩ đến các điểm khác. Về cơ bản không có gì khác, nhưng giá trị <span class="arithmatex">\(p\)</span> rất có thể sẽ khác. Ít nhất ta hy vọng rằng một người ném phi tiêu có khả năng trúng một điểm gần tâm, như <span class="arithmatex">\(2\textrm{cm}\)</span>, hơn là <span class="arithmatex">\(20\textrm{cm}\)</span>. Vì vậy, giá trị <span class="arithmatex">\(p\)</span> không cố định, mà nên phụ thuộc vào điểm <span class="arithmatex">\(x\)</span>. Điều này cho ta biết rằng ta nên kỳ vọng</p>
+<div class="arithmatex">\[P(\textrm{distance is in an}\; \epsilon \textrm{-sized interval around}\; x ) \approx \epsilon \cdot p(x).\]</div>
+<p>Thật vậy, :eqref:<code>eq_pdf_deriv</code> định nghĩa chính xác <em>hàm mật độ xác suất</em>. Đó là một hàm <span class="arithmatex">\(p(x)\)</span> mã hóa xác suất tương đối của việc rơi gần điểm này so với điểm khác. Hãy trực quan hóa xem một hàm như vậy có thể trông như thế nào.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet</span><span class="w"> </span><span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Plot the probability density function for some random variable</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">+</span> \
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="mf">0.8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># Define pi in torch</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Plot the probability density function for some random variable</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">+</span> \
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="mf">0.8</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">tf</span><span class="o">.</span><span class="n">pi</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># Define pi in TensorFlow</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Plot the probability density function for some random variable</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">+</span> \
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="mf">0.8</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Những vị trí mà giá trị hàm lớn cho biết các vùng nơi ta có nhiều khả năng tìm thấy giá trị ngẫu nhiên hơn. Những phần thấp là các vùng nơi ta ít có khả năng tìm thấy giá trị ngẫu nhiên.</p>
+<h3 id="ham-mat-o-xac-suat">Hàm Mật Độ Xác Suất<a class="headerlink" href="#ham-mat-o-xac-suat" title="Permanent link">&para;</a></h3>
+<p>Bây giờ hãy khảo sát điều này kỹ hơn. Ta đã thấy trực giác về hàm mật độ xác suất của một biến ngẫu nhiên <span class="arithmatex">\(X\)</span>: hàm mật độ là một hàm <span class="arithmatex">\(p(x)\)</span> sao cho</p>
+<div class="arithmatex">\[P(X \; \textrm{is in an}\; \epsilon \textrm{-sized interval around}\; x ) \approx \epsilon \cdot p(x).\]</div>
+<p>Nhưng điều này hàm ý gì về các tính chất của <span class="arithmatex">\(p(x)\)</span>?</p>
+<p>Thứ nhất, xác suất không bao giờ âm, vì vậy ta cũng nên kỳ vọng rằng <span class="arithmatex">\(p(x) \ge 0\)</span>.</p>
+<p>Thứ hai, hãy tưởng tượng rằng ta cắt <span class="arithmatex">\(\mathbb{R}\)</span> thành vô số lát có bề rộng <span class="arithmatex">\(\epsilon\)</span>, chẳng hạn các lát <span class="arithmatex">\((\epsilon\cdot i, \epsilon \cdot (i+1)]\)</span>. Với mỗi lát này, từ :eqref:<code>eq_pdf_def</code> ta biết xác suất xấp xỉ là</p>
+<div class="arithmatex">\[
+P(X \; \textrm{is in an}\; \epsilon\textrm{-sized interval around}\; x ) \approx \epsilon \cdot p(\epsilon \cdot i),
+\]</div>
+<p>vì vậy khi cộng trên tất cả các lát, ta sẽ có</p>
+<div class="arithmatex">\[
+P(X\in\mathbb{R}) \approx \sum_i \epsilon \cdot p(\epsilon\cdot i).
+\]</div>
+<p>Đây không gì khác hơn là phép xấp xỉ một tích phân đã thảo luận trong <a href="#sec_integral_calculus">sec_integral_calculus</a>, do đó ta có thể nói rằng</p>
+<div class="arithmatex">\[
+P(X\in\mathbb{R}) = \int_{-\infty}^{\infty} p(x) \; dx.
+\]</div>
+<p>Ta biết rằng <span class="arithmatex">\(P(X\in\mathbb{R}) = 1\)</span>, vì biến ngẫu nhiên phải nhận <em>một</em> số nào đó, nên ta có thể kết luận rằng với bất kỳ mật độ nào</p>
+<div class="arithmatex">\[
+\int_{-\infty}^{\infty} p(x) \; dx = 1.
+\]</div>
+<p>Thật vậy, đào sâu hơn cho thấy rằng với bất kỳ <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span> nào, ta có</p>
+<div class="arithmatex">\[
+P(X\in(a, b]) = \int _ {a}^{b} p(x) \; dx.
+\]</div>
+<p>Ta có thể xấp xỉ điều này trong code bằng các phương pháp xấp xỉ rời rạc giống như trước. Trong trường hợp này, ta có thể xấp xỉ xác suất rơi vào vùng màu xanh.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># Approximate probability using numerical integration</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">+</span> \
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="mf">0.8</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">],</span> <span class="n">p</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="sa">f</span><span class="s1">&#39;approximate Probability: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Approximate probability using numerical integration</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">+</span>\
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="mf">0.8</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">],</span> <span class="n">p</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="sa">f</span><span class="s1">&#39;approximate Probability: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Approximate probability using numerical integration</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">p</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">+</span>\
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="mf">0.8</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">],</span> <span class="n">p</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="sa">f</span><span class="s1">&#39;approximate Probability: </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+<p>Hóa ra hai tính chất này mô tả chính xác không gian của các hàm mật độ xác suất có thể có (hay <em>p.d.f.</em> theo cách viết tắt thường gặp). Chúng là các hàm không âm <span class="arithmatex">\(p(x) \ge 0\)</span> sao cho</p>
+<div class="arithmatex">\[\int_{-\infty}^{\infty} p(x) \; dx = 1.\]</div>
+<p>Ta diễn giải hàm này bằng cách dùng tích phân để thu được xác suất biến ngẫu nhiên của ta nằm trong một khoảng cụ thể:</p>
+<div class="arithmatex">\[P(X\in(a, b]) = \int _ {a}^{b} p(x) \; dx.\]</div>
+<p>Trong <a href="#sec_distributions">sec_distributions</a>, chúng ta sẽ thấy một số phân phối phổ biến, nhưng hãy tiếp tục làm việc ở mức trừu tượng.</p>
+<h3 id="ham-phan-phoi-tich-luy">Hàm Phân Phối Tích Lũy<a class="headerlink" href="#ham-phan-phoi-tich-luy" title="Permanent link">&para;</a></h3>
+<p>Trong phần trước, chúng ta đã thấy khái niệm p.d.f. Trong thực tế, đây là một cách thường gặp để thảo luận về biến ngẫu nhiên liên tục, nhưng nó có một điểm dễ gây nhầm lẫn quan trọng: các giá trị của p.d.f. tự bản thân chúng không phải là xác suất, mà là một hàm ta phải tích phân để thu được xác suất. Không có gì sai khi mật độ lớn hơn <span class="arithmatex">\(10\)</span>, miễn là nó không lớn hơn <span class="arithmatex">\(10\)</span> trên một khoảng có độ dài quá <span class="arithmatex">\(1/10\)</span>. Điều này có thể phản trực giác, nên người ta thường cũng suy nghĩ theo <em>hàm phân phối tích lũy</em>, hay c.d.f., vốn <em>là</em> một xác suất.</p>
+<p>Cụ thể, bằng cách dùng :eqref:<code>eq_pdf_int_int</code>, ta định nghĩa c.d.f. cho một biến ngẫu nhiên <span class="arithmatex">\(X\)</span> có mật độ <span class="arithmatex">\(p(x)\)</span> bởi</p>
+<div class="arithmatex">\[
+F(x) = \int _ {-\infty}^{x} p(x) \; dx = P(X \le x).
+\]</div>
+<p>Hãy quan sát một vài tính chất.</p>
+<ul>
+<li><span class="arithmatex">\(F(x) \rightarrow 0\)</span> khi <span class="arithmatex">\(x\rightarrow -\infty\)</span>.</li>
+<li><span class="arithmatex">\(F(x) \rightarrow 1\)</span> khi <span class="arithmatex">\(x\rightarrow \infty\)</span>.</li>
+<li><span class="arithmatex">\(F(x)\)</span> không giảm (<span class="arithmatex">\(y &gt; x \implies F(y) \ge F(x)\)</span>).</li>
+<li><span class="arithmatex">\(F(x)\)</span> liên tục (không có bước nhảy) nếu <span class="arithmatex">\(X\)</span> là một biến ngẫu nhiên liên tục.</li>
+</ul>
+<p>Với gạch đầu dòng thứ tư, lưu ý rằng điều này sẽ không đúng nếu <span class="arithmatex">\(X\)</span> là rời rạc, chẳng hạn nhận các giá trị <span class="arithmatex">\(0\)</span> và <span class="arithmatex">\(1\)</span>, mỗi giá trị với xác suất <span class="arithmatex">\(1/2\)</span>. Trong trường hợp đó</p>
+<div class="arithmatex">\[
+F(x) = \begin{cases}
+0 &amp; x &lt; 0, \\
+\frac{1}{2} &amp; x &lt; 1, \\
+1 &amp; x \ge 1.
+\end{cases}
+\]</div>
+<p>Trong ví dụ này, ta thấy một trong những lợi ích của việc làm việc với c.d.f.: khả năng xử lý các biến ngẫu nhiên liên tục hoặc rời rạc trong cùng một khuôn khổ, hoặc thậm chí các hỗn hợp của hai loại (tung đồng xu: nếu ngửa thì trả về kết quả gieo xúc xắc, nếu sấp thì trả về khoảng cách của một mũi phi tiêu so với tâm bảng phi tiêu).</p>
+<h3 id="trung-binh">Trung Bình<a class="headerlink" href="#trung-binh" title="Permanent link">&para;</a></h3>
+<p>Giả sử ta đang xử lý một biến ngẫu nhiên <span class="arithmatex">\(X\)</span>. Bản thân phân phối có thể khó diễn giải. Thường sẽ hữu ích nếu có thể tóm tắt hành vi của một biến ngẫu nhiên một cách ngắn gọn. Những con số giúp ta nắm bắt hành vi của một biến ngẫu nhiên được gọi là <em>thống kê tóm tắt</em>. Những đại lượng thường gặp nhất là <em>trung bình</em>, <em>phương sai</em> và <em>độ lệch chuẩn</em>.</p>
+<p><em>Trung bình</em> mã hóa giá trị trung bình của một biến ngẫu nhiên. Nếu ta có một biến ngẫu nhiên rời rạc <span class="arithmatex">\(X\)</span>, nhận các giá trị <span class="arithmatex">\(x_i\)</span> với xác suất <span class="arithmatex">\(p_i\)</span>, thì trung bình được cho bởi trung bình có trọng số: cộng các giá trị nhân với xác suất biến ngẫu nhiên nhận giá trị đó:</p>
+<div class="arithmatex">\[\mu_X = E[X] = \sum_i x_i p_i.\]</div>
+<p>Cách ta nên diễn giải trung bình (dù cần thận trọng) là nó về cơ bản cho ta biết biến ngẫu nhiên có xu hướng nằm ở đâu.</p>
+<p>Làm một ví dụ tối giản mà ta sẽ xét xuyên suốt phần này, hãy lấy <span class="arithmatex">\(X\)</span> là biến ngẫu nhiên nhận giá trị <span class="arithmatex">\(a-2\)</span> với xác suất <span class="arithmatex">\(p\)</span>, <span class="arithmatex">\(a+2\)</span> với xác suất <span class="arithmatex">\(p\)</span> và <span class="arithmatex">\(a\)</span> với xác suất <span class="arithmatex">\(1-2p\)</span>. Dùng :eqref:<code>eq_exp_def</code>, ta có thể tính rằng với bất kỳ lựa chọn nào của <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(p\)</span>, trung bình là</p>
+<div class="arithmatex">\[
+\mu_X = E[X] = \sum_i x_i p_i = (a-2)p + a(1-2p) + (a+2)p = a.
+\]</div>
+<p>Vì vậy ta thấy trung bình là <span class="arithmatex">\(a\)</span>. Điều này khớp với trực giác vì <span class="arithmatex">\(a\)</span> là vị trí mà quanh đó ta đặt tâm cho biến ngẫu nhiên.</p>
+<p>Vì chúng hữu ích, hãy tóm tắt một vài tính chất.</p>
+<ul>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span> và các số <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span>, ta có <span class="arithmatex">\(\mu_{aX+b} = a\mu_X + b\)</span>.</li>
+<li>Nếu ta có hai biến ngẫu nhiên <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span>, ta có <span class="arithmatex">\(\mu_{X+Y} = \mu_X+\mu_Y\)</span>.</li>
+</ul>
+<p>Trung bình hữu ích để hiểu hành vi trung bình của một biến ngẫu nhiên, tuy nhiên trung bình không đủ để có được một hiểu biết trực giác đầy đủ. Kiếm lợi nhuận <span class="arithmatex">\(\$10 \pm \$1\)</span> trên mỗi lần bán rất khác với kiếm <span class="arithmatex">\(\$10 \pm \$15\)</span> trên mỗi lần bán, dù chúng có cùng giá trị trung bình. Trường hợp thứ hai có mức dao động lớn hơn nhiều, và do đó biểu thị rủi ro lớn hơn nhiều. Vì vậy, để hiểu hành vi của một biến ngẫu nhiên, tối thiểu ta sẽ cần thêm một phép đo nữa: một thước đo về mức độ biến ngẫu nhiên dao động rộng đến đâu.</p>
+<h3 id="phuong-sai">Phương Sai<a class="headerlink" href="#phuong-sai" title="Permanent link">&para;</a></h3>
+<p>Điều này dẫn ta đến việc xét <em>phương sai</em> của một biến ngẫu nhiên. Đây là một phép đo định lượng cho biết một biến ngẫu nhiên lệch khỏi trung bình bao xa. Xét biểu thức <span class="arithmatex">\(X - \mu_X\)</span>. Đây là độ lệch của biến ngẫu nhiên khỏi trung bình của nó. Giá trị này có thể dương hoặc âm, nên ta cần làm gì đó để biến nó thành dương, sao cho ta đang đo độ lớn của độ lệch.</p>
+<p>Một điều hợp lý để thử là xét <span class="arithmatex">\(\left|X-\mu_X\right|\)</span>, và thật vậy điều này dẫn đến một đại lượng hữu ích gọi là <em>độ lệch tuyệt đối trung bình</em>. Tuy nhiên, do các liên hệ với những lĩnh vực khác của toán học và thống kê, người ta thường dùng một cách khác.</p>
+<p>Cụ thể, họ xét <span class="arithmatex">\((X-\mu_X)^2.\)</span> Nếu ta xét kích thước điển hình của đại lượng này bằng cách lấy trung bình, ta thu được phương sai</p>
+<div class="arithmatex">\[\sigma_X^2 = \textrm{Var}(X) = E\left[(X-\mu_X)^2\right] = E[X^2] - \mu_X^2.\]</div>
+<p>Đẳng thức cuối trong :eqref:<code>eq_var_def</code> đúng bằng cách khai triển định nghĩa ở giữa và áp dụng các tính chất của kỳ vọng.</p>
+<p>Hãy xét ví dụ của ta, trong đó <span class="arithmatex">\(X\)</span> là biến ngẫu nhiên nhận giá trị <span class="arithmatex">\(a-2\)</span> với xác suất <span class="arithmatex">\(p\)</span>, <span class="arithmatex">\(a+2\)</span> với xác suất <span class="arithmatex">\(p\)</span> và <span class="arithmatex">\(a\)</span> với xác suất <span class="arithmatex">\(1-2p\)</span>. Trong trường hợp này <span class="arithmatex">\(\mu_X = a\)</span>, nên tất cả những gì ta cần tính là <span class="arithmatex">\(E\left[X^2\right]\)</span>. Điều này có thể làm ngay:</p>
+<div class="arithmatex">\[
+E\left[X^2\right] = (a-2)^2p + a^2(1-2p) + (a+2)^2p = a^2 + 8p.
+\]</div>
+<p>Vì vậy, theo :eqref:<code>eq_var_def</code>, phương sai của ta là</p>
+<div class="arithmatex">\[
+\sigma_X^2 = \textrm{Var}(X) = E[X^2] - \mu_X^2 = a^2 + 8p - a^2 = 8p.
+\]</div>
+<p>Kết quả này một lần nữa hợp lý. Giá trị lớn nhất của <span class="arithmatex">\(p\)</span> là <span class="arithmatex">\(1/2\)</span>, tương ứng với việc chọn <span class="arithmatex">\(a-2\)</span> hoặc <span class="arithmatex">\(a+2\)</span> bằng cách tung đồng xu. Phương sai bằng <span class="arithmatex">\(4\)</span> tương ứng với thực tế rằng cả <span class="arithmatex">\(a-2\)</span> và <span class="arithmatex">\(a+2\)</span> đều cách trung bình <span class="arithmatex">\(2\)</span> đơn vị, và <span class="arithmatex">\(2^2 = 4\)</span>. Ở đầu kia của phổ, nếu <span class="arithmatex">\(p=0\)</span>, biến ngẫu nhiên này luôn nhận giá trị <span class="arithmatex">\(0\)</span>, nên nó hoàn toàn không có phương sai.</p>
+<p>Ta liệt kê một vài tính chất của phương sai dưới đây:</p>
+<ul>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(\textrm{Var}(X) \ge 0\)</span>, với <span class="arithmatex">\(\textrm{Var}(X) = 0\)</span> khi và chỉ khi <span class="arithmatex">\(X\)</span> là một hằng số.</li>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span> và các số <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span>, ta có <span class="arithmatex">\(\textrm{Var}(aX+b) = a^2\textrm{Var}(X)\)</span>.</li>
+<li>Nếu ta có hai biến ngẫu nhiên <em>độc lập</em> <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span>, ta có <span class="arithmatex">\(\textrm{Var}(X+Y) = \textrm{Var}(X) + \textrm{Var}(Y)\)</span>.</li>
+</ul>
+<p>Khi diễn giải các giá trị này, có thể có một chút vướng mắc. Cụ thể, hãy tưởng tượng điều gì xảy ra nếu ta theo dõi đơn vị xuyên suốt phép tính này. Giả sử ta đang làm việc với xếp hạng sao được gán cho một sản phẩm trên trang web. Khi đó <span class="arithmatex">\(a\)</span>, <span class="arithmatex">\(a-2\)</span> và <span class="arithmatex">\(a+2\)</span> đều được đo bằng đơn vị sao. Tương tự, trung bình <span class="arithmatex">\(\mu_X\)</span> khi đó cũng được đo bằng sao (vì là trung bình có trọng số). Tuy nhiên, khi đi đến phương sai, ta lập tức gặp một vấn đề: ta muốn xét <span class="arithmatex">\((X-\mu_X)^2\)</span>, đại lượng này có đơn vị là <em>sao bình phương</em>. Điều này có nghĩa là bản thân phương sai không thể so sánh trực tiếp với các phép đo ban đầu. Để làm cho nó diễn giải được, ta cần quay lại các đơn vị ban đầu.</p>
+<h3 id="o-lech-chuan">Độ Lệch Chuẩn<a class="headerlink" href="#o-lech-chuan" title="Permanent link">&para;</a></h3>
+<p>Thống kê tóm tắt này luôn có thể được suy ra từ phương sai bằng cách lấy căn bậc hai! Vì vậy ta định nghĩa <em>độ lệch chuẩn</em> là</p>
+<div class="arithmatex">\[
+\sigma_X = \sqrt{\textrm{Var}(X)}.
+\]</div>
+<p>Trong ví dụ của ta, điều này có nghĩa là độ lệch chuẩn hiện là <span class="arithmatex">\(\sigma_X = 2\sqrt{2p}\)</span>. Nếu ta đang làm việc với đơn vị sao trong ví dụ đánh giá, <span class="arithmatex">\(\sigma_X\)</span> lại có đơn vị sao.</p>
+<p>Các tính chất ta đã có cho phương sai có thể được phát biểu lại cho độ lệch chuẩn.</p>
+<ul>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(\sigma_{X} \ge 0\)</span>.</li>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span> và các số <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span>, ta có <span class="arithmatex">\(\sigma_{aX+b} = |a|\sigma_{X}\)</span></li>
+<li>Nếu ta có hai biến ngẫu nhiên <em>độc lập</em> <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span>, ta có <span class="arithmatex">\(\sigma_{X+Y} = \sqrt{\sigma_{X}^2 + \sigma_{Y}^2}\)</span>.</li>
+</ul>
+<p>Tại thời điểm này, rất tự nhiên khi hỏi: "Nếu độ lệch chuẩn có cùng đơn vị với biến ngẫu nhiên ban đầu, liệu nó có biểu thị điều gì ta có thể vẽ ra liên quan đến biến ngẫu nhiên đó không?" Câu trả lời là có một cách rõ ràng! Thật vậy, giống như trung bình cho ta biết vị trí điển hình của biến ngẫu nhiên, độ lệch chuẩn cho ta khoảng biến thiên điển hình của biến ngẫu nhiên đó. Ta có thể làm điều này chặt chẽ bằng thứ được gọi là bất đẳng thức Chebyshev:</p>
+<div class="arithmatex">\[P\left(X \not\in [\mu_X - \alpha\sigma_X, \mu_X + \alpha\sigma_X]\right) \le \frac{1}{\alpha^2}.\]</div>
+<p>Hay phát biểu bằng lời trong trường hợp <span class="arithmatex">\(\alpha=10\)</span>, <span class="arithmatex">\(99\%\)</span> mẫu từ bất kỳ biến ngẫu nhiên nào đều rơi trong phạm vi <span class="arithmatex">\(10\)</span> độ lệch chuẩn quanh trung bình. Điều này đem lại một cách diễn giải trực tiếp cho các thống kê tóm tắt chuẩn của ta.</p>
+<p>Để thấy phát biểu này tinh tế như thế nào, hãy nhìn lại ví dụ xuyên suốt của ta, trong đó <span class="arithmatex">\(X\)</span> là biến ngẫu nhiên nhận giá trị <span class="arithmatex">\(a-2\)</span> với xác suất <span class="arithmatex">\(p\)</span>, <span class="arithmatex">\(a+2\)</span> với xác suất <span class="arithmatex">\(p\)</span> và <span class="arithmatex">\(a\)</span> với xác suất <span class="arithmatex">\(1-2p\)</span>. Ta đã thấy trung bình là <span class="arithmatex">\(a\)</span> và độ lệch chuẩn là <span class="arithmatex">\(2\sqrt{2p}\)</span>. Điều này có nghĩa là nếu ta lấy bất đẳng thức Chebyshev :eqref:<code>eq_chebyshev</code> với <span class="arithmatex">\(\alpha = 2\)</span>, ta thấy biểu thức là</p>
+<div class="arithmatex">\[
+P\left(X \not\in [a - 4\sqrt{2p}, a + 4\sqrt{2p}]\right) \le \frac{1}{4}.
+\]</div>
+<p>Điều này có nghĩa là trong <span class="arithmatex">\(75\%\)</span> thời gian, biến ngẫu nhiên này sẽ rơi trong khoảng này với bất kỳ giá trị nào của <span class="arithmatex">\(p\)</span>. Bây giờ, lưu ý rằng khi <span class="arithmatex">\(p \rightarrow 0\)</span>, khoảng này cũng hội tụ về điểm duy nhất <span class="arithmatex">\(a\)</span>. Nhưng ta biết biến ngẫu nhiên của mình chỉ nhận các giá trị <span class="arithmatex">\(a-2, a\)</span> và <span class="arithmatex">\(a+2\)</span>, nên cuối cùng ta có thể chắc chắn rằng <span class="arithmatex">\(a-2\)</span> và <span class="arithmatex">\(a+2\)</span> sẽ nằm ngoài khoảng! Câu hỏi là: điều đó xảy ra tại <span class="arithmatex">\(p\)</span> nào. Vì vậy ta muốn giải: với <span class="arithmatex">\(p\)</span> nào thì <span class="arithmatex">\(a+4\sqrt{2p} = a+2\)</span>, và nghiệm là <span class="arithmatex">\(p=1/8\)</span>, đây <em>chính xác</em> là <span class="arithmatex">\(p\)</span> đầu tiên mà điều đó có thể xảy ra mà không vi phạm khẳng định rằng không quá <span class="arithmatex">\(1/4\)</span> số mẫu từ phân phối rơi ngoài khoảng (<span class="arithmatex">\(1/8\)</span> ở bên trái và <span class="arithmatex">\(1/8\)</span> ở bên phải).</p>
+<p>Hãy trực quan hóa điều này. Ta sẽ biểu diễn xác suất nhận ba giá trị bằng ba thanh dọc có chiều cao tỷ lệ với xác suất. Khoảng sẽ được vẽ như một đường ngang ở giữa. Biểu đồ đầu tiên cho thấy điều gì xảy ra với <span class="arithmatex">\(p &gt; 1/8\)</span>, khi khoảng chứa an toàn tất cả các điểm.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># Define a helper to plot these figures</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_chebyshev</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">([</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="n">use_line_collection</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;p.m.f.&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>                   <span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p = </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="c1"># Plot interval when p &gt; 1/8</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Define a helper to plot these figures</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_chebyshev</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">([</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="n">use_line_collection</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;p.m.f.&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>                   <span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p = </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="c1"># Plot interval when p &gt; 1/8</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># Define a helper to plot these figures</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_chebyshev</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">stem</span><span class="p">([</span><span class="n">a</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="n">p</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">p</span><span class="p">],</span> <span class="n">use_line_collection</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;p.m.f.&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>                   <span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p</span><span class="p">),</span> <span class="mf">0.53</span><span class="p">,</span> <span class="mf">0.47</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p = </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="c1"># Plot interval when p &gt; 1/8</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
+</code></pre></div>
+<p>Biểu đồ thứ hai cho thấy rằng tại <span class="arithmatex">\(p = 1/8\)</span>, khoảng chạm đúng hai điểm. Điều này cho thấy bất đẳng thức là <em>sắc</em>, vì không thể lấy một khoảng nhỏ hơn mà vẫn giữ bất đẳng thức đúng.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># Plot interval when p = 1/8</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># Plot interval when p = 1/8</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.125</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># Plot interval when p = 1/8</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.125</span><span class="p">))</span>
+</code></pre></div>
+<p>Biểu đồ thứ ba cho thấy rằng với <span class="arithmatex">\(p &lt; 1/8\)</span>, khoảng chỉ chứa điểm ở giữa. Điều này không làm bất đẳng thức mất hiệu lực, vì ta chỉ cần bảo đảm rằng không quá <span class="arithmatex">\(1/4\)</span> xác suất rơi ngoài khoảng, nghĩa là khi <span class="arithmatex">\(p &lt; 1/8\)</span>, hai điểm tại <span class="arithmatex">\(a-2\)</span> và <span class="arithmatex">\(a+2\)</span> có thể bị loại ra.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># Plot interval when p &lt; 1/8</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># Plot interval when p &lt; 1/8</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.05</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># Plot interval when p &lt; 1/8</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.05</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="trung-binh-va-phuong-sai-trong-mien-lien-tuc">Trung Bình Và Phương Sai Trong Miền Liên Tục<a class="headerlink" href="#trung-binh-va-phuong-sai-trong-mien-lien-tuc" title="Permanent link">&para;</a></h3>
+<p>Tất cả những điều trên được trình bày cho biến ngẫu nhiên rời rạc, nhưng trường hợp biến ngẫu nhiên liên tục cũng tương tự. Để hiểu trực giác cách điều này hoạt động, hãy tưởng tượng ta chia trục số thực thành các khoảng có độ dài <span class="arithmatex">\(\epsilon\)</span> cho bởi <span class="arithmatex">\((\epsilon i, \epsilon (i+1)]\)</span>. Khi làm vậy, biến ngẫu nhiên liên tục của ta đã được rời rạc hóa, và ta có thể dùng :eqref:<code>eq_exp_def</code> để nói rằng</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\mu_X &amp; \approx \sum_{i} (\epsilon i)P(X \in (\epsilon i, \epsilon (i+1)]) \\
+&amp; \approx \sum_{i} (\epsilon i)p_X(\epsilon i)\epsilon, \\
+\end{aligned}
+\]</div>
+<p>trong đó <span class="arithmatex">\(p_X\)</span> là mật độ của <span class="arithmatex">\(X\)</span>. Đây là một xấp xỉ cho tích phân của <span class="arithmatex">\(xp_X(x)\)</span>, nên ta có thể kết luận rằng</p>
+<div class="arithmatex">\[
+\mu_X = \int_{-\infty}^\infty xp_X(x) \; dx.
+\]</div>
+<p>Tương tự, dùng :eqref:<code>eq_var_def</code>, phương sai có thể được viết là</p>
+<div class="arithmatex">\[
+\sigma^2_X = E[X^2] - \mu_X^2 = \int_{-\infty}^\infty x^2p_X(x) \; dx - \left(\int_{-\infty}^\infty xp_X(x) \; dx\right)^2.
+\]</div>
+<p>Mọi điều đã phát biểu ở trên về trung bình, phương sai và độ lệch chuẩn vẫn áp dụng trong trường hợp này. Chẳng hạn, nếu ta xét biến ngẫu nhiên có mật độ</p>
+<div class="arithmatex">\[
+p(x) = \begin{cases}
+1 &amp; x \in [0,1], \\
+0 &amp; \textrm{otherwise}.
+\end{cases}
+\]</div>
+<p>ta có thể tính</p>
+<div class="arithmatex">\[
+\mu_X = \int_{-\infty}^\infty xp(x) \; dx = \int_0^1 x \; dx = \frac{1}{2}.
+\]</div>
+<p>và</p>
+<div class="arithmatex">\[
+\sigma_X^2 = \int_{-\infty}^\infty x^2p(x) \; dx - \left(\frac{1}{2}\right)^2 = \frac{1}{3} - \frac{1}{4} = \frac{1}{12}.
+\]</div>
+<p>Như một lời cảnh báo, hãy xét thêm một ví dụ nữa, được gọi là <em>phân phối Cauchy</em>. Đây là phân phối có p.d.f. cho bởi</p>
+<div class="arithmatex">\[
+p(x) = \frac{1}{1+x^2}.
+\]</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># Plot the Cauchy distribution p.d.f.</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;p.d.f.&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># Plot the Cauchy distribution p.d.f.</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;p.d.f.&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1"># Plot the Cauchy distribution p.d.f.</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;p.d.f.&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Hàm này trông vô hại, và quả thật khi tra một bảng tích phân, ta sẽ thấy diện tích bên dưới nó bằng một, do đó nó định nghĩa một biến ngẫu nhiên liên tục.</p>
+<p>Để thấy điều gì đi sai, hãy thử tính phương sai của nó. Điều này sẽ liên quan đến việc dùng :eqref:<code>eq_var_def</code> để tính</p>
+<div class="arithmatex">\[
+\int_{-\infty}^\infty \frac{x^2}{1+x^2}\; dx.
+\]</div>
+<p>Hàm bên trong trông như sau:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># Plot the integrand needed to compute the variance</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">p</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;integrand&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># Plot the integrand needed to compute the variance</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="n">p</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;integrand&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># Plot the integrand needed to compute the variance</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">p</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;integrand&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Hàm này rõ ràng có diện tích vô hạn bên dưới, vì về cơ bản nó là hằng số một với một chỗ lõm nhỏ gần không, và thật vậy ta có thể chứng minh rằng</p>
+<div class="arithmatex">\[
+\int_{-\infty}^\infty \frac{x^2}{1+x^2}\; dx = \infty.
+\]</div>
+<p>Điều này có nghĩa là nó không có phương sai hữu hạn được định nghĩa tốt.</p>
+<p>Tuy nhiên, nhìn sâu hơn còn cho thấy một kết quả đáng lo ngại hơn. Hãy thử tính trung bình bằng :eqref:<code>eq_exp_def</code>. Dùng công thức đổi biến, ta thấy</p>
+<div class="arithmatex">\[
+\mu_X = \int_{-\infty}^{\infty} \frac{x}{1+x^2} \; dx = \frac{1}{2}\int_1^\infty \frac{1}{u} \; du.
+\]</div>
+<p>Tích phân bên trong là định nghĩa của logarit, nên về bản chất đây là <span class="arithmatex">\(\log(\infty) = \infty\)</span>, do đó cũng không có giá trị trung bình được định nghĩa tốt!</p>
+<p>Các nhà khoa học machine learning định nghĩa mô hình của họ sao cho thường thì ta không cần xử lý những vấn đề này, và trong đại đa số trường hợp sẽ làm việc với các biến ngẫu nhiên có trung bình và phương sai được định nghĩa tốt. Tuy nhiên, thỉnh thoảng các biến ngẫu nhiên có <em>đuôi nặng</em> (tức những biến ngẫu nhiên mà xác suất nhận giá trị lớn đủ lớn để làm cho những đại lượng như trung bình hoặc phương sai không xác định) lại hữu ích trong việc mô hình hóa các hệ vật lý, nên đáng để biết rằng chúng tồn tại.</p>
+<h3 id="ham-mat-o-ong-thoi">Hàm Mật Độ Đồng Thời<a class="headerlink" href="#ham-mat-o-ong-thoi" title="Permanent link">&para;</a></h3>
+<p>Toàn bộ phần trên đều giả định ta đang làm việc với một biến ngẫu nhiên thực đơn lẻ. Nhưng nếu ta đang xử lý hai hoặc nhiều biến ngẫu nhiên có thể tương quan mạnh thì sao? Tình huống này là chuẩn mực trong machine learning: hãy tưởng tượng các biến ngẫu nhiên như <span class="arithmatex">\(R_{i, j}\)</span> mã hóa giá trị đỏ của pixel tại tọa độ <span class="arithmatex">\((i, j)\)</span> trong một ảnh, hoặc <span class="arithmatex">\(P_t\)</span> là biến ngẫu nhiên được cho bởi giá cổ phiếu tại thời điểm <span class="arithmatex">\(t\)</span>. Các pixel gần nhau có xu hướng có màu tương tự, và các thời điểm gần nhau có xu hướng có giá tương tự. Ta không thể xem chúng như các biến ngẫu nhiên tách biệt mà vẫn kỳ vọng tạo ra một mô hình thành công (ta sẽ thấy trong <a href="#sec_naive_bayes">sec_naive_bayes</a> một mô hình hoạt động kém do giả định như vậy). Ta cần phát triển ngôn ngữ toán học để xử lý các biến ngẫu nhiên liên tục có tương quan này.</p>
+<p>May mắn thay, với các tích phân bội trong <a href="#sec_integral_calculus">sec_integral_calculus</a>, ta có thể phát triển một ngôn ngữ như vậy. Giả sử, để đơn giản, ta có hai biến ngẫu nhiên <span class="arithmatex">\(X, Y\)</span> có thể tương quan. Khi đó, tương tự trường hợp một biến, ta có thể đặt câu hỏi:</p>
+<div class="arithmatex">\[
+P(X \;\textrm{is in an}\; \epsilon \textrm{-sized interval around}\; x \; \textrm{and} \;Y \;\textrm{is in an}\; \epsilon \textrm{-sized interval around}\; y ).
+\]</div>
+<p>Lập luận tương tự như trong trường hợp một biến cho thấy đại lượng này nên xấp xỉ</p>
+<div class="arithmatex">\[
+P(X \;\textrm{is in an}\; \epsilon \textrm{-sized interval around}\; x \; \textrm{and} \;Y \;\textrm{is in an}\; \epsilon \textrm{-sized interval around}\; y ) \approx \epsilon^{2}p(x, y),
+\]</div>
+<p>với một hàm nào đó <span class="arithmatex">\(p(x, y)\)</span>. Hàm này được gọi là mật độ đồng thời của <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span>. Các tính chất tương tự cũng đúng như ta đã thấy trong trường hợp một biến. Cụ thể:</p>
+<ul>
+<li><span class="arithmatex">\(p(x, y) \ge 0\)</span>;</li>
+<li><span class="arithmatex">\(\int _ {\mathbb{R}^2} p(x, y) \;dx \;dy = 1\)</span>;</li>
+<li><span class="arithmatex">\(P((X, Y) \in \mathcal{D}) = \int _ {\mathcal{D}} p(x, y) \;dx \;dy\)</span>.</li>
+</ul>
+<p>Bằng cách này, ta có thể xử lý nhiều biến ngẫu nhiên có thể tương quan. Nếu muốn làm việc với nhiều hơn hai biến ngẫu nhiên, ta có thể mở rộng mật độ đa biến đến bao nhiêu tọa độ tùy ý bằng cách xét <span class="arithmatex">\(p(\mathbf{x}) = p(x_1, \ldots, x_n)\)</span>. Các tính chất không âm và có tích phân toàn phần bằng một vẫn giữ nguyên.</p>
+<h3 id="phan-phoi-bien">Phân Phối Biên<a class="headerlink" href="#phan-phoi-bien" title="Permanent link">&para;</a></h3>
+<p>Khi xử lý nhiều biến, ta thường muốn bỏ qua các mối quan hệ và hỏi: "biến này được phân phối như thế nào?" Một phân phối như vậy được gọi là <em>phân phối biên</em>.</p>
+<p>Cụ thể, giả sử ta có hai biến ngẫu nhiên <span class="arithmatex">\(X, Y\)</span> với mật độ đồng thời cho bởi <span class="arithmatex">\(p _ {X, Y}(x, y)\)</span>. Ta sẽ dùng chỉ số dưới để chỉ mật độ đó thuộc về những biến ngẫu nhiên nào. Bài toán tìm phân phối biên là lấy hàm này và dùng nó để tìm <span class="arithmatex">\(p _ X(x)\)</span>.</p>
+<p>Như với hầu hết mọi thứ, tốt nhất là quay lại bức tranh trực giác để tìm ra điều gì nên đúng. Nhớ lại rằng mật độ là hàm <span class="arithmatex">\(p _ X\)</span> sao cho</p>
+<div class="arithmatex">\[
+P(X \in [x, x+\epsilon]) \approx \epsilon \cdot p _ X(x).
+\]</div>
+<p>Không hề có nhắc đến <span class="arithmatex">\(Y\)</span>, nhưng nếu tất cả những gì ta được cho là <span class="arithmatex">\(p _{X, Y}\)</span>, ta cần đưa <span class="arithmatex">\(Y\)</span> vào theo cách nào đó. Trước hết, ta có thể quan sát rằng điều này giống với</p>
+<div class="arithmatex">\[
+P(X \in [x, x+\epsilon] \textrm{, and } Y \in \mathbb{R}) \approx \epsilon \cdot p _ X(x).
+\]</div>
+<p>Mật độ của ta không trực tiếp cho biết điều gì xảy ra trong trường hợp này; ta cũng cần chia thành các khoảng nhỏ theo <span class="arithmatex">\(y\)</span>, vì vậy ta có thể viết</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\epsilon \cdot p _ X(x) &amp; \approx \sum _ {i} P(X \in [x, x+\epsilon] \textrm{, and } Y \in [\epsilon \cdot i, \epsilon \cdot (i+1)]) \\
+&amp; \approx \sum _ {i} \epsilon^{2} p _ {X, Y}(x, \epsilon\cdot i).
+\end{aligned}
+\]</div>
+<p><img alt="Bằng cách cộng dọc theo các cột của mảng xác suất, ta có thể thu được phân phối biên chỉ cho biến ngẫu nhiên được biểu diễn dọc theo trục \(\mathit{x}\)." src="../../img/marginal.svg" />
+<a id="fig_marginal"></a></p>
+<p>Điều này cho ta biết phải cộng các giá trị của mật độ dọc theo một chuỗi các ô vuông trên một đường, như được minh họa trong <a href="#fig_marginal">fig_marginal</a>. Thật vậy, sau khi khử một thừa số epsilon ở cả hai vế và nhận ra tổng ở vế phải là tích phân theo <span class="arithmatex">\(y\)</span>, ta có thể kết luận rằng</p>
+<div class="arithmatex">\[
+\begin{aligned}
+ p _ X(x) &amp;  \approx \sum _ {i} \epsilon p _ {X, Y}(x, \epsilon\cdot i) \\
+ &amp; \approx \int_{-\infty}^\infty p_{X, Y}(x, y) \; dy.
+\end{aligned}
+\]</div>
+<p>Do đó ta thấy</p>
+<div class="arithmatex">\[
+p _ X(x) = \int_{-\infty}^\infty p_{X, Y}(x, y) \; dy.
+\]</div>
+<p>Điều này cho ta biết rằng để thu được một phân phối biên, ta tích phân theo các biến mà ta không quan tâm. Quá trình này thường được gọi là <em>tích phân loại bỏ</em> hoặc <em>biên hóa</em> các biến không cần thiết.</p>
+<h3 id="hiep-phuong-sai">Hiệp Phương Sai<a class="headerlink" href="#hiep-phuong-sai" title="Permanent link">&para;</a></h3>
+<p>Khi xử lý nhiều biến ngẫu nhiên, có một thống kê tóm tắt bổ sung rất hữu ích cần biết: <em>hiệp phương sai</em>. Đại lượng này đo mức độ hai biến ngẫu nhiên dao động cùng nhau.</p>
+<p>Giả sử ta có hai biến ngẫu nhiên <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span>; để bắt đầu, hãy giả sử chúng là rời rạc, nhận các giá trị <span class="arithmatex">\((x_i, y_j)\)</span> với xác suất <span class="arithmatex">\(p_{ij}\)</span>. Trong trường hợp này, hiệp phương sai được định nghĩa là</p>
+<div class="arithmatex">\[\sigma_{XY} = \textrm{Cov}(X, Y) = \sum_{i, j} (x_i - \mu_X) (y_j-\mu_Y) p_{ij}. = E[XY] - E[X]E[Y].\]</div>
+<p>Để suy nghĩ về điều này một cách trực giác, hãy xét cặp biến ngẫu nhiên sau. Giả sử <span class="arithmatex">\(X\)</span> nhận các giá trị <span class="arithmatex">\(1\)</span> và <span class="arithmatex">\(3\)</span>, còn <span class="arithmatex">\(Y\)</span> nhận các giá trị <span class="arithmatex">\(-1\)</span> và <span class="arithmatex">\(3\)</span>. Giả sử ta có các xác suất sau</p>
+<div class="arithmatex">\[
+\begin{aligned}
+P(X = 1 \; \textrm{and} \; Y = -1) &amp; = \frac{p}{2}, \\
+P(X = 1 \; \textrm{and} \; Y = 3) &amp; = \frac{1-p}{2}, \\
+P(X = 3 \; \textrm{and} \; Y = -1) &amp; = \frac{1-p}{2}, \\
+P(X = 3 \; \textrm{and} \; Y = 3) &amp; = \frac{p}{2},
+\end{aligned}
+\]</div>
+<p>trong đó <span class="arithmatex">\(p\)</span> là một tham số trong <span class="arithmatex">\([0,1]\)</span> mà ta được chọn. Lưu ý rằng nếu <span class="arithmatex">\(p=1\)</span> thì cả hai luôn cùng nhận giá trị nhỏ nhất hoặc lớn nhất đồng thời, và nếu <span class="arithmatex">\(p=0\)</span> thì chúng được bảo đảm nhận các giá trị đảo ngược đồng thời (một biến lớn khi biến kia nhỏ và ngược lại). Nếu <span class="arithmatex">\(p=1/2\)</span>, bốn khả năng đều có xác suất như nhau, và không biến nào nên liên quan đến biến kia. Hãy tính hiệp phương sai. Trước hết, lưu ý <span class="arithmatex">\(\mu_X = 2\)</span> và <span class="arithmatex">\(\mu_Y = 1\)</span>, nên ta có thể tính bằng :eqref:<code>eq_cov_def</code>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\textrm{Cov}(X, Y) &amp; = \sum_{i, j} (x_i - \mu_X) (y_j-\mu_Y) p_{ij} \\
+&amp; = (1-2)(-1-1)\frac{p}{2} + (1-2)(3-1)\frac{1-p}{2} + (3-2)(-1-1)\frac{1-p}{2} + (3-2)(3-1)\frac{p}{2} \\
+&amp; = 4p-2.
+\end{aligned}
+\]</div>
+<p>Khi <span class="arithmatex">\(p=1\)</span> (trường hợp chúng đồng thời cùng cực đại theo hướng dương hoặc âm) thì hiệp phương sai là <span class="arithmatex">\(2\)</span>. Khi <span class="arithmatex">\(p=0\)</span> (trường hợp chúng bị đảo ngược) thì hiệp phương sai là <span class="arithmatex">\(-2\)</span>. Cuối cùng, khi <span class="arithmatex">\(p=1/2\)</span> (trường hợp chúng không liên quan), hiệp phương sai là <span class="arithmatex">\(0\)</span>. Vì vậy ta thấy hiệp phương sai đo cách hai biến ngẫu nhiên này liên hệ với nhau.</p>
+<p>Một lưu ý nhanh về hiệp phương sai là nó chỉ đo các quan hệ tuyến tính này. Những quan hệ phức tạp hơn như <span class="arithmatex">\(X = Y^2\)</span>, trong đó <span class="arithmatex">\(Y\)</span> được chọn ngẫu nhiên từ <span class="arithmatex">\(\{-2, -1, 0, 1, 2\}\)</span> với xác suất bằng nhau, có thể bị bỏ lỡ. Thật vậy, một phép tính nhanh cho thấy các biến ngẫu nhiên này có hiệp phương sai bằng không, dù một biến là hàm tất định của biến kia.</p>
+<p>Với biến ngẫu nhiên liên tục, câu chuyện cũng gần như vậy. Đến lúc này, ta đã khá quen với việc chuyển đổi giữa rời rạc và liên tục, nên ta sẽ đưa ra dạng tương tự liên tục của :eqref:<code>eq_cov_def</code> mà không suy diễn.</p>
+<div class="arithmatex">\[
+\sigma_{XY} = \int_{\mathbb{R}^2} (x-\mu_X)(y-\mu_Y)p(x, y) \;dx \;dy.
+\]</div>
+<p>Để trực quan hóa, hãy xem một tập hợp các biến ngẫu nhiên có hiệp phương sai điều chỉnh được.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1"># Plot a few random variables adjustable covariance</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">covs</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>    <span class="n">Y</span> <span class="o">=</span> <span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">X</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cov = </span><span class="si">{</span><span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># Plot a few random variables adjustable covariance</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">covs</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>    <span class="n">Y</span> <span class="o">=</span> <span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">X</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cov = </span><span class="si">{</span><span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="c1"># Plot a few random variables adjustable covariance</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">covs</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="mi">500</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    <span class="n">Y</span> <span class="o">=</span> <span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">X</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="mi">500</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cov = </span><span class="si">{</span><span class="n">covs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>Hãy xem một vài tính chất của hiệp phương sai:</p>
+<ul>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(\textrm{Cov}(X, X) = \textrm{Var}(X)\)</span>.</li>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X, Y\)</span> và các số <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span>, <span class="arithmatex">\(\textrm{Cov}(aX+b, Y) = \textrm{Cov}(X, aY+b) = a\textrm{Cov}(X, Y)\)</span>.</li>
+<li>Nếu <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> độc lập thì <span class="arithmatex">\(\textrm{Cov}(X, Y) = 0\)</span>.</li>
+</ul>
+<p>Ngoài ra, ta có thể dùng hiệp phương sai để mở rộng một quan hệ ta đã thấy trước đó. Nhớ rằng nếu <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> là hai biến ngẫu nhiên độc lập thì</p>
+<div class="arithmatex">\[
+\textrm{Var}(X+Y) = \textrm{Var}(X) + \textrm{Var}(Y).
+\]</div>
+<p>Với kiến thức về hiệp phương sai, ta có thể mở rộng quan hệ này. Thật vậy, một chút đại số cho thấy rằng nói chung,</p>
+<div class="arithmatex">\[
+\textrm{Var}(X+Y) = \textrm{Var}(X) + \textrm{Var}(Y) + 2\textrm{Cov}(X, Y).
+\]</div>
+<p>Điều này cho phép ta tổng quát hóa quy tắc cộng phương sai cho các biến ngẫu nhiên có tương quan.</p>
+<h3 id="tuong-quan">Tương Quan<a class="headerlink" href="#tuong-quan" title="Permanent link">&para;</a></h3>
+<p>Như ta đã làm trong trường hợp trung bình và phương sai, bây giờ hãy xét đến đơn vị. Nếu <span class="arithmatex">\(X\)</span> được đo bằng một đơn vị (chẳng hạn inch), còn <span class="arithmatex">\(Y\)</span> được đo bằng một đơn vị khác (chẳng hạn đô la), thì hiệp phương sai được đo bằng tích của hai đơn vị này <span class="arithmatex">\(\textrm{inches} \times \textrm{dollars}\)</span>. Các đơn vị này có thể khó diễn giải. Trong trường hợp này, điều ta thường muốn là một phép đo không có đơn vị về mức độ liên quan. Thật vậy, thường ta không quan tâm đến tương quan định lượng chính xác, mà chỉ hỏi liệu tương quan có cùng chiều hay không, và mối quan hệ mạnh đến mức nào.</p>
+<p>Để thấy điều gì hợp lý, hãy thực hiện một thí nghiệm tưởng tượng. Giả sử ta đổi các biến ngẫu nhiên tính bằng inch và đô la sang inch và xu. Trong trường hợp này, biến ngẫu nhiên <span class="arithmatex">\(Y\)</span> được nhân với <span class="arithmatex">\(100\)</span>. Nếu ta đi qua định nghĩa, điều này có nghĩa là <span class="arithmatex">\(\textrm{Cov}(X, Y)\)</span> sẽ được nhân với <span class="arithmatex">\(100\)</span>. Vì vậy ta thấy rằng trong trường hợp này, thay đổi đơn vị làm hiệp phương sai thay đổi theo hệ số <span class="arithmatex">\(100\)</span>. Do đó, để tìm phép đo tương quan bất biến theo đơn vị, ta cần chia cho thứ gì đó khác cũng được co giãn theo <span class="arithmatex">\(100\)</span>. Quả thật ta có một ứng viên rõ ràng: độ lệch chuẩn! Thật vậy, nếu ta định nghĩa <em>hệ số tương quan</em> là</p>
+<div class="arithmatex">\[\rho(X, Y) = \frac{\textrm{Cov}(X, Y)}{\sigma_{X}\sigma_{Y}},\]</div>
+<p>ta thấy đây là một giá trị không có đơn vị. Một chút toán học có thể cho thấy con số này nằm giữa <span class="arithmatex">\(-1\)</span> và <span class="arithmatex">\(1\)</span>, trong đó <span class="arithmatex">\(1\)</span> nghĩa là tương quan dương cực đại, còn <span class="arithmatex">\(-1\)</span> nghĩa là tương quan âm cực đại.</p>
+<p>Quay lại ví dụ rời rạc tường minh ở trên, ta có thể thấy <span class="arithmatex">\(\sigma_X = 1\)</span> và <span class="arithmatex">\(\sigma_Y = 2\)</span>, nên ta có thể tính tương quan giữa hai biến ngẫu nhiên bằng :eqref:<code>eq_cor_def</code> và thấy rằng</p>
+<div class="arithmatex">\[
+\rho(X, Y) = \frac{4p-2}{1\cdot 2} = 2p-1.
+\]</div>
+<p>Giờ giá trị này chạy từ <span class="arithmatex">\(-1\)</span> đến <span class="arithmatex">\(1\)</span> với hành vi như kỳ vọng: <span class="arithmatex">\(1\)</span> nghĩa là tương quan mạnh nhất, và <span class="arithmatex">\(-1\)</span> nghĩa là tương quan tối thiểu.</p>
+<p>Như một ví dụ khác, xét <span class="arithmatex">\(X\)</span> là bất kỳ biến ngẫu nhiên nào, và <span class="arithmatex">\(Y=aX+b\)</span> là một hàm tuyến tính tất định bất kỳ của <span class="arithmatex">\(X\)</span>. Khi đó, ta có thể tính được</p>
+<div class="arithmatex">\[\sigma_{Y} = \sigma_{aX+b} = |a|\sigma_{X},\]</div>
+<div class="arithmatex">\[\textrm{Cov}(X, Y) = \textrm{Cov}(X, aX+b) = a\textrm{Cov}(X, X) = a\textrm{Var}(X),\]</div>
+<p>và do đó theo :eqref:<code>eq_cor_def</code>,</p>
+<div class="arithmatex">\[
+\rho(X, Y) = \frac{a\textrm{Var}(X)}{|a|\sigma_{X}^2} = \frac{a}{|a|} = \textrm{sign}(a).
+\]</div>
+<p>Vì vậy ta thấy tương quan là <span class="arithmatex">\(+1\)</span> với mọi <span class="arithmatex">\(a &gt; 0\)</span>, và <span class="arithmatex">\(-1\)</span> với mọi <span class="arithmatex">\(a &lt; 0\)</span>, minh họa rằng tương quan đo mức độ và chiều hướng liên hệ giữa hai biến ngẫu nhiên, chứ không đo thang đo mà biến thiên diễn ra.</p>
+<p>Hãy lại vẽ một tập hợp các biến ngẫu nhiên có tương quan điều chỉnh được.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="c1"># Plot a few random variables adjustable correlations</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="n">cors</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>    <span class="n">Y</span> <span class="o">=</span> <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cor = </span><span class="si">{</span><span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1"># Plot a few random variables adjustable correlations</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">cors</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>    <span class="n">Y</span> <span class="o">=</span> <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>                                 <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cor = </span><span class="si">{</span><span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="c1"># Plot a few random variables adjustable correlations</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="n">cors</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="mi">500</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>    <span class="n">Y</span> <span class="o">=</span> <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span> <span class="o">-</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>                                 <span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="mi">500</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;cor = </span><span class="si">{</span><span class="n">cors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>Hãy liệt kê một vài tính chất của tương quan dưới đây.</p>
+<ul>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span>, <span class="arithmatex">\(\rho(X, X) = 1\)</span>.</li>
+<li>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X, Y\)</span> và các số <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span>, <span class="arithmatex">\(\rho(aX+b, Y) = \rho(X, aY+b) = \rho(X, Y)\)</span>.</li>
+<li>Nếu <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> độc lập với phương sai khác không thì <span class="arithmatex">\(\rho(X, Y) = 0\)</span>.</li>
+</ul>
+<p>Như một lưu ý cuối cùng, bạn có thể cảm thấy một số công thức này quen thuộc. Thật vậy, nếu ta khai triển mọi thứ với giả định rằng <span class="arithmatex">\(\mu_X = \mu_Y = 0\)</span>, ta thấy rằng đây là</p>
+<div class="arithmatex">\[
+\rho(X, Y) = \frac{\sum_{i, j} x_iy_ip_{ij}}{\sqrt{\sum_{i, j}x_i^2 p_{ij}}\sqrt{\sum_{i, j}y_j^2 p_{ij}}}.
+\]</div>
+<p>Biểu thức này trông giống tổng của tích các hạng tử chia cho căn bậc hai của các tổng các hạng tử. Đây chính xác là công thức cho cosin của góc giữa hai vector <span class="arithmatex">\(\mathbf{v}, \mathbf{w}\)</span> với các tọa độ khác nhau được trọng số bởi <span class="arithmatex">\(p_{ij}\)</span>:</p>
+<div class="arithmatex">\[
+\cos(\theta) = \frac{\mathbf{v}\cdot \mathbf{w}}{\|\mathbf{v}\|\|\mathbf{w}\|} = \frac{\sum_{i} v_iw_i}{\sqrt{\sum_{i}v_i^2}\sqrt{\sum_{i}w_i^2}}.
+\]</div>
+<p>Thật vậy, nếu ta nghĩ chuẩn liên quan đến độ lệch chuẩn, và tương quan như cosin của các góc, thì phần lớn trực giác từ hình học có thể được áp dụng để suy nghĩ về các biến ngẫu nhiên.</p>
+<h2 id="tom-tat">Tóm Tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Biến ngẫu nhiên liên tục là các biến ngẫu nhiên có thể nhận một miền giá trị liên tục. Chúng có một số khó khăn kỹ thuật khiến việc làm việc với chúng thách thức hơn so với biến ngẫu nhiên rời rạc.</li>
+<li>Hàm mật độ xác suất cho phép ta làm việc với biến ngẫu nhiên liên tục bằng cách cung cấp một hàm mà diện tích dưới đường cong trên một khoảng cho biết xác suất tìm thấy một điểm mẫu trong khoảng đó.</li>
+<li>Hàm phân phối tích lũy là xác suất quan sát biến ngẫu nhiên nhỏ hơn một ngưỡng cho trước. Nó có thể cung cấp một góc nhìn thay thế hữu ích, thống nhất các biến rời rạc và liên tục.</li>
+<li>Trung bình là giá trị trung bình của một biến ngẫu nhiên.</li>
+<li>Phương sai là kỳ vọng của bình phương hiệu giữa biến ngẫu nhiên và trung bình của nó.</li>
+<li>Độ lệch chuẩn là căn bậc hai của phương sai. Có thể xem nó như phép đo khoảng giá trị mà biến ngẫu nhiên có thể nhận.</li>
+<li>Bất đẳng thức Chebyshev cho phép ta làm trực giác này trở nên chặt chẽ bằng cách đưa ra một khoảng tường minh chứa biến ngẫu nhiên trong phần lớn thời gian.</li>
+<li>Mật độ đồng thời cho phép ta làm việc với các biến ngẫu nhiên có tương quan. Ta có thể biên hóa mật độ đồng thời bằng cách tích phân trên các biến ngẫu nhiên không mong muốn để thu được phân phối của biến ngẫu nhiên mong muốn.</li>
+<li>Hiệp phương sai và hệ số tương quan cung cấp một cách đo bất kỳ quan hệ tuyến tính nào giữa hai biến ngẫu nhiên có tương quan.</li>
+</ul>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Giả sử ta có biến ngẫu nhiên với mật độ cho bởi <span class="arithmatex">\(p(x) = \frac{1}{x^2}\)</span> với <span class="arithmatex">\(x \ge 1\)</span> và <span class="arithmatex">\(p(x) = 0\)</span> trong các trường hợp khác. <span class="arithmatex">\(P(X &gt; 2)\)</span> là bao nhiêu?</li>
+<li>Phân phối Laplace là một biến ngẫu nhiên có mật độ cho bởi <span class="arithmatex">\(p(x = \frac{1}{2}e^{-|x|}\)</span>. Trung bình và độ lệch chuẩn của hàm này là gì? Gợi ý: <span class="arithmatex">\(\int_0^\infty xe^{-x} \; dx = 1\)</span> và <span class="arithmatex">\(\int_0^\infty x^2e^{-x} \; dx = 2\)</span>.</li>
+<li>Tôi bước đến gần bạn trên phố và nói: "Tôi có một biến ngẫu nhiên với trung bình <span class="arithmatex">\(1\)</span>, độ lệch chuẩn <span class="arithmatex">\(2\)</span>, và tôi quan sát thấy <span class="arithmatex">\(25\%\)</span> số mẫu của mình nhận giá trị lớn hơn <span class="arithmatex">\(9\)</span>." Bạn có tin tôi không? Vì sao có hoặc vì sao không?</li>
+<li>Giả sử bạn có hai biến ngẫu nhiên <span class="arithmatex">\(X, Y\)</span>, với mật độ đồng thời cho bởi <span class="arithmatex">\(p_{XY}(x, y) = 4xy\)</span> với <span class="arithmatex">\(x, y \in [0,1]\)</span> và <span class="arithmatex">\(p_{XY}(x, y) = 0\)</span> trong các trường hợp khác. Hiệp phương sai của <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> là bao nhiêu?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/1094">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

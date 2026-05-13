@@ -1,0 +1,2294 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_multilayer-perceptrons/numerical-stability-and-init/">
+      
+      
+        <link rel="prev" href="../backprop/">
+      
+      
+        <link rel="next" href="../generalization-deep/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Ổn định số và khởi tạo - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#on-inh-so-va-khoi-tao" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ổn định số và khởi tạo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng perceptron đa lớp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mlp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mlp-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai MLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lan truyền ngược
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ổn định số và khởi tạo
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ổn định số và khởi tạo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gradient-tieu-bien-va-gradient-bung-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Tiêu biến và Gradient Bùng nổ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gradient Tiêu biến và Gradient Bùng nổ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gradient-tieu-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Gradient Tiêu biến)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-bung-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Gradient Bùng nổ]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pha-vo-tinh-oi-xung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phá vỡ Tính Đối xứng
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#khoi-tao-tham-so" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi tạo Tham số
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Khởi tạo Tham số">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#khoi-tao-mac-inh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi tạo Mặc định
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#khoi-tao-xavier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi tạo Xavier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tiep-theo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiếp theo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generalization-deep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa sâu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dropout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dropout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kaggle-house-price/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kaggle - Giá nhà
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#gradient-tieu-bien-va-gradient-bung-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Tiêu biến và Gradient Bùng nổ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gradient Tiêu biến và Gradient Bùng nổ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gradient-tieu-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Gradient Tiêu biến)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-bung-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Gradient Bùng nổ]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pha-vo-tinh-oi-xung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phá vỡ Tính Đối xứng
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#khoi-tao-tham-so" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi tạo Tham số
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Khởi tạo Tham số">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#khoi-tao-mac-inh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi tạo Mặc định
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#khoi-tao-xavier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi tạo Xavier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tiep-theo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiếp theo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="on-inh-so-va-khoi-tao">Ổn định Số và Khởi tạo<a class="headerlink" href="#on-inh-so-va-khoi-tao" title="Permanent link">&para;</a></h1>
+<p><a id="sec_numerical_stability"></a></p>
+<p>Cho đến nay, mọi mô hình chúng ta cài đặt
+đều yêu cầu khởi tạo tham số
+theo một phân phối được xác định trước.
+Cho đến bây giờ, chúng ta coi sơ đồ khởi tạo là điều hiển nhiên,
+bỏ qua chi tiết về cách các lựa chọn này được thực hiện.
+Bạn thậm chí có thể có ấn tượng rằng những lựa chọn này
+không đặc biệt quan trọng.
+Ngược lại, sự lựa chọn sơ đồ khởi tạo
+đóng vai trò quan trọng trong việc học mạng nơ-ron,
+và nó có thể là yếu tố quyết định để duy trì ổn định số.
+Hơn nữa, những lựa chọn này có thể gắn kết theo những cách thú vị
+với việc lựa chọn hàm kích hoạt phi tuyến.
+Hàm nào chúng ta chọn và cách chúng ta khởi tạo tham số
+có thể quyết định thuật toán tối ưu hóa của chúng ta hội tụ nhanh như thế nào.
+Những lựa chọn kém ở đây có thể khiến chúng ta gặp phải
+gradient bùng nổ hoặc gradient tiêu biến trong quá trình huấn luyện.
+Trong phần này, chúng ta đi sâu vào những chủ đề này một cách chi tiết hơn
+và thảo luận về một số heuristic hữu ích
+mà bạn sẽ thấy có ích
+trong suốt sự nghiệp deep learning của mình.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</code></pre></div>
+<h2 id="gradient-tieu-bien-va-gradient-bung-no">Gradient Tiêu biến và Gradient Bùng nổ<a class="headerlink" href="#gradient-tieu-bien-va-gradient-bung-no" title="Permanent link">&para;</a></h2>
+<p>Xét một mạng sâu với <span class="arithmatex">\(L\)</span> lớp,
+đầu vào <span class="arithmatex">\(\mathbf{x}\)</span> và đầu ra <span class="arithmatex">\(\mathbf{o}\)</span>.
+Với mỗi lớp <span class="arithmatex">\(l\)</span> được định nghĩa bởi một phép biến đổi <span class="arithmatex">\(f_l\)</span>
+được tham số hóa bởi trọng số <span class="arithmatex">\(\mathbf{W}^{(l)}\)</span>,
+có đầu ra lớp ẩn là <span class="arithmatex">\(\mathbf{h}^{(l)}\)</span> (đặt <span class="arithmatex">\(\mathbf{h}^{(0)} = \mathbf{x}\)</span>),
+mạng của chúng ta có thể được biểu diễn như sau:</p>
+<div class="arithmatex">\[\mathbf{h}^{(l)} = f_l (\mathbf{h}^{(l-1)}) \textrm{ và do đó } \mathbf{o} = f_L \circ \cdots \circ f_1(\mathbf{x}).\]</div>
+<p>Nếu tất cả đầu ra lớp ẩn và đầu vào là các vectơ,
+chúng ta có thể viết gradient của <span class="arithmatex">\(\mathbf{o}\)</span> theo
+bất kỳ tập tham số <span class="arithmatex">\(\mathbf{W}^{(l)}\)</span> nào như sau:</p>
+<div class="arithmatex">\[\partial_{\mathbf{W}^{(l)}} \mathbf{o} = \underbrace{\partial_{\mathbf{h}^{(L-1)}} \mathbf{h}^{(L)}}_{ \mathbf{M}^{(L)} \stackrel{\textrm{def}}{=}} \cdots \underbrace{\partial_{\mathbf{h}^{(l)}} \mathbf{h}^{(l+1)}}_{ \mathbf{M}^{(l+1)} \stackrel{\textrm{def}}{=}} \underbrace{\partial_{\mathbf{W}^{(l)}} \mathbf{h}^{(l)}}_{ \mathbf{v}^{(l)} \stackrel{\textrm{def}}{=}}.\]</div>
+<p>Nói cách khác, gradient này là
+tích của <span class="arithmatex">\(L-l\)</span> ma trận
+<span class="arithmatex">\(\mathbf{M}^{(L)} \cdots \mathbf{M}^{(l+1)}\)</span>
+và vectơ gradient <span class="arithmatex">\(\mathbf{v}^{(l)}\)</span>.
+Do đó chúng ta dễ gặp phải cùng
+vấn đề tràn số dưới (numerical underflow) thường xuất hiện
+khi nhân quá nhiều xác suất với nhau.
+Khi xử lý xác suất, một mẹo phổ biến là
+chuyển sang không gian log, tức là dịch chuyển
+áp lực từ phần định trị sang phần số mũ
+của biểu diễn số.
+Thật không may, vấn đề của chúng ta ở trên nghiêm trọng hơn:
+ban đầu các ma trận <span class="arithmatex">\(\mathbf{M}^{(l)}\)</span> có thể có nhiều loại trị riêng khác nhau.
+Chúng có thể nhỏ hoặc lớn, và
+tích của chúng có thể là <em>rất lớn</em> hoặc <em>rất nhỏ</em>.</p>
+<p>Những rủi ro do gradient không ổn định
+vượt ra ngoài biểu diễn số.
+Gradient có độ lớn không thể đoán trước
+cũng đe dọa sự ổn định của các thuật toán tối ưu hóa của chúng ta.
+Chúng ta có thể phải đối mặt với các cập nhật tham số
+(i) quá lớn, phá hủy mô hình của chúng ta
+(vấn đề <em>gradient bùng nổ</em>);
+hoặc (ii) quá nhỏ
+(vấn đề <em>gradient tiêu biến</em>),
+khiến việc học không thể thực hiện được vì các tham số
+hầu như không di chuyển ở mỗi lần cập nhật.</p>
+<h3 id="gradient-tieu-bien">(<strong>Gradient Tiêu biến</strong>)<a class="headerlink" href="#gradient-tieu-bien" title="Permanent link">&para;</a></h3>
+<p>Một nguyên nhân thường gặp gây ra vấn đề gradient tiêu biến
+là sự lựa chọn hàm kích hoạt <span class="arithmatex">\(\sigma\)</span>
+được thêm vào sau các phép toán tuyến tính của mỗi lớp.
+Về mặt lịch sử, hàm sigmoid
+<span class="arithmatex">\(1/(1 + \exp(-x))\)</span> (được giới thiệu trong <a href="#sec_mlp">sec_mlp</a>)
+rất phổ biến vì nó giống một hàm ngưỡng.
+Vì các mạng nơ-ron nhân tạo ban đầu được lấy cảm hứng
+từ các mạng nơ-ron sinh học,
+ý tưởng về các nơ-ron kích hoạt <em>hoàn toàn</em> hoặc <em>không kích hoạt</em>
+(như nơ-ron sinh học) có vẻ hấp dẫn.
+Hãy xem xét kỹ hơn hàm sigmoid
+để hiểu tại sao nó có thể gây ra gradient tiêu biến.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">numpy</span><span class="p">()],</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>         <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">,</span> <span class="s1">&#39;gradient&#39;</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+</code></pre></div>
+<p>Như bạn có thể thấy, (<strong>gradient của hàm sigmoid tiêu biến
+cả khi đầu vào lớn và khi đầu vào nhỏ</strong>).
+Hơn nữa, khi lan truyền ngược qua nhiều lớp,
+trừ khi chúng ta ở trong vùng Goldilocks, nơi
+đầu vào của nhiều hàm sigmoid gần bằng không,
+gradient của tích tổng thể có thể tiêu biến.
+Khi mạng của chúng ta có nhiều lớp,
+trừ khi chúng ta cẩn thận, gradient
+có thể bị cắt đứt ở một lớp nào đó.
+Thực vậy, vấn đề này đã từng ảnh hưởng đến việc huấn luyện mạng sâu.
+Do đó, ReLU, ổn định hơn
+(nhưng ít giống nơ-ron sinh học hơn),
+đã nổi lên như lựa chọn mặc định cho các chuyên gia.</p>
+<h3 id="gradient-bung-no">[<strong>Gradient Bùng nổ</strong>]<a class="headerlink" href="#gradient-bung-no" title="Permanent link">&para;</a></h3>
+<p>Vấn đề ngược lại, khi gradient bùng nổ,
+cũng có thể gây phiền toái tương tự.
+Để minh họa điều này rõ hơn,
+chúng ta lấy 100 ma trận ngẫu nhiên Gaussian
+và nhân chúng với một ma trận ban đầu nào đó.
+Với tỉ lệ mà chúng ta chọn
+(lựa chọn phương sai <span class="arithmatex">\(\sigma^2=1\)</span>),
+tích ma trận bùng nổ.
+Khi điều này xảy ra do khởi tạo
+của một mạng sâu, chúng ta không có cơ hội
+để thuật toán tối ưu hóa gradient descent hội tụ.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">M</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;a single matrix </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">M</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">M</span> <span class="o">=</span> <span class="n">M</span> <span class="o">@</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;after multiplying 100 matrices</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="pha-vo-tinh-oi-xung">Phá vỡ Tính Đối xứng<a class="headerlink" href="#pha-vo-tinh-oi-xung" title="Permanent link">&para;</a></h3>
+<p>Một vấn đề khác trong thiết kế mạng nơ-ron
+là tính đối xứng vốn có trong cách tham số hóa của chúng.
+Giả sử chúng ta có một MLP đơn giản
+với một lớp ẩn và hai đơn vị.
+Trong trường hợp này, chúng ta có thể hoán vị các trọng số <span class="arithmatex">\(\mathbf{W}^{(1)}\)</span>
+của lớp đầu tiên và tương tự hoán vị
+các trọng số của lớp đầu ra
+để thu được cùng một hàm.
+Không có gì đặc biệt phân biệt
+đơn vị ẩn thứ nhất và thứ hai.
+Nói cách khác, chúng ta có tính đối xứng hoán vị
+giữa các đơn vị ẩn của mỗi lớp.</p>
+<p>Đây không chỉ là một phiền toái về mặt lý thuyết.
+Hãy xét MLP một lớp ẩn đã đề cập
+với hai đơn vị ẩn.
+Để minh họa,
+giả sử lớp đầu ra biến đổi hai đơn vị ẩn thành chỉ một đơn vị đầu ra.
+Hãy tưởng tượng điều gì xảy ra nếu chúng ta khởi tạo
+tất cả tham số của lớp ẩn
+là <span class="arithmatex">\(\mathbf{W}^{(1)} = c\)</span> với một hằng số <span class="arithmatex">\(c\)</span> nào đó.
+Trong trường hợp này, trong quá trình lan truyền xuôi
+mỗi đơn vị ẩn nhận cùng đầu vào và tham số
+tạo ra cùng kích hoạt
+được đưa vào đơn vị đầu ra.
+Trong quá trình lan truyền ngược,
+việc lấy vi phân đơn vị đầu ra theo tham số <span class="arithmatex">\(\mathbf{W}^{(1)}\)</span> cho gradient mà tất cả các phần tử có cùng giá trị.
+Do đó, sau khi cập nhật dựa trên gradient (ví dụ: gradient descent ngẫu nhiên theo minibatch),
+tất cả các phần tử của <span class="arithmatex">\(\mathbf{W}^{(1)}\)</span> vẫn có cùng giá trị.
+Các lần cập nhật như vậy sẽ
+không bao giờ tự <em>phá vỡ tính đối xứng</em>
+và chúng ta có thể không bao giờ thực hiện được
+sức mạnh biểu diễn của mạng.
+Lớp ẩn sẽ hoạt động
+như thể nó chỉ có một đơn vị duy nhất.
+Lưu ý rằng trong khi gradient descent ngẫu nhiên theo minibatch không phá vỡ tính đối xứng này,
+chính quy hóa dropout (sẽ được giới thiệu sau) thì có thể!</p>
+<h2 id="khoi-tao-tham-so">Khởi tạo Tham số<a class="headerlink" href="#khoi-tao-tham-so" title="Permanent link">&para;</a></h2>
+<p>Một cách để giải quyết---hoặc ít nhất là giảm thiểu---các
+vấn đề nêu trên là thông qua việc khởi tạo cẩn thận.
+Như chúng ta sẽ thấy sau,
+sự chú ý bổ sung trong quá trình tối ưu hóa
+và chính quy hóa phù hợp có thể tăng cường thêm sự ổn định.</p>
+<h3 id="khoi-tao-mac-inh">Khởi tạo Mặc định<a class="headerlink" href="#khoi-tao-mac-inh" title="Permanent link">&para;</a></h3>
+<p>Trong các phần trước, ví dụ, trong <a href="#sec_linear_concise">sec_linear_concise</a>,
+chúng ta đã sử dụng phân phối chuẩn
+để khởi tạo các giá trị trọng số.
+Nếu chúng ta không chỉ định phương pháp khởi tạo, framework sẽ
+sử dụng phương pháp khởi tạo ngẫu nhiên mặc định, thường hoạt động tốt trong thực tế
+cho các kích thước bài toán vừa phải.</p>
+<h3 id="khoi-tao-xavier">Khởi tạo Xavier<a class="headerlink" href="#khoi-tao-xavier" title="Permanent link">&para;</a></h3>
+<p><a id="subsec_xavier"></a></p>
+<p>Hãy xem xét phân phối tỉ lệ của
+một đầu ra <span class="arithmatex">\(o_{i}\)</span> cho một lớp kết nối đầy đủ nào đó
+<em>không có phi tuyến tính</em>.
+Với <span class="arithmatex">\(n_\textrm{in}\)</span> đầu vào <span class="arithmatex">\(x_j\)</span>
+và các trọng số liên quan <span class="arithmatex">\(w_{ij}\)</span> cho lớp này,
+một đầu ra được cho bởi</p>
+<div class="arithmatex">\[o_{i} = \sum_{j=1}^{n_\textrm{in}} w_{ij} x_j.\]</div>
+<p>Các trọng số <span class="arithmatex">\(w_{ij}\)</span> đều được lấy mẫu độc lập
+từ cùng một phân phối.
+Hơn nữa, hãy giả sử rằng phân phối này
+có giá trị trung bình bằng không và phương sai <span class="arithmatex">\(\sigma^2\)</span>.
+Lưu ý rằng điều này không có nghĩa là phân phối phải là Gaussian,
+chỉ là giá trị trung bình và phương sai cần tồn tại.
+Hiện tại, hãy giả sử rằng đầu vào cho lớp <span class="arithmatex">\(x_j\)</span>
+cũng có giá trị trung bình bằng không và phương sai <span class="arithmatex">\(\gamma^2\)</span>
+và chúng độc lập với <span class="arithmatex">\(w_{ij}\)</span> và độc lập với nhau.
+Trong trường hợp này, chúng ta có thể tính giá trị trung bình của <span class="arithmatex">\(o_i\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    E[o_i] &amp; = \sum_{j=1}^{n_\textrm{in}} E[w_{ij} x_j] \\&amp;= \sum_{j=1}^{n_\textrm{in}} E[w_{ij}] E[x_j] \\&amp;= 0, \end{aligned}\]</div>
+<p>và phương sai:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    \textrm{Var}[o_i] &amp; = E[o_i^2] - (E[o_i])^2 \\
+        &amp; = \sum_{j=1}^{n_\textrm{in}} E[w^2_{ij} x^2_j] - 0 \\
+        &amp; = \sum_{j=1}^{n_\textrm{in}} E[w^2_{ij}] E[x^2_j] \\
+        &amp; = n_\textrm{in} \sigma^2 \gamma^2.
+\end{aligned}
+\]</div>
+<p>Một cách để giữ phương sai cố định
+là đặt <span class="arithmatex">\(n_\textrm{in} \sigma^2 = 1\)</span>.
+Bây giờ hãy xét lan truyền ngược.
+Ở đó chúng ta phải đối mặt với một vấn đề tương tự,
+mặc dù các gradient được lan truyền từ các lớp gần đầu ra hơn.
+Sử dụng lý luận tương tự như cho lan truyền xuôi,
+chúng ta thấy rằng phương sai của gradient có thể bùng nổ
+trừ khi <span class="arithmatex">\(n_\textrm{out} \sigma^2 = 1\)</span>,
+trong đó <span class="arithmatex">\(n_\textrm{out}\)</span> là số đầu ra của lớp này.
+Điều này đặt chúng ta vào một tình huống khó xử:
+chúng ta không thể đồng thời thỏa mãn cả hai điều kiện.
+Thay vào đó, chúng ta chỉ đơn giản cố gắng thỏa mãn:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{1}{2} (n_\textrm{in} + n_\textrm{out}) \sigma^2 = 1 \textrm{ hay tương đương }
+\sigma = \sqrt{\frac{2}{n_\textrm{in} + n_\textrm{out}}}.
+\end{aligned}
+\]</div>
+<p>Đây là lý luận nền tảng của <em>khởi tạo Xavier</em> hiện là tiêu chuẩn
+và có lợi ích thực tế,
+được đặt theo tên tác giả đầu tiên của những người tạo ra nó [Glorot.Bengio.2010].
+Thông thường, khởi tạo Xavier
+lấy mẫu trọng số từ phân phối Gaussian
+với giá trị trung bình bằng không và phương sai
+<span class="arithmatex">\(\sigma^2 = \frac{2}{n_\textrm{in} + n_\textrm{out}}\)</span>.
+Chúng ta cũng có thể điều chỉnh điều này để
+chọn phương sai khi lấy mẫu trọng số
+từ phân phối đều.
+Lưu ý rằng phân phối đều <span class="arithmatex">\(U(-a, a)\)</span> có phương sai <span class="arithmatex">\(\frac{a^2}{3}\)</span>.
+Thay <span class="arithmatex">\(\frac{a^2}{3}\)</span> vào điều kiện của chúng ta về <span class="arithmatex">\(\sigma^2\)</span>
+nhắc nhở chúng ta khởi tạo theo</p>
+<div class="arithmatex">\[U\left(-\sqrt{\frac{6}{n_\textrm{in} + n_\textrm{out}}}, \sqrt{\frac{6}{n_\textrm{in} + n_\textrm{out}}}\right).\]</div>
+<p>Mặc dù giả định về sự vắng mặt của phi tuyến tính
+trong lý luận toán học trên
+có thể dễ dàng bị vi phạm trong mạng nơ-ron,
+phương pháp khởi tạo Xavier
+hóa ra lại hoạt động tốt trong thực tế.</p>
+<h3 id="tiep-theo">Tiếp theo<a class="headerlink" href="#tiep-theo" title="Permanent link">&para;</a></h3>
+<p>Lý luận ở trên chỉ mới chạm đến bề mặt
+của các phương pháp hiện đại về khởi tạo tham số.
+Một framework deep learning thường cài đặt hơn chục heuristic khác nhau.
+Hơn nữa, khởi tạo tham số tiếp tục là
+một lĩnh vực nghiên cứu cơ bản sôi động trong deep learning.
+Trong số đó có các heuristic chuyên biệt cho
+các tham số ràng buộc (chia sẻ), siêu phân giải,
+mô hình chuỗi, và các tình huống khác.
+Ví dụ,
+Xiao.Bahri.Sohl-Dickstein.ea.2018 đã chứng minh khả năng huấn luyện
+mạng nơ-ron 10,000 lớp mà không cần các mẹo kiến trúc
+bằng cách sử dụng phương pháp khởi tạo được thiết kế cẩn thận.</p>
+<p>Nếu chủ đề này thu hút bạn, chúng tôi gợi ý
+tìm hiểu sâu vào các nội dung của mô-đun này,
+đọc các bài báo đề xuất và phân tích từng heuristic,
+và sau đó khám phá các ấn phẩm mới nhất về chủ đề này.
+Có thể bạn sẽ tình cờ khám phá ra hoặc thậm chí phát minh ra
+một ý tưởng thông minh và đóng góp cài đặt vào các framework deep learning.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Gradient tiêu biến và gradient bùng nổ là các vấn đề thường gặp trong mạng sâu. Cần hết sức cẩn thận trong khởi tạo tham số để đảm bảo gradient và tham số được kiểm soát tốt.
+Các heuristic khởi tạo cần thiết để đảm bảo rằng gradient ban đầu không quá lớn cũng không quá nhỏ.
+Khởi tạo ngẫu nhiên là chìa khóa để đảm bảo tính đối xứng bị phá vỡ trước khi tối ưu hóa.
+Khởi tạo Xavier gợi ý rằng, đối với mỗi lớp, phương sai của bất kỳ đầu ra nào không bị ảnh hưởng bởi số lượng đầu vào, và phương sai của bất kỳ gradient nào không bị ảnh hưởng bởi số lượng đầu ra.
+Hàm kích hoạt ReLU giảm thiểu vấn đề gradient tiêu biến. Điều này có thể tăng tốc hội tụ.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Bạn có thể thiết kế các trường hợp khác mà một mạng nơ-ron có thể thể hiện tính đối xứng cần phá vỡ, ngoài tính đối xứng hoán vị trong các lớp của MLP không?</li>
+<li>Chúng ta có thể khởi tạo tất cả tham số trọng số trong hồi quy tuyến tính hoặc hồi quy softmax về cùng một giá trị không?</li>
+<li>Tra cứu các giới hạn giải tích về trị riêng của tích hai ma trận. Điều này cho bạn biết gì về việc đảm bảo gradient được điều kiện tốt?</li>
+<li>Nếu chúng ta biết rằng một số số hạng phân kỳ, liệu chúng ta có thể khắc phục điều này sau đó không? Hãy xem bài báo về layerwise adaptive rate scaling để tham khảo [You.Gitman.Ginsburg.2017].</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/104">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

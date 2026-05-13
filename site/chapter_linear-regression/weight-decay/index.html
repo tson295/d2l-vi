@@ -1,0 +1,2340 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_linear-regression/weight-decay/">
+      
+      
+        <link rel="prev" href="../generalization/">
+      
+      
+        <link rel="next" href="../oo-design/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Weight Decay - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#suy-giam-trong-so" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Weight Decay
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hồi quy tuyến tính
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../synthetic-regression-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dữ liệu hồi quy tổng hợp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-regression-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-regression-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weight Decay
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weight Decay
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chuan-va-suy-giam-trong-so" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chuẩn và Suy giảm Trọng số
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hoi-quy-tuyen-tinh-nhieu-chieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hồi quy Tuyến tính Nhiều chiều
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-tu-au" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài đặt từ Đầu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cài đặt từ Đầu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia-phat-chuan-ell_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Định nghĩa Phạt Chuẩn \(\ell_2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định nghĩa Mô hình
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huan-luyen-khong-co-chuan-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Huấn luyện không có Chuẩn hóa]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#su-dung-suy-giam-trong-so" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Sử dụng Suy giảm Trọng số]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-gon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Cài đặt Gọn]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oo-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thiết kế hướng đối tượng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chuan-va-suy-giam-trong-so" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chuẩn và Suy giảm Trọng số
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hoi-quy-tuyen-tinh-nhieu-chieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hồi quy Tuyến tính Nhiều chiều
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-tu-au" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài đặt từ Đầu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cài đặt từ Đầu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia-phat-chuan-ell_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Định nghĩa Phạt Chuẩn \(\ell_2\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định nghĩa Mô hình
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huan-luyen-khong-co-chuan-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Huấn luyện không có Chuẩn hóa]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#su-dung-suy-giam-trong-so" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Sử dụng Suy giảm Trọng số]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-gon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Cài đặt Gọn]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="suy-giam-trong-so">Suy giảm Trọng số<a class="headerlink" href="#suy-giam-trong-so" title="Permanent link">&para;</a></h1>
+<p><a id="sec_weight_decay"></a></p>
+<p>Bây giờ ta đã đặc trưng hóa bài toán quá khớp,
+ta có thể giới thiệu kỹ thuật <em>chuẩn hóa</em> đầu tiên.
+Hãy nhớ rằng ta luôn có thể giảm thiểu quá khớp
+bằng cách thu thập thêm dữ liệu huấn luyện.
+Tuy nhiên, điều đó có thể tốn kém, mất nhiều thời gian,
+hoặc hoàn toàn nằm ngoài tầm kiểm soát của ta,
+khiến nó không thể thực hiện được trong ngắn hạn.
+Hiện tại, ta có thể giả định rằng ta đã có
+nhiều dữ liệu chất lượng cao như nguồn lực cho phép
+và tập trung vào các công cụ trong tầm tay
+khi tập dữ liệu được xem là đã cho.</p>
+<p>Hãy nhớ lại rằng trong ví dụ hồi quy đa thức
+(<a href="#subsec_polynomial-curve-fitting">subsec_polynomial-curve-fitting</a>)
+ta có thể giới hạn năng lực mô hình của mình
+bằng cách điều chỉnh bậc
+của đa thức được khớp.
+Thực ra, giới hạn số lượng đặc trưng
+là một kỹ thuật phổ biến để giảm thiểu quá khớp.
+Tuy nhiên, đơn giản là loại bỏ các đặc trưng
+có thể là công cụ quá thô bạo.
+Tiếp tục với ví dụ hồi quy đa thức,
+hãy xem xét điều gì có thể xảy ra
+với đầu vào nhiều chiều.
+Các phần mở rộng tự nhiên của đa thức
+cho dữ liệu đa biến được gọi là <em>đơn thức</em>,
+chỉ đơn giản là tích của lũy thừa các biến.
+Bậc của một đơn thức là tổng của các lũy thừa.
+Chẳng hạn, <span class="arithmatex">\(x_1^2 x_2\)</span> và <span class="arithmatex">\(x_3 x_5^2\)</span>
+đều là các đơn thức bậc 3.</p>
+<p>Lưu ý rằng số số hạng có bậc <span class="arithmatex">\(d\)</span>
+tăng nhanh chóng khi <span class="arithmatex">\(d\)</span> lớn hơn.
+Cho <span class="arithmatex">\(k\)</span> biến, số đơn thức
+bậc <span class="arithmatex">\(d\)</span> là <span class="arithmatex">\({k - 1 + d} \choose {k - 1}\)</span>.
+Ngay cả những thay đổi nhỏ về bậc, chẳng hạn từ <span class="arithmatex">\(2\)</span> đến <span class="arithmatex">\(3\)</span>,
+làm tăng đáng kể độ phức tạp của mô hình.
+Do đó ta thường cần một công cụ tinh tế hơn
+để điều chỉnh độ phức tạp hàm.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+</code></pre></div>
+<h2 id="chuan-va-suy-giam-trong-so">Chuẩn và Suy giảm Trọng số<a class="headerlink" href="#chuan-va-suy-giam-trong-so" title="Permanent link">&para;</a></h2>
+<p>(<strong>Thay vì trực tiếp thao túng số lượng tham số,
+<em>suy giảm trọng số</em>, hoạt động bằng cách hạn chế các giá trị
+mà các tham số có thể nhận.</strong>)
+Thường được gọi là chuẩn hóa <span class="arithmatex">\(\ell_2\)</span>
+bên ngoài giới deep learning
+khi được tối ưu hóa bởi minibatch stochastic gradient descent,
+suy giảm trọng số có thể là kỹ thuật được sử dụng rộng rãi nhất
+để chuẩn hóa các mô hình machine learning tham số.
+Kỹ thuật được thúc đẩy bởi trực giác cơ bản
+rằng trong tất cả các hàm <span class="arithmatex">\(f\)</span>,
+hàm <span class="arithmatex">\(f = 0\)</span>
+(gán giá trị <span class="arithmatex">\(0\)</span> cho tất cả đầu vào)
+theo một nghĩa nào đó là <em>đơn giản nhất</em>,
+và ta có thể đo độ phức tạp
+của một hàm bằng khoảng cách các tham số của nó đến không.
+Nhưng ta nên đo chính xác như thế nào
+khoảng cách giữa một hàm và không?
+Không có một câu trả lời đúng duy nhất.
+Thực tế, toàn bộ các nhánh toán học,
+bao gồm các phần của phân tích hàm
+và lý thuyết không gian Banach,
+được dành để giải quyết các vấn đề như vậy.</p>
+<p>Một diễn giải đơn giản có thể là
+đo độ phức tạp của một hàm tuyến tính
+<span class="arithmatex">\(f(\mathbf{x}) = \mathbf{w}^\top \mathbf{x}\)</span>
+bằng một vài chuẩn của vector trọng số, ví dụ <span class="arithmatex">\(\| \mathbf{w} \|^2\)</span>.
+Hãy nhớ lại rằng ta đã giới thiệu chuẩn <span class="arithmatex">\(\ell_2\)</span> và chuẩn <span class="arithmatex">\(\ell_1\)</span>,
+là các trường hợp đặc biệt của chuẩn <span class="arithmatex">\(\ell_p\)</span> tổng quát hơn,
+trong <a href="#subsec_lin-algebra-norms">subsec_lin-algebra-norms</a>.
+Phương pháp phổ biến nhất để đảm bảo vector trọng số nhỏ
+là thêm chuẩn của nó như một số hạng phạt
+vào bài toán tối thiểu hóa hàm mất mát.
+Do đó ta thay thế mục tiêu ban đầu,
+<em>tối thiểu hóa mất mát dự đoán trên nhãn huấn luyện</em>,
+bằng mục tiêu mới,
+<em>tối thiểu hóa tổng của mất mát dự đoán và số hạng phạt</em>.
+Bây giờ, nếu vector trọng số của ta lớn quá,
+thuật toán học của ta có thể tập trung
+vào tối thiểu hóa chuẩn trọng số <span class="arithmatex">\(\| \mathbf{w} \|^2\)</span>
+hơn là tối thiểu hóa sai số huấn luyện.
+Đó chính xác là điều ta muốn.
+Để minh họa trong code,
+ta hồi sinh ví dụ trước của ta
+từ <a href="#sec_linear_regression">sec_linear_regression</a> cho hồi quy tuyến tính.
+Ở đó, hàm mất mát của ta được cho bởi</p>
+<div class="arithmatex">\[L(\mathbf{w}, b) = \frac{1}{n}\sum_{i=1}^n \frac{1}{2}\left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right)^2.\]</div>
+<p>Hãy nhớ rằng <span class="arithmatex">\(\mathbf{x}^{(i)}\)</span> là các đặc trưng,
+<span class="arithmatex">\(y^{(i)}\)</span> là nhãn cho bất kỳ mẫu dữ liệu <span class="arithmatex">\(i\)</span> nào, và <span class="arithmatex">\((\mathbf{w}, b)\)</span>
+lần lượt là các tham số trọng số và hệ số chặn.
+Để phạt kích thước của vector trọng số,
+ta phải bằng cách nào đó thêm <span class="arithmatex">\(\| \mathbf{w} \|^2\)</span> vào hàm mất mát,
+nhưng mô hình nên đánh đổi mất mát tiêu chuẩn
+với số hạng phạt cộng thêm mới này như thế nào?
+Trong thực tế, ta đặc trưng hóa sự đánh đổi này
+thông qua <em>hằng số chuẩn hóa</em> <span class="arithmatex">\(\lambda\)</span>,
+một siêu tham số không âm
+mà ta khớp bằng dữ liệu kiểm định:</p>
+<div class="arithmatex">\[L(\mathbf{w}, b) + \frac{\lambda}{2} \|\mathbf{w}\|^2.\]</div>
+<p>Với <span class="arithmatex">\(\lambda = 0\)</span>, ta phục hồi hàm mất mát ban đầu.
+Với <span class="arithmatex">\(\lambda &gt; 0\)</span>, ta hạn chế kích thước của <span class="arithmatex">\(\| \mathbf{w} \|\)</span>.
+Ta chia cho <span class="arithmatex">\(2\)</span> theo quy ước:
+khi ta lấy đạo hàm của một hàm bậc hai,
+<span class="arithmatex">\(2\)</span> và <span class="arithmatex">\(1/2\)</span> triệt tiêu nhau, đảm bảo rằng biểu thức
+cho phép cập nhật trông đẹp và đơn giản.
+Độc giả sắc sảo có thể tự hỏi tại sao ta làm việc với chuẩn bình phương
+chứ không phải chuẩn tiêu chuẩn (tức là khoảng cách Euclid).
+Ta làm điều này để tiện tính toán.
+Bằng cách bình phương chuẩn <span class="arithmatex">\(\ell_2\)</span>, ta loại bỏ căn bậc hai,
+để lại tổng bình phương của
+từng thành phần của vector trọng số.
+Điều này làm cho đạo hàm của số hạng phạt dễ tính:
+tổng các đạo hàm bằng đạo hàm của tổng.</p>
+<p>Hơn nữa, bạn có thể hỏi tại sao ta làm việc với chuẩn <span class="arithmatex">\(\ell_2\)</span>
+trước hết chứ không phải, chẳng hạn, chuẩn <span class="arithmatex">\(\ell_1\)</span>.
+Thực ra, các lựa chọn khác cũng hợp lệ và
+phổ biến trong thống kê.
+Trong khi các mô hình tuyến tính được chuẩn hóa <span class="arithmatex">\(\ell_2\)</span> tạo nên
+thuật toán <em>hồi quy ridge</em> cổ điển,
+hồi quy tuyến tính được chuẩn hóa <span class="arithmatex">\(\ell_1\)</span>
+là một phương pháp cơ bản tương tự trong thống kê,
+thường được biết đến là <em>hồi quy lasso</em>.
+Một lý do để làm việc với chuẩn <span class="arithmatex">\(\ell_2\)</span>
+là nó đặt hình phạt lớn
+lên các thành phần lớn của vector trọng số.
+Điều này làm lệch thuật toán học của ta
+hướng đến các mô hình phân phối trọng số đều đặn
+trên nhiều đặc trưng hơn.
+Trong thực tế, điều này có thể làm cho chúng mạnh mẽ hơn
+với sai số đo lường trong một biến đơn lẻ.
+Ngược lại, hình phạt <span class="arithmatex">\(\ell_1\)</span> dẫn đến các mô hình
+tập trung trọng số vào một tập nhỏ các đặc trưng
+bằng cách đặt các trọng số khác về không.
+Điều này cho ta một phương pháp hiệu quả để <em>lựa chọn đặc trưng</em>,
+điều có thể mong muốn vì các lý do khác.
+Chẳng hạn, nếu mô hình của ta chỉ dựa vào một vài đặc trưng,
+thì ta có thể không cần thu thập, lưu trữ, hoặc truyền dữ liệu
+cho các đặc trưng khác (bị loại bỏ).</p>
+<p>Sử dụng ký hiệu tương tự trong :eqref:<code>eq_linreg_batch_update</code>,
+các cập nhật minibatch stochastic gradient descent
+cho hồi quy được chuẩn hóa <span class="arithmatex">\(\ell_2\)</span> như sau:</p>
+<div class="arithmatex">\[\begin{aligned}
+\mathbf{w} &amp; \leftarrow \left(1- \eta\lambda \right) \mathbf{w} - \frac{\eta}{|\mathcal{B}|} \sum_{i \in \mathcal{B}} \mathbf{x}^{(i)} \left(\mathbf{w}^\top \mathbf{x}^{(i)} + b - y^{(i)}\right).
+\end{aligned}\]</div>
+<p>Như trước, ta cập nhật <span class="arithmatex">\(\mathbf{w}\)</span> dựa trên lượng
+mà ước lượng của ta khác với quan sát.
+Tuy nhiên, ta cũng thu nhỏ kích thước của <span class="arithmatex">\(\mathbf{w}\)</span> về không.
+Đó là lý do tại sao phương pháp đôi khi được gọi là "suy giảm trọng số":
+với số hạng phạt một mình,
+thuật toán tối ưu hóa của ta <em>phân rã</em>
+trọng số ở mỗi bước huấn luyện.
+Trái ngược với lựa chọn đặc trưng,
+suy giảm trọng số cung cấp cho ta một cơ chế để liên tục điều chỉnh độ phức tạp của hàm.
+Các giá trị nhỏ hơn của <span class="arithmatex">\(\lambda\)</span> tương ứng
+với <span class="arithmatex">\(\mathbf{w}\)</span> ít bị hạn chế hơn,
+trong khi các giá trị lớn hơn của <span class="arithmatex">\(\lambda\)</span>
+hạn chế <span class="arithmatex">\(\mathbf{w}\)</span> nhiều hơn.
+Việc ta có bao gồm hình phạt hệ số chặn tương ứng <span class="arithmatex">\(b^2\)</span> hay không
+có thể thay đổi giữa các cài đặt,
+và có thể thay đổi giữa các lớp của mạng nơ-ron.
+Thường ta không chuẩn hóa số hạng hệ số chặn.
+Ngoài ra,
+mặc dù chuẩn hóa <span class="arithmatex">\(\ell_2\)</span> có thể không tương đương với suy giảm trọng số đối với các thuật toán tối ưu hóa khác,
+ý tưởng chuẩn hóa thông qua
+thu nhỏ kích thước trọng số
+vẫn đúng.</p>
+<h2 id="hoi-quy-tuyen-tinh-nhieu-chieu">Hồi quy Tuyến tính Nhiều chiều<a class="headerlink" href="#hoi-quy-tuyen-tinh-nhieu-chieu" title="Permanent link">&para;</a></h2>
+<p>Ta có thể minh họa lợi ích của suy giảm trọng số
+thông qua một ví dụ tổng hợp đơn giản.</p>
+<p>Đầu tiên, ta [<strong>tạo một số dữ liệu như trước</strong>]:</p>
+<p>(<strong>$<span class="arithmatex">\(y = 0.05 + \sum_{i = 1}^d 0.01 x_i + \epsilon \textrm{ trong đó }
+\epsilon \sim \mathcal{N}(0, 0.01^2).\)</span>$</strong>)</p>
+<p>Trong tập dữ liệu tổng hợp này, nhãn của ta được cho
+bởi một hàm tuyến tính nền tảng của đầu vào,
+bị nhiễm loạn bởi nhiễu Gauss
+với trung bình không và độ lệch chuẩn 0.01.
+Để minh họa,
+ta có thể làm cho các hiệu ứng quá khớp rõ rệt,
+bằng cách tăng chiều số của bài toán lên <span class="arithmatex">\(d = 200\)</span>
+và làm việc với một tập huấn luyện nhỏ chỉ 20 mẫu.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Data</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">DataModule</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_train</span><span class="p">,</span> <span class="n">num_val</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>                
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="n">n</span> <span class="o">=</span> <span class="n">num_train</span> <span class="o">+</span> <span class="n">num_val</span> 
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;mxnet&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;pytorch&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>            <span class="n">noise</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;tensorflow&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">))</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>            <span class="n">noise</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.01</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;jax&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">))</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>            <span class="n">noise</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.01</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="n">w</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">num_inputs</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">noise</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="n">i</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_train</span><span class="p">)</span> <span class="k">if</span> <span class="n">train</span> <span class="k">else</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_train</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tensorloader</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">],</span> <span class="n">train</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="cai-at-tu-au">Cài đặt từ Đầu<a class="headerlink" href="#cai-at-tu-au" title="Permanent link">&para;</a></h2>
+<p>Bây giờ, hãy thử cài đặt suy giảm trọng số từ đầu.
+Vì minibatch stochastic gradient descent
+là bộ tối ưu hóa của ta,
+ta chỉ cần thêm số hạng phạt bình phương <span class="arithmatex">\(\ell_2\)</span>
+vào hàm mất mát ban đầu.</p>
+<h3 id="inh-nghia-phat-chuan-ell_2">(<strong>Định nghĩa Phạt Chuẩn <span class="arithmatex">\(\ell_2\)</span></strong>)<a class="headerlink" href="#inh-nghia-phat-chuan-ell_2" title="Permanent link">&para;</a></h3>
+<p>Cách thuận tiện nhất để cài đặt số hạng phạt này
+có lẽ là bình phương tất cả các số hạng tại chỗ và tính tổng chúng.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">l2_penalty</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">return</span> <span class="n">d2l</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</code></pre></div>
+<h3 id="inh-nghia-mo-hinh">Định nghĩa Mô hình<a class="headerlink" href="#inh-nghia-mo-hinh" title="Permanent link">&para;</a></h3>
+<p>Trong mô hình cuối cùng,
+hồi quy tuyến tính và mất mát bình phương không thay đổi kể từ <a href="#sec_linear_scratch">sec_linear_scratch</a>,
+vì vậy ta sẽ chỉ định nghĩa một lớp con của <code>d2l.LinearRegressionScratch</code>. Thay đổi duy nhất ở đây là hàm mất mát của ta bây giờ bao gồm số hạng phạt.</p>
+<p>Code sau khớp mô hình trên tập huấn luyện với 20 mẫu và đánh giá nó trên tập kiểm định với 100 mẫu.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">(</span><span class="n">num_train</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">num_val</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">num_inputs</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">trainer</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">train_scratch</span><span class="p">(</span><span class="n">lambd</span><span class="p">):</span>    
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">WeightDecayScratch</span><span class="p">(</span><span class="n">num_inputs</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">lambd</span><span class="o">=</span><span class="n">lambd</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">model</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;pytorch&#39;</span><span class="p">,</span> <span class="s1">&#39;mxnet&#39;</span><span class="p">,</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">):</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L2 norm of w:&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">l2_penalty</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">w</span><span class="p">)))</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;jax&#39;</span><span class="p">):</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L2 norm of w:&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>              <span class="nb">float</span><span class="p">(</span><span class="n">l2_penalty</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">])))</span>
+</code></pre></div>
+<h3 id="huan-luyen-khong-co-chuan-hoa">[<strong>Huấn luyện không có Chuẩn hóa</strong>]<a class="headerlink" href="#huan-luyen-khong-co-chuan-hoa" title="Permanent link">&para;</a></h3>
+<p>Ta chạy code này với <code>lambd = 0</code>,
+tắt suy giảm trọng số.
+Lưu ý rằng ta quá khớp tệ,
+giảm sai số huấn luyện nhưng không giảm
+sai số kiểm định---một trường hợp điển hình của quá khớp.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">train_scratch</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="su-dung-suy-giam-trong-so">[<strong>Sử dụng Suy giảm Trọng số</strong>]<a class="headerlink" href="#su-dung-suy-giam-trong-so" title="Permanent link">&para;</a></h3>
+<p>Dưới đây, ta chạy với suy giảm trọng số đáng kể.
+Lưu ý rằng sai số huấn luyện tăng
+nhưng sai số kiểm định giảm.
+Đây chính xác là hiệu ứng
+ta mong đợi từ chuẩn hóa.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">train_scratch</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="cai-at-gon">[<strong>Cài đặt Gọn</strong>]<a class="headerlink" href="#cai-at-gon" title="Permanent link">&para;</a></h2>
+<p>Vì suy giảm trọng số có mặt khắp nơi
+trong tối ưu hóa mạng nơ-ron,
+framework deep learning làm cho nó đặc biệt thuận tiện,
+tích hợp suy giảm trọng số vào thuật toán tối ưu hóa
+để dễ dàng sử dụng kết hợp với bất kỳ hàm mất mát nào.
+Hơn nữa, sự tích hợp này mang lại lợi ích tính toán,
+cho phép các thủ thuật cài đặt thêm suy giảm trọng số vào thuật toán,
+mà không có bất kỳ chi phí tính toán bổ sung nào.
+Vì phần suy giảm trọng số của phép cập nhật
+chỉ phụ thuộc vào giá trị hiện tại của từng tham số,
+bộ tối ưu hóa phải chạm vào từng tham số một lần dù sao.</p>
+<p>Dưới đây, ta chỉ định
+siêu tham số suy giảm trọng số trực tiếp
+thông qua <code>weight_decay</code> khi khởi tạo bộ tối ưu hóa.
+Theo mặc định, PyTorch phân rã cả
+trọng số và hệ số chặn đồng thời, nhưng
+ta có thể cấu hình bộ tối ưu hóa để xử lý các tham số khác nhau
+theo các chính sách khác nhau.
+Ở đây, ta chỉ đặt <code>weight_decay</code> cho
+trọng số (các tham số <code>net.weight</code>), do đó
+hệ số chặn (tham số <code>net.bias</code>) sẽ không phân rã.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">WeightDecay</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">):</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wd</span><span class="p">,</span> <span class="n">lr</span><span class="p">):</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">lr</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">wd</span> <span class="o">=</span> <span class="n">wd</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">([</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>            <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="s1">&#39;weight_decay&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">wd</span><span class="p">},</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>            <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">net</span><span class="o">.</span><span class="n">bias</span><span class="p">}],</span> <span class="n">lr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="p">)</span>
+</code></pre></div>
+<p>[<strong>Đồ thị trông tương tự như khi
+ta cài đặt suy giảm trọng số từ đầu</strong>].
+Tuy nhiên, phiên bản này chạy nhanh hơn
+và dễ cài đặt hơn,
+những lợi ích này sẽ trở nên rõ ràng hơn
+khi bạn giải quyết các bài toán lớn hơn
+và công việc này trở nên thường xuyên hơn.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">WeightDecay</span><span class="p">(</span><span class="n">wd</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">model</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">yscale</span><span class="o">=</span><span class="s1">&#39;log&#39;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;jax&#39;</span><span class="p">):</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L2 norm of w:&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">l2_penalty</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_w_b</span><span class="p">(</span><span class="n">trainer</span><span class="o">.</span><span class="n">state</span><span class="p">)[</span><span class="mi">0</span><span class="p">])))</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;pytorch&#39;</span><span class="p">,</span> <span class="s1">&#39;mxnet&#39;</span><span class="p">,</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">):</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;L2 norm of w:&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">l2_penalty</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_w_b</span><span class="p">()[</span><span class="mi">0</span><span class="p">])))</span>
+</code></pre></div>
+<p>Cho đến nay, ta đã đề cập đến một khái niệm về
+những gì tạo nên một hàm tuyến tính đơn giản.
+Tuy nhiên, ngay cả với các hàm phi tuyến đơn giản, tình huống có thể phức tạp hơn nhiều. Để thấy điều này, khái niệm <a href="https://en.wikipedia.org/wiki/Reproducing_kernel_Hilbert_space">không gian Hilbert nhân tái tạo (RKHS)</a>
+cho phép áp dụng các công cụ được giới thiệu
+cho các hàm tuyến tính trong bối cảnh phi tuyến.
+Thật không may, các thuật toán dựa trên RKHS
+có xu hướng mở rộng kém với dữ liệu lớn, nhiều chiều.
+Trong cuốn sách này ta thường sẽ áp dụng heuristic phổ biến
+trong đó suy giảm trọng số được áp dụng
+cho tất cả các lớp của mạng sâu.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Chuẩn hóa là một phương pháp phổ biến để xử lý quá khớp. Các kỹ thuật chuẩn hóa cổ điển thêm một số hạng phạt vào hàm mất mát (khi huấn luyện) để giảm độ phức tạp của mô hình được học.
+Một lựa chọn cụ thể để giữ mô hình đơn giản là sử dụng hình phạt <span class="arithmatex">\(\ell_2\)</span>. Điều này dẫn đến suy giảm trọng số trong các bước cập nhật của thuật toán minibatch stochastic gradient descent.
+Trong thực tế, chức năng suy giảm trọng số được cung cấp trong các bộ tối ưu hóa từ các framework deep learning.
+Các tập tham số khác nhau có thể có các hành vi cập nhật khác nhau trong cùng một vòng lặp huấn luyện.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Thử nghiệm với giá trị của <span class="arithmatex">\(\lambda\)</span> trong bài toán ước lượng trong phần này. Vẽ độ chính xác huấn luyện và kiểm định như là hàm của <span class="arithmatex">\(\lambda\)</span>. Bạn quan sát được gì?</li>
+<li>Dùng tập kiểm định để tìm giá trị tối ưu của <span class="arithmatex">\(\lambda\)</span>. Đó có thực sự là giá trị tối ưu không? Điều này có quan trọng không?</li>
+<li>Các phương trình cập nhật sẽ trông như thế nào nếu thay vì <span class="arithmatex">\(\|\mathbf{w}\|^2\)</span> ta dùng <span class="arithmatex">\(\sum_i |w_i|\)</span> như hình phạt ưa thích (chuẩn hóa <span class="arithmatex">\(\ell_1\)</span>)?</li>
+<li>Ta biết rằng <span class="arithmatex">\(\|\mathbf{w}\|^2 = \mathbf{w}^\top \mathbf{w}\)</span>. Bạn có thể tìm phương trình tương tự cho ma trận không (xem chuẩn Frobenius trong <a href="#subsec_lin-algebra-norms">subsec_lin-algebra-norms</a>)?</li>
+<li>Xem lại mối quan hệ giữa sai số huấn luyện và sai số tổng quát hóa. Ngoài suy giảm trọng số, tăng cường huấn luyện, và sử dụng mô hình có độ phức tạp phù hợp, các cách nào khác có thể giúp ta xử lý quá khớp?</li>
+<li>Trong thống kê Bayesian ta dùng tích của tiên nghiệm và hàm hợp lý để đến được hậu nghiệm thông qua <span class="arithmatex">\(P(w \mid x) \propto P(x \mid w) P(w)\)</span>. Bạn có thể xác định <span class="arithmatex">\(P(w)\)</span> với chuẩn hóa như thế nào?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/99">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

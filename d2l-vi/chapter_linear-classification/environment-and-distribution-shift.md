@@ -175,7 +175,6 @@ phân phối tên gọi cho *đồ uống có ga*
 như được hiển thị trong [fig_popvssoda](#fig_popvssoda).
 
 ![Dịch chuyển khái niệm cho tên đồ uống có ga ở Hoa Kỳ (CC-BY: Alan McConchie, PopVsSoda.com).](../img/popvssoda.png)
-:width:`400px`
 <a id="fig_popvssoda"></a>
 
 Nếu chúng ta xây dựng hệ thống dịch máy,

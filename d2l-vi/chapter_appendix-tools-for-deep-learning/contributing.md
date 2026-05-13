@@ -8,7 +8,6 @@ Các đóng góp từ [độc giả](https://github.com/d2l-ai/d2l-en/graphs/con
 Các đóng góp phổ biến nhất là chỉnh sửa một câu hoặc sửa lỗi chính tả. Chúng tôi khuyến nghị bạn tìm file nguồn trong [kho GitHub](https://github.com/d2l-ai/d2l-en) và chỉnh sửa file trực tiếp. Ví dụ, bạn có thể tìm file thông qua nút [Find file](https://github.com/d2l-ai/d2l-en/find/master) ([fig_edit_file](#fig_edit_file)) để định vị file nguồn (một file markdown). Sau đó bạn nhấp vào nút "Edit this file" ở góc trên bên phải để thực hiện thay đổi trong file markdown.
 
 ![Chỉnh sửa file trên Github.](../img/edit-file.png)
-:width:`300px`
 <a id="fig_edit_file"></a>
 
 Sau khi hoàn tất, điền mô tả thay đổi của bạn trong bảng "Propose file change" ở cuối trang rồi nhấp nút "Propose file change". Thao tác này sẽ chuyển bạn đến một trang mới để review các thay đổi của bạn ([fig_git_createpr](#fig_git_createpr)). Nếu mọi thứ ổn, bạn có thể gửi một pull request bằng cách nhấp nút "Create pull request".
@@ -41,14 +40,12 @@ Cuốn sách mã nguồn mở về Git mô tả [cách cài đặt Git](https://
 Nhập [địa chỉ](https://github.com/d2l-ai/d2l-en/) của kho code cuốn sách vào trình duyệt. Nhấp vào nút `Fork` trong khung đỏ ở góc trên bên phải của [fig_git_fork](#fig_git_fork), để tạo một bản sao của kho cuốn sách này. Đây giờ là *bản sao của bạn* và bạn có thể thay đổi nó theo bất kỳ cách nào mình muốn.
 
 ![Trang kho code.](../img/git-fork.png)
-:width:`700px`
 <a id="fig_git_fork"></a>
 
 
 Bây giờ, kho code của cuốn sách này sẽ được fork (tức sao chép) sang tên người dùng của bạn, chẳng hạn `astonzhang/d2l-en` như hiển thị ở góc trên bên trái của [fig_git_forked](#fig_git_forked).
 
 ![Kho code đã fork.](../img/git-forked.png)
-:width:`700px`
 <a id="fig_git_forked"></a>
 
 ### Clone Kho
@@ -56,7 +53,6 @@ Bây giờ, kho code của cuốn sách này sẽ được fork (tức sao chép
 Để clone kho (tức tạo một bản sao cục bộ), ta cần lấy địa chỉ kho của nó. Nút màu xanh trong [fig_git_clone](#fig_git_clone) hiển thị địa chỉ này. Hãy chắc chắn rằng bản sao cục bộ của bạn được cập nhật với kho chính nếu bạn quyết định giữ fork này lâu hơn. Hiện tại, chỉ cần làm theo hướng dẫn trong :ref:`chap_installation` để bắt đầu. Khác biệt chính là bây giờ bạn đang tải xuống *fork của chính mình* của kho.
 
 ![Clone kho.](../img/git-clone.png)
-:width:`700px`
 <a id="fig_git_clone"></a>
 
 ```
@@ -101,7 +97,6 @@ Code đã thay đổi khi đó sẽ nằm trong fork cá nhân của bạn của
 Như minh họa trong [fig_git_newpr](#fig_git_newpr), hãy vào fork của bạn của kho trên GitHub và chọn "New pull request". Thao tác này sẽ mở một màn hình hiển thị các thay đổi giữa chỉnh sửa của bạn và nội dung hiện tại trong kho chính của cuốn sách.
 
 ![Pull request mới.](../img/git-newpr.png)
-:width:`700px`
 <a id="fig_git_newpr"></a>
 
 
@@ -109,7 +104,6 @@ Cuối cùng, gửi một pull request bằng cách nhấp nút như minh họa 
 Điều này sẽ giúp các tác giả review và merge nó vào cuốn sách dễ hơn. Tùy thuộc vào thay đổi, nó có thể được chấp nhận ngay, bị từ chối, hoặc nhiều khả năng hơn là bạn sẽ nhận được một số phản hồi về các thay đổi. Khi bạn đã tích hợp các phản hồi đó, mọi thứ đã sẵn sàng.
 
 ![Tạo pull request.](../img/git-createpr.png)
-:width:`700px`
 <a id="fig_git_createpr"></a>
 
 

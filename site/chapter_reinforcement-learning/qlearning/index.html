@@ -1,0 +1,1929 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_reinforcement-learning/qlearning/">
+      
+      
+        <link rel="prev" href="../value-iter/">
+      
+      
+        <link rel="next" href="../../chapter_gaussian-processes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Q-Learning - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#q-learning" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Q-Learning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Học tăng cường
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../value-iter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Value Iteration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#thuat-toan-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-toan-toi-uu-hoa-ben-duoi-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài toán tối ưu hóa bên dưới Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kham-pha-trong-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khám phá trong Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tinh-chat-tu-sua-cua-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính chất "tự sửa" của Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trien-khai-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triển khai Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#thuat-toan-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-toan-toi-uu-hoa-ben-duoi-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài toán tối ưu hóa bên dưới Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kham-pha-trong-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khám phá trong Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tinh-chat-tu-sua-cua-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính chất "tự sửa" của Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trien-khai-q-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triển khai Q-Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="q-learning">Q-Learning<a class="headerlink" href="#q-learning" title="Permanent link">&para;</a></h1>
+<p><a id="sec_qlearning"></a></p>
+<p>Trong phần trước, chúng ta đã thảo luận thuật toán Value Iteration, vốn yêu cầu truy cập đầy đủ Markov decision process (MDP), ví dụ các hàm chuyển tiếp và phần thưởng. Trong phần này, chúng ta sẽ xem xét Q-Learning [Watkins.Dayan.1992], một thuật toán học hàm giá trị mà không nhất thiết phải biết MDP. Thuật toán này thể hiện ý tưởng trung tâm đằng sau học tăng cường: nó cho phép robot tự thu thập dữ liệu của mình.</p>
+<!-- , instead of relying upon the expert. -->
+
+<h2 id="thuat-toan-q-learning">Thuật toán Q-Learning<a class="headerlink" href="#thuat-toan-q-learning" title="Permanent link">&para;</a></h2>
+<p>Nhắc lại rằng value iteration cho hàm giá trị-hành động trong :ref:<code>sec_valueiter</code> tương ứng với cập nhật</p>
+<div class="arithmatex">\[Q_{k+1}(s, a) = r(s, a) + \gamma \sum_{s' \in \mathcal{S}} P(s' \mid s, a) \max_{a' \in \mathcal{A}} Q_k (s', a'); \ \textrm{for all } s \in \mathcal{S} \textrm{ and } a \in \mathcal{A}.\]</div>
+<p>Như đã thảo luận, việc triển khai thuật toán này yêu cầu biết MDP, cụ thể là hàm chuyển tiếp <span class="arithmatex">\(P(s' \mid s, a)\)</span>. Ý tưởng then chốt đằng sau Q-Learning là thay thế tổng trên mọi <span class="arithmatex">\(s' \in \mathcal{S}\)</span> trong biểu thức trên bằng một tổng trên các trạng thái mà robot đã thăm. Điều này cho phép chúng ta tránh nhu cầu phải biết hàm chuyển tiếp.</p>
+<h2 id="bai-toan-toi-uu-hoa-ben-duoi-q-learning">Bài toán tối ưu hóa bên dưới Q-Learning<a class="headerlink" href="#bai-toan-toi-uu-hoa-ben-duoi-q-learning" title="Permanent link">&para;</a></h2>
+<p>Hãy tưởng tượng robot dùng một chính sách <span class="arithmatex">\(\pi_e(a \mid s)\)</span> để thực hiện hành động. Giống như chương trước, nó thu thập một bộ dữ liệu gồm <span class="arithmatex">\(n\)</span> quỹ đạo, mỗi quỹ đạo có <span class="arithmatex">\(T\)</span> bước thời gian <span class="arithmatex">\(\{ (s_t^i, a_t^i)_{t=0,\ldots,T-1}\}_{i=1,\ldots, n}\)</span>. Nhắc lại rằng value iteration thực chất là một tập ràng buộc liên kết giá trị-hành động <span class="arithmatex">\(Q^*(s, a)\)</span> của các trạng thái và hành động khác nhau với nhau. Chúng ta có thể triển khai một phiên bản xấp xỉ của value iteration bằng dữ liệu mà robot đã thu thập khi dùng <span class="arithmatex">\(\pi_e\)</span> như sau</p>
+<div class="arithmatex">\[\hat{Q} = \min_Q \underbrace{\frac{1}{nT} \sum_{i=1}^n \sum_{t=0}^{T-1} (Q(s_t^i, a_t^i) - r(s_t^i, a_t^i) - \gamma \max_{a'} Q(s_{t+1}^i, a'))^2}_{\stackrel{\textrm{def}}{=} \ell(Q)}.\]</div>
+<p>Trước tiên, hãy quan sát các điểm giống và khác nhau giữa biểu thức này và value iteration ở trên. Nếu chính sách của robot <span class="arithmatex">\(\pi_e\)</span> bằng chính sách tối ưu <span class="arithmatex">\(\pi^*\)</span>, và nếu nó thu thập một lượng dữ liệu vô hạn, thì bài toán tối ưu hóa này sẽ giống hệt bài toán tối ưu hóa bên dưới value iteration. Nhưng trong khi value iteration yêu cầu chúng ta biết <span class="arithmatex">\(P(s' \mid s, a)\)</span>, mục tiêu tối ưu hóa lại không có hạng tử này. Chúng ta không gian lận: khi robot dùng chính sách <span class="arithmatex">\(\pi_e\)</span> để thực hiện hành động <span class="arithmatex">\(a_t^i\)</span> tại trạng thái <span class="arithmatex">\(s_t^i\)</span>, trạng thái kế tiếp <span class="arithmatex">\(s_{t+1}^i\)</span> là một mẫu được rút ra từ hàm chuyển tiếp. Vì vậy, mục tiêu tối ưu hóa cũng có quyền truy cập vào hàm chuyển tiếp, nhưng một cách ngầm định thông qua dữ liệu do robot thu thập.</p>
+<p>Các biến của bài toán tối ưu hóa là <span class="arithmatex">\(Q(s, a)\)</span> với mọi <span class="arithmatex">\(s \in \mathcal{S}\)</span> và <span class="arithmatex">\(a \in \mathcal{A}\)</span>. Chúng ta có thể tối thiểu hóa mục tiêu bằng gradient descent. Với mỗi cặp <span class="arithmatex">\((s_t^i, a_t^i)\)</span> trong bộ dữ liệu, chúng ta có thể viết</p>
+<div class="arithmatex">\[\begin{aligned}Q(s_t^i, a_t^i) &amp;\leftarrow Q(s_t^i, a_t^i) - \alpha \nabla_{Q(s_t^i,a_t^i)} \ell(Q) \\&amp;=(1 - \alpha) Q(s_t^i,a_t^i) - \alpha \Big( r(s_t^i, a_t^i) + \gamma \max_{a'} Q(s_{t+1}^i, a') \Big),\end{aligned}\]</div>
+<p>trong đó <span class="arithmatex">\(\alpha\)</span> là learning rate. Thông thường trong các bài toán thực tế, khi robot đến được vị trí mục tiêu, các quỹ đạo kết thúc. Giá trị của trạng thái kết thúc như vậy là không vì robot không thực hiện thêm hành động nào sau trạng thái này. Chúng ta nên sửa cập nhật để xử lý các trạng thái như vậy thành</p>
+<div class="arithmatex">\[Q(s_t^i, a_t^i) =(1 - \alpha) Q(s_t^i,a_t^i) - \alpha \Big( r(s_t^i, a_t^i) + \gamma (1 - \mathbb{1}_{s_{t+1}^i \textrm{ is terminal}} )\max_{a'} Q(s_{t+1}^i, a') \Big).\]</div>
+<p>trong đó <span class="arithmatex">\(\mathbb{1}_{s_{t+1}^i \textrm{ is terminal}}\)</span> là một biến chỉ báo bằng một nếu <span class="arithmatex">\(s_{t+1}^i\)</span> là trạng thái kết thúc và bằng không nếu ngược lại. Giá trị của các bộ trạng thái-hành động <span class="arithmatex">\((s, a)\)</span> không thuộc bộ dữ liệu được đặt là <span class="arithmatex">\(-\infty\)</span>. Thuật toán này được gọi là Q-Learning.</p>
+<p>Với nghiệm của các cập nhật này <span class="arithmatex">\(\hat{Q}\)</span>, một xấp xỉ của hàm giá trị tối ưu <span class="arithmatex">\(Q^*\)</span>, chúng ta có thể dễ dàng thu được chính sách tất định tối ưu tương ứng với hàm giá trị này bằng</p>
+<div class="arithmatex">\[\hat{\pi}(s) = \mathrm{argmax}_{a} \hat{Q}(s, a).\]</div>
+<p>Có thể có các tình huống trong đó nhiều chính sách tất định tương ứng với cùng một hàm giá trị tối ưu; các trường hợp hòa như vậy có thể được phá vỡ tùy ý vì chúng có cùng hàm giá trị.</p>
+<h2 id="kham-pha-trong-q-learning">Khám phá trong Q-Learning<a class="headerlink" href="#kham-pha-trong-q-learning" title="Permanent link">&para;</a></h2>
+<p>Chính sách được robot dùng để thu thập dữ liệu <span class="arithmatex">\(\pi_e\)</span> là yếu tố then chốt để đảm bảo Q-Learning hoạt động tốt. Rốt cuộc, chúng ta đã thay thế kỳ vọng trên <span class="arithmatex">\(s'\)</span> dùng hàm chuyển tiếp <span class="arithmatex">\(P(s' \mid s, a)\)</span> bằng dữ liệu do robot thu thập. Nếu chính sách <span class="arithmatex">\(\pi_e\)</span> không đi đến các phần đa dạng của không gian trạng thái-hành động, thì dễ hình dung rằng ước lượng <span class="arithmatex">\(\hat{Q}\)</span> của chúng ta sẽ là một xấp xỉ kém của <span class="arithmatex">\(Q^*\)</span> tối ưu. Cũng cần lưu ý rằng trong tình huống như vậy, ước lượng của <span class="arithmatex">\(Q^*\)</span> tại <em>mọi trạng thái</em> <span class="arithmatex">\(s \in \mathcal{S}\)</span> sẽ kém, không chỉ những trạng thái được <span class="arithmatex">\(\pi_e\)</span> thăm. Điều này là vì mục tiêu Q-Learning (hoặc value iteration) là một ràng buộc liên kết giá trị của tất cả các cặp trạng thái-hành động. Do đó, việc chọn chính sách <span class="arithmatex">\(\pi_e\)</span> đúng để thu thập dữ liệu là rất quan trọng.</p>
+<p>Chúng ta có thể giảm nhẹ mối lo này bằng cách chọn một chính sách hoàn toàn ngẫu nhiên <span class="arithmatex">\(\pi_e\)</span>, lấy mẫu hành động đều ngẫu nhiên từ <span class="arithmatex">\(\mathcal{A}\)</span>. Một chính sách như vậy sẽ thăm mọi trạng thái, nhưng cần một số lượng lớn quỹ đạo trước khi làm được điều đó.</p>
+<p>Từ đó chúng ta đi đến ý tưởng then chốt thứ hai trong Q-Learning, đó là exploration. Các triển khai Q-Learning điển hình liên kết ước lượng hiện tại của <span class="arithmatex">\(Q\)</span> và chính sách <span class="arithmatex">\(\pi_e\)</span> để đặt</p>
+<div class="arithmatex">\[\pi_e(a \mid s) = \begin{cases}\mathrm{argmax}_{a'} \hat{Q}(s, a') &amp; \textrm{with prob. } 1-\epsilon \\ \textrm{uniform}(\mathcal{A}) &amp; \textrm{with prob. } \epsilon,\end{cases}\]</div>
+<p>trong đó <span class="arithmatex">\(\epsilon\)</span> được gọi là "tham số exploration" và do người dùng chọn. Chính sách <span class="arithmatex">\(\pi_e\)</span> được gọi là chính sách exploration. Chính sách <span class="arithmatex">\(\pi_e\)</span> cụ thể này được gọi là chính sách exploration <span class="arithmatex">\(\epsilon\)</span>-greedy vì nó chọn hành động tối ưu (theo ước lượng hiện tại <span class="arithmatex">\(\hat{Q}\)</span>) với xác suất <span class="arithmatex">\(1-\epsilon\)</span> nhưng khám phá ngẫu nhiên với phần xác suất còn lại <span class="arithmatex">\(\epsilon\)</span>. Chúng ta cũng có thể dùng chính sách exploration gọi là softmax</p>
+<div class="arithmatex">\[\pi_e(a \mid s) = \frac{e^{\hat{Q}(s, a)/T}}{\sum_{a'} e^{\hat{Q}(s, a')/T}};\]</div>
+<p>trong đó siêu tham số <span class="arithmatex">\(T\)</span> được gọi là temperature. Một giá trị lớn của <span class="arithmatex">\(\epsilon\)</span> trong chính sách <span class="arithmatex">\(\epsilon\)</span>-greedy hoạt động tương tự một giá trị lớn của temperature <span class="arithmatex">\(T\)</span> trong chính sách softmax.</p>
+<p>Điều quan trọng cần lưu ý là khi chúng ta chọn một exploration phụ thuộc vào ước lượng hiện tại của hàm giá trị-hành động <span class="arithmatex">\(\hat{Q}\)</span>, chúng ta cần giải lại bài toán tối ưu hóa theo định kỳ. Các triển khai Q-Learning điển hình thực hiện một cập nhật mini-batch bằng một vài cặp trạng thái-hành động trong bộ dữ liệu đã thu thập (thường là các cặp được thu thập từ bước thời gian trước đó của robot) sau mỗi hành động được thực hiện bằng <span class="arithmatex">\(\pi_e\)</span>.</p>
+<h2 id="tinh-chat-tu-sua-cua-q-learning">Tính chất "tự sửa" của Q-Learning<a class="headerlink" href="#tinh-chat-tu-sua-cua-q-learning" title="Permanent link">&para;</a></h2>
+<p>Bộ dữ liệu do robot thu thập trong quá trình Q-Learning lớn dần theo thời gian. Cả chính sách exploration <span class="arithmatex">\(\pi_e\)</span> và ước lượng <span class="arithmatex">\(\hat{Q}\)</span> đều tiến hóa khi robot thu thập thêm dữ liệu. Điều này cho ta một trực giác then chốt về lý do Q-Learning hoạt động tốt. Xét một trạng thái <span class="arithmatex">\(s\)</span>: nếu một hành động cụ thể <span class="arithmatex">\(a\)</span> có giá trị lớn theo ước lượng hiện tại <span class="arithmatex">\(\hat{Q}(s,a)\)</span>, thì cả chính sách exploration <span class="arithmatex">\(\epsilon\)</span>-greedy và softmax đều có xác suất lớn hơn để chọn hành động này. Nếu hành động này thực ra <em>không</em> phải hành động lý tưởng, thì các trạng thái tương lai phát sinh từ hành động này sẽ có phần thưởng kém. Cập nhật tiếp theo của mục tiêu Q-Learning do đó sẽ giảm giá trị <span class="arithmatex">\(\hat{Q}(s,a)\)</span>, làm giảm xác suất chọn hành động này vào lần sau robot thăm trạng thái <span class="arithmatex">\(s\)</span>. Các hành động xấu, ví dụ những hành động có giá trị bị đánh giá quá cao trong <span class="arithmatex">\(\hat{Q}(s,a)\)</span>, được robot khám phá nhưng giá trị của chúng được sửa trong cập nhật tiếp theo của mục tiêu Q-Learning. Các hành động tốt, ví dụ những hành động có giá trị <span class="arithmatex">\(\hat{Q}(s, a)\)</span> lớn, được robot khám phá thường xuyên hơn và nhờ đó được củng cố. Tính chất này có thể được dùng để chứng minh rằng Q-Learning có thể hội tụ về chính sách tối ưu ngay cả khi nó bắt đầu với một chính sách ngẫu nhiên <span class="arithmatex">\(\pi_e\)</span> [Watkins.Dayan.1992].</p>
+<p>Khả năng không chỉ thu thập dữ liệu mới mà còn thu thập đúng loại dữ liệu là đặc trưng trung tâm của các thuật toán học tăng cường, và đây là điều phân biệt chúng với học có giám sát. Q-Learning, khi dùng mạng nơ-ron sâu (mà chúng ta sẽ thấy trong chương DQN sau này), chịu trách nhiệm cho sự trỗi dậy trở lại của học tăng cường [mnih2013playing].</p>
+<h2 id="trien-khai-q-learning">Triển khai Q-Learning<a class="headerlink" href="#trien-khai-q-learning" title="Permanent link">&para;</a></h2>
+<p>Bây giờ chúng ta trình bày cách triển khai Q-Learning trên FrozenLake từ <a href="https://gym.openai.com">Open AI Gym</a>. Lưu ý đây là cùng thiết lập mà chúng ta xét trong thí nghiệm :ref:<code>sec_valueiter</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">seed</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Random number generator seed</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.95</span>  <span class="c1"># Discount factor</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">num_iters</span> <span class="o">=</span> <span class="mi">256</span>  <span class="c1"># Number of iterations</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">alpha</span>   <span class="o">=</span> <span class="mf">0.9</span>  <span class="c1"># Learing rate</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.9</span>  <span class="c1"># Epsilon in epsilion gready algorithm</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>  <span class="c1"># Set the random seed</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Now set up the environment</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">env_info</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">make_env</span><span class="p">(</span><span class="s1">&#39;FrozenLake-v1&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+</code></pre></div>
+<p>Trong môi trường FrozenLake, robot di chuyển trên một lưới <span class="arithmatex">\(4 \times 4\)</span> (đây là các trạng thái) với các hành động là "up" (<span class="arithmatex">\(\uparrow\)</span>), "down" (<span class="arithmatex">\(\rightarrow\)</span>), "left" (<span class="arithmatex">\(\leftarrow\)</span>) và "right" (<span class="arithmatex">\(\rightarrow\)</span>). Môi trường chứa một số ô hố (H), ô đóng băng (F), cũng như một ô mục tiêu (G), tất cả đều chưa biết đối với robot. Để giữ bài toán đơn giản, chúng ta giả định robot có các hành động đáng tin cậy, tức <span class="arithmatex">\(P(s' \mid s, a) = 1\)</span> với mọi <span class="arithmatex">\(s \in \mathcal{S}, a \in \mathcal{A}\)</span>. Nếu robot đến được mục tiêu, lượt thử kết thúc và robot nhận phần thưởng <span class="arithmatex">\(1\)</span> bất kể hành động; phần thưởng ở mọi trạng thái khác là <span class="arithmatex">\(0\)</span> cho tất cả hành động. Mục tiêu của robot là học một chính sách đi đến vị trí mục tiêu (G) từ một vị trí bắt đầu cho trước (S) (đây là <span class="arithmatex">\(s_0\)</span>) để tối đa hóa <em>return</em>.</p>
+<p>Trước tiên, chúng ta triển khai phương pháp <span class="arithmatex">\(\epsilon\)</span>-greedy như sau:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">e_greedy</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="k">return</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">,:])</span>
+</code></pre></div>
+<p>Bây giờ chúng ta đã sẵn sàng triển khai Q-learning:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">q_learning</span><span class="p">(</span><span class="n">env_info</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">):</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">env_desc</span> <span class="o">=</span> <span class="n">env_info</span><span class="p">[</span><span class="s1">&#39;desc&#39;</span><span class="p">]</span>  <span class="c1"># 2D array specifying what each grid item means</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">env</span> <span class="o">=</span> <span class="n">env_info</span><span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">]</span>  <span class="c1"># 2D array specifying what each grid item means</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">num_states</span> <span class="o">=</span> <span class="n">env_info</span><span class="p">[</span><span class="s1">&#39;num_states&#39;</span><span class="p">]</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">num_actions</span> <span class="o">=</span> <span class="n">env_info</span><span class="p">[</span><span class="s1">&#39;num_actions&#39;</span><span class="p">]</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">Q</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_states</span><span class="p">,</span> <span class="n">num_actions</span><span class="p">))</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">V</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_iters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_states</span><span class="p">))</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="n">pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_iters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">num_states</span><span class="p">))</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_iters</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="c1"># Reset environment</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>        <span class="n">state</span><span class="p">,</span> <span class="n">done</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(),</span> <span class="kc">False</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>        <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>            <span class="c1"># Select an action for a given state and acts in env based on selected action</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>            <span class="n">action</span> <span class="o">=</span> <span class="n">e_greedy</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>            <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>            <span class="c1"># Q-update:</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>            <span class="n">y</span> <span class="o">=</span> <span class="n">reward</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">next_state</span><span class="p">,:])</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>            <span class="n">Q</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">]</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">Q</span><span class="p">[</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">])</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>            <span class="c1"># Move to the next state</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>            <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>        <span class="c1"># Record max value and max action for visualization purpose only</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_states</span><span class="p">):</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>            <span class="n">V</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">s</span><span class="p">]</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">,:])</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>            <span class="n">pi</span><span class="p">[</span><span class="n">k</span><span class="p">,</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">Q</span><span class="p">[</span><span class="n">s</span><span class="p">,:])</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">show_Q_function_progress</span><span class="p">(</span><span class="n">env_desc</span><span class="p">,</span> <span class="n">V</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">pi</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="n">q_learning</span><span class="p">(</span><span class="n">env_info</span><span class="o">=</span><span class="n">env_info</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="n">num_iters</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="n">epsilon</span><span class="p">)</span>
+</code></pre></div>
+<p>Kết quả này cho thấy Q-learning có thể tìm nghiệm tối ưu cho bài toán này sau khoảng 250 lần lặp. Tuy nhiên, khi so sánh kết quả này với kết quả của thuật toán Value Iteration (xem :ref:<code>subsec_valueitercode</code>), chúng ta có thể thấy thuật toán Value Iteration cần ít lần lặp hơn nhiều để tìm nghiệm tối ưu cho bài toán này. Điều này xảy ra vì thuật toán Value Iteration có quyền truy cập vào MDP đầy đủ, trong khi Q-learning thì không.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Q-learning là một trong những thuật toán học tăng cường nền tảng nhất. Nó đã ở trung tâm của thành công gần đây của học tăng cường, nổi bật nhất là trong việc học chơi trò chơi điện tử [mnih2013playing]. Việc triển khai Q-learning không yêu cầu chúng ta biết đầy đủ Markov decision process (MDP), ví dụ các hàm chuyển tiếp và phần thưởng.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Thử tăng kích thước lưới lên <span class="arithmatex">\(8 \times 8\)</span>. So với lưới <span class="arithmatex">\(4 \times 4\)</span>, cần bao nhiêu lần lặp để tìm hàm giá trị tối ưu?</li>
+<li>Chạy lại thuật toán Q-learning với <span class="arithmatex">\(\gamma\)</span> (tức "gamma" trong đoạn code trên) khi nó bằng <span class="arithmatex">\(0\)</span>, <span class="arithmatex">\(0.5\)</span> và <span class="arithmatex">\(1\)</span>, rồi phân tích kết quả.</li>
+<li>Chạy lại thuật toán Q-learning với <span class="arithmatex">\(\epsilon\)</span> (tức "epsilon" trong đoạn code trên) khi nó bằng <span class="arithmatex">\(0\)</span>, <span class="arithmatex">\(0.5\)</span> và <span class="arithmatex">\(1\)</span>, rồi phân tích kết quả.</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/12103">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

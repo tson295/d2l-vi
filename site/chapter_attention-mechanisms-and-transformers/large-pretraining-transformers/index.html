@@ -1,0 +1,2527 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_attention-mechanisms-and-transformers/large-pretraining-transformers/">
+      
+      
+        <link rel="prev" href="../vision-transformer/">
+      
+      
+        <link rel="next" href="../../chapter_optimization/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Large Pretrained Transformers - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tien-huan-luyen-quy-mo-lon-voi-transformer" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Large Pretrained Transformers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Attention và Transformer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../queries-keys-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Queries, Keys, Values
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attention-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attention-scoring-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hàm tính điểm Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bahdanau-attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bahdanau Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multihead-attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Head Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../self-attention-and-positional-encoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Attention và Positional Encoding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vision-transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Large Pretrained Transformers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Large Pretrained Transformers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chi-ma-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chỉ Mã Hóa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chỉ Mã Hóa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tien-huan-luyen-bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiền Huấn Luyện BERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chinh-bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tinh Chỉnh BERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ma-hoa-giai-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mã Hóa--Giải Mã
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mã Hóa--Giải Mã">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tien-huan-luyen-t5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiền Huấn Luyện T5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chinh-t5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tinh Chỉnh T5
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chi-giai-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chỉ Giải Mã
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chỉ Giải Mã">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpt-va-gpt-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPT và GPT-2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpt-3-va-hon-nua" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPT-3 và Hơn Nữa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kha-nang-mo-rong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khả Năng Mở Rộng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cac-mo-hinh-ngon-ngu-lon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các Mô Hình Ngôn Ngữ Lớn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat-va-thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt và Thảo Luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chi-ma-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chỉ Mã Hóa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chỉ Mã Hóa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tien-huan-luyen-bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiền Huấn Luyện BERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chinh-bert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tinh Chỉnh BERT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ma-hoa-giai-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mã Hóa--Giải Mã
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mã Hóa--Giải Mã">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tien-huan-luyen-t5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tiền Huấn Luyện T5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chinh-t5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tinh Chỉnh T5
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chi-giai-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chỉ Giải Mã
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chỉ Giải Mã">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpt-va-gpt-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPT và GPT-2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpt-3-va-hon-nua" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPT-3 và Hơn Nữa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kha-nang-mo-rong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khả Năng Mở Rộng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cac-mo-hinh-ngon-ngu-lon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các Mô Hình Ngôn Ngữ Lớn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat-va-thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt và Thảo Luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tien-huan-luyen-quy-mo-lon-voi-transformer">Tiền Huấn Luyện Quy Mô Lớn với Transformer<a class="headerlink" href="#tien-huan-luyen-quy-mo-lon-voi-transformer" title="Permanent link">&para;</a></h1>
+<p><a id="sec_large-pretraining-transformers"></a></p>
+<p>Cho đến nay trong các thí nghiệm phân loại ảnh và dịch máy,
+các mô hình đã được huấn luyện trên các tập dữ liệu với các ví dụ đầu vào--đầu ra
+<em>từ đầu</em> để thực hiện các tác vụ cụ thể.
+Ví dụ, một Transformer được huấn luyện
+với các cặp Anh--Pháp (<a href="#sec_transformer">sec_transformer</a>)
+để mô hình này có thể dịch văn bản tiếng Anh đầu vào sang tiếng Pháp.
+Kết quả là, mỗi mô hình trở thành một <em>chuyên gia cụ thể</em>
+nhạy cảm ngay cả với một sự dịch chuyển nhỏ trong phân phối dữ liệu
+(<a href="#sec_environment-and-distribution-shift">sec_environment-and-distribution-shift</a>).
+Để có các mô hình tổng quát hơn, hoặc thậm chí là các <em>chuyên gia tổng quát</em> có năng lực hơn
+có thể thực hiện nhiều tác vụ có hoặc không có thích nghi,
+<em>tiền huấn luyện</em> các mô hình trên dữ liệu lớn ngày càng trở nên phổ biến.</p>
+<p>Với dữ liệu lớn hơn để tiền huấn luyện, kiến trúc Transformer
+hoạt động tốt hơn với kích thước mô hình và tính toán huấn luyện tăng lên,
+thể hiện hành vi <em>mở rộng</em> vượt trội.
+Cụ thể, hiệu suất của các mô hình ngôn ngữ dựa trên Transformer
+tỷ lệ theo quy luật lũy thừa với số lượng tham số mô hình,
+token huấn luyện và tính toán huấn luyện [kaplan2020scaling].
+Khả năng mở rộng của Transformer cũng được chứng minh
+bởi hiệu suất được nâng cao đáng kể
+từ các vision Transformer lớn hơn được huấn luyện trên dữ liệu lớn hơn
+(được thảo luận trong <a href="#sec_vision-transformer">sec_vision-transformer</a>).
+Các câu chuyện thành công gần đây hơn bao gồm Gato, một mô hình <em>chuyên gia tổng quát</em>
+có thể chơi Atari, chú thích ảnh, trò chuyện và hoạt động như robot [reed2022generalist]. Gato là một Transformer duy nhất mở rộng tốt khi được tiền huấn luyện trên các phương thức đa dạng,
+bao gồm văn bản, ảnh, mô-men khớp và nhấn nút.
+Đáng chú ý, tất cả dữ liệu đa phương thức như vậy được tuần tự hóa thành một chuỗi phẳng các token,
+có thể được xử lý tương tự như các token văn bản (<a href="#sec_transformer">sec_transformer</a>)
+hoặc các patch ảnh (<a href="#sec_vision-transformer">sec_vision-transformer</a>) bởi Transformer.</p>
+<p>Trước sự thành công thuyết phục của việc tiền huấn luyện Transformer cho dữ liệu đa phương thức,
+Transformer đã được tiền huấn luyện rộng rãi với lượng văn bản phong phú.
+Ban đầu được đề xuất cho dịch máy,
+kiến trúc Transformer trong <a href="#fig_transformer">fig_transformer</a>
+bao gồm một bộ mã hóa để biểu diễn chuỗi đầu vào
+và một bộ giải mã để tạo ra chuỗi mục tiêu.
+Chủ yếu, Transformer có thể được sử dụng theo ba chế độ khác nhau:
+<em>chỉ mã hóa</em>, <em>mã hóa--giải mã</em> và <em>chỉ giải mã</em>.
+Để kết thúc chương này, chúng ta sẽ xem lại ba chế độ này
+và giải thích khả năng mở rộng trong tiền huấn luyện Transformer.</p>
+<h2 id="chi-ma-hoa">Chỉ Mã Hóa<a class="headerlink" href="#chi-ma-hoa" title="Permanent link">&para;</a></h2>
+<p>Khi chỉ sử dụng bộ mã hóa Transformer,
+một chuỗi token đầu vào được chuyển đổi
+thành cùng số lượng biểu diễn
+có thể được chiếu thêm thành đầu ra
+(ví dụ: phân loại). Một bộ mã hóa Transformer
+bao gồm các lớp self-attention,
+trong đó tất cả các token đầu vào chú ý đến nhau.
+Ví dụ, vision Transformer được mô tả trong <a href="#fig_vit">fig_vit</a>
+chỉ mã hóa, chuyển đổi một chuỗi các patch ảnh đầu vào thành
+biểu diễn của token đặc biệt "&lt;cls&gt;".
+Vì biểu diễn này phụ thuộc vào tất cả các token đầu vào,
+nó được chiếu thêm thành các nhãn phân loại.
+Thiết kế này được lấy cảm hứng từ Transformer chỉ mã hóa trước đó
+được tiền huấn luyện trên văn bản: BERT (Biểu diễn Mã hóa Hai chiều từ Transformer) [Devlin.Chang.Lee.ea.2018].</p>
+<h3 id="tien-huan-luyen-bert">Tiền Huấn Luyện BERT<a class="headerlink" href="#tien-huan-luyen-bert" title="Permanent link">&para;</a></h3>
+<p><img alt="Trái: Tiền huấn luyện BERT với mô hình hóa ngôn ngữ có che. Dự đoán token &quot;love&quot; bị che phụ thuộc vào tất cả các token đầu vào trước và sau &quot;love&quot;. Phải: Mẫu attention trong bộ mã hóa Transformer. Mỗi token dọc theo trục dọc chú ý đến tất cả các token đầu vào dọc theo trục ngang." src="../../img/bert-encoder-only.svg" />
+<a id="fig_bert-encoder-only"></a></p>
+<p>BERT được tiền huấn luyện trên các chuỗi văn bản sử dụng <em>mô hình hóa ngôn ngữ có che</em>:
+văn bản đầu vào với các token ngẫu nhiên bị che được đưa
+vào bộ mã hóa Transformer để dự đoán các token bị che.
+Như được minh họa trong <a href="#fig_bert-encoder-only">fig_bert-encoder-only</a>,
+một chuỗi văn bản gốc "I", "love", "this", "red", "car"
+được đặt trước với token "&lt;cls&gt;", và token "&lt;mask&gt;"
+ngẫu nhiên thay thế "love"; sau đó mất mát entropy chéo giữa token bị che "love"
+và dự đoán của nó được tối thiểu hóa trong quá trình tiền huấn luyện.
+Lưu ý rằng không có ràng buộc trong mẫu attention của bộ mã hóa Transformer
+(bên phải của <a href="#fig_bert-encoder-only">fig_bert-encoder-only</a>)
+vì vậy tất cả các token có thể chú ý đến nhau.
+Do đó, dự đoán "love" phụ thuộc vào các token đầu vào trước và sau nó trong chuỗi.
+Đây là lý do tại sao BERT là "bộ mã hóa hai chiều".
+Không cần gán nhãn thủ công, dữ liệu văn bản quy mô lớn
+từ sách và Wikipedia có thể được sử dụng để tiền huấn luyện BERT.</p>
+<h3 id="tinh-chinh-bert">Tinh Chỉnh BERT<a class="headerlink" href="#tinh-chinh-bert" title="Permanent link">&para;</a></h3>
+<p>BERT đã được tiền huấn luyện có thể được <em>tinh chỉnh</em> cho các tác vụ mã hóa hạ lưu liên quan đến văn bản đơn hoặc cặp văn bản. Trong quá trình tinh chỉnh, các lớp bổ sung có thể được thêm vào BERT với các tham số được khởi tạo ngẫu nhiên: các tham số này và các tham số BERT đã được tiền huấn luyện sẽ được <em>cập nhật</em> để phù hợp với dữ liệu huấn luyện của các tác vụ hạ lưu.</p>
+<p><img alt="Tinh chỉnh BERT cho phân tích cảm xúc." src="../../img/bert-finetune-classification.svg" />
+<a id="fig_bert-finetune-classification"></a></p>
+<p><a href="#fig_bert-finetune-classification">fig_bert-finetune-classification</a> minh họa
+tinh chỉnh BERT cho phân tích cảm xúc.
+Bộ mã hóa Transformer là BERT đã được tiền huấn luyện,
+nhận một chuỗi văn bản làm đầu vào
+và đưa biểu diễn "&lt;cls&gt;"
+(biểu diễn toàn cục của đầu vào)
+vào một lớp kết nối đầy đủ bổ sung
+để dự đoán cảm xúc.
+Trong quá trình tinh chỉnh, mất mát entropy chéo
+giữa dự đoán và nhãn
+trên dữ liệu phân tích cảm xúc
+được tối thiểu hóa thông qua các thuật toán dựa trên gradient,
+trong đó lớp bổ sung được huấn luyện từ đầu
+trong khi các tham số đã được tiền huấn luyện của BERT được cập nhật.
+BERT làm được nhiều hơn chỉ phân tích cảm xúc.
+Các biểu diễn ngôn ngữ tổng quát được học
+bởi BERT 350 triệu tham số
+từ 250 tỷ token huấn luyện
+đã nâng cao tình trạng tiên tiến cho các tác vụ ngôn ngữ tự nhiên
+như phân loại văn bản đơn,
+phân loại hoặc hồi quy cặp văn bản,
+gắn thẻ văn bản và trả lời câu hỏi.</p>
+<p>Bạn có thể nhận thấy rằng các tác vụ hạ lưu này bao gồm hiểu cặp văn bản.
+Tiền huấn luyện BERT có thêm mất mát để dự đoán
+liệu một câu có ngay lập tức theo sau câu kia không.
+Tuy nhiên, mất mát này sau đó được phát hiện ít hữu ích hơn khi tiền huấn luyện RoBERTa,
+một biến thể BERT cùng kích thước, trên 2000 tỷ token [Liu.Ott.Goyal.ea.2019].
+Các dẫn xuất khác của BERT cải thiện kiến trúc mô hình hoặc mục tiêu tiền huấn luyện,
+chẳng hạn như ALBERT (thực thi chia sẻ tham số) [lan2019albert],
+SpanBERT (biểu diễn và dự đoán các span văn bản) [joshi2020spanbert],
+DistilBERT (nhẹ thông qua chưng cất kiến thức) [sanh2019distilbert],
+và ELECTRA (phát hiện token được thay thế) [clark2019electra].
+Hơn nữa, BERT đã truyền cảm hứng cho tiền huấn luyện Transformer trong thị giác máy tính,
+chẳng hạn như với vision Transformer [Dosovitskiy.Beyer.Kolesnikov.ea.2021],
+Swin Transformer [liu2021swin],
+và MAE (bộ tự mã hóa có che) [he2022masked].</p>
+<h2 id="ma-hoa-giai-ma">Mã Hóa--Giải Mã<a class="headerlink" href="#ma-hoa-giai-ma" title="Permanent link">&para;</a></h2>
+<p>Vì bộ mã hóa Transformer chuyển đổi một chuỗi token đầu vào
+thành cùng số lượng biểu diễn đầu ra,
+chế độ chỉ mã hóa không thể tạo ra chuỗi có độ dài tùy ý như trong dịch máy.
+Như được đề xuất ban đầu cho dịch máy,
+kiến trúc Transformer có thể được trang bị thêm bộ giải mã
+dự đoán tự hồi quy chuỗi mục tiêu
+có độ dài tùy ý, từng token một,
+có điều kiện trên cả đầu ra bộ mã hóa và đầu ra bộ giải mã:
+(i) để có điều kiện trên đầu ra bộ mã hóa, attention chéo mã hóa--giải mã
+(attention đa đầu của bộ giải mã trong <a href="#fig_transformer">fig_transformer</a>)
+cho phép các token mục tiêu chú ý đến <em>tất cả</em> các token đầu vào;
+(ii) có điều kiện trên đầu ra bộ giải mã đạt được
+bởi mẫu attention được gọi là <em>nhân quả</em>
+(tên này phổ biến trong tài liệu nhưng gây hiểu lầm
+vì nó có ít liên quan đến nghiên cứu nhân quả thích hợp)
+(attention đa đầu có che của bộ giải mã trong <a href="#fig_transformer">fig_transformer</a>),
+trong đó bất kỳ token mục tiêu nào chỉ có thể chú ý đến các token <em>quá khứ</em> và <em>hiện tại</em> trong chuỗi mục tiêu.</p>
+<p>Để tiền huấn luyện Transformer mã hóa--giải mã vượt ra ngoài dữ liệu dịch máy được gán nhãn bởi con người,
+BART [lewis2019bart] và T5 [raffel2020exploring]
+là hai Transformer mã hóa--giải mã được đề xuất đồng thời
+được tiền huấn luyện trên các kho ngữ liệu văn bản quy mô lớn.
+Cả hai đều cố gắng tái tạo lại văn bản gốc trong các mục tiêu tiền huấn luyện của chúng,
+trong khi cái trước nhấn mạnh việc nhiễu hóa đầu vào
+(ví dụ: che, xóa, hoán vị và xoay)
+và cái sau nêu bật sự thống nhất đa tác vụ
+với các nghiên cứu loại trừ toàn diện.</p>
+<h3 id="tien-huan-luyen-t5">Tiền Huấn Luyện T5<a class="headerlink" href="#tien-huan-luyen-t5" title="Permanent link">&para;</a></h3>
+<p>Là một ví dụ về Transformer mã hóa--giải mã đã được tiền huấn luyện,
+T5 (Text-to-Text Transfer Transformer - Transformer Chuyển Văn Bản sang Văn Bản)
+thống nhất nhiều tác vụ như cùng một bài toán văn bản sang văn bản:
+với bất kỳ tác vụ nào, đầu vào của bộ mã hóa là mô tả tác vụ
+(ví dụ: "Tóm tắt", ":") theo sau là đầu vào tác vụ
+(ví dụ: một chuỗi token từ một bài báo),
+và bộ giải mã dự đoán đầu ra tác vụ
+(ví dụ: một chuỗi token tóm tắt bài báo đầu vào).
+Để thực hiện như văn bản sang văn bản, T5 được huấn luyện
+để tạo ra một số văn bản mục tiêu có điều kiện trên văn bản đầu vào.</p>
+<p><img alt="Trái: Tiền huấn luyện T5 bằng cách dự đoán các span liên tiếp. Câu gốc là &quot;I&quot;, &quot;love&quot;, &quot;this&quot;, &quot;red&quot;, &quot;car&quot;, trong đó &quot;love&quot; được thay thế bởi token đặc biệt &quot;&lt;X&gt;&quot;, và các từ liên tiếp &quot;red&quot;, &quot;car&quot; được thay thế bởi token đặc biệt &quot;&lt;Y&gt;&quot;. Chuỗi mục tiêu kết thúc bằng token đặc biệt &quot;&lt;Z&gt;&quot;. Phải: Mẫu attention trong Transformer mã hóa--giải mã. Trong self-attention của bộ mã hóa (hình vuông dưới), tất cả các token đầu vào chú ý đến nhau; Trong attention chéo mã hóa--giải mã (hình chữ nhật trên), mỗi token mục tiêu chú ý đến tất cả các token đầu vào; Trong self-attention của bộ giải mã (tam giác trên), mỗi token mục tiêu chỉ chú ý đến các token mục tiêu hiện tại và quá khứ (nhân quả)." src="../../img/t5-encoder-decoder.svg" />
+<a id="fig_t5-encoder-decoder"></a></p>
+<p>Để lấy đầu vào và đầu ra từ bất kỳ văn bản gốc nào,
+T5 được tiền huấn luyện để dự đoán các span liên tiếp.
+Cụ thể, các token từ văn bản ngẫu nhiên bị thay thế
+bởi các token đặc biệt trong đó mỗi span liên tiếp
+được thay thế bởi cùng một token đặc biệt.
+Xem xét ví dụ trong <a href="#fig_t5-encoder-decoder">fig_t5-encoder-decoder</a>,
+trong đó văn bản gốc là "I", "love", "this", "red", "car".
+Các token "love", "red", "car" ngẫu nhiên bị thay thế bởi các token đặc biệt.
+Vì "red" và "car" là một span liên tiếp,
+chúng được thay thế bởi cùng một token đặc biệt.
+Kết quả là, chuỗi đầu vào là "I", "&lt;X&gt;", "this", "&lt;Y&gt;",
+và chuỗi mục tiêu là
+"&lt;X&gt;", "love", "&lt;Y&gt;", "red", "car", "&lt;Z&gt;",
+trong đó "&lt;Z&gt;" là một token đặc biệt khác đánh dấu kết thúc.
+Như được hiển thị trong <a href="#fig_t5-encoder-decoder">fig_t5-encoder-decoder</a>,
+bộ giải mã có mẫu attention nhân quả để ngăn chính nó
+không chú ý đến các token tương lai trong quá trình dự đoán chuỗi.</p>
+<p>Trong T5, dự đoán span liên tiếp cũng được gọi là
+tái tạo văn bản bị hỏng.
+Với mục tiêu này, T5 được tiền huấn luyện
+với 1000 tỷ token từ dữ liệu C4
+(Colossal Clean Crawled Corpus - Kho dữ liệu Thu thập Sạch Khổng lồ),
+bao gồm văn bản tiếng Anh sạch
+từ web [raffel2020exploring].</p>
+<h3 id="tinh-chinh-t5">Tinh Chỉnh T5<a class="headerlink" href="#tinh-chinh-t5" title="Permanent link">&para;</a></h3>
+<p>Tương tự như BERT, T5 cần được tinh chỉnh (cập nhật tham số T5)
+trên dữ liệu huấn luyện cụ thể cho tác vụ để thực hiện tác vụ này.
+Các điểm khác biệt chính so với tinh chỉnh BERT bao gồm:
+(i) Đầu vào T5 bao gồm mô tả tác vụ;
+(ii) T5 có thể tạo ra chuỗi
+có độ dài tùy ý
+với bộ giải mã Transformer của nó;
+(iii) Không cần các lớp bổ sung.</p>
+<p><img alt="Tinh chỉnh T5 cho tóm tắt văn bản. Cả token mô tả tác vụ và token bài báo đều được đưa vào bộ mã hóa Transformer để dự đoán bản tóm tắt." src="../../img/t5-finetune-summarization.svg" />
+<a id="fig_t5-finetune-summarization"></a></p>
+<p><a href="#fig_t5-finetune-summarization">fig_t5-finetune-summarization</a>
+giải thích tinh chỉnh T5
+sử dụng tóm tắt văn bản làm ví dụ.
+Trong tác vụ hạ lưu này,
+các token mô tả tác vụ "Summarize", ":"
+theo sau là các token bài báo được đưa vào bộ mã hóa.</p>
+<p>Sau khi tinh chỉnh, T5 11 tỷ tham số (T5-11B)
+đạt được kết quả tiên tiến trên nhiều benchmark mã hóa (ví dụ: phân loại)
+và tạo sinh (ví dụ: tóm tắt).
+Kể từ khi được phát hành, T5 đã được sử dụng rộng rãi trong các nghiên cứu sau đó.
+Ví dụ, switch Transformer được thiết kế dựa trên T5
+để kích hoạt một tập con các tham số
+để có hiệu quả tính toán tốt hơn [fedus2022switch].
+Trong một mô hình văn bản sang ảnh được gọi là Imagen,
+văn bản được đưa vào bộ mã hóa T5 đông lạnh (T5-XXL)
+với 4,6 tỷ tham số [saharia2022photorealistic].
+Các ví dụ văn bản sang ảnh chân thực trong <a href="#fig_imagen">fig_imagen</a>
+gợi ý rằng bộ mã hóa T5 một mình có thể hiệu quả
+biểu diễn văn bản ngay cả mà không cần tinh chỉnh.</p>
+<p><img alt="Ví dụ văn bản sang ảnh của mô hình Imagen, bộ mã hóa văn bản là từ T5 (hình lấy từ saharia2022photorealistic)." src="../../img/imagen.png" />
+<a id="fig_imagen"></a></p>
+<h2 id="chi-giai-ma">Chỉ Giải Mã<a class="headerlink" href="#chi-giai-ma" title="Permanent link">&para;</a></h2>
+<p>Chúng ta đã xem xét Transformer chỉ mã hóa và mã hóa--giải mã.
+Thay vào đó, Transformer chỉ giải mã
+loại bỏ toàn bộ bộ mã hóa và lớp con bộ giải mã
+với attention chéo mã hóa--giải mã
+từ kiến trúc mã hóa--giải mã gốc
+được mô tả trong <a href="#fig_transformer">fig_transformer</a>.
+Ngày nay, Transformer chỉ giải mã đã trở thành kiến trúc <em>de facto</em>
+trong mô hình hóa ngôn ngữ quy mô lớn (<a href="#sec_language-model">sec_language-model</a>),
+tận dụng các kho ngữ liệu văn bản không có nhãn phong phú của thế giới thông qua học tự giám sát.</p>
+<h3 id="gpt-va-gpt-2">GPT và GPT-2<a class="headerlink" href="#gpt-va-gpt-2" title="Permanent link">&para;</a></h3>
+<p>Sử dụng mô hình hóa ngôn ngữ như mục tiêu huấn luyện,
+mô hình GPT (Tiền huấn luyện Tạo sinh)
+chọn một bộ giải mã Transformer
+làm xương sống của nó [Radford.Narasimhan.Salimans.ea.2018].</p>
+<p><img alt="Trái: Tiền huấn luyện GPT với mô hình hóa ngôn ngữ. Chuỗi mục tiêu là chuỗi đầu vào dịch chuyển một token. Cả &quot;&lt;bos&gt;&quot; và &quot;&lt;eos&gt;&quot; đều là các token đặc biệt đánh dấu sự bắt đầu và kết thúc của chuỗi, tương ứng. Phải: Mẫu attention trong bộ giải mã Transformer. Mỗi token dọc theo trục dọc chỉ chú ý đến các token quá khứ của nó dọc theo trục ngang (nhân quả)." src="../../img/gpt-decoder-only.svg" />
+<a id="fig_gpt-decoder-only"></a></p>
+<p>Theo huấn luyện mô hình ngôn ngữ tự hồi quy
+như được mô tả trong <a href="#subsec_partitioning-seqs">subsec_partitioning-seqs</a>,
+<a href="#fig_gpt-decoder-only">fig_gpt-decoder-only</a> minh họa
+tiền huấn luyện GPT với bộ mã hóa Transformer,
+trong đó chuỗi mục tiêu là chuỗi đầu vào dịch chuyển một token.
+Lưu ý rằng mẫu attention trong bộ giải mã Transformer
+thực thi rằng mỗi token chỉ có thể chú ý đến các token quá khứ của nó
+(các token tương lai không thể được chú ý vì chúng chưa được chọn).</p>
+<p>GPT có 100 triệu tham số và cần được
+tinh chỉnh cho các tác vụ hạ lưu riêng lẻ.
+Một mô hình ngôn ngữ bộ giải mã Transformer lớn hơn nhiều,
+GPT-2, được giới thiệu một năm sau [Radford.Wu.Child.ea.2019].
+So với bộ giải mã Transformer gốc trong GPT, pre-normalization
+(được thảo luận trong <a href="#subsec_vit-encoder">subsec_vit-encoder</a>)
+và việc khởi tạo và tỷ lệ trọng số được cải thiện đã được áp dụng trong GPT-2.
+Được tiền huấn luyện trên 40 GB văn bản, 1,5 tỷ tham số
+GPT-2 đạt được kết quả tiên tiến trên các benchmark mô hình hóa ngôn ngữ
+và kết quả hứa hẹn trên nhiều tác vụ khác
+<em>mà không cập nhật các tham số hoặc kiến trúc</em>.</p>
+<h3 id="gpt-3-va-hon-nua">GPT-3 và Hơn Nữa<a class="headerlink" href="#gpt-3-va-hon-nua" title="Permanent link">&para;</a></h3>
+<p>GPT-2 đã chứng minh tiềm năng của việc sử dụng cùng một mô hình ngôn ngữ
+cho nhiều tác vụ mà không cần cập nhật mô hình.
+Điều này hiệu quả hơn về mặt tính toán so với tinh chỉnh,
+đòi hỏi cập nhật mô hình thông qua tính toán gradient.</p>
+<p><img alt="Học trong ngữ cảnh zero-shot, one-shot, few-shot với các mô hình ngôn ngữ (bộ giải mã Transformer). Không cần cập nhật tham số." src="../../img/gpt-3-xshot.svg" />
+<a id="fig_gpt-3-xshot"></a></p>
+<p>Trước khi giải thích cách sử dụng các mô hình ngôn ngữ hiệu quả hơn về mặt tính toán mà không cần cập nhật tham số,
+hãy nhớ lại <a href="#sec_rnn-scratch">sec_rnn-scratch</a> rằng một mô hình ngôn ngữ
+có thể được huấn luyện để tạo ra một chuỗi văn bản
+có điều kiện trên một số chuỗi văn bản tiền tố.
+Do đó, một mô hình ngôn ngữ đã được tiền huấn luyện có thể tạo ra đầu ra tác vụ
+như một chuỗi <em>mà không cần cập nhật tham số</em>,
+có điều kiện trên một chuỗi đầu vào với mô tả tác vụ,
+các ví dụ đầu vào--đầu ra cụ thể cho tác vụ, và một prompt (đầu vào tác vụ).
+Mô hình học này được gọi là <em>học trong ngữ cảnh</em> [brown2020language],
+có thể được phân loại thêm thành
+<em>zero-shot</em>, <em>one-shot</em> và <em>few-shot</em>,
+khi không có, một và một vài ví dụ đầu vào--đầu ra cụ thể cho tác vụ (<a href="#fig_gpt-3-xshot">fig_gpt-3-xshot</a>).</p>
+<p><img alt="Hiệu suất tổng hợp của GPT-3 cho tất cả 42 benchmark được đo bằng độ chính xác (chú thích được điều chỉnh và hình lấy từ brown2020language)." src="../../img/gpt3-xshot-scaling.png" />
+<a id="fig_gpt3-xshot-scaling"></a></p>
+<p>Ba cài đặt này đã được kiểm tra trong GPT-3 [brown2020language],
+phiên bản lớn nhất sử dụng kích thước dữ liệu và mô hình
+lớn hơn khoảng hai bậc độ lớn so với trong GPT-2.
+GPT-3 sử dụng cùng kiến trúc bộ giải mã Transformer
+như người tiền nhiệm trực tiếp GPT-2 của nó
+ngoại trừ mẫu attention
+(bên phải trong <a href="#fig_gpt-decoder-only">fig_gpt-decoder-only</a>)
+thưa hơn ở các lớp xen kẽ.
+Được tiền huấn luyện với 300 tỷ token,
+GPT-3 hoạt động tốt hơn với kích thước mô hình lớn hơn,
+trong đó hiệu suất few-shot tăng nhanh nhất (<a href="#fig_gpt3-xshot-scaling">fig_gpt3-xshot-scaling</a>).</p>
+<p>Mô hình GPT-4 tiếp theo không tiết lộ đầy đủ chi tiết kỹ thuật trong báo cáo của nó [openai2023gpt4].
+Ngược lại với những người tiền nhiệm của nó, GPT-4
+là một mô hình đa phương thức quy mô lớn
+có thể nhận cả văn bản và ảnh làm đầu vào
+và tạo ra đầu ra văn bản.</p>
+<h2 id="kha-nang-mo-rong">Khả Năng Mở Rộng<a class="headerlink" href="#kha-nang-mo-rong" title="Permanent link">&para;</a></h2>
+<p><a href="#fig_gpt3-xshot-scaling">fig_gpt3-xshot-scaling</a> chứng minh theo thực nghiệm khả năng mở rộng
+của Transformer trong mô hình ngôn ngữ GPT-3.
+Đối với mô hình hóa ngôn ngữ, các nghiên cứu thực nghiệm toàn diện hơn
+về khả năng mở rộng của Transformer đã dẫn các nhà nghiên cứu thấy hứa hẹn
+trong việc huấn luyện các Transformer lớn hơn với nhiều dữ liệu và tính toán hơn [kaplan2020scaling].</p>
+<p><img alt="Hiệu suất mô hình ngôn ngữ Transformer cải thiện trơn tru khi chúng ta tăng kích thước mô hình, kích thước tập dữ liệu và lượng tính toán dùng để huấn luyện. Để có hiệu suất tối ưu, cả ba yếu tố phải được mở rộng cùng nhau. Hiệu suất thực nghiệm có quan hệ quy luật lũy thừa với từng yếu tố riêng lẻ khi không bị giới hạn bởi hai yếu tố còn lại (chú thích được điều chỉnh và hình lấy từ kaplan2020scaling)." src="../../img/scaling-power-law.png" />
+<a id="fig_scaling-power-law3"></a></p>
+<p>Như được hiển thị trong <a href="#fig_scaling-power-law3">fig_scaling-power-law3</a>,
+<em>mở rộng theo quy luật lũy thừa</em> có thể được quan sát trong hiệu suất
+với kích thước mô hình (số tham số, không tính các lớp embedding),
+kích thước tập dữ liệu (số token huấn luyện),
+và lượng tính toán huấn luyện (PetaFLOP/s-ngày, không tính các lớp embedding).
+Nói chung, tăng tất cả ba yếu tố này cùng nhau dẫn đến hiệu suất tốt hơn.
+Tuy nhiên, <em>làm thế nào</em> để tăng chúng cùng nhau
+vẫn còn là vấn đề gây tranh cãi [hoffmann2022training].</p>
+<p><img alt="Các lần chạy huấn luyện mô hình ngôn ngữ Transformer (hình lấy từ kaplan2020scaling)." src="../../img/scaling-sample-conv.png" />
+<a id="fig_scaling-sample-conv"></a></p>
+<p>Ngoài hiệu suất tăng, các mô hình lớn cũng có hiệu quả mẫu tốt hơn các mô hình nhỏ. <a href="#fig_scaling-sample-conv">fig_scaling-sample-conv</a> cho thấy rằng các mô hình lớn cần ít mẫu huấn luyện hơn (token được xử lý) để đạt hiệu suất ở cùng mức mà các mô hình nhỏ đạt được, và hiệu suất được mở rộng trơn tru với tính toán.</p>
+<p><img alt="Hiệu suất GPT-3 (mất mát xác thực entropy chéo) tuân theo xu hướng quy luật lũy thừa với lượng tính toán được sử dụng cho huấn luyện. Hành vi quy luật lũy thừa quan sát được trong kaplan2020scaling tiếp tục thêm hai bậc độ lớn với chỉ các độ lệch nhỏ khỏi đường cong dự đoán. Các tham số embedding bị loại trừ khỏi số đếm tính toán và tham số (chú thích được điều chỉnh và hình lấy từ brown2020language)." src="../../img/scaling-gpt3.png" />
+<a id="fig_scaling-gpt3"></a></p>
+<p>Các hành vi mở rộng thực nghiệm trong kaplan2020scaling đã được kiểm tra trong các mô hình Transformer lớn tiếp theo. Ví dụ, GPT-3 hỗ trợ giả thuyết này với thêm hai bậc độ lớn trong <a href="#fig_scaling-gpt3">fig_scaling-gpt3</a>.</p>
+<h2 id="cac-mo-hinh-ngon-ngu-lon">Các Mô Hình Ngôn Ngữ Lớn<a class="headerlink" href="#cac-mo-hinh-ngon-ngu-lon" title="Permanent link">&para;</a></h2>
+<p>Khả năng mở rộng của Transformer trong dòng GPT đã truyền cảm hứng cho các mô hình ngôn ngữ lớn tiếp theo.
+Bộ giải mã Transformer GPT-2 được sử dụng để huấn luyện Megatron-Turing NLG 530 tỷ tham số [smith2022using] với 270 tỷ token huấn luyện. Theo thiết kế GPT-2, Gopher 280 tỷ tham số [rae2021scaling] được tiền huấn luyện với 300 tỷ token, hoạt động cạnh tranh trên nhiều tác vụ đa dạng.
+Kế thừa kiến trúc tương tự và sử dụng cùng ngân sách tính toán của Gopher, Chinchilla [hoffmann2022training] là một mô hình nhỏ hơn đáng kể (70 tỷ tham số) huấn luyện lâu hơn nhiều (1,4 nghìn tỷ token huấn luyện), vượt trội hơn Gopher trên nhiều tác vụ và nhấn mạnh hơn vào số token hơn là số tham số.
+Để tiếp tục dòng mở rộng của mô hình hóa ngôn ngữ,
+PaLM (Mô Hình Ngôn Ngữ Pathway) [chowdhery2022palm], bộ giải mã Transformer 540 tỷ tham số với các thiết kế sửa đổi được tiền huấn luyện trên 780 tỷ token, vượt qua hiệu suất trung bình của con người trên benchmark BIG-Bench [srivastava2022beyond]. Phiên bản sau của nó, PaLM 2 [anil2023palm], mở rộng dữ liệu và mô hình xấp xỉ 1:1 và cải thiện khả năng đa ngôn ngữ và suy luận.
+Các mô hình ngôn ngữ lớn khác, chẳng hạn như Minerva [lewkowycz2022solving] huấn luyện thêm một mô hình tổng quát (PaLM) và Galactica [taylor2022galactica] không được huấn luyện trên kho ngữ liệu tổng quát, đã cho thấy khả năng suy luận định lượng và khoa học đầy hứa hẹn.</p>
+<p>Các phát hành nguồn mở, chẳng hạn như OPT (Open Pretrained Transformers) [zhang2022opt], BLOOM [scao2022bloom], và FALCON [penedo2023refinedweb],
+đã dân chủ hóa nghiên cứu và sử dụng các mô hình ngôn ngữ lớn.
+Tập trung vào hiệu quả tính toán tại thời điểm suy luận,
+Llama 1 nguồn mở [touvron2023llama] vượt trội hơn các mô hình lớn hơn nhiều bằng cách huấn luyện trên nhiều token hơn so với thông thường được sử dụng. Llama 2 được cập nhật [touvron2023llama2] tiếp tục tăng kho dữ liệu tiền huấn luyện thêm 40%, dẫn đến các mô hình sản phẩm có thể so sánh hiệu suất của các mô hình nguồn đóng cạnh tranh.</p>
+<p>wei2022emergent đã thảo luận về các khả năng nổi sinh của các mô hình ngôn ngữ lớn có mặt trong các mô hình lớn hơn, nhưng không có trong các mô hình nhỏ hơn.
+Tuy nhiên, chỉ đơn giản là tăng kích thước mô hình không vốn làm cho các mô hình tuân theo hướng dẫn của con người tốt hơn.
+wei2021finetuned,sanh2021multitask đã phát hiện ra rằng tinh chỉnh các mô hình ngôn ngữ lớn
+trên một loạt tập dữ liệu được mô tả qua <em>hướng dẫn</em>
+có thể cải thiện hiệu suất zero-shot trên các tác vụ ngoài tập.
+Sử dụng <em>học tăng cường từ phản hồi của con người</em>,
+ouyang2022training đã tinh chỉnh GPT-3
+để tuân theo một tập hợp hướng dẫn đa dạng.
+Theo InstructGPT kết quả
+căn chỉnh các mô hình ngôn ngữ với ý định của con người
+thông qua tinh chỉnh [ouyang2022training],
+<a href="https://chat.openai.com/">ChatGPT</a>
+có thể tạo ra các phản hồi giống con người (ví dụ: gỡ lỗi code và viết sáng tạo)
+dựa trên các cuộc trò chuyện với con người
+và có thể thực hiện nhiều tác vụ xử lý ngôn ngữ tự nhiên
+zero-shot [qin2023chatgpt].
+bai2022constitutional đã thay thế các đầu vào của con người (ví dụ: dữ liệu được gán nhãn bởi con người) bằng đầu ra mô hình
+để tự động hóa một phần quá trình điều chỉnh hướng dẫn, còn được biết đến là <em>học tăng cường từ phản hồi AI</em>.</p>
+<p>Các mô hình ngôn ngữ lớn đưa ra triển vọng thú vị
+về việc xây dựng đầu vào văn bản để khuyến khích các mô hình thực hiện các tác vụ mong muốn thông qua học trong ngữ cảnh,
+còn được gọi là <em>prompting</em>.
+Đáng chú ý,
+<em>chain-of-thought prompting</em> [wei2022chain],
+một phương pháp học trong ngữ cảnh
+với các minh chứng few-shot "câu hỏi, các bước suy luận trung gian, câu trả lời",
+khơi dậy các khả năng suy luận phức tạp của
+các mô hình ngôn ngữ lớn
+để giải quyết các tác vụ suy luận toán học, thông thường và ký hiệu.
+Lấy mẫu nhiều đường suy luận [wang2023self], đa dạng hóa các minh chứng few-shot [zhang2023automatic],
+và giảm các vấn đề phức tạp thành các bài toán con [zhou2023least]
+đều có thể cải thiện độ chính xác suy luận. Thực tế, với các prompt đơn giản như "Let's think step by step" (Hãy suy nghĩ từng bước) ngay trước mỗi câu trả lời,
+các mô hình ngôn ngữ lớn thậm chí có thể thực hiện suy luận chain-of-thought <em>zero-shot</em>
+với độ chính xác tốt [kojima2022large].
+Ngay cả đối với đầu vào đa phương thức bao gồm cả văn bản và ảnh,
+các mô hình ngôn ngữ có thể thực hiện suy luận chain-of-thought đa phương thức với độ chính xác cao hơn so với chỉ sử dụng đầu vào văn bản [zhang2023multicot].</p>
+<h2 id="tom-tat-va-thao-luan">Tóm Tắt và Thảo Luận<a class="headerlink" href="#tom-tat-va-thao-luan" title="Permanent link">&para;</a></h2>
+<p>Transformer đã được tiền huấn luyện như chỉ mã hóa (ví dụ: BERT), mã hóa--giải mã (ví dụ: T5) và chỉ giải mã (ví dụ: dòng GPT). Các mô hình đã được tiền huấn luyện có thể được điều chỉnh để thực hiện các tác vụ khác nhau với cập nhật mô hình (ví dụ: tinh chỉnh) hoặc không (ví dụ: few-shot). Khả năng mở rộng của Transformer gợi ý rằng hiệu suất tốt hơn được hưởng lợi từ các mô hình lớn hơn, nhiều dữ liệu huấn luyện hơn và nhiều tính toán huấn luyện hơn. Vì Transformer được thiết kế và tiền huấn luyện cho dữ liệu văn bản lần đầu tiên, phần này hơi nghiêng về xử lý ngôn ngữ tự nhiên. Tuy nhiên, những mô hình được thảo luận ở trên thường có thể được tìm thấy trong các mô hình gần đây hơn trên nhiều phương thức. Ví dụ,
+(i) Chinchilla [hoffmann2022training] được mở rộng thêm thành Flamingo [alayrac2022flamingo], một mô hình ngôn ngữ thị giác cho học few-shot;
+(ii) GPT-2 [Radford.Wu.Child.ea.2019] và vision Transformer mã hóa văn bản và ảnh trong CLIP (Tiền huấn luyện Ngôn ngữ-Ảnh Đối lập) [radford2021learning], các embedding ảnh và văn bản của nó sau đó được áp dụng trong hệ thống văn bản sang ảnh DALL-E 2 [ramesh2022hierarchical]. Mặc dù chưa có các nghiên cứu có hệ thống về khả năng mở rộng Transformer trong tiền huấn luyện đa phương thức, một mô hình văn bản sang ảnh all-Transformer được gọi là Parti [yu2022scaling] cho thấy tiềm năng mở rộng qua các phương thức:
+một Parti lớn hơn có khả năng tạo ảnh độ trung thực cao và hiểu văn bản phong phú nội dung hơn (<a href="#fig_parti">fig_parti</a>).</p>
+<p><img alt="Ví dụ ảnh được tạo từ cùng văn bản bởi mô hình Parti với kích thước tăng dần (350M, 750M, 3B, 20B) (ví dụ lấy từ yu2022scaling)." src="../../img/parti.png" />
+<a id="fig_parti"></a></p>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Có thể tinh chỉnh T5 sử dụng một minibatch bao gồm các tác vụ khác nhau không? Tại sao hoặc tại sao không? Còn với GPT-2 thì sao?</li>
+<li>Với một mô hình ngôn ngữ mạnh, bạn có thể nghĩ đến những ứng dụng nào?</li>
+<li>Giả sử bạn được yêu cầu tinh chỉnh một mô hình ngôn ngữ để thực hiện phân loại văn bản bằng cách thêm các lớp bổ sung. Bạn sẽ thêm chúng ở đâu? Tại sao?</li>
+<li>Xem xét các bài toán chuỗi sang chuỗi (ví dụ: dịch máy) trong đó chuỗi đầu vào luôn có sẵn trong suốt quá trình dự đoán chuỗi mục tiêu. Những hạn chế có thể có của việc mô hình hóa với Transformer chỉ giải mã là gì? Tại sao?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/9232">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

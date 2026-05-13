@@ -117,7 +117,6 @@ giá, $x_t$, của chỉ số tại thời điểm đó.
 
 
 ![Chỉ số FTSE 100 trong khoảng 30 năm.](../img/ftse100.png)
-:width:`400px`
 <a id="fig_ftse100"></a>
 
 

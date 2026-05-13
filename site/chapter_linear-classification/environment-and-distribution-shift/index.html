@@ -1,0 +1,2921 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_linear-classification/environment-and-distribution-shift/">
+      
+      
+        <link rel="prev" href="../generalization-classification/">
+      
+      
+        <link rel="next" href="../classification/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Phân phối và dịch chuyển - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#moi-truong-va-dich-chuyen-phan-phoi" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phân phối và dịch chuyển
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phân loại tuyến tính
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../softmax-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Softmax Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-classification-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu phân loại ảnh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../softmax-regression-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../softmax-regression-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generalization-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối và dịch chuyển
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối và dịch chuyển
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cac-loai-dich-chuyen-phan-phoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các Loại Dịch chuyển Phân phối
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Các Loại Dịch chuyển Phân phối">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dich-chuyen-hiep-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dịch chuyển Hiệp biến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dich-chuyen-nhan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dịch chuyển Nhãn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dich-chuyen-khai-niem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dịch chuyển Khái niệm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vi-du-ve-dich-chuyen-phan-phoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ví dụ về Dịch chuyển Phân phối
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ví dụ về Dịch chuyển Phân phối">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chan-oan-y-te" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chẩn đoán Y tế
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xe-tu-lai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xe Tự lái
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phan-phoi-khong-dung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân phối Không dừng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#them-giai-thoai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thêm Giai thoại
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-phan-phoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Phân phối
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sửa chữa Dịch chuyển Phân phối">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rui-ro-thuc-nghiem-va-rui-ro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rủi ro Thực nghiệm và Rủi ro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-hiep-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Hiệp biến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-nhan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Nhãn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-khai-niem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Khái niệm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phan-loai-cac-bai-toan-hoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân loại các Bài toán Học
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phân loại các Bài toán Học">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hoc-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Học Batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hoc-truc-tuyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Học Trực tuyến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bandits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ieu-khien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Điều khiển
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hoc-tang-cuong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Học Tăng cường
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xem-xet-moi-truong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xem xét Môi trường
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cong-bang-trach-nhiem-va-minh-bach-trong-machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Công bằng, Trách nhiệm và Minh bạch trong Machine Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lớp phân loại
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cac-loai-dich-chuyen-phan-phoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các Loại Dịch chuyển Phân phối
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Các Loại Dịch chuyển Phân phối">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dich-chuyen-hiep-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dịch chuyển Hiệp biến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dich-chuyen-nhan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dịch chuyển Nhãn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dich-chuyen-khai-niem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dịch chuyển Khái niệm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vi-du-ve-dich-chuyen-phan-phoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ví dụ về Dịch chuyển Phân phối
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ví dụ về Dịch chuyển Phân phối">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chan-oan-y-te" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chẩn đoán Y tế
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xe-tu-lai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xe Tự lái
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phan-phoi-khong-dung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân phối Không dừng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#them-giai-thoai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thêm Giai thoại
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-phan-phoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Phân phối
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sửa chữa Dịch chuyển Phân phối">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rui-ro-thuc-nghiem-va-rui-ro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rủi ro Thực nghiệm và Rủi ro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-hiep-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Hiệp biến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-nhan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Nhãn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sua-chua-dich-chuyen-khai-niem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sửa chữa Dịch chuyển Khái niệm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phan-loai-cac-bai-toan-hoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân loại các Bài toán Học
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phân loại các Bài toán Học">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hoc-batch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Học Batch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hoc-truc-tuyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Học Trực tuyến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bandits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ieu-khien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Điều khiển
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hoc-tang-cuong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Học Tăng cường
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xem-xet-moi-truong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xem xét Môi trường
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cong-bang-trach-nhiem-va-minh-bach-trong-machine-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Công bằng, Trách nhiệm và Minh bạch trong Machine Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="moi-truong-va-dich-chuyen-phan-phoi">Môi trường và Dịch chuyển Phân phối<a class="headerlink" href="#moi-truong-va-dich-chuyen-phan-phoi" title="Permanent link">&para;</a></h1>
+<p><a id="sec_environment-and-distribution-shift"></a></p>
+<p>Trong các phần trước, chúng ta đã làm việc qua
+một số ứng dụng thực tế của machine learning,
+khớp mô hình với nhiều loại bộ dữ liệu.
+Tuy nhiên, chúng ta chưa bao giờ dừng lại để suy nghĩ
+về việc dữ liệu đến từ đâu ban đầu
+hay chúng ta cuối cùng định làm gì
+với đầu ra từ mô hình của mình.
+Quá thường xuyên, các nhà phát triển machine learning
+trong tay có dữ liệu vội vã phát triển mô hình
+mà không dừng lại để xem xét những vấn đề cơ bản này.</p>
+<p>Nhiều triển khai machine learning thất bại
+có thể được truy nguyên về sự thất bại này.
+Đôi khi các mô hình có vẻ hoạt động tuyệt vời
+được đo bằng độ chính xác tập kiểm tra
+nhưng thất bại thảm hại khi triển khai
+khi phân phối dữ liệu đột nhiên thay đổi.
+Tinh tế hơn, đôi khi chính việc triển khai mô hình
+có thể là chất xúc tác gây xáo trộn phân phối dữ liệu.
+Giả sử, ví dụ, chúng ta đã huấn luyện mô hình
+để dự đoán ai sẽ trả nợ thay vì vỡ nợ,
+và thấy rằng lựa chọn giày dép của người nộp đơn
+có liên quan đến rủi ro vỡ nợ
+(giày Oxford chỉ ra trả nợ, giày thể thao chỉ ra vỡ nợ).
+Chúng ta có thể có xu hướng
+sau đó cấp khoản vay
+cho bất kỳ người nộp đơn nào đeo giày Oxford
+và từ chối tất cả người nộp đơn đeo giày thể thao.</p>
+<p>Trong trường hợp này, bước nhảy vội vàng của chúng ta từ
+nhận dạng mẫu sang ra quyết định
+và sự thất bại trong việc xem xét nghiêm túc môi trường
+có thể gây ra hậu quả thảm họa.
+Để bắt đầu, ngay khi chúng ta bắt đầu
+ra quyết định dựa trên giày dép,
+khách hàng sẽ nhận ra và thay đổi hành vi của họ.
+Trước lâu, tất cả người nộp đơn sẽ đeo giày Oxford,
+mà không có bất kỳ cải thiện nào về mức độ tín dụng.
+Hãy dành một phút để tiêu hóa điều này vì các vấn đề tương tự rất nhiều
+trong nhiều ứng dụng machine learning:
+bằng cách đưa ra các quyết định dựa trên mô hình cho môi trường,
+chúng ta có thể phá vỡ mô hình.</p>
+<p>Mặc dù chúng ta không thể xử lý những chủ đề này
+một cách đầy đủ trong một phần,
+chúng ta nhằm ở đây tiết lộ một số mối lo ngại phổ biến,
+và kích thích tư duy phê phán
+cần thiết để phát hiện sớm các tình huống như vậy,
+giảm thiểu thiệt hại, và sử dụng machine learning có trách nhiệm.
+Một số giải pháp đơn giản
+(yêu cầu dữ liệu "đúng"),
+một số khó về mặt kỹ thuật
+(cài đặt hệ thống học tăng cường),
+và một số đòi hỏi chúng ta bước ra ngoài lĩnh vực
+dự đoán thống kê hoàn toàn và
+vật lộn với các câu hỏi triết học khó khăn
+liên quan đến ứng dụng đạo đức của thuật toán.</p>
+<h2 id="cac-loai-dich-chuyen-phan-phoi">Các Loại Dịch chuyển Phân phối<a class="headerlink" href="#cac-loai-dich-chuyen-phan-phoi" title="Permanent link">&para;</a></h2>
+<p>Để bắt đầu, chúng ta gắn bó với thiết lập dự đoán thụ động
+xem xét các cách khác nhau mà phân phối dữ liệu có thể thay đổi
+và những gì có thể được thực hiện để cứu vãn hiệu suất mô hình.
+Trong một thiết lập cổ điển, chúng ta giả định rằng dữ liệu huấn luyện
+được lấy mẫu từ phân phối <span class="arithmatex">\(p_S(\mathbf{x},y)\)</span> nào đó
+nhưng dữ liệu kiểm tra của chúng ta sẽ bao gồm
+các mẫu không có nhãn được rút từ
+một phân phối khác <span class="arithmatex">\(p_T(\mathbf{x},y)\)</span>.
+Chúng ta đã phải đối mặt với thực tế đáng tỉnh táo.
+Vắng mặt bất kỳ giả định nào về cách <span class="arithmatex">\(p_S\)</span>
+và <span class="arithmatex">\(p_T\)</span> liên quan đến nhau,
+học một bộ phân loại mạnh mẽ là không thể.</p>
+<p>Xem xét bài toán phân loại nhị phân,
+khi chúng ta muốn phân biệt giữa chó và mèo.
+Nếu phân phối có thể thay đổi theo cách tùy ý,
+thì thiết lập của chúng ta cho phép trường hợp bệnh lý
+trong đó phân phối đầu vào vẫn
+không đổi: <span class="arithmatex">\(p_S(\mathbf{x}) = p_T(\mathbf{x})\)</span>,
+nhưng các nhãn đều bị lật ngược:
+<span class="arithmatex">\(p_S(y \mid \mathbf{x}) = 1 - p_T(y \mid \mathbf{x})\)</span>.
+Nói cách khác, nếu Chúa có thể đột nhiên quyết định
+rằng trong tương lai tất cả "mèo" bây giờ là chó
+và những gì chúng ta trước đây gọi là "chó" bây giờ là mèo---mà không có
+bất kỳ thay đổi nào trong phân phối đầu vào <span class="arithmatex">\(p(\mathbf{x})\)</span>,
+thì chúng ta không thể phân biệt thiết lập này
+với một thiết lập mà phân phối không thay đổi chút nào.</p>
+<p>May mắn thay, dưới một số giả định hạn chế
+về cách dữ liệu của chúng ta có thể thay đổi trong tương lai,
+các thuật toán có nguyên tắc có thể phát hiện dịch chuyển
+và đôi khi thậm chí thích nghi ngay lập tức,
+cải thiện độ chính xác của bộ phân loại ban đầu.</p>
+<h3 id="dich-chuyen-hiep-bien">Dịch chuyển Hiệp biến<a class="headerlink" href="#dich-chuyen-hiep-bien" title="Permanent link">&para;</a></h3>
+<p>Trong số các loại dịch chuyển phân phối,
+dịch chuyển hiệp biến có thể được nghiên cứu rộng rãi nhất.
+Ở đây, chúng ta giả định rằng trong khi phân phối đầu vào
+có thể thay đổi theo thời gian, hàm gán nhãn,
+tức là phân phối có điều kiện
+<span class="arithmatex">\(P(y \mid \mathbf{x})\)</span> không thay đổi.
+Các nhà thống kê gọi điều này là <em>dịch chuyển hiệp biến</em>
+vì vấn đề phát sinh do
+dịch chuyển trong phân phối của hiệp biến (đặc trưng).
+Mặc dù đôi khi chúng ta có thể lý luận về dịch chuyển phân phối
+mà không cần nhắc đến nhân quả, chúng ta lưu ý rằng dịch chuyển hiệp biến
+là giả định tự nhiên để áp dụng trong các thiết lập
+khi chúng ta tin rằng <span class="arithmatex">\(\mathbf{x}\)</span> gây ra <span class="arithmatex">\(y\)</span>.</p>
+<p>Hãy xem xét thách thức phân biệt mèo và chó.
+Dữ liệu huấn luyện của chúng ta có thể bao gồm các ảnh như trong <a href="#fig_cat-dog-train">fig_cat-dog-train</a>.</p>
+<p><img alt="Dữ liệu huấn luyện để phân biệt mèo và chó (minh họa: Lafeez Hossain / 500px / Getty Images; ilkermetinkursova / iStock / Getty Images Plus; GlobalP / iStock / Getty Images Plus; Musthafa Aboobakuru / 500px / Getty Images)." src="../../img/cat-dog-train.png" />
+<a id="fig_cat-dog-train"></a></p>
+<p>Tại thời điểm kiểm tra, chúng ta được yêu cầu phân loại các ảnh trong <a href="#fig_cat-dog-test">fig_cat-dog-test</a>.</p>
+<p><img alt="Dữ liệu kiểm tra để phân biệt mèo và chó (minh họa: SIBAS_minich / iStock / Getty Images Plus; Ghrzuzudu / iStock / Getty Images Plus; id-work / DigitalVision Vectors / Getty Images; Yime / iStock / Getty Images Plus)." src="../../img/cat-dog-test.png" />
+<a id="fig_cat-dog-test"></a></p>
+<p>Tập huấn luyện bao gồm các ảnh chụp,
+trong khi tập kiểm tra chỉ chứa các hoạt hình.
+Huấn luyện trên bộ dữ liệu với đặc điểm khác biệt đáng kể
+so với tập kiểm tra
+có thể gây rắc rối nếu không có kế hoạch nhất quán
+về cách thích nghi với miền mới.</p>
+<h3 id="dich-chuyen-nhan">Dịch chuyển Nhãn<a class="headerlink" href="#dich-chuyen-nhan" title="Permanent link">&para;</a></h3>
+<p><em>Dịch chuyển nhãn</em> mô tả vấn đề ngược lại.
+Ở đây, chúng ta giả định rằng phân phối biên nhãn <span class="arithmatex">\(P(y)\)</span>
+có thể thay đổi
+nhưng phân phối có điều kiện lớp
+<span class="arithmatex">\(P(\mathbf{x} \mid y)\)</span> vẫn cố định qua các miền.
+Dịch chuyển nhãn là giả định hợp lý khi
+chúng ta tin rằng <span class="arithmatex">\(y\)</span> gây ra <span class="arithmatex">\(\mathbf{x}\)</span>.
+Ví dụ, chúng ta có thể muốn dự đoán chẩn đoán
+dựa trên triệu chứng của chúng (hoặc các biểu hiện khác),
+ngay cả khi tần suất tương đối của chẩn đoán
+đang thay đổi theo thời gian.
+Dịch chuyển nhãn là giả định thích hợp ở đây
+vì bệnh tật gây ra triệu chứng.
+Trong một số trường hợp suy biến, giả định dịch chuyển nhãn
+và dịch chuyển hiệp biến có thể đồng thời thỏa mãn.
+Ví dụ, khi nhãn là xác định,
+giả định dịch chuyển hiệp biến sẽ được thỏa mãn,
+ngay cả khi <span class="arithmatex">\(y\)</span> gây ra <span class="arithmatex">\(\mathbf{x}\)</span>.
+Thú vị là, trong những trường hợp này,
+thường có lợi khi làm việc với các phương pháp
+xuất phát từ giả định dịch chuyển nhãn.
+Đó là vì các phương pháp này có xu hướng
+liên quan đến việc thao túng các đối tượng trông như nhãn (thường là ít chiều),
+trái ngược với các đối tượng trông như đầu vào,
+có xu hướng cao chiều trong deep learning.</p>
+<h3 id="dich-chuyen-khai-niem">Dịch chuyển Khái niệm<a class="headerlink" href="#dich-chuyen-khai-niem" title="Permanent link">&para;</a></h3>
+<p>Chúng ta cũng có thể gặp vấn đề liên quan <em>dịch chuyển khái niệm</em>,
+phát sinh khi chính các định nghĩa của nhãn có thể thay đổi.
+Điều này nghe có vẻ kỳ lạ---một <em>con mèo</em> là một <em>con mèo</em>, phải không?
+Tuy nhiên, các danh mục khác phải chịu những thay đổi trong cách sử dụng theo thời gian.
+Tiêu chí chẩn đoán bệnh tâm thần,
+những gì được coi là hợp thời trang, và chức danh công việc,
+đều phải chịu lượng đáng kể
+dịch chuyển khái niệm.
+Hóa ra nếu chúng ta đi khắp Hoa Kỳ,
+dịch chuyển nguồn dữ liệu theo địa lý,
+chúng ta sẽ tìm thấy dịch chuyển khái niệm đáng kể liên quan
+phân phối tên gọi cho <em>đồ uống có ga</em>
+như được hiển thị trong <a href="#fig_popvssoda">fig_popvssoda</a>.</p>
+<p><img alt="Dịch chuyển khái niệm cho tên đồ uống có ga ở Hoa Kỳ (CC-BY: Alan McConchie, PopVsSoda.com)." src="../../img/popvssoda.png" />
+<a id="fig_popvssoda"></a></p>
+<p>Nếu chúng ta xây dựng hệ thống dịch máy,
+phân phối <span class="arithmatex">\(P(y \mid \mathbf{x})\)</span> có thể khác nhau
+tùy thuộc vào vị trí của chúng ta.
+Vấn đề này có thể khó nhận ra.
+Chúng ta có thể hy vọng khai thác kiến thức
+rằng dịch chuyển chỉ diễn ra dần dần
+theo nghĩa thời gian hoặc địa lý.</p>
+<h2 id="vi-du-ve-dich-chuyen-phan-phoi">Ví dụ về Dịch chuyển Phân phối<a class="headerlink" href="#vi-du-ve-dich-chuyen-phan-phoi" title="Permanent link">&para;</a></h2>
+<p>Trước khi đi vào các quy tắc chính thức và thuật toán,
+chúng ta có thể thảo luận về một số tình huống cụ thể
+mà dịch chuyển hiệp biến hoặc dịch chuyển khái niệm có thể không rõ ràng.</p>
+<h3 id="chan-oan-y-te">Chẩn đoán Y tế<a class="headerlink" href="#chan-oan-y-te" title="Permanent link">&para;</a></h3>
+<p>Hãy tưởng tượng bạn muốn thiết kế thuật toán để phát hiện ung thư.
+Bạn thu thập dữ liệu từ người khỏe mạnh và bệnh nhân
+và huấn luyện thuật toán của mình.
+Nó hoạt động tốt, cho bạn độ chính xác cao
+và bạn kết luận rằng bạn đã sẵn sàng
+cho một sự nghiệp thành công trong chẩn đoán y tế.
+<em>Không phải vậy.</em></p>
+<p>Các phân phối tạo ra dữ liệu huấn luyện
+và những gì bạn sẽ gặp trong thực tế có thể khác nhau đáng kể.
+Điều này xảy ra với một startup không may mắn
+mà một số tác giả của chúng tôi đã làm việc cùng nhiều năm trước.
+Họ đang phát triển xét nghiệm máu cho một bệnh
+chủ yếu ảnh hưởng đến nam giới lớn tuổi
+và hy vọng nghiên cứu nó bằng các mẫu máu
+mà họ đã thu thập từ bệnh nhân.
+Tuy nhiên, việc lấy mẫu máu từ nam giới khỏe mạnh
+khó hơn nhiều so với bệnh nhân bệnh đã có trong hệ thống.
+Để bù đắp, startup đã vận động
+quyên góp máu từ sinh viên trên khuôn viên đại học
+để làm đối chứng khỏe mạnh trong việc phát triển thử nghiệm của họ.
+Sau đó họ hỏi liệu chúng ta có thể giúp họ
+xây dựng bộ phân loại để phát hiện bệnh không.</p>
+<p>Như chúng ta đã giải thích cho họ,
+thực sự sẽ dễ dàng phân biệt
+giữa nhóm khỏe mạnh và bệnh nhân
+với độ chính xác gần hoàn hảo.
+Tuy nhiên, đó là vì các đối tượng thử nghiệm
+khác nhau về tuổi tác, mức hormone,
+hoạt động thể chất, chế độ ăn uống, uống rượu,
+và nhiều yếu tố khác không liên quan đến bệnh.
+Điều này khó có khả năng xảy ra với bệnh nhân thực.
+Do quy trình lấy mẫu của họ,
+chúng ta có thể kỳ vọng gặp dịch chuyển hiệp biến cực độ.
+Hơn nữa, trường hợp này khó có thể
+được sửa chữa bằng các phương pháp thông thường.
+Nói ngắn gọn, họ đã lãng phí một số tiền đáng kể.</p>
+<h3 id="xe-tu-lai">Xe Tự lái<a class="headerlink" href="#xe-tu-lai" title="Permanent link">&para;</a></h3>
+<p>Giả sử một công ty muốn tận dụng machine learning
+để phát triển xe tự lái.
+Một thành phần quan trọng ở đây là máy dò vệ đường.
+Vì dữ liệu được chú thích thực sự đắt để lấy,
+họ có ý tưởng (thông minh và đáng ngờ)
+sử dụng dữ liệu tổng hợp từ engine kết xuất trò chơi
+làm dữ liệu huấn luyện bổ sung.
+Điều này hoạt động rất tốt trên "dữ liệu kiểm tra"
+được rút từ engine kết xuất.
+Thật không may, trong xe thực sự thì đó là thảm họa.
+Hóa ra, vệ đường đã được kết xuất
+với kết cấu rất đơn giản.
+Quan trọng hơn, <em>tất cả</em> vệ đường đã được kết xuất
+với <em>cùng một</em> kết cấu và máy dò vệ đường
+đã học về "đặc trưng" này rất nhanh.</p>
+<p>Điều tương tự cũng xảy ra với Quân đội Mỹ
+khi họ lần đầu tiên cố gắng phát hiện xe tăng trong rừng.
+Họ chụp ảnh hàng không của khu rừng không có xe tăng,
+sau đó lái xe tăng vào rừng
+và chụp một bộ ảnh khác.
+Bộ phân loại có vẻ hoạt động <em>hoàn hảo</em>.
+Thật không may, nó chỉ đơn giản là học
+cách phân biệt cây có bóng
+với cây không có bóng---bộ ảnh đầu tiên
+được chụp vào buổi sáng sớm,
+bộ thứ hai vào buổi trưa.</p>
+<h3 id="phan-phoi-khong-dung">Phân phối Không dừng<a class="headerlink" href="#phan-phoi-khong-dung" title="Permanent link">&para;</a></h3>
+<p>Một tình huống tinh tế hơn phát sinh
+khi phân phối thay đổi chậm
+(còn được gọi là <em>phân phối không dừng</em>)
+và mô hình không được cập nhật đầy đủ.
+Dưới đây là một số trường hợp điển hình.</p>
+<ul>
+<li>Chúng ta huấn luyện mô hình quảng cáo tính toán rồi không cập nhật nó thường xuyên (ví dụ: chúng ta quên tích hợp việc một thiết bị mới ít biết đến gọi là iPad vừa được ra mắt).</li>
+<li>Chúng ta xây dựng bộ lọc spam. Nó hoạt động tốt để phát hiện tất cả spam chúng ta đã thấy cho đến nay. Nhưng sau đó những kẻ spam trở nên thông minh hơn và tạo ra các tin nhắn mới trông khác hoàn toàn so với những gì chúng ta đã thấy trước đây.</li>
+<li>Chúng ta xây dựng hệ thống gợi ý sản phẩm. Nó hoạt động suốt mùa đông nhưng sau đó tiếp tục đề xuất mũ ông già Noel lâu sau Giáng sinh.</li>
+</ul>
+<h3 id="them-giai-thoai">Thêm Giai thoại<a class="headerlink" href="#them-giai-thoai" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Chúng ta xây dựng máy dò khuôn mặt. Nó hoạt động tốt trên tất cả benchmark. Thật không may, nó thất bại trên dữ liệu kiểm tra---các ví dụ vi phạm là ảnh cận cảnh khi khuôn mặt lấp đầy toàn bộ ảnh (không có dữ liệu như vậy trong tập huấn luyện).</li>
+<li>Chúng ta xây dựng công cụ tìm kiếm web cho thị trường Mỹ và muốn triển khai ở Anh.</li>
+<li>Chúng ta huấn luyện bộ phân loại ảnh bằng cách biên soạn bộ dữ liệu lớn trong đó mỗi lớp trong tập hợp lớn các lớp được đại diện bằng nhau trong bộ dữ liệu, chẳng hạn 1000 danh mục, mỗi danh mục được đại diện bởi 1000 ảnh. Sau đó chúng ta triển khai hệ thống trong thế giới thực, khi phân phối nhãn thực tế của ảnh rõ ràng là không đồng đều.</li>
+</ul>
+<h2 id="sua-chua-dich-chuyen-phan-phoi">Sửa chữa Dịch chuyển Phân phối<a class="headerlink" href="#sua-chua-dich-chuyen-phan-phoi" title="Permanent link">&para;</a></h2>
+<p>Như chúng ta đã thảo luận, có nhiều trường hợp
+mà phân phối huấn luyện và kiểm tra
+<span class="arithmatex">\(P(\mathbf{x}, y)\)</span> khác nhau.
+Trong một số trường hợp, chúng ta may mắn và mô hình hoạt động
+bất chấp dịch chuyển hiệp biến, nhãn, hoặc khái niệm.
+Trong các trường hợp khác, chúng ta có thể làm tốt hơn bằng cách áp dụng
+các chiến lược có nguyên tắc để đối phó với dịch chuyển.
+Phần còn lại của phần này ngày càng kỹ thuật hơn.
+Độc giả không kiên nhẫn có thể tiếp tục đến phần tiếp theo
+vì tài liệu này không phải là điều kiện tiên quyết cho các khái niệm tiếp theo.</p>
+<h3 id="rui-ro-thuc-nghiem-va-rui-ro">Rủi ro Thực nghiệm và Rủi ro<a class="headerlink" href="#rui-ro-thuc-nghiem-va-rui-ro" title="Permanent link">&para;</a></h3>
+<p><a id="subsec_empirical-risk-and-risk"></a></p>
+<p>Hãy đầu tiên phản ánh về chính xác
+những gì đang xảy ra trong quá trình huấn luyện mô hình:
+chúng ta lặp qua các đặc trưng và nhãn liên quan
+của dữ liệu huấn luyện
+<span class="arithmatex">\(\{(\mathbf{x}_1, y_1), \ldots, (\mathbf{x}_n, y_n)\}\)</span>
+và cập nhật tham số của mô hình <span class="arithmatex">\(f\)</span> sau mỗi minibatch.
+Để đơn giản, chúng ta không xét chuẩn hóa,
+do đó chúng ta phần lớn tối thiểu hóa mất mát trên huấn luyện:</p>
+<div class="arithmatex">\[\mathop{\mathrm{minimize}}_f \frac{1}{n} \sum_{i=1}^n l(f(\mathbf{x}_i), y_i),\]</div>
+<p>trong đó <span class="arithmatex">\(l\)</span> là hàm mất mát
+đo "mức độ tệ" của dự đoán <span class="arithmatex">\(f(\mathbf{x}_i)\)</span> với nhãn liên quan <span class="arithmatex">\(y_i\)</span>.
+Các nhà thống kê gọi thuật ngữ trong :eqref:<code>eq_empirical-risk-min</code> là <em>rủi ro thực nghiệm</em>.
+<em>Rủi ro thực nghiệm</em> là mất mát trung bình trên dữ liệu huấn luyện
+để xấp xỉ <em>rủi ro</em>,
+là kỳ vọng của mất mát trên toàn bộ tổng thể dữ liệu được rút từ phân phối thực của chúng
+<span class="arithmatex">\(p(\mathbf{x},y)\)</span>:</p>
+<div class="arithmatex">\[E_{p(\mathbf{x}, y)} [l(f(\mathbf{x}), y)] = \int\int l(f(\mathbf{x}), y) p(\mathbf{x}, y) \;d\mathbf{x}dy.\]</div>
+<p>Tuy nhiên, trong thực tế chúng ta thường không thể thu được toàn bộ tổng thể dữ liệu.
+Do đó, <em>tối thiểu hóa rủi ro thực nghiệm</em>,
+là tối thiểu hóa rủi ro thực nghiệm trong :eqref:<code>eq_empirical-risk-min</code>,
+là chiến lược thực tế cho machine learning,
+với hy vọng xấp xỉ
+tối thiểu hóa rủi ro.</p>
+<h3 id="sua-chua-dich-chuyen-hiep-bien">Sửa chữa Dịch chuyển Hiệp biến<a class="headerlink" href="#sua-chua-dich-chuyen-hiep-bien" title="Permanent link">&para;</a></h3>
+<p><a id="subsec_covariate-shift-correction"></a></p>
+<p>Giả sử chúng ta muốn ước tính
+một số phụ thuộc <span class="arithmatex">\(P(y \mid \mathbf{x})\)</span>
+mà chúng ta có dữ liệu có nhãn <span class="arithmatex">\((\mathbf{x}_i, y_i)\)</span>.
+Thật không may, các quan sát <span class="arithmatex">\(\mathbf{x}_i\)</span> được rút
+từ một <em>phân phối nguồn</em> <span class="arithmatex">\(q(\mathbf{x})\)</span> nào đó
+thay vì <em>phân phối mục tiêu</em> <span class="arithmatex">\(p(\mathbf{x})\)</span>.
+May mắn thay,
+giả định phụ thuộc có nghĩa là
+phân phối có điều kiện không thay đổi: <span class="arithmatex">\(p(y \mid \mathbf{x}) = q(y \mid \mathbf{x})\)</span>.
+Nếu phân phối nguồn <span class="arithmatex">\(q(\mathbf{x})\)</span> là "sai",
+chúng ta có thể sửa chữa điều đó bằng cách sử dụng đồng nhất thức đơn giản sau trong rủi ro:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\int\int l(f(\mathbf{x}), y) p(y \mid \mathbf{x})p(\mathbf{x}) \;d\mathbf{x}dy =
+\int\int l(f(\mathbf{x}), y) q(y \mid \mathbf{x})q(\mathbf{x})\frac{p(\mathbf{x})}{q(\mathbf{x})} \;d\mathbf{x}dy.
+\end{aligned}
+\]</div>
+<p>Nói cách khác, chúng ta cần cân lại mỗi mẫu dữ liệu
+bằng tỷ lệ của
+xác suất
+nó sẽ được rút từ phân phối đúng so với phân phối sai:</p>
+<div class="arithmatex">\[\beta_i \stackrel{\textrm{def}}{=} \frac{p(\mathbf{x}_i)}{q(\mathbf{x}_i)}.\]</div>
+<p>Đưa trọng số <span class="arithmatex">\(\beta_i\)</span> vào
+mỗi mẫu dữ liệu <span class="arithmatex">\((\mathbf{x}_i, y_i)\)</span>
+chúng ta có thể huấn luyện mô hình bằng cách sử dụng
+<em>tối thiểu hóa rủi ro thực nghiệm có trọng số</em>:</p>
+<div class="arithmatex">\[\mathop{\mathrm{minimize}}_f \frac{1}{n} \sum_{i=1}^n \beta_i l(f(\mathbf{x}_i), y_i).\]</div>
+<p>Thật không may, chúng ta không biết tỷ lệ đó,
+vì vậy trước khi chúng ta có thể làm bất cứ điều gì hữu ích chúng ta cần ước tính nó.
+Nhiều phương pháp có sẵn,
+bao gồm một số phương pháp lý thuyết toán tử ưa thích
+cố gắng hiệu chỉnh lại toán tử kỳ vọng trực tiếp
+bằng nguyên lý chuẩn tối thiểu hoặc entropy tối đa.
+Lưu ý rằng với bất kỳ phương pháp nào như vậy, chúng ta cần mẫu
+được rút từ cả hai phân phối---"thực" <span class="arithmatex">\(p\)</span>, ví dụ
+bằng cách truy cập dữ liệu kiểm tra, và cái được dùng
+để tạo tập huấn luyện <span class="arithmatex">\(q\)</span> (cái sau dễ dàng có sẵn).
+Lưu ý tuy nhiên rằng chúng ta chỉ cần đặc trưng <span class="arithmatex">\(\mathbf{x} \sim p(\mathbf{x})\)</span>;
+chúng ta không cần truy cập nhãn <span class="arithmatex">\(y \sim p(y)\)</span>.</p>
+<p>Trong trường hợp này, tồn tại một phương pháp rất hiệu quả
+sẽ cho kết quả gần như tốt như bản gốc: cụ thể là hồi quy logistic,
+là trường hợp đặc biệt của hồi quy softmax (xem <a href="#sec_softmax">sec_softmax</a>)
+cho phân loại nhị phân.
+Đây là tất cả những gì cần thiết để tính tỷ lệ xác suất ước tính.
+Chúng ta học một bộ phân loại để phân biệt
+giữa dữ liệu được rút từ <span class="arithmatex">\(p(\mathbf{x})\)</span>
+và dữ liệu được rút từ <span class="arithmatex">\(q(\mathbf{x})\)</span>.
+Nếu không thể phân biệt
+giữa hai phân phối
+thì điều đó có nghĩa là các mẫu liên quan
+có xác suất đến từ
+một trong hai phân phối đó bằng nhau.
+Mặt khác, bất kỳ mẫu nào
+có thể được phân biệt tốt
+nên được cân nặng đáng kể
+hoặc nhẹ đi tương ứng.</p>
+<p>Để đơn giản hóa, giả sử chúng ta có
+số lượng bằng nhau của các mẫu từ cả hai phân phối
+<span class="arithmatex">\(p(\mathbf{x})\)</span>
+và <span class="arithmatex">\(q(\mathbf{x})\)</span>, tương ứng.
+Bây giờ ký hiệu bằng <span class="arithmatex">\(z\)</span> các nhãn là <span class="arithmatex">\(1\)</span>
+cho dữ liệu được rút từ <span class="arithmatex">\(p\)</span> và <span class="arithmatex">\(-1\)</span> cho dữ liệu được rút từ <span class="arithmatex">\(q\)</span>.
+Sau đó xác suất trong bộ dữ liệu hỗn hợp là:</p>
+<div class="arithmatex">\[P(z=1 \mid \mathbf{x}) = \frac{p(\mathbf{x})}{p(\mathbf{x})+q(\mathbf{x})} \textrm{ and hence } \frac{P(z=1 \mid \mathbf{x})}{P(z=-1 \mid \mathbf{x})} = \frac{p(\mathbf{x})}{q(\mathbf{x})}.\]</div>
+<p>Vì vậy, nếu chúng ta sử dụng phương pháp hồi quy logistic,
+khi <span class="arithmatex">\(P(z=1 \mid \mathbf{x})=\frac{1}{1+\exp(-h(\mathbf{x}))}\)</span> (<span class="arithmatex">\(h\)</span> là hàm được tham số hóa),
+suy ra rằng</p>
+<div class="arithmatex">\[
+\beta_i = \frac{1/(1 + \exp(-h(\mathbf{x}_i)))}{\exp(-h(\mathbf{x}_i))/(1 + \exp(-h(\mathbf{x}_i)))} = \exp(h(\mathbf{x}_i)).
+\]</div>
+<p>Kết quả là, chúng ta cần giải hai bài toán:
+bài toán đầu tiên, phân biệt giữa
+dữ liệu được rút từ cả hai phân phối,
+và sau đó một bài toán tối thiểu hóa rủi ro thực nghiệm có trọng số
+trong :eqref:<code>eq_weighted-empirical-risk-min</code>
+khi chúng ta cân các thuật ngữ bởi <span class="arithmatex">\(\beta_i\)</span>.</p>
+<p>Bây giờ chúng ta đã sẵn sàng mô tả thuật toán sửa chữa.
+Giả sử chúng ta có tập huấn luyện <span class="arithmatex">\(\{(\mathbf{x}_1, y_1), \ldots, (\mathbf{x}_n, y_n)\}\)</span> và tập kiểm tra không có nhãn <span class="arithmatex">\(\{\mathbf{u}_1, \ldots, \mathbf{u}_m\}\)</span>.
+Với dịch chuyển hiệp biến,
+chúng ta giả định rằng <span class="arithmatex">\(\mathbf{x}_i\)</span> với mọi <span class="arithmatex">\(1 \leq i \leq n\)</span> được rút từ một phân phối nguồn nào đó
+và <span class="arithmatex">\(\mathbf{u}_i\)</span> với mọi <span class="arithmatex">\(1 \leq i \leq m\)</span>
+được rút từ phân phối mục tiêu.
+Đây là thuật toán điển hình
+để sửa chữa dịch chuyển hiệp biến:</p>
+<ol>
+<li>Tạo tập huấn luyện phân loại nhị phân: <span class="arithmatex">\(\{(\mathbf{x}_1, -1), \ldots, (\mathbf{x}_n, -1), (\mathbf{u}_1, 1), \ldots, (\mathbf{u}_m, 1)\}\)</span>.</li>
+<li>Huấn luyện bộ phân loại nhị phân bằng hồi quy logistic để có được hàm <span class="arithmatex">\(h\)</span>.</li>
+<li>Cân dữ liệu huấn luyện bằng <span class="arithmatex">\(\beta_i = \exp(h(\mathbf{x}_i))\)</span> hoặc tốt hơn <span class="arithmatex">\(\beta_i = \min(\exp(h(\mathbf{x}_i)), c)\)</span> với một hằng số <span class="arithmatex">\(c\)</span> nào đó.</li>
+<li>Sử dụng trọng số <span class="arithmatex">\(\beta_i\)</span> để huấn luyện trên <span class="arithmatex">\(\{(\mathbf{x}_1, y_1), \ldots, (\mathbf{x}_n, y_n)\}\)</span> trong :eqref:<code>eq_weighted-empirical-risk-min</code>.</li>
+</ol>
+<p>Lưu ý rằng thuật toán trên dựa trên một giả định quan trọng.
+Để sơ đồ này hoạt động, chúng ta cần mỗi mẫu dữ liệu
+trong phân phối mục tiêu (ví dụ: tại thời điểm kiểm tra)
+có xác suất xảy ra khác không tại thời điểm huấn luyện.
+Nếu chúng ta tìm thấy một điểm khi <span class="arithmatex">\(p(\mathbf{x}) &gt; 0\)</span> nhưng <span class="arithmatex">\(q(\mathbf{x}) = 0\)</span>,
+thì trọng số tầm quan trọng tương ứng phải là vô cùng.</p>
+<h3 id="sua-chua-dich-chuyen-nhan">Sửa chữa Dịch chuyển Nhãn<a class="headerlink" href="#sua-chua-dich-chuyen-nhan" title="Permanent link">&para;</a></h3>
+<p>Giả sử chúng ta đang xử lý một
+bài toán phân loại với <span class="arithmatex">\(k\)</span> danh mục.
+Sử dụng cùng ký hiệu trong <a href="#subsec_covariate-shift-correction">subsec_covariate-shift-correction</a>,
+<span class="arithmatex">\(q\)</span> và <span class="arithmatex">\(p\)</span> lần lượt là phân phối nguồn (ví dụ: tại thời điểm huấn luyện) và phân phối mục tiêu (ví dụ: tại thời điểm kiểm tra).
+Giả sử phân phối nhãn thay đổi theo thời gian:
+<span class="arithmatex">\(q(y) \neq p(y)\)</span>, nhưng phân phối có điều kiện lớp
+vẫn như cũ: <span class="arithmatex">\(q(\mathbf{x} \mid y)=p(\mathbf{x} \mid y)\)</span>.
+Nếu phân phối nguồn <span class="arithmatex">\(q(y)\)</span> là "sai",
+chúng ta có thể sửa chữa điều đó
+theo
+đồng nhất thức sau trong rủi ro
+như được định nghĩa trong
+:eqref:<code>eq_true-risk</code>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\int\int l(f(\mathbf{x}), y) p(\mathbf{x} \mid y)p(y) \;d\mathbf{x}dy =
+\int\int l(f(\mathbf{x}), y) q(\mathbf{x} \mid y)q(y)\frac{p(y)}{q(y)} \;d\mathbf{x}dy.
+\end{aligned}
+\]</div>
+<p>Ở đây, trọng số tầm quan trọng của chúng ta sẽ tương ứng với
+tỷ lệ likelihood nhãn:</p>
+<div class="arithmatex">\[\beta_i \stackrel{\textrm{def}}{=} \frac{p(y_i)}{q(y_i)}.\]</div>
+<p>Một điều tốt về dịch chuyển nhãn là
+nếu chúng ta có mô hình khá tốt
+trên phân phối nguồn,
+thì chúng ta có thể nhận được các ước tính nhất quán của các trọng số này
+mà không cần phải xử lý chiều không gian xung quanh.
+Trong deep learning, đầu vào có xu hướng
+là các đối tượng nhiều chiều như ảnh,
+trong khi nhãn thường là các đối tượng đơn giản hơn như danh mục.</p>
+<p>Để ước tính phân phối nhãn mục tiêu,
+trước tiên chúng ta lấy bộ phân loại khá tốt có sẵn của mình
+(thường được huấn luyện trên dữ liệu huấn luyện)
+và tính ma trận "nhầm lẫn" của nó bằng tập kiểm định
+(cũng từ phân phối huấn luyện).
+<em>Ma trận nhầm lẫn</em>, <span class="arithmatex">\(\mathbf{C}\)</span>, đơn giản là ma trận <span class="arithmatex">\(k \times k\)</span>,
+trong đó mỗi cột tương ứng với danh mục nhãn (sự thật cơ bản)
+và mỗi hàng tương ứng với danh mục dự đoán của mô hình chúng ta.
+Giá trị ô <span class="arithmatex">\(c_{ij}\)</span> là tỷ lệ tổng số dự đoán trên tập kiểm định
+khi nhãn thực là <span class="arithmatex">\(j\)</span> và mô hình của chúng ta dự đoán <span class="arithmatex">\(i\)</span>.</p>
+<p>Bây giờ, chúng ta không thể tính ma trận nhầm lẫn
+trực tiếp trên dữ liệu mục tiêu
+vì chúng ta không thấy các nhãn cho các mẫu
+mà chúng ta thấy trong thực tế,
+trừ khi chúng ta đầu tư vào một pipeline chú thích thời gian thực phức tạp.
+Những gì chúng ta có thể làm, tuy nhiên, là lấy trung bình tất cả dự đoán của mô hình
+tại thời điểm kiểm tra với nhau, tạo ra đầu ra trung bình của mô hình <span class="arithmatex">\(\mu(\hat{\mathbf{y}}) \in \mathbb{R}^k\)</span>,
+trong đó phần tử thứ <span class="arithmatex">\(i\)</span> <span class="arithmatex">\(\mu(\hat{y}_i)\)</span>
+là tỷ lệ tổng số dự đoán trên tập kiểm tra
+khi mô hình của chúng ta dự đoán <span class="arithmatex">\(i\)</span>.</p>
+<p>Hóa ra dưới một số điều kiện nhẹ---nếu
+bộ phân loại của chúng ta khá chính xác ban đầu,
+và nếu dữ liệu mục tiêu chỉ chứa các danh mục
+mà chúng ta đã thấy trước đây,
+và nếu giả định dịch chuyển nhãn thỏa mãn ban đầu
+(giả định mạnh nhất ở đây)---chúng ta có thể ước tính phân phối nhãn tập kiểm tra
+bằng cách giải một hệ tuyến tính đơn giản</p>
+<div class="arithmatex">\[\mathbf{C} p(\mathbf{y}) = \mu(\hat{\mathbf{y}}),\]</div>
+<p>vì như một ước tính <span class="arithmatex">\(\sum_{j=1}^k c_{ij} p(y_j) = \mu(\hat{y}_i)\)</span> đúng với mọi <span class="arithmatex">\(1 \leq i \leq k\)</span>,
+trong đó <span class="arithmatex">\(p(y_j)\)</span> là phần tử thứ <span class="arithmatex">\(j\)</span> của vector phân phối nhãn <span class="arithmatex">\(k\)</span> chiều <span class="arithmatex">\(p(\mathbf{y})\)</span>.
+Nếu bộ phân loại của chúng ta đủ chính xác ban đầu,
+thì ma trận nhầm lẫn <span class="arithmatex">\(\mathbf{C}\)</span> sẽ khả nghịch,
+và chúng ta nhận được nghiệm <span class="arithmatex">\(p(\mathbf{y}) = \mathbf{C}^{-1} \mu(\hat{\mathbf{y}})\)</span>.</p>
+<p>Vì chúng ta quan sát các nhãn trên dữ liệu nguồn,
+dễ dàng ước tính phân phối <span class="arithmatex">\(q(y)\)</span>.
+Sau đó, với bất kỳ mẫu huấn luyện <span class="arithmatex">\(i\)</span> nào có nhãn <span class="arithmatex">\(y_i\)</span>,
+chúng ta có thể lấy tỷ lệ của <span class="arithmatex">\(p(y_i)/q(y_i)\)</span> ước tính
+để tính trọng số <span class="arithmatex">\(\beta_i\)</span>,
+và đưa điều này vào tối thiểu hóa rủi ro thực nghiệm có trọng số
+trong :eqref:<code>eq_weighted-empirical-risk-min</code>.</p>
+<h3 id="sua-chua-dich-chuyen-khai-niem">Sửa chữa Dịch chuyển Khái niệm<a class="headerlink" href="#sua-chua-dich-chuyen-khai-niem" title="Permanent link">&para;</a></h3>
+<p>Dịch chuyển khái niệm khó sửa chữa hơn nhiều theo cách có nguyên tắc.
+Ví dụ, trong tình huống mà đột nhiên bài toán thay đổi
+từ phân biệt mèo và chó sang phân biệt
+động vật trắng và đen,
+sẽ không hợp lý khi giả định
+rằng chúng ta có thể làm tốt hơn nhiều so với việc chỉ thu thập nhãn mới
+và huấn luyện từ đầu.
+May mắn thay, trong thực tế, những dịch chuyển cực đoan như vậy hiếm gặp.
+Thay vào đó, những gì thường xảy ra là tác vụ tiếp tục thay đổi chậm.
+Để làm rõ hơn, đây là một số ví dụ:</p>
+<ul>
+<li>Trong quảng cáo tính toán, các sản phẩm mới được ra mắt,
+sản phẩm cũ trở nên kém phổ biến hơn. Điều này có nghĩa là phân phối quảng cáo và mức độ phổ biến của chúng thay đổi dần dần và bất kỳ bộ dự đoán tỷ lệ nhấp qua nào cũng cần thay đổi dần dần theo.</li>
+<li>Ống kính camera giao thông suy giảm dần dần do hao mòn môi trường, ảnh hưởng dần dần đến chất lượng ảnh.</li>
+<li>Nội dung tin tức thay đổi dần dần (tức là hầu hết tin tức vẫn không đổi nhưng xuất hiện các câu chuyện mới).</li>
+</ul>
+<p>Trong những trường hợp như vậy, chúng ta có thể sử dụng cùng phương pháp mà chúng ta dùng để huấn luyện mạng để khiến chúng thích nghi với sự thay đổi trong dữ liệu. Nói cách khác, chúng ta sử dụng trọng số mạng hiện có và đơn giản thực hiện một vài bước cập nhật với dữ liệu mới thay vì huấn luyện từ đầu.</p>
+<h2 id="phan-loai-cac-bai-toan-hoc">Phân loại các Bài toán Học<a class="headerlink" href="#phan-loai-cac-bai-toan-hoc" title="Permanent link">&para;</a></h2>
+<p>Được trang bị kiến thức về cách xử lý các thay đổi trong phân phối, bây giờ chúng ta có thể xem xét một số khía cạnh khác của công thức bài toán machine learning.</p>
+<h3 id="hoc-batch">Học Batch<a class="headerlink" href="#hoc-batch" title="Permanent link">&para;</a></h3>
+<p>Trong <em>học batch</em>, chúng ta có quyền truy cập vào các đặc trưng và nhãn huấn luyện <span class="arithmatex">\(\{(\mathbf{x}_1, y_1), \ldots, (\mathbf{x}_n, y_n)\}\)</span>, mà chúng ta sử dụng để huấn luyện mô hình <span class="arithmatex">\(f(\mathbf{x})\)</span>. Sau đó, chúng ta triển khai mô hình này để chấm điểm dữ liệu mới <span class="arithmatex">\((\mathbf{x}, y)\)</span> được rút từ cùng một phân phối. Đây là giả định mặc định cho bất kỳ bài toán nào chúng ta thảo luận ở đây. Ví dụ, chúng ta có thể huấn luyện máy dò mèo dựa trên nhiều ảnh của mèo và chó. Một khi chúng ta huấn luyện xong, chúng ta vận chuyển nó như một phần của hệ thống thị giác máy tính cửa thông minh cho mèo chỉ cho phép mèo vào. Sau đó nó được lắp đặt trong nhà của khách hàng và không bao giờ được cập nhật lại (ngoại trừ trường hợp cực đoan).</p>
+<h3 id="hoc-truc-tuyen">Học Trực tuyến<a class="headerlink" href="#hoc-truc-tuyen" title="Permanent link">&para;</a></h3>
+<p>Bây giờ hãy tưởng tượng rằng dữ liệu <span class="arithmatex">\((\mathbf{x}_i, y_i)\)</span> đến từng mẫu một. Cụ thể hơn, giả sử chúng ta đầu tiên quan sát <span class="arithmatex">\(\mathbf{x}_i\)</span>, sau đó chúng ta cần đưa ra ước tính <span class="arithmatex">\(f(\mathbf{x}_i)\)</span>. Chỉ sau khi chúng ta làm điều này mới quan sát <span class="arithmatex">\(y_i\)</span> và nhận phần thưởng hoặc chịu mất mát, với quyết định của chúng ta.
+Nhiều vấn đề thực tế thuộc danh mục này. Ví dụ, chúng ta cần dự đoán giá cổ phiếu ngày mai, cho phép chúng ta giao dịch dựa trên ước tính đó và cuối ngày chúng ta tìm hiểu xem ước tính của mình có tạo ra lợi nhuận không. Nói cách khác, trong <em>học trực tuyến</em>, chúng ta có chu kỳ sau khi chúng ta liên tục cải thiện mô hình dựa trên các quan sát mới:</p>
+<div class="arithmatex">\[\begin{aligned}&amp;\textrm{model } f_t \longrightarrow \textrm{data }  \mathbf{x}_t \longrightarrow \textrm{estimate } f_t(\mathbf{x}_t) \longrightarrow\\ \textrm{obs}&amp;\textrm{ervation } y_t \longrightarrow \textrm{loss } l(y_t, f_t(\mathbf{x}_t)) \longrightarrow \textrm{model } f_{t+1}\end{aligned}\]</div>
+<h3 id="bandits">Bandits<a class="headerlink" href="#bandits" title="Permanent link">&para;</a></h3>
+<p><em>Bandit</em> là trường hợp đặc biệt của bài toán trên. Trong khi ở hầu hết các bài toán học chúng ta có hàm được tham số hóa liên tục <span class="arithmatex">\(f\)</span> mà chúng ta muốn học tham số của nó (ví dụ: mạng sâu), trong bài toán <em>bandit</em> chúng ta chỉ có một số hữu hạn các cánh tay mà chúng ta có thể kéo, tức là một số hữu hạn hành động mà chúng ta có thể thực hiện. Không có gì đáng ngạc nhiên khi với bài toán đơn giản hơn này, các đảm bảo lý thuyết mạnh hơn về tính tối ưu có thể được thu được. Chúng ta liệt kê nó chủ yếu vì bài toán này thường (gây nhầm lẫn) được xử lý như thể nó là một thiết lập học khác biệt.</p>
+<h3 id="ieu-khien">Điều khiển<a class="headerlink" href="#ieu-khien" title="Permanent link">&para;</a></h3>
+<p>Trong nhiều trường hợp môi trường nhớ những gì chúng ta đã làm. Không nhất thiết theo cách thù địch nhưng nó sẽ chỉ nhớ và phản ứng sẽ phụ thuộc vào những gì đã xảy ra trước đó. Ví dụ, bộ điều khiển nồi hơi cà phê sẽ quan sát các nhiệt độ khác nhau tùy thuộc vào việc nó có đang làm nóng nồi hơi trước đó không. Các thuật toán bộ điều khiển PID (tỷ lệ-tích phân-đạo hàm) là lựa chọn phổ biến ở đó.
+Tương tự, hành vi của người dùng trên trang tin tức sẽ phụ thuộc vào những gì chúng ta đã hiển thị cho họ trước đó (ví dụ: họ sẽ đọc hầu hết tin tức chỉ một lần). Nhiều thuật toán như vậy tạo thành mô hình của môi trường mà chúng hành động để làm cho các quyết định của chúng ít ngẫu nhiên hơn.
+Gần đây,
+lý thuyết điều khiển (ví dụ: các biến thể PID) cũng đã được sử dụng
+để tự động điều chỉnh siêu tham số
+để đạt được chất lượng tách rời và tái tạo tốt hơn,
+và cải thiện sự đa dạng của văn bản được tạo ra và chất lượng tái tạo của ảnh được tạo ra [Shao.Yao.Sun.ea.2020].</p>
+<h3 id="hoc-tang-cuong">Học Tăng cường<a class="headerlink" href="#hoc-tang-cuong" title="Permanent link">&para;</a></h3>
+<p>Trong trường hợp tổng quát hơn của môi trường có bộ nhớ, chúng ta có thể gặp các tình huống khi môi trường đang cố gắng hợp tác với chúng ta (trò chơi hợp tác, đặc biệt cho các trò chơi tổng không bằng không), hoặc những trường hợp khi môi trường sẽ cố gắng thắng. Cờ vua, cờ vây, Backgammon, hoặc StarCraft là một số trường hợp trong <em>học tăng cường</em>. Tương tự, chúng ta có thể muốn xây dựng bộ điều khiển tốt cho xe tự lái. Các xe khác có thể sẽ phản ứng với phong cách lái của xe tự lái theo những cách không tầm thường, ví dụ: cố gắng tránh nó, cố gắng gây tai nạn, hoặc cố gắng hợp tác với nó.</p>
+<h3 id="xem-xet-moi-truong">Xem xét Môi trường<a class="headerlink" href="#xem-xet-moi-truong" title="Permanent link">&para;</a></h3>
+<p>Một sự khác biệt quan trọng giữa các tình huống khác nhau ở trên là chiến lược có thể hoạt động xuyên suốt trong trường hợp môi trường ổn định, có thể không hoạt động xuyên suốt trong môi trường có thể thích nghi. Ví dụ, một cơ hội chênh lệch giá được phát hiện bởi một nhà giao dịch có thể biến mất ngay khi nó bị khai thác. Tốc độ và cách thức môi trường thay đổi quyết định phần lớn loại thuật toán chúng ta có thể sử dụng. Ví dụ, nếu chúng ta biết rằng mọi thứ có thể chỉ thay đổi chậm, chúng ta có thể buộc bất kỳ ước tính nào cũng chỉ thay đổi chậm. Nếu chúng ta biết rằng môi trường có thể thay đổi ngay lập tức, nhưng rất hiếm khi, chúng ta có thể tính toán cho điều đó. Những loại kiến thức này rất quan trọng cho nhà khoa học dữ liệu đầy tham vọng trong việc xử lý dịch chuyển khái niệm, tức là khi bài toán đang được giải quyết có thể thay đổi theo thời gian.</p>
+<h2 id="cong-bang-trach-nhiem-va-minh-bach-trong-machine-learning">Công bằng, Trách nhiệm và Minh bạch trong Machine Learning<a class="headerlink" href="#cong-bang-trach-nhiem-va-minh-bach-trong-machine-learning" title="Permanent link">&para;</a></h2>
+<p>Cuối cùng, điều quan trọng cần nhớ
+là khi bạn triển khai các hệ thống machine learning
+bạn không chỉ tối ưu hóa một mô hình dự đoán---bạn
+thường cung cấp một công cụ sẽ được
+sử dụng để (một phần hoặc toàn phần) tự động hóa các quyết định.
+Các hệ thống kỹ thuật này có thể ảnh hưởng đến cuộc sống
+của các cá nhân là đối tượng của các quyết định kết quả.
+Bước nhảy từ xem xét dự đoán sang ra quyết định
+không chỉ đặt ra những câu hỏi kỹ thuật mới,
+mà còn một loạt câu hỏi đạo đức
+phải được xem xét cẩn thận.
+Nếu chúng ta đang triển khai hệ thống chẩn đoán y tế,
+chúng ta cần biết cho dân số nào
+nó có thể hoạt động và cho dân số nào thì không.
+Bỏ qua các rủi ro có thể thấy trước đối với phúc lợi của
+một dân số con có thể khiến chúng ta thực hiện chăm sóc kém chất lượng.
+Hơn nữa, một khi chúng ta suy nghĩ về các hệ thống ra quyết định,
+chúng ta phải lùi lại và xem xét lại cách chúng ta đánh giá công nghệ của mình.
+Trong số các hậu quả khác của sự thay đổi phạm vi này,
+chúng ta sẽ thấy rằng <em>độ chính xác</em> hiếm khi là thước đo đúng.
+Ví dụ, khi dịch dự đoán thành hành động,
+chúng ta thường muốn tính đến
+độ nhạy chi phí tiềm năng của việc sai theo nhiều cách khác nhau.
+Nếu một cách phân loại sai ảnh
+có thể được nhận thức là một cú lách luật chủng tộc,
+trong khi phân loại sai sang danh mục khác
+sẽ vô hại, thì chúng ta có thể muốn điều chỉnh
+ngưỡng của mình tương ứng, tính đến các giá trị xã hội
+trong thiết kế giao thức ra quyết định.
+Chúng ta cũng muốn cẩn thận về
+cách các hệ thống dự đoán có thể dẫn đến các vòng phản hồi.
+Ví dụ, hãy xem xét các hệ thống cảnh sát dự báo,
+phân bổ sĩ quan tuần tra
+cho các khu vực có tội phạm dự báo cao.
+Dễ dàng thấy một mẫu đáng lo ngại có thể xuất hiện:</p>
+<ol>
+<li>Các khu dân cư có nhiều tội phạm hơn nhận được nhiều tuần tra hơn.</li>
+<li>Do đó, nhiều tội phạm hơn được phát hiện ở những khu dân cư này, đưa vào dữ liệu huấn luyện có sẵn cho các lần lặp trong tương lai.</li>
+<li>Được tiếp xúc với nhiều mẫu dương hơn, mô hình dự đoán nhiều tội phạm hơn ở những khu dân cư này.</li>
+<li>Trong lần lặp tiếp theo, mô hình cập nhật nhắm vào cùng khu dân cư nặng hơn dẫn đến nhiều tội phạm được phát hiện hơn nữa, v.v.</li>
+</ol>
+<p>Thường xuyên, các cơ chế khác nhau theo đó
+dự đoán của mô hình trở nên gắn kết với dữ liệu huấn luyện của nó
+không được tính đến trong quá trình mô hình hóa.
+Điều này có thể dẫn đến những gì các nhà nghiên cứu gọi là <em>vòng phản hồi bùng phát</em>.
+Ngoài ra, chúng ta muốn cẩn thận về
+việc liệu chúng ta có đang giải quyết đúng bài toán ngay từ đầu hay không.
+Các thuật toán dự đoán bây giờ đóng vai trò ngoại cỡ
+trong việc trung gian hóa việc phổ biến thông tin.
+Liệu tin tức mà một cá nhân gặp
+có nên được xác định bởi tập hợp các trang Facebook mà họ đã <em>Like</em> không?
+Đây chỉ là một số ít trong số nhiều tình huống đạo đức khẩn cấp
+mà bạn có thể gặp trong sự nghiệp machine learning.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Trong nhiều trường hợp, tập huấn luyện và kiểm tra không đến từ cùng một phân phối. Điều này được gọi là dịch chuyển phân phối.
+Rủi ro là kỳ vọng của mất mát trên toàn bộ tổng thể dữ liệu được rút từ phân phối thực của chúng. Tuy nhiên, toàn bộ tổng thể này thường không có sẵn. Rủi ro thực nghiệm là mất mát trung bình trên dữ liệu huấn luyện để xấp xỉ rủi ro. Trong thực tế, chúng ta thực hiện tối thiểu hóa rủi ro thực nghiệm.</p>
+<p>Dưới các giả định tương ứng, dịch chuyển hiệp biến và nhãn có thể được phát hiện và sửa chữa tại thời điểm kiểm tra. Không tính đến sự thiên lệch này có thể trở nên có vấn đề tại thời điểm kiểm tra.
+Trong một số trường hợp, môi trường có thể nhớ các hành động tự động và phản ứng theo những cách bất ngờ. Chúng ta phải tính đến khả năng này khi xây dựng mô hình và tiếp tục theo dõi các hệ thống trực tiếp, mở với khả năng rằng các mô hình và môi trường của chúng ta sẽ trở nên đan xen theo những cách không lường trước.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Điều gì có thể xảy ra khi chúng ta thay đổi hành vi của một công cụ tìm kiếm? Người dùng có thể làm gì? Còn nhà quảng cáo thì sao?</li>
+<li>Cài đặt một máy dò dịch chuyển hiệp biến. Gợi ý: xây dựng một bộ phân loại.</li>
+<li>Cài đặt một bộ sửa chữa dịch chuyển hiệp biến.</li>
+<li>Ngoài dịch chuyển phân phối, còn gì khác có thể ảnh hưởng đến cách rủi ro thực nghiệm xấp xỉ rủi ro?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/105">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2467 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_multilayer-perceptrons/mlp/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../mlp-implementation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>MLP - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#perceptron-a-lop" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MLP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng perceptron đa lớp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLP
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lop-an" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lớp Ẩn
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lớp Ẩn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gioi-han-cua-mo-hinh-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giới hạn của Mô hình Tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ket-hop-lop-an" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kết hợp Lớp Ẩn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tu-tuyen-tinh-sang-phi-tuyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Từ Tuyến tính sang Phi tuyến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bo-xap-xi-toan-nang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bộ Xấp xỉ Toàn năng
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ham-kich-hoat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Kích hoạt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hàm Kích hoạt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ham-relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm ReLU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-sigmoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Sigmoid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-tanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Tanh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat-va-thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt và Thảo luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mlp-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai MLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lan truyền ngược
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../numerical-stability-and-init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ổn định số và khởi tạo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../generalization-deep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa sâu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dropout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dropout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kaggle-house-price/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kaggle - Giá nhà
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lop-an" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lớp Ẩn
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lớp Ẩn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gioi-han-cua-mo-hinh-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giới hạn của Mô hình Tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ket-hop-lop-an" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kết hợp Lớp Ẩn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tu-tuyen-tinh-sang-phi-tuyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Từ Tuyến tính sang Phi tuyến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bo-xap-xi-toan-nang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bộ Xấp xỉ Toàn năng
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ham-kich-hoat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Kích hoạt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hàm Kích hoạt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ham-relu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm ReLU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-sigmoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Sigmoid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-tanh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Tanh
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat-va-thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt và Thảo luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="perceptron-a-lop">Perceptron Đa lớp<a class="headerlink" href="#perceptron-a-lop" title="Permanent link">&para;</a></h1>
+<p><a id="sec_mlp"></a></p>
+<p>Trong <a href="#sec_softmax">sec_softmax</a>, chúng ta đã giới thiệu
+hồi quy softmax,
+cài đặt thuật toán từ đầu
+(<a href="#sec_softmax_scratch">sec_softmax_scratch</a>) và sử dụng API cấp cao
+(<a href="#sec_softmax_concise">sec_softmax_concise</a>). Điều này cho phép chúng ta
+huấn luyện các bộ phân loại có khả năng nhận dạng
+10 danh mục quần áo từ ảnh độ phân giải thấp.
+Trên đường đi, chúng ta đã học cách xử lý dữ liệu,
+ép các đầu ra thành phân phối xác suất hợp lệ,
+áp dụng hàm mất mát thích hợp,
+và tối thiểu hóa nó theo tham số mô hình của chúng ta.
+Bây giờ chúng ta đã thành thạo các cơ chế này
+trong ngữ cảnh các mô hình tuyến tính đơn giản,
+chúng ta có thể khởi động khám phá mạng nơ-ron sâu,
+lớp mô hình tương đối phong phú
+mà cuốn sách này chủ yếu quan tâm.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</code></pre></div>
+<h2 id="lop-an">Lớp Ẩn<a class="headerlink" href="#lop-an" title="Permanent link">&para;</a></h2>
+<p>Chúng ta đã mô tả các phép biến đổi affine trong
+<a href="#subsec_linear_model">subsec_linear_model</a> như là
+các phép biến đổi tuyến tính với hệ số chặn được thêm vào.
+Để bắt đầu, hãy nhớ lại kiến trúc mô hình
+tương ứng với ví dụ hồi quy softmax của chúng ta,
+được minh họa trong <a href="#fig_softmaxreg">fig_softmaxreg</a>.
+Mô hình này ánh xạ trực tiếp đầu vào sang đầu ra
+thông qua một phép biến đổi affine duy nhất,
+tiếp theo là một phép toán softmax.
+Nếu nhãn của chúng ta thực sự có liên quan
+đến dữ liệu đầu vào bằng một phép biến đổi affine đơn giản,
+thì phương pháp này sẽ đủ.
+Tuy nhiên, tuyến tính (trong các phép biến đổi affine) là một giả định <em>mạnh</em>.</p>
+<h3 id="gioi-han-cua-mo-hinh-tuyen-tinh">Giới hạn của Mô hình Tuyến tính<a class="headerlink" href="#gioi-han-cua-mo-hinh-tuyen-tinh" title="Permanent link">&para;</a></h3>
+<p>Ví dụ, tuyến tính ngụ ý giả định <em>yếu hơn</em>
+về <em>đơn điệu</em>, tức là
+bất kỳ sự tăng nào trong đặc trưng của chúng ta phải
+luôn gây ra sự tăng trong đầu ra mô hình của chúng ta
+(nếu trọng số tương ứng dương),
+hoặc luôn gây ra sự giảm trong đầu ra mô hình của chúng ta
+(nếu trọng số tương ứng âm).
+Đôi khi điều đó có ý nghĩa.
+Ví dụ, nếu chúng ta đang cố gắng dự đoán
+liệu một cá nhân có trả được khoản vay hay không,
+chúng ta có thể hợp lý giả định rằng tất cả mọi thứ như nhau,
+một người nộp đơn có thu nhập cao hơn
+sẽ luôn có nhiều khả năng trả hơn
+so với người có thu nhập thấp hơn.
+Mặc dù đơn điệu, mối quan hệ này có thể
+không liên quan tuyến tính đến xác suất
+trả nợ. Sự tăng thu nhập từ $0 đến $50,000
+có thể tương ứng với sự tăng lớn hơn
+trong khả năng trả nợ
+so với sự tăng từ $1 triệu đến $1.05 triệu.
+Một cách để xử lý điều này có thể là xử lý hậu kết quả của chúng ta
+để tuyến tính trở nên hợp lý hơn,
+bằng cách sử dụng ánh xạ logistic (và do đó logarit của xác suất kết quả).</p>
+<p>Lưu ý rằng chúng ta có thể dễ dàng đưa ra ví dụ
+vi phạm đơn điệu.
+Giả sử ví dụ chúng ta muốn dự đoán sức khỏe như một hàm
+của nhiệt độ cơ thể.
+Với những cá nhân có nhiệt độ cơ thể bình thường
+trên 37°C,
+nhiệt độ cao hơn cho thấy rủi ro lớn hơn.
+Tuy nhiên, nếu nhiệt độ cơ thể giảm
+xuống dưới 37°C, nhiệt độ thấp hơn cho thấy rủi ro lớn hơn!
+Một lần nữa, chúng ta có thể giải quyết vấn đề
+với một số tiền xử lý thông minh, chẳng hạn như sử dụng khoảng cách từ 37°C
+như một đặc trưng.</p>
+<p>Nhưng còn phân loại ảnh của mèo và chó thì sao?
+Tăng cường độ
+của pixel tại vị trí (13, 17)
+có luôn tăng (hoặc luôn giảm)
+xác suất ảnh mô tả một con chó không?
+Dựa vào mô hình tuyến tính tương ứng với giả định ngầm
+rằng yêu cầu duy nhất
+để phân biệt mèo và chó là đánh giá
+độ sáng của từng pixel.
+Cách tiếp cận này sẽ thất bại trong thế giới
+khi đảo ngược ảnh vẫn bảo toàn danh mục.</p>
+<p>Tuy nhiên, mặc dù tính vô lý rõ ràng của tuyến tính ở đây,
+so với các ví dụ trước của chúng ta,
+không rõ ràng rằng chúng ta có thể giải quyết vấn đề
+bằng một sửa chữa tiền xử lý đơn giản.
+Đó là, vì tầm quan trọng của bất kỳ pixel nào
+phụ thuộc theo những cách phức tạp vào ngữ cảnh của nó
+(các giá trị của các pixel xung quanh).
+Trong khi có thể tồn tại một biểu diễn dữ liệu
+tính đến
+các tương tác liên quan giữa các đặc trưng của chúng ta,
+trên đó một mô hình tuyến tính sẽ phù hợp,
+chúng ta đơn giản không biết cách tính toán nó bằng tay.
+Với mạng nơ-ron sâu, chúng ta đã sử dụng dữ liệu quan sát
+để đồng thời học cả biểu diễn qua các lớp ẩn
+và bộ dự đoán tuyến tính tác động lên biểu diễn đó.</p>
+<p>Vấn đề phi tuyến này đã được nghiên cứu ít nhất một
+thế kỷ [Fisher.1928]. Ví dụ, cây quyết định
+ở dạng cơ bản nhất sử dụng chuỗi quyết định nhị phân để
+quyết định thuộc lớp nào [quinlan2014c4]. Tương tự, các phương pháp
+kernel đã được sử dụng trong nhiều thập kỷ để mô hình hóa phụ thuộc phi tuyến
+[Aronszajn.1950]. Điều này đã tìm đường vào
+các mô hình spline phi tham số [Wahba.1990] và phương pháp kernel
+[Scholkopf.Smola.2002]. Đây cũng là điều mà não bộ giải quyết
+khá tự nhiên. Xét cho cùng, các nơ-ron nuôi vào các nơ-ron khác mà,
+lần lượt, lại nuôi vào các nơ-ron khác nữa [Cajal.Azoulay.1894].
+Do đó chúng ta có một chuỗi các phép biến đổi tương đối đơn giản.</p>
+<h3 id="ket-hop-lop-an">Kết hợp Lớp Ẩn<a class="headerlink" href="#ket-hop-lop-an" title="Permanent link">&para;</a></h3>
+<p>Chúng ta có thể vượt qua giới hạn của mô hình tuyến tính
+bằng cách kết hợp một hoặc nhiều lớp ẩn.
+Cách dễ nhất để làm điều này là xếp chồng
+nhiều lớp kết nối đầy đủ lên nhau.
+Mỗi lớp nuôi vào lớp trên nó,
+cho đến khi chúng ta tạo ra đầu ra.
+Chúng ta có thể coi <span class="arithmatex">\(L-1\)</span> lớp đầu tiên
+là biểu diễn của chúng ta và lớp cuối
+là bộ dự đoán tuyến tính của chúng ta.
+Kiến trúc này thường được gọi là
+<em>perceptron đa lớp</em>,
+thường được viết tắt là <em>MLP</em> (<a href="#fig_mlp">fig_mlp</a>).</p>
+<p><img alt="MLP với một lớp ẩn gồm năm đơn vị ẩn." src="../../img/mlp.svg" />
+<a id="fig_mlp"></a></p>
+<p>MLP này có bốn đầu vào, ba đầu ra,
+và lớp ẩn của nó chứa năm đơn vị ẩn.
+Vì lớp đầu vào không liên quan đến bất kỳ phép tính nào,
+tạo ra đầu ra với mạng này
+đòi hỏi cài đặt các phép tính
+cho cả lớp ẩn và lớp đầu ra;
+do đó, số lượng lớp trong MLP này là hai.
+Lưu ý rằng cả hai lớp đều kết nối đầy đủ.
+Mỗi đầu vào ảnh hưởng đến mỗi nơ-ron trong lớp ẩn,
+và mỗi nơ-ron trong số đó lần lượt ảnh hưởng
+đến mỗi nơ-ron trong lớp đầu ra. Tiếc là, chúng ta chưa
+xong.</p>
+<h3 id="tu-tuyen-tinh-sang-phi-tuyen">Từ Tuyến tính sang Phi tuyến<a class="headerlink" href="#tu-tuyen-tinh-sang-phi-tuyen" title="Permanent link">&para;</a></h3>
+<p>Như trước đây, chúng ta ký hiệu bằng ma trận <span class="arithmatex">\(\mathbf{X} \in \mathbb{R}^{n \times d}\)</span>
+một minibatch gồm <span class="arithmatex">\(n\)</span> mẫu khi mỗi mẫu có <span class="arithmatex">\(d\)</span> đầu vào (đặc trưng).
+Với MLP một lớp ẩn có lớp ẩn chứa <span class="arithmatex">\(h\)</span> đơn vị ẩn,
+chúng ta ký hiệu bằng <span class="arithmatex">\(\mathbf{H} \in \mathbb{R}^{n \times h}\)</span>
+các đầu ra của lớp ẩn, là
+<em>biểu diễn ẩn</em>.
+Vì lớp ẩn và lớp đầu ra đều kết nối đầy đủ,
+chúng ta có trọng số lớp ẩn <span class="arithmatex">\(\mathbf{W}^{(1)} \in \mathbb{R}^{d \times h}\)</span> và hệ số chặn <span class="arithmatex">\(\mathbf{b}^{(1)} \in \mathbb{R}^{1 \times h}\)</span>
+và trọng số lớp đầu ra <span class="arithmatex">\(\mathbf{W}^{(2)} \in \mathbb{R}^{h \times q}\)</span> và hệ số chặn <span class="arithmatex">\(\mathbf{b}^{(2)} \in \mathbb{R}^{1 \times q}\)</span>.
+Điều này cho phép chúng ta tính toán đầu ra <span class="arithmatex">\(\mathbf{O} \in \mathbb{R}^{n \times q}\)</span>
+của MLP một lớp ẩn như sau:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    \mathbf{H} &amp; = \mathbf{X} \mathbf{W}^{(1)} + \mathbf{b}^{(1)}, \\
+    \mathbf{O} &amp; = \mathbf{H}\mathbf{W}^{(2)} + \mathbf{b}^{(2)}.
+\end{aligned}
+\]</div>
+<p>Lưu ý rằng sau khi thêm lớp ẩn,
+mô hình của chúng ta bây giờ đòi hỏi chúng ta theo dõi và cập nhật
+các tập tham số bổ sung.
+Vậy chúng ta đã được gì đổi lại?
+Bạn có thể ngạc nhiên khi phát hiện ra
+rằng---trong mô hình được định nghĩa ở trên---<em>chúng ta
+không được gì cả!</em>
+Lý do rất rõ ràng.
+Các đơn vị ẩn ở trên được cho bởi
+một hàm affine của đầu vào,
+và đầu ra (pre-softmax) chỉ là
+một hàm affine của các đơn vị ẩn.
+Một hàm affine của hàm affine
+chính nó là một hàm affine.
+Hơn nữa, mô hình tuyến tính của chúng ta đã
+có khả năng biểu diễn bất kỳ hàm affine nào.</p>
+<p>Để thấy điều này một cách hình thức, chúng ta chỉ có thể thu gọn lớp ẩn trong định nghĩa trên,
+tạo ra một mô hình tương đương một lớp với tham số
+<span class="arithmatex">\(\mathbf{W} = \mathbf{W}^{(1)}\mathbf{W}^{(2)}\)</span> và <span class="arithmatex">\(\mathbf{b} = \mathbf{b}^{(1)} \mathbf{W}^{(2)} + \mathbf{b}^{(2)}\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{O} = (\mathbf{X} \mathbf{W}^{(1)} + \mathbf{b}^{(1)})\mathbf{W}^{(2)} + \mathbf{b}^{(2)} = \mathbf{X} \mathbf{W}^{(1)}\mathbf{W}^{(2)} + \mathbf{b}^{(1)} \mathbf{W}^{(2)} + \mathbf{b}^{(2)} = \mathbf{X} \mathbf{W} + \mathbf{b}.
+\]</div>
+<p>Để nhận ra tiềm năng của các kiến trúc đa lớp,
+chúng ta cần thêm một thành phần chính: một
+<em>hàm kích hoạt</em> phi tuyến <span class="arithmatex">\(\sigma\)</span>
+được áp dụng cho mỗi đơn vị ẩn
+theo sau phép biến đổi affine. Ví dụ, lựa chọn phổ biến
+là hàm kích hoạt ReLU (đơn vị tuyến tính được chỉnh lưu) [Nair.Hinton.2010]
+<span class="arithmatex">\(\sigma(x) = \mathrm{max}(0, x)\)</span> tác động lên các đối số của nó theo từng phần tử.
+Đầu ra của hàm kích hoạt <span class="arithmatex">\(\sigma(\cdot)\)</span>
+được gọi là <em>kích hoạt</em>.
+Nhìn chung, với các hàm kích hoạt được đặt vào,
+không còn có thể thu gọn MLP của chúng ta thành một mô hình tuyến tính:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+    \mathbf{H} &amp; = \sigma(\mathbf{X} \mathbf{W}^{(1)} + \mathbf{b}^{(1)}), \\
+    \mathbf{O} &amp; = \mathbf{H}\mathbf{W}^{(2)} + \mathbf{b}^{(2)}.\\
+\end{aligned}
+\]</div>
+<p>Vì mỗi hàng trong <span class="arithmatex">\(\mathbf{X}\)</span> tương ứng với một mẫu trong minibatch,
+với một số lạm dụng ký hiệu, chúng ta định nghĩa phi tuyến
+<span class="arithmatex">\(\sigma\)</span> được áp dụng cho đầu vào của nó theo từng hàng,
+tức là một mẫu mỗi lần.
+Lưu ý rằng chúng ta đã sử dụng ký hiệu tương tự cho softmax
+khi chúng ta ký hiệu một phép toán theo hàng trong <a href="#subsec_softmax_vectorization">subsec_softmax_vectorization</a>.
+Khá thường xuyên, các hàm kích hoạt chúng ta sử dụng áp dụng không chỉ theo hàng mà còn
+theo từng phần tử. Điều đó có nghĩa là sau khi tính phần tuyến tính của lớp,
+chúng ta có thể tính mỗi kích hoạt
+mà không cần nhìn vào các giá trị được lấy bởi các đơn vị ẩn khác.</p>
+<p>Để xây dựng MLP tổng quát hơn, chúng ta có thể tiếp tục xếp chồng
+các lớp ẩn như vậy,
+ví dụ: <span class="arithmatex">\(\mathbf{H}^{(1)} = \sigma_1(\mathbf{X} \mathbf{W}^{(1)} + \mathbf{b}^{(1)})\)</span>
+và <span class="arithmatex">\(\mathbf{H}^{(2)} = \sigma_2(\mathbf{H}^{(1)} \mathbf{W}^{(2)} + \mathbf{b}^{(2)})\)</span>,
+chồng lên nhau, tạo ra các mô hình ngày càng biểu đạt hơn.</p>
+<h3 id="bo-xap-xi-toan-nang">Bộ Xấp xỉ Toàn năng<a class="headerlink" href="#bo-xap-xi-toan-nang" title="Permanent link">&para;</a></h3>
+<p>Chúng ta biết rằng não bộ có khả năng phân tích thống kê rất tinh vi. Vì vậy,
+đáng hỏi, <em>mạnh mẽ như thế nào</em> một mạng sâu có thể là. Câu hỏi này
+đã được trả lời nhiều lần, ví dụ: trong Cybenko.1989 trong ngữ cảnh
+của MLP, và trong micchelli1984interpolation trong ngữ cảnh tái tạo không gian
+Hilbert kernel theo cách có thể được xem là mạng hàm cơ sở hướng tâm (RBF) với một lớp ẩn duy nhất.
+Các kết quả này (và các kết quả liên quan) gợi ý rằng ngay cả với mạng một lớp ẩn,
+với đủ nút (có thể vô lý nhiều),
+và tập trọng số đúng,
+chúng ta có thể mô hình hóa bất kỳ hàm nào.
+Thực sự học hàm đó mới là phần khó, mặc dù.
+Bạn có thể nghĩ mạng nơ-ron của mình
+giống như ngôn ngữ lập trình C.
+Ngôn ngữ này, như bất kỳ ngôn ngữ hiện đại nào khác,
+có khả năng biểu đạt bất kỳ chương trình có thể tính toán được.
+Nhưng thực sự tạo ra một chương trình
+đáp ứng các đặc tả của bạn mới là phần khó.</p>
+<p>Hơn nữa, chỉ vì mạng một lớp ẩn
+<em>có thể</em> học bất kỳ hàm nào
+không có nghĩa là bạn nên cố gắng
+giải quyết tất cả vấn đề của mình
+bằng một mạng như vậy. Thực tế, trong trường hợp này các phương pháp kernel
+hiệu quả hơn nhiều, vì chúng có khả năng giải quyết bài toán
+<em>chính xác</em> ngay cả trong không gian vô hạn chiều [Kimeldorf.Wahba.1971, Scholkopf.Herbrich.Smola.2001].
+Thực ra, chúng ta có thể xấp xỉ nhiều hàm
+gọn hơn nhiều bằng cách sử dụng các mạng sâu hơn (thay vì rộng hơn) [Simonyan.Zisserman.2014].
+Chúng ta sẽ đề cập đến các lập luận nghiêm ngặt hơn trong các chương tiếp theo.</p>
+<h2 id="ham-kich-hoat">Hàm Kích hoạt<a class="headerlink" href="#ham-kich-hoat" title="Permanent link">&para;</a></h2>
+<p><a id="subsec_activation-functions"></a></p>
+<p>Hàm kích hoạt quyết định liệu một nơ-ron có nên được kích hoạt hay không bằng cách
+tính tổng có trọng số và thêm hệ số chặn vào nó.
+Chúng là các toán tử khả vi để biến đổi tín hiệu đầu vào sang đầu ra,
+trong khi hầu hết chúng thêm phi tuyến.
+Vì hàm kích hoạt là nền tảng của deep learning,
+(<strong>hãy khảo sát ngắn gọn một số loại phổ biến</strong>).</p>
+<h3 id="ham-relu">Hàm ReLU<a class="headerlink" href="#ham-relu" title="Permanent link">&para;</a></h3>
+<p>Lựa chọn phổ biến nhất,
+nhờ cả sự đơn giản của cài đặt và
+hiệu suất tốt của nó trên nhiều tác vụ dự đoán,
+là <em>đơn vị tuyến tính được chỉnh lưu</em> (<em>ReLU</em>) [Nair.Hinton.2010].
+[<strong>ReLU cung cấp một phép biến đổi phi tuyến rất đơn giản</strong>].
+Cho một phần tử <span class="arithmatex">\(x\)</span>, hàm được định nghĩa
+là giá trị tối đa của phần tử đó và <span class="arithmatex">\(0\)</span>:</p>
+<div class="arithmatex">\[\operatorname{ReLU}(x) = \max(x, 0).\]</div>
+<p>Nói một cách thông thường, hàm ReLU chỉ giữ lại các
+phần tử dương và loại bỏ tất cả các phần tử âm
+bằng cách đặt các kích hoạt tương ứng thành 0.
+Để có trực giác, chúng ta có thể vẽ hàm.
+Như bạn thấy, hàm kích hoạt là tuyến tính từng đoạn.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">8.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;relu(x)&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+</code></pre></div>
+<p>Khi đầu vào âm,
+đạo hàm của hàm ReLU là 0,
+và khi đầu vào dương,
+đạo hàm của hàm ReLU là 1.
+Lưu ý rằng hàm ReLU không khả vi
+khi đầu vào bằng chính xác 0.
+Trong những trường hợp này, chúng ta mặc định về phía bên trái
+đạo hàm và nói rằng đạo hàm là 0 khi đầu vào là 0.
+Chúng ta có thể làm điều này vì
+đầu vào có thể không bao giờ thực sự bằng không (các nhà toán học sẽ
+nói rằng nó không khả vi trên một tập có đo bằng không).
+Có một câu ngạn ngữ cũ rằng nếu các điều kiện biên tinh tế quan trọng,
+chúng ta có thể đang làm (<em>thực sự</em>) toán học, không phải kỹ thuật.
+Sự khôn ngoan thông thường đó có thể áp dụng ở đây, hoặc ít nhất, thực tế là
+chúng ta không thực hiện tối ưu hóa có ràng buộc [Mangasarian.1965, Rockafellar.1970].
+Chúng ta vẽ đạo hàm của hàm ReLU bên dưới.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">retain_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;grad of relu&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+</code></pre></div>
+<p>Lý do sử dụng ReLU là
+các đạo hàm của nó hoạt động đặc biệt tốt:
+hoặc chúng biến mất hoặc chúng chỉ để đối số đi qua.
+Điều này làm cho tối ưu hóa hoạt động tốt hơn
+và nó giảm thiểu vấn đề được ghi chép rõ ràng
+về gradient biến mất đã làm khó chịu
+các phiên bản trước của mạng nơ-ron (sẽ nói thêm về điều này sau).</p>
+<p>Lưu ý rằng có nhiều biến thể của hàm ReLU,
+bao gồm hàm <em>ReLU được tham số hóa</em> (<em>pReLU</em>) [He.Zhang.Ren.ea.2015].
+Biến thể này thêm một số hạng tuyến tính vào ReLU,
+vì vậy một số thông tin vẫn được truyền qua,
+ngay cả khi đối số âm:</p>
+<div class="arithmatex">\[\operatorname{pReLU}(x) = \max(0, x) + \alpha \min(0, x).\]</div>
+<h3 id="ham-sigmoid">Hàm Sigmoid<a class="headerlink" href="#ham-sigmoid" title="Permanent link">&para;</a></h3>
+<p>[<strong>Hàm <em>sigmoid</em> biến đổi những đầu vào</strong>]
+có giá trị nằm trong miền <span class="arithmatex">\(\mathbb{R}\)</span>,
+(<strong>thành đầu ra nằm trong khoảng (0, 1).</strong>)
+Vì lý do đó, sigmoid
+thường được gọi là <em>hàm nén</em>:
+nó nén bất kỳ đầu vào nào trong phạm vi (-inf, inf)
+thành một giá trị nào đó trong phạm vi (0, 1):</p>
+<div class="arithmatex">\[\operatorname{sigmoid}(x) = \frac{1}{1 + \exp(-x)}.\]</div>
+<p>Trong các mạng nơ-ron đầu tiên, các nhà khoa học
+quan tâm đến việc mô hình hóa các nơ-ron sinh học
+mà <em>kích hoạt</em> hoặc <em>không kích hoạt</em>.
+Do đó những người tiên phong trong lĩnh vực này,
+truy nguyên về tận McCulloch và Pitts,
+những người phát minh ra nơ-ron nhân tạo,
+tập trung vào các đơn vị ngưỡng [McCulloch.Pitts.1943].
+Kích hoạt ngưỡng lấy giá trị 0
+khi đầu vào dưới một số ngưỡng
+và giá trị 1 khi đầu vào vượt ngưỡng.</p>
+<p>Khi sự chú ý chuyển sang học dựa trên gradient,
+hàm sigmoid là lựa chọn tự nhiên
+vì nó là một xấp xỉ mịn, khả vi
+cho đơn vị ngưỡng.
+Sigmoid vẫn được sử dụng rộng rãi như là
+hàm kích hoạt trên các đơn vị đầu ra
+khi chúng ta muốn diễn giải đầu ra như xác suất
+cho các bài toán phân loại nhị phân: bạn có thể nghĩ sigmoid là trường hợp đặc biệt của softmax.
+Tuy nhiên, sigmoid đã phần lớn được thay thế
+bởi ReLU đơn giản hơn và dễ huấn luyện hơn
+cho hầu hết sử dụng trong lớp ẩn. Phần lớn điều này liên quan
+đến việc sigmoid đặt ra thách thức cho tối ưu hóa
+[LeCun.Bottou.Orr.ea.1998] vì gradient của nó biến mất với đối số dương <em>và</em> âm lớn.
+Điều này có thể dẫn đến các bình nguyên khó thoát ra.
+Tuy nhiên sigmoid vẫn quan trọng. Trong các chương sau (ví dụ: <a href="#sec_lstm">sec_lstm</a>) về mạng nơ-ron hồi tiếp,
+chúng ta sẽ mô tả các kiến trúc tận dụng đơn vị sigmoid
+để kiểm soát luồng thông tin theo thời gian.</p>
+<p>Bên dưới, chúng ta vẽ hàm sigmoid.
+Lưu ý rằng khi đầu vào gần 0,
+hàm sigmoid tiến gần đến
+một phép biến đổi tuyến tính.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;sigmoid(x)&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+</code></pre></div>
+<p>Đạo hàm của hàm sigmoid được cho bởi phương trình sau:</p>
+<div class="arithmatex">\[\frac{d}{dx} \operatorname{sigmoid}(x) = \frac{\exp(-x)}{(1 + \exp(-x))^2} = \operatorname{sigmoid}(x)\left(1-\operatorname{sigmoid}(x)\right).\]</div>
+<p>Đạo hàm của hàm sigmoid được vẽ bên dưới.
+Lưu ý rằng khi đầu vào là 0,
+đạo hàm của hàm sigmoid
+đạt giá trị tối đa là 0.25.
+Khi đầu vào phân kỳ khỏi 0 theo bất kỳ hướng nào,
+đạo hàm tiến gần đến 0.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Clear out previous gradients</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">retain_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;grad of sigmoid&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="ham-tanh">Hàm Tanh<a class="headerlink" href="#ham-tanh" title="Permanent link">&para;</a></h3>
+<p><a id="subsec_tanh"></a></p>
+<p>Giống như hàm sigmoid, [<strong>hàm tanh (tiếp tuyến hypebol)
+cũng nén đầu vào của nó</strong>],
+biến đổi chúng thành các phần tử trong khoảng (<strong>giữa <span class="arithmatex">\(-1\)</span> và <span class="arithmatex">\(1\)</span></strong>):</p>
+<div class="arithmatex">\[\operatorname{tanh}(x) = \frac{1 - \exp(-2x)}{1 + \exp(-2x)}.\]</div>
+<p>Chúng ta vẽ hàm tanh bên dưới. Lưu ý khi đầu vào tiến gần 0, hàm tanh tiến gần đến một phép biến đổi tuyến tính. Mặc dù hình dạng của hàm tương tự như hàm sigmoid, hàm tanh thể hiện đối xứng điểm về gốc tọa độ [Kalman.Kwasny.1992].</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;tanh(x)&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+</code></pre></div>
+<p>Đạo hàm của hàm tanh là:</p>
+<div class="arithmatex">\[\frac{d}{dx} \operatorname{tanh}(x) = 1 - \operatorname{tanh}^2(x).\]</div>
+<p>Nó được vẽ bên dưới.
+Khi đầu vào tiến gần 0,
+đạo hàm của hàm tanh tiến gần đến giá trị tối đa là 1.
+Và như chúng ta đã thấy với hàm sigmoid,
+khi đầu vào di chuyển ra khỏi 0 theo bất kỳ hướng nào,
+đạo hàm của hàm tanh tiến gần đến 0.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Clear out previous gradients</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">y</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">retain_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;grad of tanh&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+</code></pre></div>
+<h2 id="tom-tat-va-thao-luan">Tóm tắt và Thảo luận<a class="headerlink" href="#tom-tat-va-thao-luan" title="Permanent link">&para;</a></h2>
+<p>Bây giờ chúng ta biết cách kết hợp phi tuyến
+để xây dựng các kiến trúc mạng nơ-ron đa lớp biểu đạt.
+Như một ghi chú phụ, kiến thức của bạn đã
+đặt bạn nắm quyền một bộ công cụ tương tự
+với người thực hành vào khoảng năm 1990.
+Theo một nghĩa nào đó, bạn có lợi thế
+hơn bất kỳ ai làm việc thời đó,
+vì bạn có thể tận dụng các framework deep learning
+mã nguồn mở mạnh mẽ
+để xây dựng mô hình nhanh chóng, chỉ sử dụng vài dòng code.
+Trước đây, huấn luyện các mạng này
+đòi hỏi các nhà nghiên cứu phải viết code các lớp và đạo hàm
+một cách tường minh trong C, Fortran, hoặc thậm chí Lisp (trong trường hợp LeNet).</p>
+<p>Một lợi ích thứ cấp là ReLU dễ tối ưu hóa hơn đáng kể
+so với sigmoid hoặc hàm tanh. Người ta có thể lập luận
+rằng đây là một trong những đổi mới chính đã giúp sự phục hưng
+của deep learning trong thập kỷ qua. Lưu ý, tuy nhiên, rằng nghiên cứu về
+hàm kích hoạt chưa dừng lại.
+Ví dụ,
+hàm kích hoạt GELU (đơn vị tuyến tính lỗi Gaussian)
+<span class="arithmatex">\(x \Phi(x)\)</span> bởi Hendrycks.Gimpel.2016 (<span class="arithmatex">\(\Phi(x)\)</span>
+là hàm phân phối tích lũy Gaussian chuẩn)
+và
+hàm kích hoạt Swish
+<span class="arithmatex">\(\sigma(x) = x \operatorname{sigmoid}(\beta x)\)</span> được đề xuất trong Ramachandran.Zoph.Le.2017 có thể mang lại độ chính xác tốt hơn
+trong nhiều trường hợp.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Chứng minh rằng việc thêm lớp vào mạng sâu <em>tuyến tính</em>, tức là mạng không có
+   phi tuyến <span class="arithmatex">\(\sigma\)</span>, không bao giờ có thể tăng sức mạnh biểu đạt của mạng.
+   Đưa ra ví dụ khi nó chủ động giảm đi.</li>
+<li>Tính đạo hàm của hàm kích hoạt pReLU.</li>
+<li>Tính đạo hàm của hàm kích hoạt Swish <span class="arithmatex">\(x \operatorname{sigmoid}(\beta x)\)</span>.</li>
+<li>Chứng minh rằng MLP chỉ sử dụng ReLU (hoặc pReLU) xây dựng một
+   hàm tuyến tính từng đoạn liên tục.</li>
+<li>Sigmoid và tanh rất giống nhau.<ol>
+<li>Chứng minh <span class="arithmatex">\(\operatorname{tanh}(x) + 1 = 2 \operatorname{sigmoid}(2x)\)</span>.</li>
+<li>Chứng minh rằng các lớp hàm được tham số hóa bởi cả hai phi tuyến đều giống hệt nhau. Gợi ý: các lớp affine cũng có số hạng hệ số chặn.</li>
+</ol>
+</li>
+<li>Giả sử chúng ta có một phi tuyến được áp dụng cho một minibatch mỗi lần, chẳng hạn như chuẩn hóa batch [Ioffe.Szegedy.2015]. Bạn kỳ vọng điều này gây ra vấn đề gì?</li>
+<li>Đưa ra ví dụ khi gradient biến mất với hàm kích hoạt sigmoid.</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/91">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

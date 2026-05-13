@@ -72,7 +72,6 @@ trước tiên bạn sẽ cần đăng ký tài khoản
 (xem [fig_kaggle](#fig_kaggle)).
 
 ![Trang web Kaggle.](../img/kaggle.png)
-:width:`400px`
 <a id="fig_kaggle"></a>
 
 Trên trang cuộc thi dự đoán giá nhà, như được minh họa
@@ -84,7 +83,6 @@ URL ở đây:
 > https://www.kaggle.com/c/house-prices-advanced-regression-techniques
 
 ![Trang cuộc thi dự đoán giá nhà.](../img/house-pricing.png)
-:width:`400px`
 <a id="fig_house_pricing"></a>
 
 ## Truy cập và Đọc Tập dữ liệu
@@ -385,7 +383,6 @@ Các bước khá đơn giản:
 * Nhấp vào nút "Make Submission" ở cuối trang để xem kết quả của bạn.
 
 ![Nộp dữ liệu lên Kaggle.](../img/kaggle-submit2.png)
-:width:`400px`
 <a id="fig_kaggle_submit2"></a>
 
 ## Tóm tắt và Thảo luận

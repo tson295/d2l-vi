@@ -1,0 +1,2346 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_recurrent-modern/lstm/">
+      
+      
+        <link rel="prev" href="../gru/">
+      
+      
+        <link rel="next" href="../deep-rnn/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>LSTM - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bo-nho-ngan-han-dai-lstm" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LSTM
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RNN hiện đại
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gru/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GRU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LSTM
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LSTM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#o-nho-co-cong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ô Nhớ Có Cổng
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ô Nhớ Có Cổng">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trang-thai-an-co-cong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trạng Thái Ẩn Có Cổng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cong-au-vao-cong-quen-va-cong-au-ra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cổng Đầu Vào, Cổng Quên và Cổng Đầu Ra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nut-au-vao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút Đầu Vào
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trang-thai-noi-bo-cua-o-nho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trạng Thái Nội Bộ Của Ô Nhớ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trang-thai-an" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trạng Thái Ẩn
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lap-trinh-tu-au" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lập Trình Từ Đầu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lập Trình Từ Đầu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#khoi-tao-tham-so-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Khởi Tạo Tham Số Mô Hình]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huan-luyen-va-du-oan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Huấn Luyện] và Dự Đoán
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lap-trinh-suc-tich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Lập Trình Súc Tích]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deep-rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN sâu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bi-rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hai chiều
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../machine-translation-and-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dịch máy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encoder-decoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encoder-Decoder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../seq2seq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seq2Seq
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../beam-search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#o-nho-co-cong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ô Nhớ Có Cổng
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ô Nhớ Có Cổng">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#trang-thai-an-co-cong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trạng Thái Ẩn Có Cổng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cong-au-vao-cong-quen-va-cong-au-ra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cổng Đầu Vào, Cổng Quên và Cổng Đầu Ra
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nut-au-vao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nút Đầu Vào
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trang-thai-noi-bo-cua-o-nho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trạng Thái Nội Bộ Của Ô Nhớ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trang-thai-an" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trạng Thái Ẩn
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lap-trinh-tu-au" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lập Trình Từ Đầu
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lập Trình Từ Đầu">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#khoi-tao-tham-so-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Khởi Tạo Tham Số Mô Hình]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huan-luyen-va-du-oan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Huấn Luyện] và Dự Đoán
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lap-trinh-suc-tich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Lập Trình Súc Tích]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="bo-nho-ngan-han-dai-lstm">Bộ Nhớ Ngắn Hạn Dài (LSTM)<a class="headerlink" href="#bo-nho-ngan-han-dai-lstm" title="Permanent link">&para;</a></h1>
+<p><a id="sec_lstm"></a></p>
+<p>Ngay sau khi các mạng RNN kiểu Elman đầu tiên được huấn luyện bằng lan truyền ngược
+[elman1990finding], các vấn đề về học phụ thuộc dài hạn
+(do gradient biến mất và bùng nổ)
+trở nên nổi bật, khi Bengio và Hochreiter
+thảo luận về vấn đề này
+[bengio1994learning, Hochreiter.Bengio.Frasconi.ea.2001].
+Hochreiter đã phát biểu vấn đề này từ năm 1991 trong luận văn Thạc sĩ của mình, mặc dù kết quả
+không được biết đến rộng rãi vì luận văn được viết bằng tiếng Đức.
+Trong khi cắt gradient giúp xử lý gradient bùng nổ,
+việc xử lý gradient biến mất dường như
+đòi hỏi một giải pháp phức tạp hơn.
+Một trong những kỹ thuật đầu tiên và thành công nhất
+để giải quyết gradient biến mất
+xuất hiện dưới dạng mô hình bộ nhớ ngắn hạn dài (LSTM)
+do Hochreiter.Schmidhuber.1997 đề xuất.
+LSTM giống với mạng nơ-ron hồi tiếp tiêu chuẩn
+nhưng ở đây mỗi nút hồi tiếp thông thường
+được thay thế bằng một <em>ô nhớ</em>.
+Mỗi ô nhớ chứa một <em>trạng thái nội bộ</em>,
+tức là một nút với cạnh hồi tiếp tự kết nối có trọng số cố định bằng 1,
+đảm bảo rằng gradient có thể truyền qua nhiều bước thời gian
+mà không bị biến mất hay bùng nổ.</p>
+<p>Thuật ngữ "bộ nhớ ngắn hạn dài" xuất phát từ trực giác sau.
+Mạng nơ-ron hồi tiếp đơn giản
+có <em>bộ nhớ dài hạn</em> dưới dạng các trọng số.
+Các trọng số thay đổi chậm trong quá trình huấn luyện,
+mã hóa kiến thức chung về dữ liệu.
+Chúng cũng có <em>bộ nhớ ngắn hạn</em>
+dưới dạng các kích hoạt tạm thời,
+truyền từ mỗi nút đến các nút tiếp theo.
+Mô hình LSTM giới thiệu một loại lưu trữ trung gian qua ô nhớ.
+Một ô nhớ là đơn vị tổng hợp,
+được xây dựng từ các nút đơn giản hơn
+theo một mẫu kết nối cụ thể,
+với sự bổ sung mới lạ của các nút nhân.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+</code></pre></div>
+<h2 id="o-nho-co-cong">Ô Nhớ Có Cổng<a class="headerlink" href="#o-nho-co-cong" title="Permanent link">&para;</a></h2>
+<p>Mỗi ô nhớ được trang bị một <em>trạng thái nội bộ</em>
+và một số cổng nhân xác định liệu
+(i) một đầu vào nhất định có ảnh hưởng đến trạng thái nội bộ không (the <em>cổng đầu vào</em>),
+(ii) trạng thái nội bộ có nên được xóa về <span class="arithmatex">\(0\)</span> không (the <em>cổng quên</em>),
+và (iii) trạng thái nội bộ của một nơ-ron nhất định
+có được phép ảnh hưởng đến đầu ra của ô không (the <em>cổng đầu ra</em>).</p>
+<h3 id="trang-thai-an-co-cong">Trạng Thái Ẩn Có Cổng<a class="headerlink" href="#trang-thai-an-co-cong" title="Permanent link">&para;</a></h3>
+<p>Điểm phân biệt chính giữa RNN thông thường và LSTM
+là LSTM hỗ trợ kiểm soát bằng cổng của trạng thái ẩn.
+Điều này có nghĩa là chúng ta có các cơ chế chuyên dụng cho
+khi nào trạng thái ẩn nên được <em>cập nhật</em> và
+cả khi nào nó nên được <em>đặt lại</em>.
+Các cơ chế này được học và chúng giải quyết các vấn đề được liệt kê ở trên.
+Chẳng hạn, nếu token đầu tiên rất quan trọng
+chúng ta sẽ học không cập nhật trạng thái ẩn sau quan sát đầu tiên.
+Tương tự, chúng ta sẽ học cách bỏ qua các quan sát tạm thời không liên quan.
+Cuối cùng, chúng ta sẽ học cách đặt lại trạng thái ẩn bất cứ khi nào cần thiết.
+Chúng ta thảo luận điều này chi tiết dưới đây.</p>
+<h3 id="cong-au-vao-cong-quen-va-cong-au-ra">Cổng Đầu Vào, Cổng Quên và Cổng Đầu Ra<a class="headerlink" href="#cong-au-vao-cong-quen-va-cong-au-ra" title="Permanent link">&para;</a></h3>
+<p>Dữ liệu đưa vào các cổng LSTM là
+đầu vào tại bước thời gian hiện tại và
+trạng thái ẩn của bước thời gian trước,
+như minh họa trong <a href="#fig_lstm_0">fig_lstm_0</a>.
+Ba lớp kết nối đầy đủ với hàm kích hoạt sigmoid
+tính toán các giá trị của cổng đầu vào, cổng quên và cổng đầu ra.
+Do hàm kích hoạt sigmoid,
+tất cả các giá trị của ba cổng
+đều nằm trong khoảng <span class="arithmatex">\((0, 1)\)</span>.
+Ngoài ra, chúng ta yêu cầu một <em>nút đầu vào</em>,
+thường được tính với hàm kích hoạt <em>tanh</em>.
+Theo trực giác, <em>cổng đầu vào</em> xác định bao nhiêu
+giá trị của nút đầu vào nên được thêm vào
+trạng thái nội bộ của ô nhớ hiện tại.
+<em>Cổng quên</em> xác định liệu có giữ
+giá trị hiện tại của bộ nhớ hay xóa nó.
+Và <em>cổng đầu ra</em> xác định liệu
+ô nhớ có nên ảnh hưởng đến đầu ra
+tại bước thời gian hiện tại không.</p>
+<p><img alt="Tính toán cổng đầu vào, cổng quên và cổng đầu ra trong mô hình LSTM." src="../../img/lstm-0.svg" />
+<a id="fig_lstm_0"></a></p>
+<p>Về mặt toán học, giả sử có <span class="arithmatex">\(h\)</span> đơn vị ẩn,
+kích thước batch là <span class="arithmatex">\(n\)</span>, và số lượng đầu vào là <span class="arithmatex">\(d\)</span>.
+Do đó, đầu vào là <span class="arithmatex">\(\mathbf{X}_t \in \mathbb{R}^{n \times d}\)</span>
+và trạng thái ẩn của bước thời gian trước
+là <span class="arithmatex">\(\mathbf{H}_{t-1} \in \mathbb{R}^{n \times h}\)</span>.
+Tương ứng, các cổng tại bước thời gian <span class="arithmatex">\(t\)</span>
+được định nghĩa như sau: cổng đầu vào là <span class="arithmatex">\(\mathbf{I}_t \in \mathbb{R}^{n \times h}\)</span>,
+cổng quên là <span class="arithmatex">\(\mathbf{F}_t \in \mathbb{R}^{n \times h}\)</span>,
+và cổng đầu ra là <span class="arithmatex">\(\mathbf{O}_t \in \mathbb{R}^{n \times h}\)</span>.
+Chúng được tính như sau:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\mathbf{I}_t &amp;= \sigma(\mathbf{X}_t \mathbf{W}_{\textrm{xi}} + \mathbf{H}_{t-1} \mathbf{W}_{\textrm{hi}} + \mathbf{b}_\textrm{i}),\\
+\mathbf{F}_t &amp;= \sigma(\mathbf{X}_t \mathbf{W}_{\textrm{xf}} + \mathbf{H}_{t-1} \mathbf{W}_{\textrm{hf}} + \mathbf{b}_\textrm{f}),\\
+\mathbf{O}_t &amp;= \sigma(\mathbf{X}_t \mathbf{W}_{\textrm{xo}} + \mathbf{H}_{t-1} \mathbf{W}_{\textrm{ho}} + \mathbf{b}_\textrm{o}),
+\end{aligned}
+\]</div>
+<p>trong đó <span class="arithmatex">\(\mathbf{W}_{\textrm{xi}}, \mathbf{W}_{\textrm{xf}}, \mathbf{W}_{\textrm{xo}} \in \mathbb{R}^{d \times h}\)</span> và <span class="arithmatex">\(\mathbf{W}_{\textrm{hi}}, \mathbf{W}_{\textrm{hf}}, \mathbf{W}_{\textrm{ho}} \in \mathbb{R}^{h \times h}\)</span> là các tham số trọng số
+và <span class="arithmatex">\(\mathbf{b}_\textrm{i}, \mathbf{b}_\textrm{f}, \mathbf{b}_\textrm{o} \in \mathbb{R}^{1 \times h}\)</span> là các tham số hệ số chặn.
+Lưu ý rằng broadcasting
+(xem <a href="#subsec_broadcasting">subsec_broadcasting</a>)
+được kích hoạt trong quá trình tính tổng.
+Chúng ta sử dụng hàm sigmoid
+(như đã giới thiệu trong <a href="#sec_mlp">sec_mlp</a>)
+để ánh xạ các giá trị đầu vào vào khoảng <span class="arithmatex">\((0, 1)\)</span>.</p>
+<h3 id="nut-au-vao">Nút Đầu Vào<a class="headerlink" href="#nut-au-vao" title="Permanent link">&para;</a></h3>
+<p>Tiếp theo chúng ta thiết kế ô nhớ.
+Vì chúng ta chưa chỉ định hành động của các cổng khác nhau,
+đầu tiên chúng ta giới thiệu <em>nút đầu vào</em>
+<span class="arithmatex">\(\tilde{\mathbf{C}}_t \in \mathbb{R}^{n \times h}\)</span>.
+Việc tính toán nó tương tự như ba cổng được mô tả ở trên,
+nhưng sử dụng hàm <span class="arithmatex">\(\tanh\)</span> với phạm vi giá trị <span class="arithmatex">\((-1, 1)\)</span> làm hàm kích hoạt.
+Điều này dẫn đến phương trình sau tại bước thời gian <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[\tilde{\mathbf{C}}_t = \textrm{tanh}(\mathbf{X}_t \mathbf{W}_{\textrm{xc}} + \mathbf{H}_{t-1} \mathbf{W}_{\textrm{hc}} + \mathbf{b}_\textrm{c}),\]</div>
+<p>trong đó <span class="arithmatex">\(\mathbf{W}_{\textrm{xc}} \in \mathbb{R}^{d \times h}\)</span> và <span class="arithmatex">\(\mathbf{W}_{\textrm{hc}} \in \mathbb{R}^{h \times h}\)</span> là các tham số trọng số và <span class="arithmatex">\(\mathbf{b}_\textrm{c} \in \mathbb{R}^{1 \times h}\)</span> là tham số hệ số chặn.</p>
+<p>Minh họa nhanh về nút đầu vào được hiển thị trong <a href="#fig_lstm_1">fig_lstm_1</a>.</p>
+<p><img alt="Tính toán nút đầu vào trong mô hình LSTM." src="../../img/lstm-1.svg" />
+<a id="fig_lstm_1"></a></p>
+<h3 id="trang-thai-noi-bo-cua-o-nho">Trạng Thái Nội Bộ Của Ô Nhớ<a class="headerlink" href="#trang-thai-noi-bo-cua-o-nho" title="Permanent link">&para;</a></h3>
+<p>Trong LSTM, cổng đầu vào <span class="arithmatex">\(\mathbf{I}_t\)</span> điều khiển
+bao nhiêu dữ liệu mới chúng ta đưa vào thông qua <span class="arithmatex">\(\tilde{\mathbf{C}}_t\)</span>
+và cổng quên <span class="arithmatex">\(\mathbf{F}_t\)</span> giải quyết
+bao nhiêu trạng thái nội bộ cũ của ô <span class="arithmatex">\(\mathbf{C}_{t-1} \in \mathbb{R}^{n \times h}\)</span> chúng ta giữ lại.
+Sử dụng toán tử tích Hadamard (theo phần tử) <span class="arithmatex">\(\odot\)</span>
+chúng ta đến phương trình cập nhật sau:</p>
+<div class="arithmatex">\[\mathbf{C}_t = \mathbf{F}_t \odot \mathbf{C}_{t-1} + \mathbf{I}_t \odot \tilde{\mathbf{C}}_t.\]</div>
+<p>Nếu cổng quên luôn bằng 1 và cổng đầu vào luôn bằng 0,
+trạng thái nội bộ của ô nhớ <span class="arithmatex">\(\mathbf{C}_{t-1}\)</span>
+sẽ không đổi mãi mãi,
+truyền không thay đổi đến mỗi bước thời gian tiếp theo.
+Tuy nhiên, cổng đầu vào và cổng quên
+cung cấp cho mô hình tính linh hoạt để có thể học
+khi nào giữ giá trị này không đổi
+và khi nào làm thay đổi nó để phản hồi
+với các đầu vào tiếp theo.
+Trong thực tế, thiết kế này giảm nhẹ vấn đề gradient biến mất,
+dẫn đến các mô hình dễ huấn luyện hơn nhiều,
+đặc biệt khi đối mặt với các tập dữ liệu có độ dài chuỗi dài.</p>
+<p>Do đó chúng ta đến biểu đồ luồng trong <a href="#fig_lstm_2">fig_lstm_2</a>.</p>
+<p><img alt="Tính toán trạng thái nội bộ của ô nhớ trong mô hình LSTM." src="../../img/lstm-2.svg" /></p>
+<p><a id="fig_lstm_2"></a></p>
+<h3 id="trang-thai-an">Trạng Thái Ẩn<a class="headerlink" href="#trang-thai-an" title="Permanent link">&para;</a></h3>
+<p>Cuối cùng, chúng ta cần định nghĩa cách tính đầu ra
+của ô nhớ, tức là trạng thái ẩn <span class="arithmatex">\(\mathbf{H}_t \in \mathbb{R}^{n \times h}\)</span>, như được nhìn thấy bởi các lớp khác.
+Đây là nơi cổng đầu ra phát huy tác dụng.
+Trong LSTM, đầu tiên chúng ta áp dụng <span class="arithmatex">\(\tanh\)</span> cho trạng thái nội bộ của ô nhớ
+và sau đó áp dụng thêm một phép nhân theo điểm,
+lần này với cổng đầu ra.
+Điều này đảm bảo rằng các giá trị của <span class="arithmatex">\(\mathbf{H}_t\)</span>
+luôn nằm trong khoảng <span class="arithmatex">\((-1, 1)\)</span>:</p>
+<div class="arithmatex">\[\mathbf{H}_t = \mathbf{O}_t \odot \tanh(\mathbf{C}_t).\]</div>
+<p>Bất cứ khi nào cổng đầu ra gần bằng 1,
+chúng ta cho phép trạng thái nội bộ của ô nhớ ảnh hưởng đến các lớp tiếp theo không bị cản,
+trong khi đối với các giá trị cổng đầu ra gần 0,
+chúng ta ngăn bộ nhớ hiện tại ảnh hưởng đến các lớp khác của mạng
+tại bước thời gian hiện tại.
+Lưu ý rằng một ô nhớ có thể tích lũy thông tin
+qua nhiều bước thời gian mà không ảnh hưởng đến phần còn lại của mạng
+(miễn là cổng đầu ra nhận các giá trị gần 0),
+và sau đó đột ngột ảnh hưởng đến mạng tại một bước thời gian tiếp theo
+ngay khi cổng đầu ra lật từ các giá trị gần 0
+sang các giá trị gần 1. <a href="#fig_lstm_3">fig_lstm_3</a> có minh họa đồ họa về luồng dữ liệu.</p>
+<p><img alt="Tính toán trạng thái ẩn trong mô hình LSTM." src="../../img/lstm-3.svg" />
+<a id="fig_lstm_3"></a></p>
+<h2 id="lap-trinh-tu-au">Lập Trình Từ Đầu<a class="headerlink" href="#lap-trinh-tu-au" title="Permanent link">&para;</a></h2>
+<p>Bây giờ hãy lập trình LSTM từ đầu.
+Giống như các thí nghiệm trong <a href="#sec_rnn-scratch">sec_rnn-scratch</a>,
+đầu tiên chúng ta tải tập dữ liệu <em>The Time Machine</em>.</p>
+<h3 id="khoi-tao-tham-so-mo-hinh">[<strong>Khởi Tạo Tham Số Mô Hình</strong>]<a class="headerlink" href="#khoi-tao-tham-so-mo-hinh" title="Permanent link">&para;</a></h3>
+<p>Tiếp theo, chúng ta cần định nghĩa và khởi tạo các tham số mô hình.
+Như trước, siêu tham số <code>num_hiddens</code>
+xác định số lượng đơn vị ẩn.
+Chúng ta khởi tạo các trọng số theo phân phối Gaussian
+với độ lệch chuẩn 0.01,
+và chúng ta đặt các hệ số chặn về 0.</p>
+<h3 id="huan-luyen-va-du-oan">[<strong>Huấn Luyện</strong>] và Dự Đoán<a class="headerlink" href="#huan-luyen-va-du-oan" title="Permanent link">&para;</a></h3>
+<p>Hãy huấn luyện mô hình LSTM bằng cách khởi tạo lớp <code>RNNLMScratch</code> từ <a href="#sec_rnn-scratch">sec_rnn-scratch</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">data</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">TimeMachine</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">num_steps</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;mxnet&#39;</span><span class="p">,</span> <span class="s1">&#39;pytorch&#39;</span><span class="p">,</span> <span class="s1">&#39;jax&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">lstm</span> <span class="o">=</span> <span class="n">LSTMScratch</span><span class="p">(</span><span class="n">num_inputs</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">num_hiddens</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">RNNLMScratch</span><span class="p">(</span><span class="n">lstm</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">trainer</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_gpus</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;tensorflow&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="k">with</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">():</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="n">lstm</span> <span class="o">=</span> <span class="n">LSTMScratch</span><span class="p">(</span><span class="n">num_inputs</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">num_hiddens</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">RNNLMScratch</span><span class="p">(</span><span class="n">lstm</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">trainer</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">gradient_clip_val</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="lap-trinh-suc-tich">[<strong>Lập Trình Súc Tích</strong>]<a class="headerlink" href="#lap-trinh-suc-tich" title="Permanent link">&para;</a></h2>
+<p>Sử dụng các API cấp cao,
+chúng ta có thể trực tiếp khởi tạo mô hình LSTM.
+Điều này đóng gói tất cả các chi tiết cấu hình
+mà chúng ta đã làm rõ ràng ở trên.
+Mã chạy nhanh hơn đáng kể vì nó sử dụng
+các toán tử đã biên dịch thay vì Python
+cho nhiều chi tiết mà chúng ta đã trình bày trước đó.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">LSTM</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">RNN</span><span class="p">):</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_inputs</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">):</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="n">d2l</span><span class="o">.</span><span class="n">Module</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LSTM</span><span class="p">(</span><span class="n">num_inputs</span><span class="p">,</span> <span class="n">num_hiddens</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">H_C</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rnn</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">H_C</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;pytorch&#39;</span><span class="p">):</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">lstm</span> <span class="o">=</span> <span class="n">LSTM</span><span class="p">(</span><span class="n">num_inputs</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">num_hiddens</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;mxnet&#39;</span><span class="p">,</span> <span class="s1">&#39;tensorflow&#39;</span><span class="p">,</span> <span class="s1">&#39;jax&#39;</span><span class="p">):</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">lstm</span> <span class="o">=</span> <span class="n">LSTM</span><span class="p">(</span><span class="n">num_hiddens</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;mxnet&#39;</span><span class="p">,</span> <span class="s1">&#39;pytorch&#39;</span><span class="p">,</span> <span class="s1">&#39;jax&#39;</span><span class="p">):</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">RNNLM</span><span class="p">(</span><span class="n">lstm</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;tensorflow&#39;</span><span class="p">):</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">with</span> <span class="n">d2l</span><span class="o">.</span><span class="n">try_gpu</span><span class="p">():</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">RNNLM</span><span class="p">(</span><span class="n">lstm</span><span class="p">,</span> <span class="n">vocab_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">vocab</span><span class="p">),</span> <span class="n">lr</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+<p>LSTM là mô hình tự hồi quy biến ẩn nguyên mẫu với kiểm soát trạng thái phức tạp.
+Nhiều biến thể đã được đề xuất trong những năm qua, ví dụ: nhiều lớp, kết nối phần dư, các loại chuẩn hóa khác nhau. Tuy nhiên, việc huấn luyện LSTM và các mô hình chuỗi khác (như GRU) khá tốn kém do phụ thuộc phạm vi dài của chuỗi.
+Sau này chúng ta sẽ gặp các mô hình thay thế như Transformer có thể được sử dụng trong một số trường hợp.</p>
+<h2 id="tom-tat">Tóm Tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Mặc dù LSTM được công bố vào năm 1997,
+chúng đạt được sự nổi bật lớn
+với một số chiến thắng trong các cuộc thi dự đoán vào giữa những năm 2000,
+và trở thành mô hình thống trị cho học chuỗi từ năm 2011
+cho đến sự trỗi dậy của các mô hình Transformer, bắt đầu từ năm 2017.
+Ngay cả Transformer cũng nợ một số ý tưởng chính của mình
+từ các cải tiến thiết kế kiến trúc được giới thiệu bởi LSTM.</p>
+<p>LSTM có ba loại cổng:
+cổng đầu vào, cổng quên và cổng đầu ra
+kiểm soát luồng thông tin.
+Đầu ra lớp ẩn của LSTM bao gồm trạng thái ẩn và trạng thái nội bộ của ô nhớ.
+Chỉ có trạng thái ẩn được truyền vào lớp đầu ra trong khi
+trạng thái nội bộ của ô nhớ vẫn hoàn toàn nội bộ.
+LSTM có thể giảm nhẹ gradient biến mất và bùng nổ.</p>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Điều chỉnh các siêu tham số và phân tích ảnh hưởng của chúng đối với thời gian chạy, độ hỗn loạn và chuỗi đầu ra.</li>
+<li>Bạn cần thay đổi mô hình như thế nào để tạo ra các từ thích hợp thay vì chỉ là các chuỗi ký tự?</li>
+<li>So sánh chi phí tính toán cho GRU, LSTM và RNN thông thường cho một chiều ẩn nhất định. Chú ý đặc biệt đến chi phí huấn luyện và suy luận.</li>
+<li>Vì ô nhớ ứng viên đảm bảo phạm vi giá trị nằm trong khoảng <span class="arithmatex">\(-1\)</span> và <span class="arithmatex">\(1\)</span> bằng cách sử dụng hàm <span class="arithmatex">\(\tanh\)</span>, tại sao trạng thái ẩn cần sử dụng hàm <span class="arithmatex">\(\tanh\)</span> một lần nữa để đảm bảo phạm vi giá trị đầu ra nằm trong khoảng <span class="arithmatex">\(-1\)</span> và <span class="arithmatex">\(1\)</span>?</li>
+<li>Lập trình mô hình LSTM để dự đoán chuỗi thời gian thay vì dự đoán chuỗi ký tự.</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/1057">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

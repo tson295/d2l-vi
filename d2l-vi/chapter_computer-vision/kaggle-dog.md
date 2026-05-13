@@ -16,7 +16,6 @@ các ảnh trong tập dữ liệu ImageNet có chiều cao và chiều rộng l
 
 
 ![Trang web cuộc thi nhận diện giống chó. Có thể lấy tập dữ liệu cuộc thi bằng cách nhấp vào thẻ "Data".](../img/kaggle-dog.jpg)
-:width:`400px`
 <a id="fig_kaggle_dog"></a>
 
 ```python

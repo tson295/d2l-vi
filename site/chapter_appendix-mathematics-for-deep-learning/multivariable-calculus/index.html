@@ -1,0 +1,2747 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_appendix-mathematics-for-deep-learning/multivariable-calculus/">
+      
+      
+        <link rel="prev" href="../single-variable-calculus/">
+      
+      
+        <link rel="next" href="../integral-calculus/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Giải tích nhiều biến - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#giai-tich-nhieu-bien" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Giải tích nhiều biến
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Toán học
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geometry-linear-algebraic-ops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hình học và Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eigendecomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích trị riêng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-variable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích một biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích nhiều biến
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích nhiều biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vi-phan-trong-chieu-cao-hon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vi phân trong chiều cao hơn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hinh-hoc-cua-gradient-va-gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình học của gradient và gradient descent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ghi-chu-ve-toi-uu-hoa-toan-hoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ghi chú về tối ưu hóa toán học
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quy-tac-day-chuyen-nhieu-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quy tắc dây chuyền nhiều biến
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thuat-toan-lan-truyen-nguoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán lan truyền ngược
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hessian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hessian
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mot-chut-giai-tich-ma-tran" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một chút giải tích ma trận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integral-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích tích phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../random-variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biến ngẫu nhiên
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maximum-likelihood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maximum Likelihood
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../naive-bayes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Naive Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thống kê
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../information-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lý thuyết thông tin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vi-phan-trong-chieu-cao-hon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vi phân trong chiều cao hơn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hinh-hoc-cua-gradient-va-gradient-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình học của gradient và gradient descent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ghi-chu-ve-toi-uu-hoa-toan-hoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ghi chú về tối ưu hóa toán học
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quy-tac-day-chuyen-nhieu-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quy tắc dây chuyền nhiều biến
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thuat-toan-lan-truyen-nguoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thuật toán lan truyền ngược
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hessian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hessian
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mot-chut-giai-tich-ma-tran" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một chút giải tích ma trận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="giai-tich-nhieu-bien">Giải tích nhiều biến<a class="headerlink" href="#giai-tich-nhieu-bien" title="Permanent link">&para;</a></h1>
+<p><a id="sec_multivariable_calculus"></a></p>
+<p>Bây giờ khi đã có hiểu biết khá vững về đạo hàm của hàm một biến, hãy quay lại câu hỏi ban đầu, nơi ta xét một hàm mất mát có thể phụ thuộc vào hàng tỷ trọng số.</p>
+<h2 id="vi-phan-trong-chieu-cao-hon">Vi phân trong chiều cao hơn<a class="headerlink" href="#vi-phan-trong-chieu-cao-hon" title="Permanent link">&para;</a></h2>
+<p>Điều <a href="#sec_single_variable_calculus">sec_single_variable_calculus</a> nói với ta là nếu thay đổi chỉ một trong hàng tỷ trọng số này và giữ tất cả trọng số khác cố định, ta biết điều gì sẽ xảy ra! Đây không gì hơn là một hàm một biến, nên ta có thể viết</p>
+<div class="arithmatex">\[L(w_1+\epsilon_1, w_2, \ldots, w_N) \approx L(w_1, w_2, \ldots, w_N) + \epsilon_1 \frac{d}{dw_1} L(w_1, w_2, \ldots, w_N).\]</div>
+<p>Ta sẽ gọi đạo hàm theo một biến trong khi giữ cố định các biến còn lại là <em>đạo hàm riêng</em>, và sẽ dùng ký hiệu <span class="arithmatex">\(\frac{\partial}{\partial w_1}\)</span> cho đạo hàm trong :eqref:<code>eq_part_der</code>.</p>
+<p>Bây giờ, hãy lấy điều này và thay đổi <span class="arithmatex">\(w_2\)</span> một chút thành <span class="arithmatex">\(w_2 + \epsilon_2\)</span>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+L(w_1+\epsilon_1, w_2+\epsilon_2, \ldots, w_N) &amp; \approx L(w_1, w_2+\epsilon_2, \ldots, w_N) + \epsilon_1 \frac{\partial}{\partial w_1} L(w_1, w_2+\epsilon_2, \ldots, w_N+\epsilon_N) \\
+&amp; \approx L(w_1, w_2, \ldots, w_N) \\
+&amp; \quad + \epsilon_2\frac{\partial}{\partial w_2} L(w_1, w_2, \ldots, w_N) \\
+&amp; \quad + \epsilon_1 \frac{\partial}{\partial w_1} L(w_1, w_2, \ldots, w_N) \\
+&amp; \quad + \epsilon_1\epsilon_2\frac{\partial}{\partial w_2}\frac{\partial}{\partial w_1} L(w_1, w_2, \ldots, w_N) \\
+&amp; \approx L(w_1, w_2, \ldots, w_N) \\
+&amp; \quad + \epsilon_2\frac{\partial}{\partial w_2} L(w_1, w_2, \ldots, w_N) \\
+&amp; \quad + \epsilon_1 \frac{\partial}{\partial w_1} L(w_1, w_2, \ldots, w_N).
+\end{aligned}
+\]</div>
+<p>Ta lại dùng ý tưởng rằng <span class="arithmatex">\(\epsilon_1\epsilon_2\)</span> là một hạng bậc cao có thể loại bỏ giống như đã loại bỏ <span class="arithmatex">\(\epsilon^{2}\)</span> ở phần trước, cùng với điều đã thấy trong :eqref:<code>eq_part_der</code>. Tiếp tục theo cách này, ta có thể viết</p>
+<div class="arithmatex">\[
+L(w_1+\epsilon_1, w_2+\epsilon_2, \ldots, w_N+\epsilon_N) \approx L(w_1, w_2, \ldots, w_N) + \sum_i \epsilon_i \frac{\partial}{\partial w_i} L(w_1, w_2, \ldots, w_N).
+\]</div>
+<p>Biểu thức này có thể trông rối, nhưng ta có thể làm nó quen thuộc hơn bằng cách lưu ý rằng tổng ở vế phải trông đúng như một tích vô hướng. Vì vậy, nếu đặt</p>
+<div class="arithmatex">\[
+\boldsymbol{\epsilon} = [\epsilon_1, \ldots, \epsilon_N]^\top \; \textrm{and} \;
+\nabla_{\mathbf{x}} L = \left[\frac{\partial L}{\partial x_1}, \ldots, \frac{\partial L}{\partial x_N}\right]^\top,
+\]</div>
+<p>thì</p>
+<div class="arithmatex">\[L(\mathbf{w} + \boldsymbol{\epsilon}) \approx L(\mathbf{w}) + \boldsymbol{\epsilon}\cdot \nabla_{\mathbf{w}} L(\mathbf{w}).\]</div>
+<p>Ta sẽ gọi vector <span class="arithmatex">\(\nabla_{\mathbf{w}} L\)</span> là <em>gradient</em> của <span class="arithmatex">\(L\)</span>.</p>
+<p>Phương trình :eqref:<code>eq_nabla_use</code> đáng để suy ngẫm một chút. Nó có đúng dạng mà ta đã gặp trong một chiều, chỉ là mọi thứ đã được chuyển thành vector và tích vô hướng. Nó cho phép ta nói xấp xỉ hàm <span class="arithmatex">\(L\)</span> sẽ thay đổi thế nào với bất kỳ nhiễu nào lên đầu vào. Như sẽ thấy trong phần tiếp theo, điều này cung cấp một công cụ quan trọng để hiểu theo hình học cách ta có thể học bằng thông tin chứa trong gradient.</p>
+<p>Nhưng trước hết, hãy xem phép xấp xỉ này hoạt động với một ví dụ. Giả sử ta làm việc với hàm</p>
+<div class="arithmatex">\[
+f(x, y) = \log(e^x + e^y) \textrm{ with gradient } \nabla f (x, y) = \left[\frac{e^x}{e^x+e^y}, \frac{e^y}{e^x+e^y}\right].
+\]</div>
+<p>Nếu nhìn vào một điểm như <span class="arithmatex">\((0, \log(2))\)</span>, ta thấy rằng</p>
+<div class="arithmatex">\[
+f(x, y) = \log(3) \textrm{ with gradient } \nabla f (x, y) = \left[\frac{1}{3}, \frac{2}{3}\right].
+\]</div>
+<p>Do đó, nếu muốn xấp xỉ <span class="arithmatex">\(f\)</span> tại <span class="arithmatex">\((\epsilon_1, \log(2) + \epsilon_2)\)</span>, ta thấy mình nên có trường hợp cụ thể sau của :eqref:<code>eq_nabla_use</code>:</p>
+<div class="arithmatex">\[
+f(\epsilon_1, \log(2) + \epsilon_2) \approx \log(3) + \frac{1}{3}\epsilon_1 + \frac{2}{3}\epsilon_2.
+\]</div>
+<p>Ta có thể kiểm tra điều này trong mã để xem xấp xỉ tốt đến đâu.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet</span><span class="w"> </span><span class="kn">import</span> <span class="n">autograd</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                     <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">))])</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.03</span><span class="p">])</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">grad_approx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="n">epsilon</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">grad_f</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">true_value</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="mi">0</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="sa">f</span><span class="s1">&#39;approximation: </span><span class="si">{</span><span class="n">grad_approx</span><span class="si">}</span><span class="s1">, true Value: </span><span class="si">{</span><span class="n">true_value</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)),</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>                     <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">))])</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.03</span><span class="p">])</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">grad_approx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.</span><span class="p">])))</span> <span class="o">+</span> <span class="n">epsilon</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="n">grad_f</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">2.</span><span class="p">))))</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">true_value</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">])</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.</span><span class="p">]))</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="sa">f</span><span class="s1">&#39;approximation: </span><span class="si">{</span><span class="n">grad_approx</span><span class="si">}</span><span class="s1">, true Value: </span><span class="si">{</span><span class="n">true_value</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([(</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>                        <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()])</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.03</span><span class="p">])</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">grad_approx</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.</span><span class="p">]),</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">2.</span><span class="p">])))</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="n">epsilon</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.</span><span class="p">]),</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">2.</span><span class="p">))),</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="n">true_value</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.</span><span class="p">])</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">2.</span><span class="p">]))</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="sa">f</span><span class="s1">&#39;approximation: </span><span class="si">{</span><span class="n">grad_approx</span><span class="si">}</span><span class="s1">, true Value: </span><span class="si">{</span><span class="n">true_value</span><span class="si">}</span><span class="s1">&#39;</span>
+</code></pre></div>
+<h2 id="hinh-hoc-cua-gradient-va-gradient-descent">Hình học của gradient và gradient descent<a class="headerlink" href="#hinh-hoc-cua-gradient-va-gradient-descent" title="Permanent link">&para;</a></h2>
+<p>Xét lại biểu thức từ :eqref:<code>eq_nabla_use</code>:</p>
+<div class="arithmatex">\[
+L(\mathbf{w} + \boldsymbol{\epsilon}) \approx L(\mathbf{w}) + \boldsymbol{\epsilon}\cdot \nabla_{\mathbf{w}} L(\mathbf{w}).
+\]</div>
+<p>Giả sử tôi muốn dùng điều này để giúp cực tiểu hóa mất mát <span class="arithmatex">\(L\)</span>. Trước hết, hãy hiểu theo hình học thuật toán gradient descent đã mô tả trong <a href="#sec_autograd">sec_autograd</a>. Điều ta sẽ làm là:</p>
+<ol>
+<li>Bắt đầu với một lựa chọn ngẫu nhiên cho các tham số ban đầu <span class="arithmatex">\(\mathbf{w}\)</span>.</li>
+<li>Tìm hướng <span class="arithmatex">\(\mathbf{v}\)</span> khiến <span class="arithmatex">\(L\)</span> giảm nhanh nhất tại <span class="arithmatex">\(\mathbf{w}\)</span>.</li>
+<li>Đi một bước nhỏ theo hướng đó: <span class="arithmatex">\(\mathbf{w} \rightarrow \mathbf{w} + \epsilon\mathbf{v}\)</span>.</li>
+<li>Lặp lại.</li>
+</ol>
+<p>Điều duy nhất ta chưa biết chính xác cách làm là tính vector <span class="arithmatex">\(\mathbf{v}\)</span> ở bước thứ hai. Ta sẽ gọi một hướng như vậy là <em>hướng giảm dốc nhất</em>. Dùng hiểu biết hình học về tích vô hướng từ <a href="#sec_geometry-linear-algebraic-ops">sec_geometry-linear-algebraic-ops</a>, ta thấy có thể viết lại :eqref:<code>eq_nabla_use</code> là</p>
+<div class="arithmatex">\[
+L(\mathbf{w} + \mathbf{v}) \approx L(\mathbf{w}) + \mathbf{v}\cdot \nabla_{\mathbf{w}} L(\mathbf{w}) = L(\mathbf{w}) + \|\nabla_{\mathbf{w}} L(\mathbf{w})\|\cos(\theta).
+\]</div>
+<p>Lưu ý rằng để tiện, ta đã lấy hướng có độ dài một, và dùng <span class="arithmatex">\(\theta\)</span> cho góc giữa <span class="arithmatex">\(\mathbf{v}\)</span> và <span class="arithmatex">\(\nabla_{\mathbf{w}} L(\mathbf{w})\)</span>. Nếu muốn tìm hướng làm <span class="arithmatex">\(L\)</span> giảm nhanh nhất có thể, ta muốn làm biểu thức này âm nhất có thể. Cách duy nhất hướng ta chọn đi vào phương trình này là thông qua <span class="arithmatex">\(\cos(\theta)\)</span>, và do đó ta muốn làm cosin này âm nhất có thể. Bây giờ, nhớ lại hình dạng của cosin, ta có thể làm nó âm nhất bằng cách đặt <span class="arithmatex">\(\cos(\theta) = -1\)</span>, hay tương đương làm góc giữa gradient và hướng đã chọn bằng <span class="arithmatex">\(\pi\)</span> radian, hoặc tương đương <span class="arithmatex">\(180\)</span> độ. Cách duy nhất để đạt điều này là đi đúng hướng ngược lại: chọn <span class="arithmatex">\(\mathbf{v}\)</span> chỉ đúng hướng đối diện với <span class="arithmatex">\(\nabla_{\mathbf{w}} L(\mathbf{w})\)</span>!</p>
+<p>Điều này đưa ta tới một trong những khái niệm toán học quan trọng nhất trong học máy: hướng giảm dốc nhất chỉ theo hướng <span class="arithmatex">\(-\nabla_{\mathbf{w}}L(\mathbf{w})\)</span>. Vì vậy thuật toán không hình thức của ta có thể được viết lại như sau.</p>
+<ol>
+<li>Bắt đầu với một lựa chọn ngẫu nhiên cho các tham số ban đầu <span class="arithmatex">\(\mathbf{w}\)</span>.</li>
+<li>Tính <span class="arithmatex">\(\nabla_{\mathbf{w}} L(\mathbf{w})\)</span>.</li>
+<li>Đi một bước nhỏ theo hướng ngược lại: <span class="arithmatex">\(\mathbf{w} \leftarrow \mathbf{w} - \epsilon\nabla_{\mathbf{w}} L(\mathbf{w})\)</span>.</li>
+<li>Lặp lại.</li>
+</ol>
+<p>Thuật toán cơ bản này đã được nhiều nhà nghiên cứu sửa đổi và thích nghi theo nhiều cách, nhưng khái niệm cốt lõi vẫn giống nhau ở tất cả chúng. Dùng gradient để tìm hướng làm mất mát giảm nhanh nhất, rồi cập nhật tham số để đi một bước theo hướng đó.</p>
+<h2 id="ghi-chu-ve-toi-uu-hoa-toan-hoc">Ghi chú về tối ưu hóa toán học<a class="headerlink" href="#ghi-chu-ve-toi-uu-hoa-toan-hoc" title="Permanent link">&para;</a></h2>
+<p>Trong suốt cuốn sách này, chúng ta tập trung trực diện vào các kỹ thuật tối ưu hóa số vì lý do thực tiễn rằng mọi hàm ta gặp trong bối cảnh học sâu đều quá phức tạp để cực tiểu hóa tường minh.</p>
+<p>Tuy nhiên, việc xét hiểu biết hình học thu được ở trên cho ta biết gì về tối ưu hóa hàm trực tiếp là một bài tập hữu ích.</p>
+<p>Giả sử ta muốn tìm giá trị <span class="arithmatex">\(\mathbf{x}_0\)</span> cực tiểu hóa một hàm nào đó <span class="arithmatex">\(L(\mathbf{x})\)</span>. Giả sử thêm rằng có người đưa cho ta một giá trị và nói rằng đó là giá trị cực tiểu hóa <span class="arithmatex">\(L\)</span>. Có điều gì ta có thể kiểm tra để xem câu trả lời của họ thậm chí có hợp lý không?</p>
+<p>Xét lại :eqref:<code>eq_nabla_use</code>:
+$$
+L(\mathbf{x}<em>0 + \boldsymbol{\epsilon}) \approx L(\mathbf{x}_0) + \boldsymbol{\epsilon}\cdot \nabla</em>{\mathbf{x}} L(\mathbf{x}_0).
+$$</p>
+<p>Nếu gradient khác không, ta biết rằng có thể đi một bước theo hướng <span class="arithmatex">\(-\epsilon \nabla_{\mathbf{x}} L(\mathbf{x}_0)\)</span> để tìm một giá trị <span class="arithmatex">\(L\)</span> nhỏ hơn. Vì vậy, nếu ta thật sự đang ở một cực tiểu, điều này không thể xảy ra! Ta có thể kết luận rằng nếu <span class="arithmatex">\(\mathbf{x}_0\)</span> là một cực tiểu, thì <span class="arithmatex">\(\nabla_{\mathbf{x}} L(\mathbf{x}_0) = 0\)</span>. Ta gọi các điểm có <span class="arithmatex">\(\nabla_{\mathbf{x}} L(\mathbf{x}_0) = 0\)</span> là <em>điểm tới hạn</em>.</p>
+<p>Điều này hay ở chỗ trong một số bối cảnh hiếm hoi, ta <em>có thể</em> tìm tường minh tất cả các điểm mà gradient bằng không và tìm điểm có giá trị nhỏ nhất.</p>
+<p>Với một ví dụ cụ thể, xét hàm
+$$
+f(x) = 3x^4 - 4x^3 -12x^2.
+$$</p>
+<p>Hàm này có đạo hàm
+$$
+\frac{df}{dx} = 12x^3 - 12x^2 -24x = 12x(x-2)(x+1).
+$$</p>
+<p>Các vị trí cực tiểu khả dĩ duy nhất là <span class="arithmatex">\(x = -1, 0, 2\)</span>, nơi hàm lần lượt nhận các giá trị <span class="arithmatex">\(-5,0, -32\)</span>, và do đó ta có thể kết luận rằng hàm được cực tiểu hóa khi <span class="arithmatex">\(x = 2\)</span>. Một đồ thị nhanh xác nhận điều này.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">12</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">12</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">12</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Điều này làm nổi bật một sự thật quan trọng cần biết khi làm việc cả về lý thuyết lẫn số học: các điểm khả dĩ duy nhất nơi ta có thể cực tiểu hóa (hoặc cực đại hóa) một hàm sẽ có gradient bằng không, tuy nhiên không phải mọi điểm có gradient bằng không đều là cực tiểu (hoặc cực đại) <em>toàn cục</em> thật sự.</p>
+<h2 id="quy-tac-day-chuyen-nhieu-bien">Quy tắc dây chuyền nhiều biến<a class="headerlink" href="#quy-tac-day-chuyen-nhieu-bien" title="Permanent link">&para;</a></h2>
+<p>Giả sử ta có một hàm bốn biến (<span class="arithmatex">\(w, x, y\)</span> và <span class="arithmatex">\(z\)</span>), được tạo bằng cách hợp thành nhiều hạng:</p>
+<div class="arithmatex">\[\begin{aligned}f(u, v) &amp; = (u+v)^{2} \\u(a, b) &amp; = (a+b)^{2}, \qquad v(a, b) = (a-b)^{2}, \\a(w, x, y, z) &amp; = (w+x+y+z)^{2}, \qquad b(w, x, y, z) = (w+x-y-z)^2.\end{aligned}\]</div>
+<p>Những chuỗi phương trình như vậy rất phổ biến khi làm việc với mạng nơ-ron, nên cố hiểu cách tính gradient của các hàm như vậy là điều then chốt. Ta có thể bắt đầu thấy gợi ý trực quan của mối liên hệ này trong <a href="#fig_chain-1">fig_chain-1</a> nếu xem biến nào liên quan trực tiếp với biến nào.</p>
+<p><img alt="Các quan hệ hàm ở trên, trong đó nút biểu diễn giá trị và cạnh biểu diễn phụ thuộc hàm." src="../../img/chain-net1.svg" />
+<a id="fig_chain-1"></a></p>
+<p>Không có gì ngăn ta hợp thành mọi thứ từ :eqref:<code>eq_multi_func_def</code> và viết ra</p>
+<div class="arithmatex">\[
+f(w, x, y, z) = \left(\left((w+x+y+z)^2+(w+x-y-z)^2\right)^2+\left((w+x+y+z)^2-(w+x-y-z)^2\right)^2\right)^2.
+\]</div>
+<p>Sau đó ta có thể lấy đạo hàm chỉ bằng các đạo hàm một biến, nhưng nếu làm vậy, ta sẽ nhanh chóng bị ngập trong các hạng, nhiều hạng trong số đó lặp lại! Thật vậy, có thể thấy, chẳng hạn:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial f}{\partial w} &amp; = 2 \left(2 \left(2 (w + x + y + z) - 2 (w + x - y - z)\right) \left((w + x + y + z)^{2}- (w + x - y - z)^{2}\right) + \right.\\
+&amp; \left. \quad 2 \left(2 (w + x - y - z) + 2 (w + x + y + z)\right) \left((w + x - y - z)^{2}+ (w + x + y + z)^{2}\right)\right) \times \\
+&amp; \quad \left(\left((w + x + y + z)^{2}- (w + x - y - z)^2\right)^{2}+ \left((w + x - y - z)^{2}+ (w + x + y + z)^{2}\right)^{2}\right).
+\end{aligned}
+\]</div>
+<p>Nếu sau đó ta cũng muốn tính <span class="arithmatex">\(\frac{\partial f}{\partial x}\)</span>, ta sẽ lại có một phương trình tương tự với nhiều hạng lặp, và nhiều hạng lặp <em>được chia sẻ</em> giữa hai đạo hàm. Điều này đại diện cho một lượng lớn công việc lãng phí, và nếu ta phải tính đạo hàm theo cách này, toàn bộ cuộc cách mạng học sâu đã có thể bị đình trệ trước khi bắt đầu!</p>
+<p>Hãy chia nhỏ bài toán. Ta sẽ bắt đầu bằng cách cố hiểu <span class="arithmatex">\(f\)</span> thay đổi thế nào khi ta thay đổi <span class="arithmatex">\(a\)</span>, về cơ bản giả sử <span class="arithmatex">\(w, x, y\)</span> và <span class="arithmatex">\(z\)</span> đều không tồn tại. Ta sẽ lập luận như khi lần đầu làm việc với gradient. Hãy lấy <span class="arithmatex">\(a\)</span> và cộng thêm một lượng nhỏ <span class="arithmatex">\(\epsilon\)</span> vào nó.</p>
+<div class="arithmatex">\[
+\begin{aligned}
+&amp; f(u(a+\epsilon, b), v(a+\epsilon, b)) \\
+\approx &amp; f\left(u(a, b) + \epsilon\frac{\partial u}{\partial a}(a, b), v(a, b) + \epsilon\frac{\partial v}{\partial a}(a, b)\right) \\
+\approx &amp; f(u(a, b), v(a, b)) + \epsilon\left[\frac{\partial f}{\partial u}(u(a, b), v(a, b))\frac{\partial u}{\partial a}(a, b) + \frac{\partial f}{\partial v}(u(a, b), v(a, b))\frac{\partial v}{\partial a}(a, b)\right].
+\end{aligned}
+\]</div>
+<p>Dòng đầu theo từ định nghĩa đạo hàm riêng, và dòng thứ hai theo từ định nghĩa gradient. Việc theo dõi chính xác nơi ta đánh giá mọi đạo hàm, như trong biểu thức <span class="arithmatex">\(\frac{\partial f}{\partial u}(u(a, b), v(a, b))\)</span>, gây nặng ký hiệu, nên ta thường viết tắt thành dạng dễ nhớ hơn nhiều</p>
+<div class="arithmatex">\[
+\frac{\partial f}{\partial a} = \frac{\partial f}{\partial u}\frac{\partial u}{\partial a}+\frac{\partial f}{\partial v}\frac{\partial v}{\partial a}.
+\]</div>
+<p>Suy nghĩ về ý nghĩa của quá trình này là hữu ích. Ta đang cố hiểu một hàm dạng <span class="arithmatex">\(f(u(a, b), v(a, b))\)</span> thay đổi giá trị thế nào khi <span class="arithmatex">\(a\)</span> thay đổi. Có hai con đường điều này có thể xảy ra: con đường <span class="arithmatex">\(a \rightarrow u \rightarrow f\)</span> và con đường <span class="arithmatex">\(a \rightarrow v \rightarrow f\)</span>. Ta có thể tính cả hai đóng góp này bằng quy tắc dây chuyền: lần lượt là <span class="arithmatex">\(\frac{\partial w}{\partial u} \cdot \frac{\partial u}{\partial x}\)</span> và <span class="arithmatex">\(\frac{\partial w}{\partial v} \cdot \frac{\partial v}{\partial x}\)</span>, rồi cộng lại.</p>
+<p>Hãy tưởng tượng ta có một mạng hàm khác, trong đó các hàm bên phải phụ thuộc vào các hàm được nối ở bên trái như trong <a href="#fig_chain-2">fig_chain-2</a>.</p>
+<p><img alt="Một ví dụ tinh tế hơn khác về quy tắc dây chuyền." src="../../img/chain-net2.svg" />
+<a id="fig_chain-2"></a></p>
+<p>Để tính thứ như <span class="arithmatex">\(\frac{\partial f}{\partial y}\)</span>, ta cần lấy tổng trên tất cả (trong trường hợp này là <span class="arithmatex">\(3\)</span>) đường đi từ <span class="arithmatex">\(y\)</span> tới <span class="arithmatex">\(f\)</span>, cho ta</p>
+<div class="arithmatex">\[
+\frac{\partial f}{\partial y} = \frac{\partial f}{\partial a} \frac{\partial a}{\partial u} \frac{\partial u}{\partial y} + \frac{\partial f}{\partial u} \frac{\partial u}{\partial y} + \frac{\partial f}{\partial b} \frac{\partial b}{\partial v} \frac{\partial v}{\partial y}.
+\]</div>
+<p>Hiểu quy tắc dây chuyền theo cách này sẽ đem lại lợi ích lớn khi cố hiểu gradient chảy qua mạng như thế nào, và tại sao các lựa chọn kiến trúc khác nhau như trong LSTM (<a href="#sec_lstm">sec_lstm</a>) hoặc tầng residual (<a href="#sec_resnet">sec_resnet</a>) có thể giúp định hình quá trình học bằng cách kiểm soát dòng gradient.</p>
+<h2 id="thuat-toan-lan-truyen-nguoc">Thuật toán lan truyền ngược<a class="headerlink" href="#thuat-toan-lan-truyen-nguoc" title="Permanent link">&para;</a></h2>
+<p>Hãy quay lại ví dụ :eqref:<code>eq_multi_func_def</code> của phần trước, trong đó</p>
+<div class="arithmatex">\[
+\begin{aligned}
+f(u, v) &amp; = (u+v)^{2} \\
+u(a, b) &amp; = (a+b)^{2}, \qquad v(a, b) = (a-b)^{2}, \\
+a(w, x, y, z) &amp; = (w+x+y+z)^{2}, \qquad b(w, x, y, z) = (w+x-y-z)^2.
+\end{aligned}
+\]</div>
+<p>Nếu muốn tính chẳng hạn <span class="arithmatex">\(\frac{\partial f}{\partial w}\)</span>, ta có thể áp dụng quy tắc dây chuyền nhiều biến để thấy:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial f}{\partial w} &amp; = \frac{\partial f}{\partial u}\frac{\partial u}{\partial w} + \frac{\partial f}{\partial v}\frac{\partial v}{\partial w}, \\
+\frac{\partial u}{\partial w} &amp; = \frac{\partial u}{\partial a}\frac{\partial a}{\partial w}+\frac{\partial u}{\partial b}\frac{\partial b}{\partial w}, \\
+\frac{\partial v}{\partial w} &amp; = \frac{\partial v}{\partial a}\frac{\partial a}{\partial w}+\frac{\partial v}{\partial b}\frac{\partial b}{\partial w}.
+\end{aligned}
+\]</div>
+<p>Hãy thử dùng phân rã này để tính <span class="arithmatex">\(\frac{\partial f}{\partial w}\)</span>. Lưu ý rằng mọi thứ ta cần ở đây là các đạo hàm riêng một bước khác nhau:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial f}{\partial u} = 2(u+v), &amp; \quad\frac{\partial f}{\partial v} = 2(u+v), \\
+\frac{\partial u}{\partial a} = 2(a+b), &amp; \quad\frac{\partial u}{\partial b} = 2(a+b), \\
+\frac{\partial v}{\partial a} = 2(a-b), &amp; \quad\frac{\partial v}{\partial b} = -2(a-b), \\
+\frac{\partial a}{\partial w} = 2(w+x+y+z), &amp; \quad\frac{\partial b}{\partial w} = 2(w+x-y-z).
+\end{aligned}
+\]</div>
+<p>Nếu viết điều này thành mã, nó trở thành một biểu thức khá dễ quản lý.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># Compute the value of the function from inputs to outputs</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    f at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># Compute the single step partials</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">df_du</span><span class="p">,</span> <span class="n">df_dv</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">du_da</span><span class="p">,</span> <span class="n">du_db</span><span class="p">,</span> <span class="n">dv_da</span><span class="p">,</span> <span class="n">dv_db</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">),</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">da_dw</span><span class="p">,</span> <span class="n">db_dw</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="c1"># Compute the final result from inputs to outputs</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="n">du_dw</span><span class="p">,</span> <span class="n">dv_dw</span> <span class="o">=</span> <span class="n">du_da</span><span class="o">*</span><span class="n">da_dw</span> <span class="o">+</span> <span class="n">du_db</span><span class="o">*</span><span class="n">db_dw</span><span class="p">,</span> <span class="n">dv_da</span><span class="o">*</span><span class="n">da_dw</span> <span class="o">+</span> <span class="n">dv_db</span><span class="o">*</span><span class="n">db_dw</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="n">df_dw</span> <span class="o">=</span> <span class="n">df_du</span><span class="o">*</span><span class="n">du_dw</span> <span class="o">+</span> <span class="n">df_dv</span><span class="o">*</span><span class="n">dv_dw</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dw at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">df_dw</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Tuy nhiên, lưu ý rằng điều này vẫn không làm cho việc tính thứ như <span class="arithmatex">\(\frac{\partial f}{\partial x}\)</span> trở nên dễ dàng. Lý do là <em>cách</em> ta đã chọn áp dụng quy tắc dây chuyền. Nếu nhìn vào những gì đã làm ở trên, ta luôn giữ <span class="arithmatex">\(\partial w\)</span> ở mẫu số khi có thể. Theo cách này, ta chọn áp dụng quy tắc dây chuyền bằng cách xem <span class="arithmatex">\(w\)</span> thay đổi mọi biến khác như thế nào. Nếu đó là điều ta muốn, đây sẽ là một ý tưởng tốt. Tuy nhiên, hãy nhớ lại động cơ từ học sâu: ta muốn xem mọi tham số thay đổi <em>mất mát</em> như thế nào. Về bản chất, ta muốn áp dụng quy tắc dây chuyền bằng cách giữ <span class="arithmatex">\(\partial f\)</span> ở tử số bất cứ khi nào có thể!</p>
+<p>Nói rõ hơn, lưu ý rằng ta có thể viết</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial f}{\partial w} &amp; = \frac{\partial f}{\partial a}\frac{\partial a}{\partial w} + \frac{\partial f}{\partial b}\frac{\partial b}{\partial w}, \\
+\frac{\partial f}{\partial a} &amp; = \frac{\partial f}{\partial u}\frac{\partial u}{\partial a}+\frac{\partial f}{\partial v}\frac{\partial v}{\partial a}, \\
+\frac{\partial f}{\partial b} &amp; = \frac{\partial f}{\partial u}\frac{\partial u}{\partial b}+\frac{\partial f}{\partial v}\frac{\partial v}{\partial b}.
+\end{aligned}
+\]</div>
+<p>Lưu ý rằng cách áp dụng quy tắc dây chuyền này khiến ta tính tường minh <span class="arithmatex">\(\frac{\partial f}{\partial u}, \frac{\partial f}{\partial v}, \frac{\partial f}{\partial a}, \frac{\partial f}{\partial b}, \; \textrm{and} \; \frac{\partial f}{\partial w}\)</span>. Không có gì ngăn ta cũng đưa vào các phương trình:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial f}{\partial x} &amp; = \frac{\partial f}{\partial a}\frac{\partial a}{\partial x} + \frac{\partial f}{\partial b}\frac{\partial b}{\partial x}, \\
+\frac{\partial f}{\partial y} &amp; = \frac{\partial f}{\partial a}\frac{\partial a}{\partial y}+\frac{\partial f}{\partial b}\frac{\partial b}{\partial y}, \\
+\frac{\partial f}{\partial z} &amp; = \frac{\partial f}{\partial a}\frac{\partial a}{\partial z}+\frac{\partial f}{\partial b}\frac{\partial b}{\partial z}.
+\end{aligned}
+\]</div>
+<p>rồi theo dõi <span class="arithmatex">\(f\)</span> thay đổi thế nào khi ta thay đổi <em>bất kỳ</em> nút nào trong toàn bộ mạng. Hãy triển khai nó.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Compute the value of the function from inputs to outputs</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;f at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># Compute the derivative using the decomposition above</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># First compute the single step partials</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">df_du</span><span class="p">,</span> <span class="n">df_dv</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">du_da</span><span class="p">,</span> <span class="n">du_db</span><span class="p">,</span> <span class="n">dv_da</span><span class="p">,</span> <span class="n">dv_db</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">),</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="n">da_dw</span><span class="p">,</span> <span class="n">db_dw</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">da_dx</span><span class="p">,</span> <span class="n">db_dx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="n">da_dy</span><span class="p">,</span> <span class="n">db_dy</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">),</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">da_dz</span><span class="p">,</span> <span class="n">db_dz</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">),</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="c1"># Now compute how f changes when we change any value from output to input</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">df_da</span><span class="p">,</span> <span class="n">df_db</span> <span class="o">=</span> <span class="n">df_du</span><span class="o">*</span><span class="n">du_da</span> <span class="o">+</span> <span class="n">df_dv</span><span class="o">*</span><span class="n">dv_da</span><span class="p">,</span> <span class="n">df_du</span><span class="o">*</span><span class="n">du_db</span> <span class="o">+</span> <span class="n">df_dv</span><span class="o">*</span><span class="n">dv_db</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="n">df_dw</span><span class="p">,</span> <span class="n">df_dx</span> <span class="o">=</span> <span class="n">df_da</span><span class="o">*</span><span class="n">da_dw</span> <span class="o">+</span> <span class="n">df_db</span><span class="o">*</span><span class="n">db_dw</span><span class="p">,</span> <span class="n">df_da</span><span class="o">*</span><span class="n">da_dx</span> <span class="o">+</span> <span class="n">df_db</span><span class="o">*</span><span class="n">db_dx</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="n">df_dy</span><span class="p">,</span> <span class="n">df_dz</span> <span class="o">=</span> <span class="n">df_da</span><span class="o">*</span><span class="n">da_dy</span> <span class="o">+</span> <span class="n">df_db</span><span class="o">*</span><span class="n">db_dy</span><span class="p">,</span> <span class="n">df_da</span><span class="o">*</span><span class="n">da_dz</span> <span class="o">+</span> <span class="n">df_db</span><span class="o">*</span><span class="n">db_dz</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dw at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">df_dw</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dx at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">df_dx</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dy at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">df_dy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dz at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">df_dz</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Việc ta tính đạo hàm từ <span class="arithmatex">\(f\)</span> ngược về đầu vào thay vì từ đầu vào tiến tới đầu ra (như đã làm trong đoạn mã đầu tiên ở trên) chính là điều đặt tên cho thuật toán này: <em>lan truyền ngược</em>. Lưu ý rằng có hai bước:
+1. Tính giá trị của hàm và các đạo hàm riêng một bước từ trước ra sau. Dù không làm ở trên, điều này có thể được kết hợp thành một <em>forward pass</em>.
+2. Tính gradient của <span class="arithmatex">\(f\)</span> từ sau ra trước. Ta gọi đây là <em>backwards pass</em>.</p>
+<p>Đây chính xác là điều mọi thuật toán học sâu triển khai để cho phép tính gradient của mất mát theo từng trọng số trong mạng chỉ trong một lượt. Việc ta có một phân rã như vậy là một sự thật đáng kinh ngạc.</p>
+<p>Để xem cách đóng gói điều này, hãy nhìn nhanh ví dụ này.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># Initialize as ndarrays, then attach gradients</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">w</span><span class="o">.</span><span class="n">attach_grad</span><span class="p">()</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">x</span><span class="o">.</span><span class="n">attach_grad</span><span class="p">()</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">y</span><span class="o">.</span><span class="n">attach_grad</span><span class="p">()</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">z</span><span class="o">.</span><span class="n">attach_grad</span><span class="p">()</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1"># Do the computation like usual, tracking gradients</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="k">with</span> <span class="n">autograd</span><span class="o">.</span><span class="n">record</span><span class="p">():</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1"># Execute backward pass</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">f</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dw at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dx at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dy at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dz at </span><span class="si">{</span><span class="n">w</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># Initialize as ndarrays, then attach gradients</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">1.</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">2.</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">],</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># Do the computation like usual, tracking gradients</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1"># Execute backward pass</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="n">f</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dw at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dx at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dy at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dz at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># Initialize as ndarrays, then attach gradients</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="o">-</span><span class="mf">1.</span><span class="p">]))</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.</span><span class="p">]))</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="o">-</span><span class="mf">2.</span><span class="p">]))</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="n">z</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">1.</span><span class="p">]))</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># Do the computation like usual, tracking gradients</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">(</span><span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">t</span><span class="p">:</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span> <span class="o">+</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span> <span class="o">-</span> <span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="n">u</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1"># Execute backward pass</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="n">w_grad</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="n">x_grad</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="n">y_grad</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="n">z_grad</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dw at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">w_grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dx at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">x_grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dy at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">y_grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;df/dz at </span><span class="si">{</span><span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1">, &#39;</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a>      <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">z</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="si">}</span><span class="s1"> is </span><span class="si">{</span><span class="n">z_grad</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Mọi điều ta đã làm ở trên đều có thể được thực hiện tự động bằng cách gọi <code>f.backwards()</code>.</p>
+<h2 id="hessian">Hessian<a class="headerlink" href="#hessian" title="Permanent link">&para;</a></h2>
+<p>Như với giải tích một biến, việc xét các đạo hàm bậc cao là hữu ích để nắm được cách thu được xấp xỉ tốt hơn cho một hàm so với chỉ dùng gradient.</p>
+<p>Có một vấn đề tức thì khi làm việc với đạo hàm bậc cao của hàm nhiều biến: có rất nhiều đạo hàm như vậy. Nếu ta có một hàm <span class="arithmatex">\(f(x_1, \ldots, x_n)\)</span> của <span class="arithmatex">\(n\)</span> biến, thì có thể lấy <span class="arithmatex">\(n^{2}\)</span> đạo hàm bậc hai, cụ thể là với bất kỳ lựa chọn <span class="arithmatex">\(i\)</span> và <span class="arithmatex">\(j\)</span> nào:</p>
+<div class="arithmatex">\[
+\frac{d^2f}{dx_idx_j} = \frac{d}{dx_i}\left(\frac{d}{dx_j}f\right).
+\]</div>
+<p>Theo truyền thống, chúng được ghép thành một ma trận gọi là <em>Hessian</em>:</p>
+<div class="arithmatex">\[\mathbf{H}_f = \begin{bmatrix} \frac{d^2f}{dx_1dx_1} &amp; \cdots &amp; \frac{d^2f}{dx_1dx_n} \\ \vdots &amp; \ddots &amp; \vdots \\ \frac{d^2f}{dx_ndx_1} &amp; \cdots &amp; \frac{d^2f}{dx_ndx_n} \\ \end{bmatrix}.\]</div>
+<p>Không phải mọi phần tử của ma trận này đều độc lập. Thật vậy, ta có thể chỉ ra rằng miễn là cả hai <em>đạo hàm riêng hỗn hợp</em> (đạo hàm riêng theo nhiều hơn một biến) tồn tại và liên tục, ta có thể nói rằng với bất kỳ <span class="arithmatex">\(i\)</span> và <span class="arithmatex">\(j\)</span> nào,</p>
+<div class="arithmatex">\[
+\frac{d^2f}{dx_idx_j} = \frac{d^2f}{dx_jdx_i}.
+\]</div>
+<p>Điều này theo từ việc xét trước hết nhiễu một hàm theo hướng <span class="arithmatex">\(x_i\)</span>, rồi nhiễu nó theo <span class="arithmatex">\(x_j\)</span>, và sau đó so sánh kết quả đó với điều xảy ra nếu nhiễu trước theo <span class="arithmatex">\(x_j\)</span> rồi theo <span class="arithmatex">\(x_i\)</span>, với hiểu biết rằng cả hai thứ tự đều dẫn tới cùng thay đổi cuối cùng trong đầu ra của <span class="arithmatex">\(f\)</span>.</p>
+<p>Như với một biến, ta có thể dùng các đạo hàm này để có ý tưởng tốt hơn nhiều về cách hàm ứng xử gần một điểm. Cụ thể, ta có thể dùng nó để tìm hàm bậc hai khớp tốt nhất gần một điểm <span class="arithmatex">\(\mathbf{x}_0\)</span>, như đã thấy trong trường hợp một biến.</p>
+<p>Hãy xem một ví dụ. Giả sử <span class="arithmatex">\(f(x_1, x_2) = a + b_1x_1 + b_2x_2 + c_{11}x_1^{2} + c_{12}x_1x_2 + c_{22}x_2^{2}\)</span>. Đây là dạng tổng quát của một hàm bậc hai theo hai biến. Nếu nhìn vào giá trị của hàm, gradient của nó, và Hessian :eqref:<code>eq_hess_def</code>, tất cả tại điểm không:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+f(0,0) &amp; = a, \\
+\nabla f (0,0) &amp; = \begin{bmatrix}b_1 \\ b_2\end{bmatrix}, \\
+\mathbf{H} f (0,0) &amp; = \begin{bmatrix}2 c_{11} &amp; c_{12} \\ c_{12} &amp; 2c_{22}\end{bmatrix},
+\end{aligned}
+\]</div>
+<p>ta có thể thu lại đa thức ban đầu bằng cách nói</p>
+<div class="arithmatex">\[
+f(\mathbf{x}) = f(0) + \nabla f (0) \cdot \mathbf{x} + \frac{1}{2}\mathbf{x}^\top \mathbf{H} f (0) \mathbf{x}.
+\]</div>
+<p>Nói chung, nếu ta tính khai triển này tại bất kỳ điểm <span class="arithmatex">\(\mathbf{x}_0\)</span> nào, ta thấy rằng</p>
+<div class="arithmatex">\[
+f(\mathbf{x}) = f(\mathbf{x}_0) + \nabla f (\mathbf{x}_0) \cdot (\mathbf{x}-\mathbf{x}_0) + \frac{1}{2}(\mathbf{x}-\mathbf{x}_0)^\top \mathbf{H} f (\mathbf{x}_0) (\mathbf{x}-\mathbf{x}_0).
+\]</div>
+<p>Điều này hoạt động cho đầu vào bất kỳ số chiều nào, và cung cấp xấp xỉ bậc hai tốt nhất cho bất kỳ hàm nào tại một điểm. Để đưa ra một ví dụ, hãy vẽ hàm</p>
+<div class="arithmatex">\[
+f(x, y) = xe^{-x^2-y^2}.
+\]</div>
+<p>Ta có thể tính rằng gradient và Hessian là
+$$
+\nabla f(x, y) = e^{-x^2-y^2}\begin{pmatrix}1-2x^2 \ -2xy\end{pmatrix} \; \textrm{and} \; \mathbf{H}f(x, y) = e^{-x^2-y^2}\begin{pmatrix} 4x^3 - 6x &amp; 4x^2y - 2y \ 4x^2y-2y &amp;4xy^2-2x\end{pmatrix}.
+$$</p>
+<p>Và do đó, với một chút đại số, thấy rằng xấp xỉ bậc hai tại <span class="arithmatex">\([-1,0]^\top\)</span> là</p>
+<div class="arithmatex">\[
+f(x, y) \approx e^{-1}\left(-1 - (x+1) +(x+1)^2+y^2\right).
+\]</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># Construct grid and compute function</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>                   <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># Compute approximating quadratic with gradient and Hessian at (1, 0)</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1"># Plot function</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="n">ax</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>                  <span class="o">**</span><span class="p">{</span><span class="s1">&#39;rstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>                  <span class="o">**</span><span class="p">{</span><span class="s1">&#39;rstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">)</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="n">ax</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="mi">12</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># Construct grid and compute function</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>                   <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="c1"># Compute approximating quadratic with gradient and Hessian at (1, 0)</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="n">w</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">1.</span><span class="p">]))</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="c1"># Plot function</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="n">ax</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>                  <span class="o">**</span><span class="p">{</span><span class="s1">&#39;rstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>                  <span class="o">**</span><span class="p">{</span><span class="s1">&#39;rstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">)</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="n">ax</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="mi">12</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># Construct grid and compute function</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mi">101</span><span class="p">),</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>                   <span class="n">tf</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># Compute approximating quadratic with gradient and Hessian at (1, 0)</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="o">-</span><span class="mf">1.</span><span class="p">]))</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># Plot function</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="n">ax</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>                  <span class="o">**</span><span class="p">{</span><span class="s1">&#39;rstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">w</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>                  <span class="o">**</span><span class="p">{</span><span class="s1">&#39;rstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;cstride&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">)</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a><span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a><span class="n">ax</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="mi">12</span>
+</code></pre></div>
+<p>Điều này tạo nền tảng cho thuật toán Newton được thảo luận trong <a href="#sec_gd">sec_gd</a>, nơi ta thực hiện tối ưu hóa số bằng cách lặp lại việc tìm hàm bậc hai khớp tốt nhất rồi cực tiểu hóa chính xác hàm bậc hai đó.</p>
+<h2 id="mot-chut-giai-tich-ma-tran">Một chút giải tích ma trận<a class="headerlink" href="#mot-chut-giai-tich-ma-tran" title="Permanent link">&para;</a></h2>
+<p>Đạo hàm của các hàm liên quan đến ma trận hóa ra đặc biệt đẹp. Phần này có thể trở nên nặng ký hiệu, nên có thể bỏ qua trong lần đọc đầu tiên, nhưng sẽ hữu ích khi biết rằng đạo hàm của các hàm liên quan đến những phép toán ma trận phổ biến thường sạch hơn nhiều so với dự đoán ban đầu, đặc biệt khi các phép toán ma trận rất trung tâm trong ứng dụng học sâu.</p>
+<p>Hãy bắt đầu với một ví dụ. Giả sử ta có một vector cột cố định <span class="arithmatex">\(\boldsymbol{\beta}\)</span>, và muốn lấy hàm tích <span class="arithmatex">\(f(\mathbf{x}) = \boldsymbol{\beta}^\top\mathbf{x}\)</span>, rồi hiểu tích vô hướng thay đổi thế nào khi ta thay đổi <span class="arithmatex">\(\mathbf{x}\)</span>.</p>
+<p>Một chút ký hiệu hữu ích khi làm việc với đạo hàm ma trận trong ML được gọi là <em>đạo hàm ma trận theo bố cục mẫu số</em>, trong đó ta gom các đạo hàm riêng vào hình dạng của bất kỳ vector, ma trận hoặc tensor nào nằm ở mẫu số của vi phân. Trong trường hợp này, ta sẽ viết</p>
+<div class="arithmatex">\[
+\frac{df}{d\mathbf{x}} = \begin{bmatrix}
+\frac{df}{dx_1} \\
+\vdots \\
+\frac{df}{dx_n}
+\end{bmatrix},
+\]</div>
+<p>trong đó ta khớp hình dạng của vector cột <span class="arithmatex">\(\mathbf{x}\)</span>.</p>
+<p>Nếu viết hàm của ta theo các thành phần, nó là</p>
+<div class="arithmatex">\[
+f(\mathbf{x}) = \sum_{i = 1}^{n} \beta_ix_i = \beta_1x_1 + \cdots + \beta_nx_n.
+\]</div>
+<p>Nếu bây giờ lấy đạo hàm riêng theo, chẳng hạn, <span class="arithmatex">\(\beta_1\)</span>, lưu ý rằng mọi thứ đều bằng không ngoại trừ hạng đầu tiên, chỉ là <span class="arithmatex">\(x_1\)</span> nhân với <span class="arithmatex">\(\beta_1\)</span>, nên ta thu được</p>
+<div class="arithmatex">\[
+\frac{df}{dx_1} = \beta_1,
+\]</div>
+<p>hoặc tổng quát hơn</p>
+<div class="arithmatex">\[
+\frac{df}{dx_i} = \beta_i.
+\]</div>
+<p>Bây giờ ta có thể ghép lại thành một ma trận để thấy</p>
+<div class="arithmatex">\[
+\frac{df}{d\mathbf{x}} = \begin{bmatrix}
+\frac{df}{dx_1} \\
+\vdots \\
+\frac{df}{dx_n}
+\end{bmatrix} = \begin{bmatrix}
+\beta_1 \\
+\vdots \\
+\beta_n
+\end{bmatrix} = \boldsymbol{\beta}.
+\]</div>
+<p>Điều này minh họa vài yếu tố về giải tích ma trận mà ta sẽ thường gặp trong suốt phần này:</p>
+<ul>
+<li>Thứ nhất, các phép tính sẽ trở nên khá phức tạp.</li>
+<li>Thứ hai, kết quả cuối cùng sạch hơn nhiều so với quá trình trung gian, và luôn trông tương tự trường hợp một biến. Trong trường hợp này, lưu ý rằng <span class="arithmatex">\(\frac{d}{dx}(bx) = b\)</span> và <span class="arithmatex">\(\frac{d}{d\mathbf{x}} (\boldsymbol{\beta}^\top\mathbf{x}) = \boldsymbol{\beta}\)</span> đều tương tự nhau.</li>
+<li>Thứ ba, chuyển vị thường có thể xuất hiện tưởng như từ hư không. Lý do cốt lõi là quy ước khớp hình dạng của mẫu số, nên khi nhân ma trận, ta sẽ cần lấy chuyển vị để khớp lại với hình dạng của hạng ban đầu.</li>
+</ul>
+<p>Để tiếp tục xây dựng trực giác, hãy thử một phép tính khó hơn một chút. Giả sử ta có một vector cột <span class="arithmatex">\(\mathbf{x}\)</span> và một ma trận vuông <span class="arithmatex">\(A\)</span>, và muốn tính</p>
+<div class="arithmatex">\[\frac{d}{d\mathbf{x}}(\mathbf{x}^\top A \mathbf{x}).\]</div>
+<p>Để hướng tới ký hiệu dễ thao tác hơn, hãy xét bài toán này bằng ký hiệu Einstein. Trong trường hợp này, ta có thể viết hàm là</p>
+<div class="arithmatex">\[
+\mathbf{x}^\top A \mathbf{x} = x_ia_{ij}x_j.
+\]</div>
+<p>Để tính đạo hàm, ta cần hiểu với mọi <span class="arithmatex">\(k\)</span>, giá trị của</p>
+<div class="arithmatex">\[
+\frac{d}{dx_k}(\mathbf{x}^\top A \mathbf{x}) = \frac{d}{dx_k}x_ia_{ij}x_j.
+\]</div>
+<p>Theo quy tắc tích, đây là</p>
+<div class="arithmatex">\[
+\frac{d}{dx_k}x_ia_{ij}x_j = \frac{dx_i}{dx_k}a_{ij}x_j + x_ia_{ij}\frac{dx_j}{dx_k}.
+\]</div>
+<p>Với một hạng như <span class="arithmatex">\(\frac{dx_i}{dx_k}\)</span>, không khó để thấy rằng nó bằng một khi <span class="arithmatex">\(i=k\)</span> và bằng không nếu không. Điều này có nghĩa là mọi hạng trong tổng mà <span class="arithmatex">\(i\)</span> và <span class="arithmatex">\(k\)</span> khác nhau đều biến mất, nên các hạng duy nhất còn lại trong tổng đầu tiên là những hạng có <span class="arithmatex">\(i=k\)</span>. Lập luận tương tự đúng cho hạng thứ hai, nơi ta cần <span class="arithmatex">\(j=k\)</span>. Điều này cho</p>
+<div class="arithmatex">\[
+\frac{d}{dx_k}x_ia_{ij}x_j = a_{kj}x_j + x_ia_{ik}.
+\]</div>
+<p>Bây giờ, tên của các chỉ số trong ký hiệu Einstein là tùy ý, việc <span class="arithmatex">\(i\)</span> và <span class="arithmatex">\(j\)</span> khác nhau không còn quan trọng cho phép tính này tại điểm này, nên ta có thể đánh lại chỉ số để cả hai dùng <span class="arithmatex">\(i\)</span> và thấy rằng</p>
+<div class="arithmatex">\[
+\frac{d}{dx_k}x_ia_{ij}x_j = a_{ki}x_i + x_ia_{ik} = (a_{ki} + a_{ik})x_i.
+\]</div>
+<p>Bây giờ là lúc ta bắt đầu cần luyện tập để đi xa hơn. Hãy thử nhận diện kết quả này dưới dạng các phép toán ma trận. <span class="arithmatex">\(a_{ki} + a_{ik}\)</span> là thành phần thứ <span class="arithmatex">\(k, i\)</span> của <span class="arithmatex">\(\mathbf{A} + \mathbf{A}^\top\)</span>. Điều này cho</p>
+<div class="arithmatex">\[
+\frac{d}{dx_k}x_ia_{ij}x_j = [\mathbf{A} + \mathbf{A}^\top]_{ki}x_i.
+\]</div>
+<p>Tương tự, hạng này giờ là tích của ma trận <span class="arithmatex">\(\mathbf{A} + \mathbf{A}^\top\)</span> với vector <span class="arithmatex">\(\mathbf{x}\)</span>, nên ta thấy rằng</p>
+<div class="arithmatex">\[
+\left[\frac{d}{d\mathbf{x}}(\mathbf{x}^\top A \mathbf{x})\right]_k = \frac{d}{dx_k}x_ia_{ij}x_j = [(\mathbf{A} + \mathbf{A}^\top)\mathbf{x}]_k.
+\]</div>
+<p>Do đó, ta thấy phần tử thứ <span class="arithmatex">\(k\)</span> của đạo hàm mong muốn từ :eqref:<code>eq_mat_goal_1</code> chỉ là phần tử thứ <span class="arithmatex">\(k\)</span> của vector ở vế phải, và vì vậy hai thứ giống nhau. Điều này cho</p>
+<div class="arithmatex">\[
+\frac{d}{d\mathbf{x}}(\mathbf{x}^\top A \mathbf{x}) = (\mathbf{A} + \mathbf{A}^\top)\mathbf{x}.
+\]</div>
+<p>Việc này đòi hỏi nhiều công sức hơn đáng kể so với ví dụ trước, nhưng kết quả cuối cùng nhỏ gọn. Hơn thế, hãy xét phép tính sau với đạo hàm một biến truyền thống:</p>
+<div class="arithmatex">\[
+\frac{d}{dx}(xax) = \frac{dx}{dx}ax + xa\frac{dx}{dx} = (a+a)x.
+\]</div>
+<p>Tương đương, <span class="arithmatex">\(\frac{d}{dx}(ax^2) = 2ax = (a+a)x\)</span>. Một lần nữa, ta nhận được kết quả trông khá giống kết quả một biến nhưng có thêm một chuyển vị.</p>
+<p>Tới đây, mẫu hình này hẳn trông khá đáng nghi, nên hãy thử tìm hiểu lý do. Khi lấy đạo hàm ma trận như thế này, trước hết hãy giả sử biểu thức ta nhận được sẽ là một biểu thức ma trận khác: một biểu thức có thể viết bằng các tích và tổng của ma trận cùng chuyển vị của chúng. Nếu một biểu thức như vậy tồn tại, nó cần đúng với mọi ma trận. Cụ thể, nó cần đúng với các ma trận <span class="arithmatex">\(1 \times 1\)</span>, trong trường hợp đó tích ma trận chỉ là tích của các số, tổng ma trận chỉ là tổng, và chuyển vị không làm gì cả! Nói cách khác, bất kỳ biểu thức nào ta nhận được <em>phải</em> khớp với biểu thức một biến. Điều này có nghĩa là, với một chút luyện tập, ta thường có thể đoán đạo hàm ma trận chỉ bằng cách biết biểu thức một biến liên quan trông như thế nào!</p>
+<p>Hãy thử điều này. Giả sử <span class="arithmatex">\(\mathbf{X}\)</span> là ma trận <span class="arithmatex">\(n \times m\)</span>, <span class="arithmatex">\(\mathbf{U}\)</span> là <span class="arithmatex">\(n \times r\)</span> và <span class="arithmatex">\(\mathbf{V}\)</span> là <span class="arithmatex">\(r \times m\)</span>. Hãy thử tính</p>
+<div class="arithmatex">\[\frac{d}{d\mathbf{V}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2} = \;?\]</div>
+<p>Phép tính này quan trọng trong một lĩnh vực gọi là phân rã ma trận. Tuy nhiên với chúng ta, nó chỉ là một đạo hàm cần tính. Hãy thử tưởng tượng nó sẽ là gì với các ma trận <span class="arithmatex">\(1\times1\)</span>. Trong trường hợp đó, ta nhận được biểu thức</p>
+<div class="arithmatex">\[
+\frac{d}{dv} (x-uv)^{2}= -2(x-uv)u,
+\]</div>
+<p>trong đó đạo hàm khá chuẩn. Nếu cố chuyển điều này trở lại thành một biểu thức ma trận, ta được</p>
+<div class="arithmatex">\[
+\frac{d}{d\mathbf{V}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= -2(\mathbf{X} - \mathbf{U}\mathbf{V})\mathbf{U}.
+\]</div>
+<p>Tuy nhiên, nếu nhìn vào biểu thức này, nó không hoàn toàn hoạt động. Nhớ rằng <span class="arithmatex">\(\mathbf{X}\)</span> là <span class="arithmatex">\(n \times m\)</span>, cũng như <span class="arithmatex">\(\mathbf{U}\mathbf{V}\)</span>, nên ma trận <span class="arithmatex">\(2(\mathbf{X} - \mathbf{U}\mathbf{V})\)</span> là <span class="arithmatex">\(n \times m\)</span>. Mặt khác, <span class="arithmatex">\(\mathbf{U}\)</span> là <span class="arithmatex">\(n \times r\)</span>, và ta không thể nhân một ma trận <span class="arithmatex">\(n \times m\)</span> với một ma trận <span class="arithmatex">\(n \times r\)</span> vì các chiều không khớp!</p>
+<p>Ta muốn thu được <span class="arithmatex">\(\frac{d}{d\mathbf{V}}\)</span>, có cùng hình dạng với <span class="arithmatex">\(\mathbf{V}\)</span>, tức là <span class="arithmatex">\(r \times m\)</span>. Vì vậy bằng cách nào đó ta cần lấy một ma trận <span class="arithmatex">\(n \times m\)</span> và một ma trận <span class="arithmatex">\(n \times r\)</span>, nhân chúng với nhau (có thể với một số chuyển vị) để thu được một ma trận <span class="arithmatex">\(r \times m\)</span>. Ta có thể làm điều này bằng cách nhân <span class="arithmatex">\(U^\top\)</span> với <span class="arithmatex">\((\mathbf{X} - \mathbf{U}\mathbf{V})\)</span>. Vì vậy, ta có thể đoán nghiệm của :eqref:<code>eq_mat_goal_2</code> là</p>
+<div class="arithmatex">\[
+\frac{d}{d\mathbf{V}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= -2\mathbf{U}^\top(\mathbf{X} - \mathbf{U}\mathbf{V}).
+\]</div>
+<p>Để chỉ ra rằng điều này hoạt động, sẽ là thiếu sót nếu không cung cấp một phép tính chi tiết. Nếu bạn đã tin rằng quy tắc kinh nghiệm này hoạt động, có thể bỏ qua phần suy luận này. Để tính</p>
+<div class="arithmatex">\[
+\frac{d}{d\mathbf{V}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^2,
+\]</div>
+<p>ta phải tìm với mọi <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span></p>
+<div class="arithmatex">\[
+\frac{d}{dv_{ab}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= \frac{d}{dv_{ab}} \sum_{i, j}\left(x_{ij} - \sum_k u_{ik}v_{kj}\right)^2.
+\]</div>
+<p>Nhớ rằng mọi phần tử của <span class="arithmatex">\(\mathbf{X}\)</span> và <span class="arithmatex">\(\mathbf{U}\)</span> là hằng số xét theo <span class="arithmatex">\(\frac{d}{dv_{ab}}\)</span>, ta có thể đẩy đạo hàm vào trong tổng, và áp dụng quy tắc dây chuyền cho bình phương để được</p>
+<div class="arithmatex">\[
+\frac{d}{dv_{ab}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= \sum_{i, j}2\left(x_{ij} - \sum_k u_{ik}v_{kj}\right)\left(-\sum_k u_{ik}\frac{dv_{kj}}{dv_{ab}} \right).
+\]</div>
+<p>Như trong suy luận trước, ta có thể lưu ý rằng <span class="arithmatex">\(\frac{dv_{kj}}{dv_{ab}}\)</span> chỉ khác không nếu <span class="arithmatex">\(k=a\)</span> và <span class="arithmatex">\(j=b\)</span>. Nếu một trong hai điều kiện đó không đúng, hạng trong tổng bằng không, và ta có thể tự do loại bỏ nó. Ta thấy rằng</p>
+<div class="arithmatex">\[
+\frac{d}{dv_{ab}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= -2\sum_{i}\left(x_{ib} - \sum_k u_{ik}v_{kb}\right)u_{ia}.
+\]</div>
+<p>Một điểm tinh tế quan trọng ở đây là yêu cầu <span class="arithmatex">\(k=a\)</span> không xảy ra bên trong tổng trong cùng, vì <span class="arithmatex">\(k\)</span> đó là một biến giả mà ta đang lấy tổng trong hạng bên trong. Để có một ví dụ sạch hơn về ký hiệu, hãy xét tại sao</p>
+<div class="arithmatex">\[
+\frac{d}{dx_1} \left(\sum_i x_i \right)^{2}= 2\left(\sum_i x_i \right).
+\]</div>
+<p>Từ đây, ta có thể bắt đầu nhận diện các thành phần của tổng. Trước hết,</p>
+<div class="arithmatex">\[
+\sum_k u_{ik}v_{kb} = [\mathbf{U}\mathbf{V}]_{ib}.
+\]</div>
+<p>Vậy toàn bộ biểu thức bên trong tổng là</p>
+<div class="arithmatex">\[
+x_{ib} - \sum_k u_{ik}v_{kb} = [\mathbf{X}-\mathbf{U}\mathbf{V}]_{ib}.
+\]</div>
+<p>Điều này nghĩa là ta có thể viết đạo hàm của mình là</p>
+<div class="arithmatex">\[
+\frac{d}{dv_{ab}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= -2\sum_{i}[\mathbf{X}-\mathbf{U}\mathbf{V}]_{ib}u_{ia}.
+\]</div>
+<p>Ta muốn điều này trông như phần tử <span class="arithmatex">\(a, b\)</span> của một ma trận để có thể dùng kỹ thuật như trong ví dụ trước nhằm thu được một biểu thức ma trận, nghĩa là ta cần đổi thứ tự các chỉ số trên <span class="arithmatex">\(u_{ia}\)</span>. Nếu nhận thấy <span class="arithmatex">\(u_{ia} = [\mathbf{U}^\top]_{ai}\)</span>, ta có thể viết</p>
+<div class="arithmatex">\[
+\frac{d}{dv_{ab}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= -2\sum_{i} [\mathbf{U}^\top]_{ai}[\mathbf{X}-\mathbf{U}\mathbf{V}]_{ib}.
+\]</div>
+<p>Đây là một tích ma trận, và vì vậy ta có thể kết luận rằng</p>
+<div class="arithmatex">\[
+\frac{d}{dv_{ab}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= -2[\mathbf{U}^\top(\mathbf{X}-\mathbf{U}\mathbf{V})]_{ab}.
+\]</div>
+<p>và do đó ta có thể viết nghiệm của :eqref:<code>eq_mat_goal_2</code></p>
+<div class="arithmatex">\[
+\frac{d}{d\mathbf{V}} \|\mathbf{X} - \mathbf{U}\mathbf{V}\|_2^{2}= -2\mathbf{U}^\top(\mathbf{X} - \mathbf{U}\mathbf{V}).
+\]</div>
+<p>Điều này khớp với nghiệm ta đã đoán ở trên!</p>
+<p>Tới đây, câu hỏi hợp lý là: "Tại sao tôi không thể chỉ viết các phiên bản ma trận của mọi quy tắc giải tích đã học? Rõ ràng việc này vẫn cơ học. Tại sao không làm luôn cho xong!" Và thật vậy, có những quy tắc như vậy, và [Petersen.Pedersen.ea.2008] cung cấp một bản tóm tắt xuất sắc. Tuy nhiên, do có vô số cách các phép toán ma trận có thể được kết hợp so với các giá trị đơn lẻ, có nhiều quy tắc đạo hàm ma trận hơn nhiều so với quy tắc một biến. Thường thì tốt nhất là làm việc với các chỉ số, hoặc giao cho vi phân tự động khi phù hợp.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Trong chiều cao hơn, ta có thể định nghĩa gradient phục vụ cùng mục đích như đạo hàm trong một chiều. Chúng cho phép ta thấy một hàm nhiều biến thay đổi như thế nào khi ta tạo một thay đổi nhỏ tùy ý ở đầu vào.</li>
+<li>Thuật toán lan truyền ngược có thể được xem là một phương pháp tổ chức quy tắc dây chuyền nhiều biến để cho phép tính hiệu quả nhiều đạo hàm riêng.</li>
+<li>Giải tích ma trận cho phép ta viết đạo hàm của các biểu thức ma trận một cách ngắn gọn.</li>
+</ul>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Cho một vector cột <span class="arithmatex">\(\boldsymbol{\beta}\)</span>, hãy tính đạo hàm của cả <span class="arithmatex">\(f(\mathbf{x}) = \boldsymbol{\beta}^\top\mathbf{x}\)</span> và <span class="arithmatex">\(g(\mathbf{x}) = \mathbf{x}^\top\boldsymbol{\beta}\)</span>. Tại sao bạn nhận được cùng một đáp án?</li>
+<li>Gọi <span class="arithmatex">\(\mathbf{v}\)</span> là một vector <span class="arithmatex">\(n\)</span> chiều. <span class="arithmatex">\(\frac{\partial}{\partial\mathbf{v}}\|\mathbf{v}\|_2\)</span> là gì?</li>
+<li>Gọi <span class="arithmatex">\(L(x, y) = \log(e^x + e^y)\)</span>. Hãy tính gradient. Tổng các thành phần của gradient là gì?</li>
+<li>Gọi <span class="arithmatex">\(f(x, y) = x^2y + xy^2\)</span>. Chứng minh rằng điểm tới hạn duy nhất là <span class="arithmatex">\((0,0)\)</span>. Bằng cách xét <span class="arithmatex">\(f(x, x)\)</span>, hãy xác định <span class="arithmatex">\((0,0)\)</span> là cực đại, cực tiểu, hay không phải cả hai.</li>
+<li>Giả sử ta đang cực tiểu hóa một hàm <span class="arithmatex">\(f(\mathbf{x}) = g(\mathbf{x}) + h(\mathbf{x})\)</span>. Ta có thể diễn giải hình học điều kiện <span class="arithmatex">\(\nabla f = 0\)</span> theo <span class="arithmatex">\(g\)</span> và <span class="arithmatex">\(h\)</span> như thế nào?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/1090">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

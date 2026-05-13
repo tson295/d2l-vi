@@ -1,0 +1,2500 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_appendix-mathematics-for-deep-learning/single-variable-calculus/">
+      
+      
+        <link rel="prev" href="../eigendecomposition/">
+      
+      
+        <link rel="next" href="../multivariable-calculus/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Giải tích một biến - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#giai-tich-mot-bien" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Giải tích một biến
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Toán học
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geometry-linear-algebraic-ops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hình học và Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eigendecomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích trị riêng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích một biến
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích một biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#giai-tich-vi-phan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giải tích vi phân
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cac-quy-tac-giai-tich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các quy tắc giải tích
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Các quy tắc giải tích">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cac-ao-ham-pho-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các đạo hàm phổ biến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quy-tac-ao-ham" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quy tắc đạo hàm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xap-xi-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xấp xỉ tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ao-ham-bac-cao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Đạo hàm bậc cao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chuoi-taylor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chuỗi Taylor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multivariable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích nhiều biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integral-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích tích phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../random-variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biến ngẫu nhiên
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maximum-likelihood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maximum Likelihood
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../naive-bayes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Naive Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thống kê
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../information-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lý thuyết thông tin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#giai-tich-vi-phan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Giải tích vi phân
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cac-quy-tac-giai-tich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các quy tắc giải tích
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Các quy tắc giải tích">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cac-ao-ham-pho-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các đạo hàm phổ biến
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quy-tac-ao-ham" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quy tắc đạo hàm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xap-xi-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xấp xỉ tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ao-ham-bac-cao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Đạo hàm bậc cao
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chuoi-taylor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chuỗi Taylor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="giai-tich-mot-bien">Giải tích một biến<a class="headerlink" href="#giai-tich-mot-bien" title="Permanent link">&para;</a></h1>
+<p><a id="sec_single_variable_calculus"></a></p>
+<p>Trong <a href="#sec_calculus">sec_calculus</a>, chúng ta đã thấy các thành phần cơ bản của giải tích vi phân. Phần này đi sâu hơn vào nền tảng của giải tích và cách ta có thể hiểu, áp dụng nó trong bối cảnh học máy.</p>
+<h2 id="giai-tich-vi-phan">Giải tích vi phân<a class="headerlink" href="#giai-tich-vi-phan" title="Permanent link">&para;</a></h2>
+<p>Giải tích vi phân về cơ bản là nghiên cứu cách các hàm ứng xử dưới những thay đổi nhỏ. Để thấy tại sao điều này cốt lõi với học sâu, hãy xét một ví dụ.</p>
+<p>Giả sử ta có một mạng nơ-ron sâu trong đó, để tiện, các trọng số được nối lại thành một vector duy nhất <span class="arithmatex">\(\mathbf{w} = (w_1, \ldots, w_n)\)</span>. Với một bộ dữ liệu huấn luyện, ta xét mất mát của mạng nơ-ron trên bộ dữ liệu này, ký hiệu là <span class="arithmatex">\(\mathcal{L}(\mathbf{w})\)</span>.</p>
+<p>Hàm này cực kỳ phức tạp, mã hóa hiệu năng của mọi mô hình có thể có thuộc kiến trúc đã cho trên bộ dữ liệu này, nên gần như không thể nói tập trọng số <span class="arithmatex">\(\mathbf{w}\)</span> nào sẽ cực tiểu hóa mất mát. Vì vậy, trong thực tế, ta thường bắt đầu bằng cách khởi tạo trọng số <em>ngẫu nhiên</em>, rồi lặp đi lặp lại các bước nhỏ theo hướng làm mất mát giảm nhanh nhất có thể.</p>
+<p>Câu hỏi khi đó trở thành một điều bề ngoài cũng không dễ hơn: làm thế nào để tìm hướng khiến trọng số làm mất mát giảm nhanh nhất? Để đi sâu vào điều này, trước hết hãy xét trường hợp chỉ có một trọng số duy nhất: <span class="arithmatex">\(L(\mathbf{w}) = L(x)\)</span> với một giá trị thực duy nhất <span class="arithmatex">\(x\)</span>.</p>
+<p>Hãy lấy <span class="arithmatex">\(x\)</span> và cố hiểu điều gì xảy ra khi ta thay đổi nó một lượng nhỏ thành <span class="arithmatex">\(x + \epsilon\)</span>. Nếu muốn cụ thể, hãy nghĩ tới một số như <span class="arithmatex">\(\epsilon = 0.0000001\)</span>. Để giúp trực quan hóa điều xảy ra, hãy vẽ một hàm ví dụ, <span class="arithmatex">\(f(x) = \sin(x^x)\)</span>, trên khoảng <span class="arithmatex">\([0, 3]\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet</span><span class="w"> </span><span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Plot a function in a normal range</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">x_big</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">3.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_big</span><span class="o">**</span><span class="n">x_big</span><span class="p">)</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_big</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">torch</span><span class="o">.</span><span class="n">pi</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># Define pi in torch</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># Plot a function in a normal range</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">x_big</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">3.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_big</span><span class="o">**</span><span class="n">x_big</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_big</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">tf</span><span class="o">.</span><span class="n">pi</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># Define pi in TensorFlow</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Plot a function in a normal range</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">x_big</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">3.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_big</span><span class="o">**</span><span class="n">x_big</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_big</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Ở thang đo lớn này, hành vi của hàm không đơn giản. Tuy nhiên, nếu thu hẹp khoảng xuống một đoạn nhỏ hơn như <span class="arithmatex">\([1.75,2.25]\)</span>, ta thấy đồ thị trở nên đơn giản hơn nhiều.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1"># Plot a the same function in a tiny range</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">x_med</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">1.75</span><span class="p">,</span> <span class="mf">2.25</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_med</span><span class="o">**</span><span class="n">x_med</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_med</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Plot a the same function in a tiny range</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">x_med</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">1.75</span><span class="p">,</span> <span class="mf">2.25</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_med</span><span class="o">**</span><span class="n">x_med</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_med</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Plot a the same function in a tiny range</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">x_med</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mf">1.75</span><span class="p">,</span> <span class="mf">2.25</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_med</span><span class="o">**</span><span class="n">x_med</span><span class="p">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_med</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Đẩy điều này tới cực hạn, nếu ta phóng to vào một đoạn rất nhỏ, hành vi trở nên đơn giản hơn nhiều: nó chỉ là một đường thẳng.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># Plot a the same function in a tiny range</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">x_small</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.01</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_small</span><span class="o">**</span><span class="n">x_small</span><span class="p">)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_small</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Plot a the same function in a tiny range</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">x_small</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.01</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_small</span><span class="o">**</span><span class="n">x_small</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_small</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># Plot a the same function in a tiny range</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">x_small</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.01</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x_small</span><span class="o">**</span><span class="n">x_small</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_small</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Đây là quan sát then chốt của giải tích một biến: hành vi của các hàm quen thuộc có thể được mô hình hóa bằng một đường thẳng trên một khoảng đủ nhỏ. Điều này có nghĩa là với hầu hết các hàm, hợp lý để kỳ vọng rằng khi ta dịch giá trị <span class="arithmatex">\(x\)</span> của hàm đi một chút, đầu ra <span class="arithmatex">\(f(x)\)</span> cũng sẽ dịch đi một chút. Câu hỏi duy nhất cần trả lời là: "Mức thay đổi của đầu ra lớn bao nhiêu so với thay đổi của đầu vào? Bằng một nửa? Gấp đôi?"</p>
+<p>Vì vậy, ta có thể xét tỷ số giữa thay đổi trong đầu ra của một hàm và một thay đổi nhỏ trong đầu vào của hàm. Ta có thể viết điều này một cách hình thức là</p>
+<div class="arithmatex">\[
+\frac{L(x+\epsilon) - L(x)}{(x+\epsilon) - x} = \frac{L(x+\epsilon) - L(x)}{\epsilon}.
+\]</div>
+<p>Điều này đã đủ để bắt đầu thử nghiệm trong mã. Chẳng hạn, giả sử ta biết <span class="arithmatex">\(L(x) = x^{2} + 1701(x-4)^3\)</span>, khi đó ta có thể xem giá trị này lớn bao nhiêu tại điểm <span class="arithmatex">\(x = 4\)</span> như sau.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># Define our function</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">L</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1701</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># Print the difference divided by epsilon for several epsilon</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="k">for</span> <span class="n">epsilon</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.00001</span><span class="p">]:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epsilon = </span><span class="si">{</span><span class="n">epsilon</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1"> -&gt; </span><span class="si">{</span><span class="p">(</span><span class="n">L</span><span class="p">(</span><span class="mi">4</span><span class="o">+</span><span class="n">epsilon</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">L</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">epsilon</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Bây giờ, nếu quan sát kỹ, ta sẽ nhận thấy đầu ra của con số này gần một cách đáng ngờ với <span class="arithmatex">\(8\)</span>. Thật vậy, nếu giảm <span class="arithmatex">\(\epsilon\)</span>, ta sẽ thấy giá trị tiến dần tới <span class="arithmatex">\(8\)</span>. Do đó, ta có thể kết luận, một cách đúng đắn, rằng giá trị ta tìm kiếm (mức độ mà thay đổi trong đầu vào làm thay đổi đầu ra) nên là <span class="arithmatex">\(8\)</span> tại điểm <span class="arithmatex">\(x=4\)</span>. Cách nhà toán học mã hóa sự thật này là</p>
+<div class="arithmatex">\[
+\lim_{\epsilon \rightarrow 0}\frac{L(4+\epsilon) - L(4)}{\epsilon} = 8.
+\]</div>
+<p>Như một đoạn lạc đề lịch sử: trong vài thập kỷ đầu của nghiên cứu mạng nơ-ron, các nhà khoa học dùng thuật toán này (<em>phương pháp sai phân hữu hạn</em>) để đánh giá một hàm mất mát thay đổi như thế nào dưới nhiễu nhỏ: chỉ cần thay đổi trọng số và xem mất mát thay đổi ra sao. Cách này kém hiệu quả về tính toán, vì cần hai lần đánh giá hàm mất mát để xem một thay đổi duy nhất của một biến ảnh hưởng thế nào đến mất mát. Nếu cố làm điều này với chỉ vài nghìn tham số ít ỏi, ta sẽ cần vài nghìn lần đánh giá mạng trên toàn bộ bộ dữ liệu! Vấn đề chỉ được giải quyết vào năm 1986 khi <em>thuật toán lan truyền ngược</em> được giới thiệu trong Rumelhart.Hinton.Williams.ea.1988, cung cấp một cách tính xem <em>bất kỳ</em> thay đổi nào của toàn bộ trọng số sẽ làm mất mát thay đổi ra sao với cùng thời gian tính toán như một lần dự đoán của mạng trên bộ dữ liệu.</p>
+<p>Quay lại ví dụ của ta, giá trị <span class="arithmatex">\(8\)</span> này khác nhau với các giá trị khác nhau của <span class="arithmatex">\(x\)</span>, nên hợp lý khi định nghĩa nó như một hàm của <span class="arithmatex">\(x\)</span>. Hình thức hơn, tốc độ thay đổi phụ thuộc giá trị này được gọi là <em>đạo hàm</em>, được viết là</p>
+<div class="arithmatex">\[\frac{df}{dx}(x) = \lim_{\epsilon \rightarrow 0}\frac{f(x+\epsilon) - f(x)}{\epsilon}.\]</div>
+<p>Các tài liệu khác nhau sẽ dùng các ký hiệu khác nhau cho đạo hàm. Chẳng hạn, tất cả các ký hiệu dưới đây đều chỉ cùng một điều:</p>
+<div class="arithmatex">\[
+\frac{df}{dx} = \frac{d}{dx}f = f' = \nabla_xf = D_xf = f_x.
+\]</div>
+<p>Hầu hết tác giả sẽ chọn một ký hiệu và dùng nhất quán, tuy nhiên điều đó cũng không được đảm bảo. Tốt nhất là quen thuộc với tất cả các ký hiệu này. Trong toàn bộ văn bản này, chúng ta sẽ dùng ký hiệu <span class="arithmatex">\(\frac{df}{dx}\)</span>, trừ khi muốn lấy đạo hàm của một biểu thức phức tạp, khi đó ta sẽ dùng <span class="arithmatex">\(\frac{d}{dx}f\)</span> để viết các biểu thức như
+$$
+\frac{d}{dx}\left[x^4+\cos\left(\frac{x^2+1}{2x-1}\right)\right].
+$$</p>
+<p>Thông thường, sẽ hữu ích về mặt trực giác nếu mở lại định nghĩa đạo hàm :eqref:<code>eq_der_def</code> để thấy một hàm thay đổi như thế nào khi ta tạo một thay đổi nhỏ ở <span class="arithmatex">\(x\)</span>:</p>
+<div class="arithmatex">\[\begin{aligned} \frac{df}{dx}(x) = \lim_{\epsilon \rightarrow 0}\frac{f(x+\epsilon) - f(x)}{\epsilon} &amp; \implies \frac{df}{dx}(x) \approx \frac{f(x+\epsilon) - f(x)}{\epsilon} \\ &amp; \implies \epsilon \frac{df}{dx}(x) \approx f(x+\epsilon) - f(x) \\ &amp; \implies f(x+\epsilon) \approx f(x) + \epsilon \frac{df}{dx}(x). \end{aligned}\]</div>
+<p>Phương trình cuối cùng đáng được nhấn mạnh rõ. Nó cho ta biết rằng nếu lấy bất kỳ hàm nào và thay đổi đầu vào một lượng nhỏ, đầu ra sẽ thay đổi bằng lượng nhỏ đó nhân với đạo hàm.</p>
+<p>Theo cách này, ta có thể hiểu đạo hàm như hệ số tỷ lệ cho biết ta nhận được thay đổi lớn bao nhiêu ở đầu ra từ một thay đổi ở đầu vào.</p>
+<h2 id="cac-quy-tac-giai-tich">Các quy tắc giải tích<a class="headerlink" href="#cac-quy-tac-giai-tich" title="Permanent link">&para;</a></h2>
+<p><a id="sec_derivative_table"></a></p>
+<p>Bây giờ ta chuyển sang nhiệm vụ hiểu cách tính đạo hàm của một hàm tường minh. Một trình bày hình thức đầy đủ về giải tích sẽ suy ra mọi thứ từ các nguyên lý đầu tiên. Ở đây chúng ta sẽ không đi theo cám dỗ đó, mà cung cấp cách hiểu về các quy tắc phổ biến thường gặp.</p>
+<h3 id="cac-ao-ham-pho-bien">Các đạo hàm phổ biến<a class="headerlink" href="#cac-ao-ham-pho-bien" title="Permanent link">&para;</a></h3>
+<p>Như đã thấy trong <a href="#sec_calculus">sec_calculus</a>, khi tính đạo hàm, ta thường có thể dùng một chuỗi quy tắc để rút gọn phép tính về một vài hàm cốt lõi. Ta lặp lại chúng ở đây để tiện tham khảo.</p>
+<ul>
+<li><strong>Đạo hàm của hằng số.</strong> <span class="arithmatex">\(\frac{d}{dx}c = 0\)</span>.</li>
+<li><strong>Đạo hàm của hàm tuyến tính.</strong> <span class="arithmatex">\(\frac{d}{dx}(ax) = a\)</span>.</li>
+<li><strong>Quy tắc lũy thừa.</strong> <span class="arithmatex">\(\frac{d}{dx}x^n = nx^{n-1}\)</span>.</li>
+<li><strong>Đạo hàm của hàm mũ.</strong> <span class="arithmatex">\(\frac{d}{dx}e^x = e^x\)</span>.</li>
+<li><strong>Đạo hàm của logarit.</strong> <span class="arithmatex">\(\frac{d}{dx}\log(x) = \frac{1}{x}\)</span>.</li>
+</ul>
+<h3 id="quy-tac-ao-ham">Quy tắc đạo hàm<a class="headerlink" href="#quy-tac-ao-ham" title="Permanent link">&para;</a></h3>
+<p>Nếu mọi đạo hàm cần được tính và lưu riêng trong một bảng, giải tích vi phân sẽ gần như bất khả thi. Toán học ban cho ta khả năng tổng quát hóa các đạo hàm trên và tính các đạo hàm phức tạp hơn, như tìm đạo hàm của <span class="arithmatex">\(f(x) = \log\left(1+(x-1)^{10}\right)\)</span>. Như đã đề cập trong <a href="#sec_calculus">sec_calculus</a>, chìa khóa để làm điều đó là mã hóa điều gì xảy ra khi ta lấy các hàm và kết hợp chúng theo nhiều cách, quan trọng nhất là: tổng, tích và hợp thành.</p>
+<ul>
+<li><strong>Quy tắc tổng.</strong> <span class="arithmatex">\(\frac{d}{dx}\left(g(x) + h(x)\right) = \frac{dg}{dx}(x) + \frac{dh}{dx}(x)\)</span>.</li>
+<li><strong>Quy tắc tích.</strong> <span class="arithmatex">\(\frac{d}{dx}\left(g(x)\cdot h(x)\right) = g(x)\frac{dh}{dx}(x) + \frac{dg}{dx}(x)h(x)\)</span>.</li>
+<li><strong>Quy tắc dây chuyền.</strong> <span class="arithmatex">\(\frac{d}{dx}g(h(x)) = \frac{dg}{dh}(h(x))\cdot \frac{dh}{dx}(x)\)</span>.</li>
+</ul>
+<p>Hãy xem cách ta có thể dùng :eqref:<code>eq_small_change</code> để hiểu các quy tắc này. Với quy tắc tổng, xét chuỗi lập luận sau:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+f(x+\epsilon) &amp; = g(x+\epsilon) + h(x+\epsilon) \\
+&amp; \approx g(x) + \epsilon \frac{dg}{dx}(x) + h(x) + \epsilon \frac{dh}{dx}(x) \\
+&amp; = g(x) + h(x) + \epsilon\left(\frac{dg}{dx}(x) + \frac{dh}{dx}(x)\right) \\
+&amp; = f(x) + \epsilon\left(\frac{dg}{dx}(x) + \frac{dh}{dx}(x)\right).
+\end{aligned}
+\]</div>
+<p>Bằng cách so sánh kết quả này với sự thật rằng <span class="arithmatex">\(f(x+\epsilon) \approx f(x) + \epsilon \frac{df}{dx}(x)\)</span>, ta thấy <span class="arithmatex">\(\frac{df}{dx}(x) = \frac{dg}{dx}(x) + \frac{dh}{dx}(x)\)</span> như mong muốn. Trực giác ở đây là: khi ta thay đổi đầu vào <span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(g\)</span> và <span class="arithmatex">\(h\)</span> cùng đóng góp vào thay đổi của đầu ra lần lượt bằng <span class="arithmatex">\(\frac{dg}{dx}(x)\)</span> và <span class="arithmatex">\(\frac{dh}{dx}(x)\)</span>.</p>
+<p>Tích thì tinh tế hơn, và sẽ cần một quan sát mới về cách làm việc với các biểu thức này. Ta sẽ bắt đầu như trước bằng :eqref:<code>eq_small_change</code>:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+f(x+\epsilon) &amp; = g(x+\epsilon)\cdot h(x+\epsilon) \\
+&amp; \approx \left(g(x) + \epsilon \frac{dg}{dx}(x)\right)\cdot\left(h(x) + \epsilon \frac{dh}{dx}(x)\right) \\
+&amp; = g(x)\cdot h(x) + \epsilon\left(g(x)\frac{dh}{dx}(x) + \frac{dg}{dx}(x)h(x)\right) + \epsilon^2\frac{dg}{dx}(x)\frac{dh}{dx}(x) \\
+&amp; = f(x) + \epsilon\left(g(x)\frac{dh}{dx}(x) + \frac{dg}{dx}(x)h(x)\right) + \epsilon^2\frac{dg}{dx}(x)\frac{dh}{dx}(x). \\
+\end{aligned}
+\]</div>
+<p>Điều này giống phép tính ở trên, và thật vậy ta thấy đáp án (<span class="arithmatex">\(\frac{df}{dx}(x) = g(x)\frac{dh}{dx}(x) + \frac{dg}{dx}(x)h(x)\)</span>) nằm cạnh <span class="arithmatex">\(\epsilon\)</span>, nhưng có vấn đề là hạng kích thước <span class="arithmatex">\(\epsilon^{2}\)</span>. Ta sẽ gọi đây là một <em>hạng bậc cao</em>, vì lũy thừa <span class="arithmatex">\(\epsilon^2\)</span> cao hơn lũy thừa <span class="arithmatex">\(\epsilon^1\)</span>. Trong một phần sau, ta sẽ thấy đôi khi muốn theo dõi các hạng này, tuy nhiên hiện tại hãy quan sát rằng nếu <span class="arithmatex">\(\epsilon = 0.0000001\)</span>, thì <span class="arithmatex">\(\epsilon^{2}= 0.0000000000001\)</span>, nhỏ hơn rất nhiều. Khi cho <span class="arithmatex">\(\epsilon \rightarrow 0\)</span>, ta có thể bỏ qua an toàn các hạng bậc cao. Như một quy ước chung trong phụ lục này, ta sẽ dùng "<span class="arithmatex">\(\approx\)</span>" để biểu thị rằng hai hạng bằng nhau tới các hạng bậc cao. Tuy nhiên, nếu muốn hình thức hơn, ta có thể xét thương sai phân</p>
+<div class="arithmatex">\[
+\frac{f(x+\epsilon) - f(x)}{\epsilon} = g(x)\frac{dh}{dx}(x) + \frac{dg}{dx}(x)h(x) + \epsilon \frac{dg}{dx}(x)\frac{dh}{dx}(x),
+\]</div>
+<p>và thấy rằng khi cho <span class="arithmatex">\(\epsilon \rightarrow 0\)</span>, hạng bên phải cũng tiến tới không.</p>
+<p>Cuối cùng, với quy tắc dây chuyền, ta lại có thể tiến hành như trước bằng :eqref:<code>eq_small_change</code> và thấy rằng</p>
+<div class="arithmatex">\[
+\begin{aligned}
+f(x+\epsilon) &amp; = g(h(x+\epsilon)) \\
+&amp; \approx g\left(h(x) + \epsilon \frac{dh}{dx}(x)\right) \\
+&amp; \approx g(h(x)) + \epsilon \frac{dh}{dx}(x) \frac{dg}{dh}(h(x))\\
+&amp; = f(x) + \epsilon \frac{dg}{dh}(h(x))\frac{dh}{dx}(x),
+\end{aligned}
+\]</div>
+<p>trong đó ở dòng thứ hai ta xem hàm <span class="arithmatex">\(g\)</span> như có đầu vào (<span class="arithmatex">\(h(x)\)</span>) bị dịch bởi lượng rất nhỏ <span class="arithmatex">\(\epsilon \frac{dh}{dx}(x)\)</span>.</p>
+<p>Các quy tắc này cung cấp cho ta một bộ công cụ linh hoạt để tính về cơ bản bất kỳ biểu thức nào mong muốn. Chẳng hạn,</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{d}{dx}\left[\log\left(1+(x-1)^{10}\right)\right] &amp; = \left(1+(x-1)^{10}\right)^{-1}\frac{d}{dx}\left[1+(x-1)^{10}\right]\\
+&amp; = \left(1+(x-1)^{10}\right)^{-1}\left(\frac{d}{dx}[1] + \frac{d}{dx}[(x-1)^{10}]\right) \\
+&amp; = \left(1+(x-1)^{10}\right)^{-1}\left(0 + 10(x-1)^9\frac{d}{dx}[x-1]\right) \\
+&amp; = 10\left(1+(x-1)^{10}\right)^{-1}(x-1)^9 \\
+&amp; = \frac{10(x-1)^9}{1+(x-1)^{10}}.
+\end{aligned}
+\]</div>
+<p>Trong đó mỗi dòng đã dùng các quy tắc sau:</p>
+<ol>
+<li>Quy tắc dây chuyền và đạo hàm của logarit.</li>
+<li>Quy tắc tổng.</li>
+<li>Đạo hàm của hằng số, quy tắc dây chuyền và quy tắc lũy thừa.</li>
+<li>Quy tắc tổng, đạo hàm của hàm tuyến tính, đạo hàm của hằng số.</li>
+</ol>
+<p>Sau khi làm ví dụ này, hai điều nên rõ ràng:</p>
+<ol>
+<li>Bất kỳ hàm nào ta có thể viết bằng tổng, tích, hằng số, lũy thừa, hàm mũ và logarit đều có thể được tính đạo hàm một cách cơ học bằng cách theo các quy tắc này.</li>
+<li>Bắt con người theo các quy tắc này có thể tẻ nhạt và dễ lỗi!</li>
+</ol>
+<p>May mắn thay, hai sự thật này cùng gợi ý một con đường phía trước: đây là ứng viên hoàn hảo để cơ giới hóa! Thật vậy, lan truyền ngược, mà ta sẽ quay lại sau trong phần này, chính là điều đó.</p>
+<h3 id="xap-xi-tuyen-tinh">Xấp xỉ tuyến tính<a class="headerlink" href="#xap-xi-tuyen-tinh" title="Permanent link">&para;</a></h3>
+<p>Khi làm việc với đạo hàm, thường hữu ích nếu diễn giải hình học phép xấp xỉ đã dùng ở trên. Cụ thể, lưu ý rằng phương trình</p>
+<div class="arithmatex">\[
+f(x+\epsilon) \approx f(x) + \epsilon \frac{df}{dx}(x),
+\]</div>
+<p>xấp xỉ giá trị của <span class="arithmatex">\(f\)</span> bằng một đường thẳng đi qua điểm <span class="arithmatex">\((x, f(x))\)</span> và có độ dốc <span class="arithmatex">\(\frac{df}{dx}(x)\)</span>. Theo cách này, ta nói rằng đạo hàm cho một xấp xỉ tuyến tính của hàm <span class="arithmatex">\(f\)</span>, như minh họa dưới đây:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># Compute sin</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="p">)]</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1"># Compute some linear approximations. Use d(sin(x)) / dx = cos(x)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="k">for</span> <span class="n">x0</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">plots</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># Compute sin</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="p">)]</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># Compute some linear approximations. Use d(sin(x))/dx = cos(x)</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">for</span> <span class="n">x0</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]:</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">*</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>                 <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x0</span><span class="p">)))</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">plots</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># Compute sin</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="p">)]</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1"># Compute some linear approximations. Use d(sin(x))/dx = cos(x)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="k">for</span> <span class="n">x0</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]:</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">*</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>                 <span class="n">tf</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">x0</span><span class="p">)))</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">plots</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+</code></pre></div>
+<h3 id="ao-ham-bac-cao">Đạo hàm bậc cao<a class="headerlink" href="#ao-ham-bac-cao" title="Permanent link">&para;</a></h3>
+<p>Bây giờ hãy làm một điều bề ngoài có vẻ kỳ lạ. Lấy một hàm <span class="arithmatex">\(f\)</span> và tính đạo hàm <span class="arithmatex">\(\frac{df}{dx}\)</span>. Điều này cho ta tốc độ thay đổi của <span class="arithmatex">\(f\)</span> tại mọi điểm.</p>
+<p>Tuy nhiên, đạo hàm <span class="arithmatex">\(\frac{df}{dx}\)</span> có thể được xem như một hàm, nên không có gì ngăn ta tính đạo hàm của <span class="arithmatex">\(\frac{df}{dx}\)</span> để thu được <span class="arithmatex">\(\frac{d^2f}{dx^2} = \frac{df}{dx}\left(\frac{df}{dx}\right)\)</span>. Ta sẽ gọi đây là đạo hàm bậc hai của <span class="arithmatex">\(f\)</span>. Hàm này là tốc độ thay đổi của tốc độ thay đổi của <span class="arithmatex">\(f\)</span>, hay nói cách khác, tốc độ thay đổi đang thay đổi như thế nào. Ta có thể áp dụng đạo hàm bao nhiêu lần tùy ý để thu được thứ gọi là đạo hàm bậc <span class="arithmatex">\(n\)</span>. Để ký hiệu gọn, ta sẽ ký hiệu đạo hàm bậc <span class="arithmatex">\(n\)</span> là</p>
+<div class="arithmatex">\[
+f^{(n)}(x) = \frac{d^{n}f}{dx^{n}} = \left(\frac{d}{dx}\right)^{n} f.
+\]</div>
+<p>Hãy cố hiểu <em>tại sao</em> đây là một khái niệm hữu ích. Dưới đây, ta trực quan hóa <span class="arithmatex">\(f^{(2)}(x)\)</span>, <span class="arithmatex">\(f^{(1)}(x)\)</span> và <span class="arithmatex">\(f(x)\)</span>.</p>
+<p>Trước hết, xét trường hợp đạo hàm bậc hai <span class="arithmatex">\(f^{(2)}(x)\)</span> là một hằng số dương. Điều này có nghĩa là độ dốc của đạo hàm bậc nhất là dương. Kết quả là đạo hàm bậc nhất <span class="arithmatex">\(f^{(1)}(x)\)</span> có thể bắt đầu âm, trở thành không tại một điểm, rồi cuối cùng trở thành dương. Điều này cho ta biết độ dốc của hàm gốc <span class="arithmatex">\(f\)</span>, và vì vậy chính hàm <span class="arithmatex">\(f\)</span> giảm, phẳng ra, rồi tăng. Nói cách khác, hàm <span class="arithmatex">\(f\)</span> cong lên và có một cực tiểu duy nhất như trong <a href="#fig_positive-second">fig_positive-second</a>.</p>
+<p><img alt="Nếu giả sử đạo hàm bậc hai là hằng số dương, thì đạo hàm bậc nhất đang tăng, điều này ngụ ý bản thân hàm có một cực tiểu." src="../../img/posSecDer.svg" />
+<a id="fig_positive-second"></a></p>
+<p>Thứ hai, nếu đạo hàm bậc hai là một hằng số âm, điều đó nghĩa là đạo hàm bậc nhất đang giảm. Điều này ngụ ý đạo hàm bậc nhất có thể bắt đầu dương, trở thành không tại một điểm, rồi trở thành âm. Do đó, chính hàm <span class="arithmatex">\(f\)</span> tăng, phẳng ra, rồi giảm. Nói cách khác, hàm <span class="arithmatex">\(f\)</span> cong xuống và có một cực đại duy nhất như trong <a href="#fig_negative-second">fig_negative-second</a>.</p>
+<p><img alt="Nếu giả sử đạo hàm bậc hai là hằng số âm, thì đạo hàm bậc nhất đang giảm, điều này ngụ ý bản thân hàm có một cực đại." src="../../img/negSecDer.svg" />
+<a id="fig_negative-second"></a></p>
+<p>Thứ ba, nếu đạo hàm bậc hai luôn bằng không, thì đạo hàm bậc nhất sẽ không bao giờ thay đổi, nó là hằng số! Điều này có nghĩa là <span class="arithmatex">\(f\)</span> tăng (hoặc giảm) với một tốc độ cố định, và bản thân <span class="arithmatex">\(f\)</span> là một đường thẳng như trong <a href="#fig_zero-second">fig_zero-second</a>.</p>
+<p><img alt="Nếu giả sử đạo hàm bậc hai bằng không, thì đạo hàm bậc nhất là hằng số, điều này ngụ ý bản thân hàm là một đường thẳng." src="../../img/zeroSecDer.svg" />
+<a id="fig_zero-second"></a></p>
+<p>Tóm lại, đạo hàm bậc hai có thể được diễn giải là mô tả cách hàm <span class="arithmatex">\(f\)</span> cong. Đạo hàm bậc hai dương dẫn đến đường cong hướng lên, trong khi đạo hàm bậc hai âm nghĩa là <span class="arithmatex">\(f\)</span> cong xuống, còn đạo hàm bậc hai bằng không nghĩa là <span class="arithmatex">\(f\)</span> hoàn toàn không cong.</p>
+<p>Hãy tiến thêm một bước. Xét hàm <span class="arithmatex">\(g(x) = ax^{2}+ bx + c\)</span>. Khi đó ta có thể tính</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{dg}{dx}(x) &amp; = 2ax + b \\
+\frac{d^2g}{dx^2}(x) &amp; = 2a.
+\end{aligned}
+\]</div>
+<p>Nếu ta có một hàm gốc <span class="arithmatex">\(f(x)\)</span> nào đó trong đầu, ta có thể tính hai đạo hàm đầu tiên và tìm các giá trị <span class="arithmatex">\(a, b\)</span> và <span class="arithmatex">\(c\)</span> khiến chúng khớp với phép tính này. Tương tự phần trước, nơi ta thấy đạo hàm bậc nhất cho xấp xỉ tốt nhất bằng đường thẳng, cấu trúc này cung cấp xấp xỉ tốt nhất bằng một hàm bậc hai. Hãy trực quan hóa điều này với <span class="arithmatex">\(f(x) = \sin(x)\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># Compute sin</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="p">)]</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1"># Compute some quadratic approximations. Use d(sin(x)) / dx = cos(x)</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="k">for</span> <span class="n">x0</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]:</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">-</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>                              <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">plots</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="c1"># Compute sin</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="p">)]</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># Compute some quadratic approximations. Use d(sin(x)) / dx = cos(x)</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="k">for</span> <span class="n">x0</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]:</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>    <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">*</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>                 <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>                 <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">plots</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1"># Compute sin</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="p">)]</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1"># Compute some quadratic approximations. Use d(sin(x)) / dx = cos(x)</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">for</span> <span class="n">x0</span> <span class="ow">in</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]:</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>    <span class="n">plots</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">+</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">*</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>                 <span class="n">tf</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">-</span> <span class="p">(</span><span class="n">xs</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>                 <span class="n">tf</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">plots</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+</code></pre></div>
+<p>Chúng ta sẽ mở rộng ý tưởng này sang khái niệm <em>chuỗi Taylor</em> trong phần tiếp theo.</p>
+<h3 id="chuoi-taylor">Chuỗi Taylor<a class="headerlink" href="#chuoi-taylor" title="Permanent link">&para;</a></h3>
+<p><em>Chuỗi Taylor</em> cung cấp một phương pháp xấp xỉ hàm <span class="arithmatex">\(f(x)\)</span> nếu ta biết giá trị của <span class="arithmatex">\(n\)</span> đạo hàm đầu tiên tại một điểm <span class="arithmatex">\(x_0\)</span>, tức <span class="arithmatex">\(\left\{ f(x_0), f^{(1)}(x_0), f^{(2)}(x_0), \ldots, f^{(n)}(x_0) \right\}\)</span>. Ý tưởng là tìm một đa thức bậc <span class="arithmatex">\(n\)</span> khớp với tất cả các đạo hàm đã cho tại <span class="arithmatex">\(x_0\)</span>.</p>
+<p>Ta đã thấy trường hợp <span class="arithmatex">\(n=2\)</span> ở phần trước, và một chút đại số cho thấy nó là</p>
+<div class="arithmatex">\[
+f(x) \approx \frac{1}{2}\frac{d^2f}{dx^2}(x_0)(x-x_0)^{2}+ \frac{df}{dx}(x_0)(x-x_0) + f(x_0).
+\]</div>
+<p>Như có thể thấy ở trên, mẫu số <span class="arithmatex">\(2\)</span> ở đó để triệt tiêu số <span class="arithmatex">\(2\)</span> ta nhận được khi lấy hai đạo hàm của <span class="arithmatex">\(x^2\)</span>, trong khi các hạng khác đều bằng không. Logic tương tự áp dụng cho đạo hàm bậc nhất và chính giá trị hàm.</p>
+<p>Nếu đẩy logic xa hơn tới <span class="arithmatex">\(n=3\)</span>, ta sẽ kết luận rằng</p>
+<div class="arithmatex">\[
+f(x) \approx \frac{\frac{d^3f}{dx^3}(x_0)}{6}(x-x_0)^3 + \frac{\frac{d^2f}{dx^2}(x_0)}{2}(x-x_0)^{2}+ \frac{df}{dx}(x_0)(x-x_0) + f(x_0).
+\]</div>
+<p>trong đó <span class="arithmatex">\(6 = 3 \times 2 = 3!\)</span> đến từ hằng số phía trước nếu ta lấy ba đạo hàm của <span class="arithmatex">\(x^3\)</span>.</p>
+<p>Hơn nữa, ta có thể thu được một đa thức bậc <span class="arithmatex">\(n\)</span> bằng</p>
+<div class="arithmatex">\[
+P_n(x) = \sum_{i = 0}^{n} \frac{f^{(i)}(x_0)}{i!}(x-x_0)^{i}.
+\]</div>
+<p>trong đó ký hiệu</p>
+<div class="arithmatex">\[
+f^{(n)}(x) = \frac{d^{n}f}{dx^{n}} = \left(\frac{d}{dx}\right)^{n} f.
+\]</div>
+<p>Thật vậy, <span class="arithmatex">\(P_n(x)\)</span> có thể được xem là xấp xỉ đa thức bậc <span class="arithmatex">\(n\)</span> tốt nhất cho hàm <span class="arithmatex">\(f(x)\)</span> của ta.</p>
+<p>Dù chúng ta sẽ không đi sâu hoàn toàn vào sai số của các xấp xỉ trên, việc nhắc đến giới hạn vô hạn là đáng giá. Trong trường hợp này, với các hàm cư xử tốt (gọi là các hàm giải tích thực) như <span class="arithmatex">\(\cos(x)\)</span> hoặc <span class="arithmatex">\(e^{x}\)</span>, ta có thể viết ra vô hạn số hạng và xấp xỉ đúng chính hàm đó</p>
+<div class="arithmatex">\[
+f(x) = \sum_{n = 0}^\infty \frac{f^{(n)}(x_0)}{n!}(x-x_0)^{n}.
+\]</div>
+<p>Lấy <span class="arithmatex">\(f(x) = e^{x}\)</span> làm ví dụ. Vì <span class="arithmatex">\(e^{x}\)</span> là đạo hàm của chính nó, ta biết rằng <span class="arithmatex">\(f^{(n)}(x) = e^{x}\)</span>. Do đó, <span class="arithmatex">\(e^{x}\)</span> có thể được tái dựng bằng cách lấy chuỗi Taylor tại <span class="arithmatex">\(x_0 = 0\)</span>, tức là</p>
+<div class="arithmatex">\[
+e^{x} = \sum_{n = 0}^\infty \frac{x^{n}}{n!} = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \cdots.
+\]</div>
+<p>Hãy xem điều này hoạt động trong mã như thế nào và quan sát việc tăng bậc của xấp xỉ Taylor đưa ta lại gần hàm mong muốn <span class="arithmatex">\(e^x\)</span> ra sao.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="c1"># Compute the exponential function</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1"># Compute a few Taylor series approximations</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">P1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">P2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="n">P5</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">120</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">ys</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P5</span><span class="p">],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>    <span class="s2">&quot;Exponential&quot;</span><span class="p">,</span> <span class="s2">&quot;Degree 1 Taylor Series&quot;</span><span class="p">,</span> <span class="s2">&quot;Degree 2 Taylor Series&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>    <span class="s2">&quot;Degree 5 Taylor Series&quot;</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1"># Compute the exponential function</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1"># Compute a few Taylor series approximations</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="n">P1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="n">P2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="n">P5</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">120</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">ys</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P5</span><span class="p">],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>    <span class="s2">&quot;Exponential&quot;</span><span class="p">,</span> <span class="s2">&quot;Degree 1 Taylor Series&quot;</span><span class="p">,</span> <span class="s2">&quot;Degree 2 Taylor Series&quot;</span><span class="p">,</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>    <span class="s2">&quot;Degree 5 Taylor Series&quot;</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># Compute the exponential function</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="n">xs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">ys</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="c1"># Compute a few Taylor series approximations</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="n">P1</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">P2</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="n">P5</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">xs</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">4</span> <span class="o">/</span> <span class="mi">24</span> <span class="o">+</span> <span class="n">xs</span><span class="o">**</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">120</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="p">[</span><span class="n">ys</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P5</span><span class="p">],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    <span class="s2">&quot;Exponential&quot;</span><span class="p">,</span> <span class="s2">&quot;Degree 1 Taylor Series&quot;</span><span class="p">,</span> <span class="s2">&quot;Degree 2 Taylor Series&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>    <span class="s2">&quot;Degree 5 Taylor Series&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>Chuỗi Taylor có hai ứng dụng chính:</p>
+<ol>
+<li>
+<p><em>Ứng dụng lý thuyết</em>: Thường khi cố hiểu một hàm quá phức tạp, dùng chuỗi Taylor cho phép ta biến nó thành một đa thức mà ta có thể làm việc trực tiếp.</p>
+</li>
+<li>
+<p><em>Ứng dụng số</em>: Một số hàm như <span class="arithmatex">\(e^{x}\)</span> hoặc <span class="arithmatex">\(\cos(x)\)</span> khó để máy tính tính toán. Chúng có thể lưu các bảng giá trị ở một độ chính xác cố định (và điều này thường được làm), nhưng vẫn để ngỏ các câu hỏi như "Chữ số thứ 1000 của <span class="arithmatex">\(\cos(1)\)</span> là gì?" Chuỗi Taylor thường hữu ích để trả lời những câu hỏi như vậy.</p>
+</li>
+</ol>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Đạo hàm có thể được dùng để biểu diễn cách hàm thay đổi khi ta thay đổi đầu vào một lượng nhỏ.</li>
+<li>Các đạo hàm sơ cấp có thể được kết hợp bằng các quy tắc đạo hàm để tạo ra các đạo hàm phức tạp tùy ý.</li>
+<li>Đạo hàm có thể được lặp để thu được đạo hàm bậc hai hoặc bậc cao hơn. Mỗi lần tăng bậc cung cấp thông tin tinh hơn về hành vi của hàm.</li>
+<li>Dùng thông tin trong các đạo hàm tại một ví dụ dữ liệu duy nhất, ta có thể xấp xỉ các hàm cư xử tốt bằng các đa thức thu được từ chuỗi Taylor.</li>
+</ul>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Đạo hàm của <span class="arithmatex">\(x^3-4x+1\)</span> là gì?</li>
+<li>Đạo hàm của <span class="arithmatex">\(\log(\frac{1}{x})\)</span> là gì?</li>
+<li>Đúng hay sai: Nếu <span class="arithmatex">\(f'(x) = 0\)</span> thì <span class="arithmatex">\(f\)</span> có cực đại hoặc cực tiểu tại <span class="arithmatex">\(x\)</span>?</li>
+<li>Cực tiểu của <span class="arithmatex">\(f(x) = x\log(x)\)</span> với <span class="arithmatex">\(x\ge0\)</span> nằm ở đâu (trong đó ta giả sử <span class="arithmatex">\(f\)</span> nhận giá trị giới hạn <span class="arithmatex">\(0\)</span> tại <span class="arithmatex">\(f(0)\)</span>)?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/1088">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

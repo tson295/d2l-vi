@@ -1,0 +1,2189 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_convolutional-modern/resnet/">
+      
+      
+        <link rel="prev" href="../batch-norm/">
+      
+      
+        <link rel="next" href="../densenet/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>ResNet - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mang-du-resnet-va-resnext" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ResNet
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng tích chập hiện đại
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../alexnet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AlexNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vgg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VGG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NiN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../googlenet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GoogLeNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../batch-norm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ResNet
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ResNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cac-lop-ham" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các Lớp Hàm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cac-khoi-du" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Các Khối Dư)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Mô hình ResNet]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#huan-luyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Huấn luyện]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resnext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResNeXt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat-va-thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt và Thảo luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../densenet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DenseNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cnn-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thiết kế CNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cac-lop-ham" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các Lớp Hàm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cac-khoi-du" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Các Khối Dư)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-resnet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Mô hình ResNet]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#huan-luyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [Huấn luyện]
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resnext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResNeXt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat-va-thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt và Thảo luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mang-du-resnet-va-resnext">Mạng Dư (ResNet) và ResNeXt<a class="headerlink" href="#mang-du-resnet-va-resnext" title="Permanent link">&para;</a></h1>
+<p><a id="sec_resnet"></a></p>
+<p>Khi chúng ta thiết kế các mạng ngày càng sâu hơn, điều tối quan trọng là phải hiểu cách thêm các lớp có thể tăng độ phức tạp và tính biểu đạt của mạng.
+Quan trọng hơn nữa là khả năng thiết kế các mạng mà việc thêm lớp làm cho mạng có tính biểu đạt <em>nghiêm ngặt hơn</em> thay vì chỉ khác biệt.
+Để đạt được một số tiến bộ, chúng ta cần một chút toán học.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+</code></pre></div>
+<h2 id="cac-lop-ham">Các Lớp Hàm<a class="headerlink" href="#cac-lop-ham" title="Permanent link">&para;</a></h2>
+<p>Xem xét <span class="arithmatex">\(\mathcal{F}\)</span>, lớp hàm mà một kiến trúc mạng cụ thể (cùng với tốc độ học và các cài đặt siêu tham số khác) có thể đạt được.
+Tức là, đối với tất cả <span class="arithmatex">\(f \in \mathcal{F}\)</span>, tồn tại một số tập tham số (ví dụ: trọng số và hệ số chặn) có thể thu được thông qua huấn luyện trên một tập dữ liệu phù hợp.
+Giả sử rằng <span class="arithmatex">\(f^*\)</span> là hàm "sự thật" mà chúng ta thực sự muốn tìm.
+Nếu nó nằm trong <span class="arithmatex">\(\mathcal{F}\)</span>, chúng ta ở vị trí tốt nhưng thường chúng ta sẽ không may mắn như vậy.
+Thay vào đó, chúng ta sẽ cố gắng tìm <span class="arithmatex">\(f^*_\mathcal{F}\)</span> là lựa chọn tốt nhất của chúng ta trong <span class="arithmatex">\(\mathcal{F}\)</span>.
+Ví dụ,
+cho một tập dữ liệu với các đặc trưng <span class="arithmatex">\(\mathbf{X}\)</span>
+và nhãn <span class="arithmatex">\(\mathbf{y}\)</span>,
+chúng ta có thể cố gắng tìm nó bằng cách giải bài toán tối ưu hóa sau:</p>
+<div class="arithmatex">\[f^*_\mathcal{F} \stackrel{\textrm{def}}{=} \mathop{\mathrm{argmin}}_f L(\mathbf{X}, \mathbf{y}, f) \textrm{ với điều kiện } f \in \mathcal{F}.\]</div>
+<p>Chúng ta biết rằng chuẩn hóa [tikhonov1977solutions, morozov2012methods] có thể kiểm soát độ phức tạp của <span class="arithmatex">\(\mathcal{F}\)</span>
+và đạt được tính nhất quán, vì vậy kích thước dữ liệu huấn luyện lớn hơn
+thường dẫn đến <span class="arithmatex">\(f^*_\mathcal{F}\)</span> tốt hơn.
+Chỉ hợp lý khi giả định rằng nếu chúng ta thiết kế một kiến trúc khác và mạnh mẽ hơn <span class="arithmatex">\(\mathcal{F}'\)</span> thì chúng ta sẽ đạt được kết quả tốt hơn. Nói cách khác, chúng ta kỳ vọng rằng <span class="arithmatex">\(f^*_{\mathcal{F}'}\)</span> "tốt hơn" <span class="arithmatex">\(f^*_{\mathcal{F}}\)</span>. Tuy nhiên, nếu <span class="arithmatex">\(\mathcal{F} \not\subseteq \mathcal{F}'\)</span> thì không có gì đảm bảo điều này sẽ xảy ra. Trên thực tế, <span class="arithmatex">\(f^*_{\mathcal{F}'}\)</span> hoàn toàn có thể tệ hơn.
+Như được minh họa trong <a href="#fig_functionclasses">fig_functionclasses</a>,
+đối với các lớp hàm không lồng nhau, một lớp hàm lớn hơn không phải lúc nào cũng di chuyển gần hơn đến hàm "sự thật" <span class="arithmatex">\(f^*\)</span>. Ví dụ,
+ở bên trái của <a href="#fig_functionclasses">fig_functionclasses</a>,
+mặc dù <span class="arithmatex">\(\mathcal{F}_3\)</span> gần <span class="arithmatex">\(f^*\)</span> hơn <span class="arithmatex">\(\mathcal{F}_1\)</span>, <span class="arithmatex">\(\mathcal{F}_6\)</span> lại di chuyển ra xa hơn và không có gì đảm bảo rằng việc tiếp tục tăng độ phức tạp có thể giảm khoảng cách từ <span class="arithmatex">\(f^*\)</span>.
+Với các lớp hàm lồng nhau
+nơi <span class="arithmatex">\(\mathcal{F}_1 \subseteq \cdots \subseteq \mathcal{F}_6\)</span>
+ở bên phải của <a href="#fig_functionclasses">fig_functionclasses</a>,
+chúng ta có thể tránh được vấn đề đã đề cập từ các lớp hàm không lồng nhau.</p>
+<p><img alt="Đối với các lớp hàm không lồng nhau, một lớp hàm lớn hơn (được biểu thị bằng diện tích) không đảm bảo chúng ta sẽ đến gần hơn hàm &quot;sự thật&quot; (\(\mathit{f}^*\)). Điều này không xảy ra trong các lớp hàm lồng nhau." src="../../img/functionclasses.svg" />
+<a id="fig_functionclasses"></a></p>
+<p>Do đó,
+chỉ khi các lớp hàm lớn hơn chứa các lớp nhỏ hơn, chúng ta mới được đảm bảo rằng việc tăng chúng sẽ làm tăng nghiêm ngặt tính biểu đạt của mạng.
+Đối với mạng nơ-ron sâu,
+nếu chúng ta có thể
+huấn luyện lớp mới được thêm vào thành hàm đồng nhất <span class="arithmatex">\(f(\mathbf{x}) = \mathbf{x}\)</span>, mô hình mới sẽ hiệu quả như mô hình ban đầu. Vì mô hình mới có thể tìm được giải pháp tốt hơn để phù hợp với tập dữ liệu huấn luyện, lớp được thêm vào có thể giúp giảm lỗi huấn luyện dễ hơn.</p>
+<p>Đây là câu hỏi mà He.Zhang.Ren.ea.2016 đã xem xét khi làm việc với các mô hình thị giác máy tính rất sâu.
+Trái tim của <em>mạng dư</em> (<em>ResNet</em>) do họ đề xuất là ý tưởng rằng mỗi lớp bổ sung nên
+dễ dàng hơn
+chứa hàm đồng nhất như một trong các phần tử của nó.
+Những xem xét này khá sâu sắc nhưng đã dẫn đến một
+giải pháp đơn giản đến ngạc nhiên, một <em>khối dư</em>.
+Với nó, ResNet đã giành chiến thắng trong ImageNet Large Scale Visual Recognition Challenge năm 2015. Thiết kế đã có ảnh hưởng sâu sắc đến cách
+xây dựng mạng nơ-ron sâu. Ví dụ, các khối dư đã được thêm vào mạng hồi quy [prakash2016neural, kim2017residual]. Tương tự, Transformer [Vaswani.Shazeer.Parmar.ea.2017] sử dụng chúng để xếp chồng nhiều lớp mạng một cách hiệu quả. Nó cũng được sử dụng trong mạng nơ-ron đồ thị [Kipf.Welling.2016] và, như một khái niệm cơ bản, nó đã được sử dụng rộng rãi trong thị giác máy tính [Redmon.Farhadi.2018, Ren.He.Girshick.ea.2015].
+Lưu ý rằng mạng dư có trước mạng highway [srivastava2015highway] chia sẻ một số động cơ, mặc dù không có tham số hóa thanh lịch xung quanh hàm đồng nhất.</p>
+<h2 id="cac-khoi-du">(<strong>Các Khối Dư</strong>)<a class="headerlink" href="#cac-khoi-du" title="Permanent link">&para;</a></h2>
+<p><a id="subsec_residual-blks"></a></p>
+<p>Hãy tập trung vào một phần cục bộ của mạng nơ-ron, như được mô tả trong <a href="#fig_residual_block">fig_residual_block</a>. Ký hiệu đầu vào là <span class="arithmatex">\(\mathbf{x}\)</span>.
+Chúng ta giả định rằng <span class="arithmatex">\(f(\mathbf{x})\)</span>, ánh xạ cơ bản mong muốn mà chúng ta muốn thu được qua học, được dùng làm đầu vào cho hàm kích hoạt ở trên.
+Ở bên trái,
+phần trong hộp có đường đứt nét
+phải trực tiếp học <span class="arithmatex">\(f(\mathbf{x})\)</span>.
+Ở bên phải,
+phần trong hộp có đường đứt nét
+cần học <em>ánh xạ dư</em> <span class="arithmatex">\(g(\mathbf{x}) = f(\mathbf{x}) - \mathbf{x}\)</span>,
+đây là cách khối dư có tên gọi của nó.
+Nếu ánh xạ đồng nhất <span class="arithmatex">\(f(\mathbf{x}) = \mathbf{x}\)</span> là ánh xạ cơ bản mong muốn,
+ánh xạ dư tương đương <span class="arithmatex">\(g(\mathbf{x}) = 0\)</span> và do đó dễ học hơn:
+chúng ta chỉ cần đẩy các trọng số và hệ số chặn
+của
+lớp trọng số trên (ví dụ: lớp kết nối đầy đủ và lớp tích chập)
+trong hộp có đường đứt nét
+về không.
+Hình bên phải minh họa <em>khối dư</em> của ResNet,
+trong đó đường liền nét mang đầu vào lớp
+<span class="arithmatex">\(\mathbf{x}\)</span> đến toán tử cộng
+được gọi là <em>kết nối dư</em> (hoặc <em>kết nối tắt</em>).
+Với các khối dư, đầu vào có thể
+truyền tiến nhanh hơn qua các kết nối dư trên các lớp.
+Trên thực tế,
+khối dư
+có thể được coi là
+một trường hợp đặc biệt của khối Inception đa nhánh:
+nó có hai nhánh
+một trong số đó là ánh xạ đồng nhất.</p>
+<p><img alt="Trong một khối thông thường (trái), phần trong hộp có đường đứt nét phải trực tiếp học ánh xạ \(\mathit{f}(\mathbf{x})\). Trong một khối dư (phải), phần trong hộp có đường đứt nét cần học ánh xạ dư \(\mathit{g}(\mathbf{x}) = \mathit{f}(\mathbf{x}) - \mathbf{x}\), làm cho ánh xạ đồng nhất \(\mathit{f}(\mathbf{x}) = \mathbf{x}\) dễ học hơn." src="../../img/residual-block.svg" />
+<a id="fig_residual_block"></a></p>
+<p>ResNet có thiết kế lớp tích chập <span class="arithmatex">\(3\times 3\)</span> đầy đủ của VGG. Khối dư có hai lớp tích chập <span class="arithmatex">\(3\times 3\)</span> với cùng số kênh đầu ra. Mỗi lớp tích chập được theo sau bởi một lớp chuẩn hóa batch và hàm kích hoạt ReLU. Sau đó, chúng ta bỏ qua hai phép tích chập này và thêm đầu vào trực tiếp trước hàm kích hoạt ReLU cuối cùng.
+Loại thiết kế này yêu cầu đầu ra của hai lớp tích chập phải có cùng hình dạng với đầu vào, để chúng có thể được cộng lại. Nếu muốn thay đổi số kênh, chúng ta cần giới thiệu một lớp tích chập <span class="arithmatex">\(1\times 1\)</span> bổ sung để biến đổi đầu vào thành hình dạng mong muốn cho phép cộng. Hãy xem mã bên dưới.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Residual</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>  
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;The Residual block of ResNet models.&quot;&quot;&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">,</span> <span class="n">use_1x1conv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyConv2d</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>                                   <span class="n">stride</span><span class="o">=</span><span class="n">strides</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyConv2d</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="k">if</span> <span class="n">use_1x1conv</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyConv2d</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>                                       <span class="n">stride</span><span class="o">=</span><span class="n">strides</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">bn1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyBatchNorm2d</span><span class="p">()</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">bn2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyBatchNorm2d</span><span class="p">()</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="n">Y</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bn1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span><span class="p">:</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>            <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        <span class="n">Y</span> <span class="o">+=</span> <span class="n">X</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</code></pre></div>
+<p>Mã này tạo ra hai loại mạng: một loại mà chúng ta thêm đầu vào vào đầu ra trước khi áp dụng phi tuyến ReLU bất cứ khi nào <code>use_1x1conv=False</code>; và một loại mà chúng ta điều chỉnh các kênh và độ phân giải bằng phương tiện tích chập <span class="arithmatex">\(1 \times 1\)</span> trước khi cộng. <a href="#fig_resnet_block">fig_resnet_block</a> minh họa điều này.</p>
+<p><img alt="Khối ResNet có và không có tích chập \(1 \times 1\), biến đổi đầu vào thành hình dạng mong muốn cho phép cộng." src="../../img/resnet-block.svg" />
+<a id="fig_resnet_block"></a></p>
+<p>Bây giờ hãy xem [<strong>một tình huống mà đầu vào và đầu ra có cùng hình dạng</strong>], nơi tích chập <span class="arithmatex">\(1 \times 1\)</span> không cần thiết.</p>
+<p>Chúng ta cũng có tùy chọn [<strong>giảm một nửa chiều cao và chiều rộng đầu ra trong khi tăng số kênh đầu ra</strong>].
+Trong trường hợp này chúng ta sử dụng tích chập <span class="arithmatex">\(1 \times 1\)</span> qua <code>use_1x1conv=True</code>. Điều này hữu ích ở đầu mỗi khối ResNet để giảm chiều không gian qua <code>strides=2</code>.</p>
+<h2 id="mo-hinh-resnet">[<strong>Mô hình ResNet</strong>]<a class="headerlink" href="#mo-hinh-resnet" title="Permanent link">&para;</a></h2>
+<p>Hai lớp đầu tiên của ResNet giống với GoogLeNet mà chúng ta mô tả trước đó: lớp tích chập <span class="arithmatex">\(7\times 7\)</span> với 64 kênh đầu ra và sải bước là 2 được theo sau bởi lớp max-pooling <span class="arithmatex">\(3\times 3\)</span> với sải bước là 2. Sự khác biệt là lớp chuẩn hóa batch được thêm sau mỗi lớp tích chập trong ResNet.</p>
+<p>GoogLeNet sử dụng bốn module được tạo thành từ các khối Inception.
+Tuy nhiên, ResNet sử dụng bốn module được tạo thành từ các khối dư, mỗi module sử dụng một số khối dư với cùng số kênh đầu ra.
+Số kênh trong module đầu tiên giống với số kênh đầu vào. Vì một lớp max-pooling với sải bước là 2 đã được sử dụng, không cần thiết phải giảm chiều cao và chiều rộng. Trong khối dư đầu tiên cho mỗi module tiếp theo, số kênh tăng gấp đôi so với module trước đó, và chiều cao và chiều rộng được giảm một nửa.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nd">@d2l</span><span class="o">.</span><span class="n">add_to_class</span><span class="p">(</span><span class="n">ResNet</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_residuals</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">,</span> <span class="n">first_block</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">blk</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_residuals</span><span class="p">):</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">first_block</span><span class="p">:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>            <span class="n">blk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Residual</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">use_1x1conv</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">strides</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>            <span class="n">blk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Residual</span><span class="p">(</span><span class="n">num_channels</span><span class="p">))</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">blk</span><span class="p">)</span>
+</code></pre></div>
+<p>Sau đó, chúng ta thêm tất cả các module vào ResNet. Ở đây, hai khối dư được sử dụng cho mỗi module. Cuối cùng, giống như GoogLeNet, chúng ta thêm một lớp gộp trung bình toàn cục, theo sau là đầu ra lớp kết nối đầy đủ.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># %%tab jax</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nd">@d2l</span><span class="o">.</span><span class="n">add_to_class</span><span class="p">(</span><span class="n">ResNet</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_net</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">b1</span><span class="p">()])</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arch</span><span class="p">):</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="n">net</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">(</span><span class="o">*</span><span class="n">b</span><span class="p">,</span> <span class="n">first_block</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">))])</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">net</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="c1"># Flax does not provide a GlobalAvg2D layer</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">avg_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">window_shape</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>                              <span class="n">strides</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;valid&#39;</span><span class="p">),</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        <span class="n">nn</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">)])])</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="k">return</span> <span class="n">net</span>
+</code></pre></div>
+<p>Có bốn lớp tích chập trong mỗi module (không kể lớp tích chập <span class="arithmatex">\(1\times 1\)</span>). Cùng với lớp tích chập <span class="arithmatex">\(7\times 7\)</span> đầu tiên và lớp kết nối đầy đủ cuối cùng, có tổng cộng 18 lớp. Do đó, mô hình này thường được gọi là ResNet-18.
+Bằng cách cấu hình số kênh và khối dư khác nhau trong module, chúng ta có thể tạo ra các mô hình ResNet khác nhau, chẳng hạn như ResNet-152 sâu hơn với 152 lớp. Mặc dù kiến trúc chính của ResNet tương tự như GoogLeNet, cấu trúc của ResNet đơn giản hơn và dễ sửa đổi hơn. Tất cả những yếu tố này đã dẫn đến việc sử dụng ResNet nhanh chóng và rộng rãi. <a href="#fig_resnet18">fig_resnet18</a> mô tả toàn bộ ResNet-18.</p>
+<p><img alt="Kiến trúc ResNet-18." src="../../img/resnet18-90.svg" />
+<a id="fig_resnet18"></a></p>
+<p>Trước khi huấn luyện ResNet, hãy [<strong>quan sát cách hình dạng đầu vào thay đổi qua các module khác nhau trong ResNet</strong>]. Như trong tất cả các kiến trúc trước đó, độ phân giải giảm trong khi số kênh tăng cho đến khi một lớp gộp trung bình toàn cục tổng hợp tất cả các đặc trưng.</p>
+<h2 id="huan-luyen">[<strong>Huấn luyện</strong>]<a class="headerlink" href="#huan-luyen" title="Permanent link">&para;</a></h2>
+<p>Chúng ta huấn luyện ResNet trên tập dữ liệu Fashion-MNIST, giống như trước đây. ResNet là một kiến trúc khá mạnh mẽ và linh hoạt. Đồ thị ghi lại tổn thất huấn luyện và kiểm định cho thấy khoảng cách đáng kể giữa cả hai đồ thị, với tổn thất huấn luyện thấp hơn đáng kể. Đối với mạng có tính linh hoạt này, nhiều dữ liệu huấn luyện hơn sẽ mang lại lợi ích rõ rệt trong việc thu hẹp khoảng cách và cải thiện độ chính xác.</p>
+<h2 id="resnext">ResNeXt<a class="headerlink" href="#resnext" title="Permanent link">&para;</a></h2>
+<p><a id="subsec_resnext"></a></p>
+<p>Một trong những thách thức gặp phải trong thiết kế ResNet là sự đánh đổi giữa phi tuyến và số chiều trong một khối nhất định. Tức là, chúng ta có thể thêm phi tuyến bằng cách tăng số lớp, hoặc bằng cách tăng chiều rộng của tích chập. Một chiến lược thay thế là tăng số kênh có thể mang thông tin giữa các khối. Thật không may, cái sau đi kèm với chi phí bình phương vì chi phí tính toán để nhận <span class="arithmatex">\(c_\textrm{i}\)</span> kênh và phát ra <span class="arithmatex">\(c_\textrm{o}\)</span> kênh tỷ lệ thuận với <span class="arithmatex">\(\mathcal{O}(c_\textrm{i} \cdot c_\textrm{o})\)</span> (xem thảo luận của chúng ta trong <a href="#sec_channels">sec_channels</a>).</p>
+<p>Chúng ta có thể lấy một số cảm hứng từ khối Inception của <a href="#fig_inception">fig_inception</a> có luồng thông tin qua khối trong các nhóm riêng biệt. Áp dụng ý tưởng của nhiều nhóm độc lập cho khối ResNet của <a href="#fig_resnet_block">fig_resnet_block</a> đã dẫn đến thiết kế ResNeXt [Xie.Girshick.Dollar.ea.2017].
+Khác với sự hỗn hợp các phép biến đổi trong Inception,
+ResNeXt áp dụng <em>cùng</em> phép biến đổi trong tất cả các nhánh,
+do đó giảm thiểu nhu cầu điều chỉnh thủ công từng nhánh.</p>
+<p><img alt="Khối ResNeXt. Việc sử dụng tích chập theo nhóm với \(\mathit{g}\) nhóm nhanh hơn \(\mathit{g}\) lần so với tích chập dày đặc. Đây là một khối dư nút cổ chai khi số kênh trung gian \(\mathit{b}\) nhỏ hơn \(\mathit{c}\)." src="../../img/resnext-block.svg" />
+<a id="fig_resnext_block"></a></p>
+<p>Việc chia một tích chập từ <span class="arithmatex">\(c_\textrm{i}\)</span> sang <span class="arithmatex">\(c_\textrm{o}\)</span> kênh thành một trong số <span class="arithmatex">\(g\)</span> nhóm có kích thước <span class="arithmatex">\(c_\textrm{i}/g\)</span> tạo ra <span class="arithmatex">\(g\)</span> đầu ra có kích thước <span class="arithmatex">\(c_\textrm{o}/g\)</span> được gọi, khá phù hợp, là <em>tích chập theo nhóm</em>. Chi phí tính toán (theo tỷ lệ) được giảm từ <span class="arithmatex">\(\mathcal{O}(c_\textrm{i} \cdot c_\textrm{o})\)</span> xuống <span class="arithmatex">\(\mathcal{O}(g \cdot (c_\textrm{i}/g) \cdot (c_\textrm{o}/g)) = \mathcal{O}(c_\textrm{i} \cdot c_\textrm{o} / g)\)</span>, tức là nhanh hơn <span class="arithmatex">\(g\)</span> lần. Còn tốt hơn, số tham số cần thiết để tạo ra đầu ra cũng được giảm từ một ma trận <span class="arithmatex">\(c_\textrm{i} \times c_\textrm{o}\)</span> thành <span class="arithmatex">\(g\)</span> ma trận nhỏ hơn có kích thước <span class="arithmatex">\((c_\textrm{i}/g) \times (c_\textrm{o}/g)\)</span>, cũng là giảm <span class="arithmatex">\(g\)</span> lần. Tiếp theo chúng ta giả định rằng cả <span class="arithmatex">\(c_\textrm{i}\)</span> và <span class="arithmatex">\(c_\textrm{o}\)</span> đều chia hết cho <span class="arithmatex">\(g\)</span>.</p>
+<p>Thách thức duy nhất trong thiết kế này là không có thông tin nào được trao đổi giữa <span class="arithmatex">\(g\)</span> nhóm. Khối ResNeXt của
+<a href="#fig_resnext_block">fig_resnext_block</a> sửa điều này theo hai cách: tích chập theo nhóm với nhân <span class="arithmatex">\(3 \times 3\)</span> được kẹp giữa hai tích chập <span class="arithmatex">\(1 \times 1\)</span>. Cái thứ hai phục vụ kép trong việc thay đổi số kênh trở lại. Lợi ích là chúng ta chỉ trả chi phí <span class="arithmatex">\(\mathcal{O}(c \cdot b)\)</span> cho nhân <span class="arithmatex">\(1 \times 1\)</span> và có thể dùng chi phí <span class="arithmatex">\(\mathcal{O}(b^2 / g)\)</span> cho nhân <span class="arithmatex">\(3 \times 3\)</span>. Tương tự như triển khai khối dư trong
+<a href="#subsec_residual-blks">subsec_residual-blks</a>, kết nối dư được thay thế (do đó tổng quát hóa) bằng tích chập <span class="arithmatex">\(1 \times 1\)</span>.</p>
+<p>Hình bên phải trong <a href="#fig_resnext_block">fig_resnext_block</a> cung cấp tóm tắt ngắn gọn hơn nhiều về khối mạng kết quả. Nó cũng sẽ đóng vai trò quan trọng trong thiết kế CNN hiện đại chung trong <a href="#sec_cnn-design">sec_cnn-design</a>. Lưu ý rằng ý tưởng về tích chập theo nhóm có từ triển khai AlexNet [Krizhevsky.Sutskever.Hinton.2012]. Khi phân phối mạng trên hai GPU với bộ nhớ hạn chế, việc triển khai coi mỗi GPU như kênh riêng của nó mà không có tác dụng xấu.</p>
+<p>Triển khai sau của lớp <code>ResNeXtBlock</code> nhận đối số <code>groups</code> (<span class="arithmatex">\(g\)</span>), với
+<code>bot_channels</code> (<span class="arithmatex">\(b\)</span>) kênh trung gian (nút cổ chai). Cuối cùng, khi chúng ta cần giảm chiều cao và chiều rộng của biểu diễn, chúng ta thêm sải bước là <span class="arithmatex">\(2\)</span> bằng cách đặt <code>use_1x1conv=True, strides=2</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ResNeXtBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>  
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;The ResNeXt block.&quot;&quot;&quot;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_channels</span><span class="p">,</span> <span class="n">groups</span><span class="p">,</span> <span class="n">bot_mul</span><span class="p">,</span> <span class="n">use_1x1conv</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                 <span class="n">strides</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>        <span class="n">bot_channels</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">num_channels</span> <span class="o">*</span> <span class="n">bot_mul</span><span class="p">))</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyConv2d</span><span class="p">(</span><span class="n">bot_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyConv2d</span><span class="p">(</span><span class="n">bot_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>                                   <span class="n">stride</span><span class="o">=</span><span class="n">strides</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>                                   <span class="n">groups</span><span class="o">=</span><span class="n">bot_channels</span><span class="o">//</span><span class="n">groups</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyConv2d</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">bn1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyBatchNorm2d</span><span class="p">()</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">bn2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyBatchNorm2d</span><span class="p">()</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">bn3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyBatchNorm2d</span><span class="p">()</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="k">if</span> <span class="n">use_1x1conv</span><span class="p">:</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">conv4</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyConv2d</span><span class="p">(</span><span class="n">num_channels</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>                                       <span class="n">stride</span><span class="o">=</span><span class="n">strides</span><span class="p">)</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">bn4</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LazyBatchNorm2d</span><span class="p">()</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">conv4</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>        <span class="n">Y</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bn1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>        <span class="n">Y</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bn2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">Y</span><span class="p">)))</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>        <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn3</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv4</span><span class="p">:</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>            <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn4</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv4</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">Y</span> <span class="o">+</span> <span class="n">X</span><span class="p">)</span>
+</code></pre></div>
+<p>Cách sử dụng nó hoàn toàn tương tự như <code>ResNetBlock</code> đã thảo luận trước đó. Ví dụ, khi sử dụng (<code>use_1x1conv=False, strides=1</code>), đầu vào và đầu ra có cùng hình dạng. Thay thế, đặt <code>use_1x1conv=True, strides=2</code> giảm một nửa chiều cao và chiều rộng đầu ra.</p>
+<h2 id="tom-tat-va-thao-luan">Tóm tắt và Thảo luận<a class="headerlink" href="#tom-tat-va-thao-luan" title="Permanent link">&para;</a></h2>
+<p>Các lớp hàm lồng nhau là mong muốn vì chúng cho phép chúng ta thu được các lớp hàm <em>mạnh mẽ hơn nghiêm ngặt</em> thay vì cũng tinh tế <em>khác biệt</em> khi thêm dung lượng. Một cách để thực hiện điều này là cho phép các lớp bổ sung đơn giản truyền đầu vào đến đầu ra. Các kết nối dư cho phép điều này. Kết quả là, điều này thay đổi thiên kiến quy nạp từ các hàm đơn giản có dạng <span class="arithmatex">\(f(\mathbf{x}) = 0\)</span> sang các hàm đơn giản trông như <span class="arithmatex">\(f(\mathbf{x}) = \mathbf{x}\)</span>.</p>
+<p>Ánh xạ dư có thể học hàm đồng nhất dễ dàng hơn, chẳng hạn như đẩy các tham số trong lớp trọng số về không. Chúng ta có thể huấn luyện một mạng nơ-ron <em>sâu</em> hiệu quả bằng cách có các khối dư. Đầu vào có thể truyền tiến nhanh hơn qua các kết nối dư trên các lớp. Kết quả là, chúng ta có thể huấn luyện các mạng sâu hơn nhiều. Ví dụ, bài báo ResNet gốc [He.Zhang.Ren.ea.2016] cho phép lên đến 152 lớp. Một lợi ích khác của mạng dư là nó cho phép chúng ta thêm các lớp, được khởi tạo như hàm đồng nhất, <em>trong quá trình</em> huấn luyện. Dù sao, hành vi mặc định của một lớp là cho dữ liệu đi qua không thay đổi. Điều này có thể tăng tốc quá trình huấn luyện của các mạng rất lớn trong một số trường hợp.</p>
+<p>Trước các kết nối dư,
+các đường bypass với các đơn vị cổng đã được giới thiệu
+để huấn luyện hiệu quả các mạng highway với hơn 100 lớp
+[srivastava2015highway].
+Sử dụng các hàm đồng nhất như các đường bypass,
+ResNet đã hoạt động tốt đáng kể
+trên nhiều nhiệm vụ thị giác máy tính.
+Các kết nối dư đã có ảnh hưởng lớn đến thiết kế của các mạng nơ-ron sâu tiếp theo, dù là tích chập hay tuần tự.
+Như chúng ta sẽ giới thiệu sau,
+kiến trúc Transformer [Vaswani.Shazeer.Parmar.ea.2017]
+áp dụng các kết nối dư (cùng với các lựa chọn thiết kế khác) và phổ biến
+trong các lĩnh vực đa dạng như
+ngôn ngữ, thị giác, giọng nói, và học tăng cường.</p>
+<p>ResNeXt là ví dụ về cách thiết kế mạng nơ-ron tích chập đã phát triển theo thời gian: bằng cách tiết kiệm hơn với tính toán và đánh đổi nó với kích thước của các kích hoạt (số kênh), nó cho phép các mạng nhanh hơn và chính xác hơn với chi phí thấp hơn. Một cách khác để nhìn nhận tích chập theo nhóm là nghĩ về một ma trận đường chéo theo khối cho các trọng số tích chập. Lưu ý rằng có khá nhiều "thủ thuật" như vậy dẫn đến các mạng hiệu quả hơn. Ví dụ, ShiftNet [wu2018shift] bắt chước tác dụng của tích chập <span class="arithmatex">\(3 \times 3\)</span>, đơn giản bằng cách thêm các kích hoạt dịch chuyển vào các kênh, cung cấp độ phức tạp hàm tăng lên, lần này mà không có bất kỳ chi phí tính toán nào.</p>
+<p>Một đặc điểm chung của các thiết kế chúng ta đã thảo luận cho đến nay là thiết kế mạng khá thủ công, chủ yếu dựa vào sự khéo léo của nhà thiết kế để tìm ra các siêu tham số mạng "đúng". Mặc dù rõ ràng là khả thi, nhưng nó cũng rất tốn kém về thời gian của con người và không có đảm bảo rằng kết quả là tối ưu theo bất kỳ nghĩa nào. Trong <a href="#sec_cnn-design">sec_cnn-design</a> chúng ta sẽ thảo luận về một số chiến lược để thu được các mạng chất lượng cao theo cách tự động hơn. Đặc biệt, chúng ta sẽ xem xét khái niệm <em>không gian thiết kế mạng</em> dẫn đến các mô hình RegNetX/Y
+[Radosavovic.Kosaraju.Girshick.ea.2020].</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Sự khác biệt chính giữa khối Inception trong <a href="#fig_inception">fig_inception</a> và khối dư là gì? Chúng so sánh như thế nào về tính toán, độ chính xác, và các lớp hàm có thể mô tả?</li>
+<li>Tham khảo Bảng 1 trong bài báo ResNet [He.Zhang.Ren.ea.2016] để triển khai các biến thể khác nhau của mạng.</li>
+<li>Đối với các mạng sâu hơn, ResNet giới thiệu kiến trúc "nút cổ chai" để giảm độ phức tạp mô hình. Hãy thử triển khai nó.</li>
+<li>Trong các phiên bản tiếp theo của ResNet, tác giả đã thay đổi cấu trúc "tích chập, chuẩn hóa batch và kích hoạt" thành cấu trúc "chuẩn hóa batch, kích hoạt và tích chập". Tự thực hiện cải tiến này. Xem Hình 1 trong He.Zhang.Ren.ea.2016*1 để biết chi tiết.</li>
+<li>Tại sao chúng ta không thể chỉ tăng độ phức tạp của hàm vô hạn, ngay cả khi các lớp hàm được lồng nhau?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/86">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

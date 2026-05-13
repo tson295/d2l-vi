@@ -1,0 +1,2238 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_natural-language-processing-pretraining/glove/">
+      
+      
+        <link rel="prev" href="../word2vec-pretraining/">
+      
+      
+        <link rel="next" href="../subword-embedding/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>GloVe - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#word-embedding-voi-global-vectors-glove" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GloVe
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    NLP - Tiền huấn luyện
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../word2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Word2Vec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../approx-training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Huấn luyện xấp xỉ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../word-embedding-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu Word Embedding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../word2vec-pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiền huấn luyện Word2Vec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GloVe
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GloVe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skip-gram-voi-thong-ke-toan-cuc-cua-kho-ngu-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-Gram Với Thống Kê Toàn Cục Của Kho Ngữ Liệu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-glove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô Hình GloVe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dien-giai-glove-tu-ti-so-xac-suat-ong-xuat-hien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diễn Giải GloVe Từ Tỉ Số Xác Suất Đồng Xuất Hiện
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subword-embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subword Embedding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../similarity-analogy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tương đồng và loại suy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bert/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bert-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bert-pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiền huấn luyện BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skip-gram-voi-thong-ke-toan-cuc-cua-kho-ngu-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skip-Gram Với Thống Kê Toàn Cục Của Kho Ngữ Liệu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-glove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô Hình GloVe
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dien-giai-glove-tu-ti-so-xac-suat-ong-xuat-hien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diễn Giải GloVe Từ Tỉ Số Xác Suất Đồng Xuất Hiện
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="word-embedding-voi-global-vectors-glove">Word Embedding Với Global Vectors (GloVe)<a class="headerlink" href="#word-embedding-voi-global-vectors-glove" title="Permanent link">&para;</a></h1>
+<p><a id="sec_glove"></a></p>
+<p>Các đồng xuất hiện giữa từ với từ
+trong cửa sổ ngữ cảnh
+có thể mang thông tin ngữ nghĩa phong phú.
+Ví dụ,
+trong một kho ngữ liệu lớn,
+từ "solid"
+có nhiều khả năng đồng xuất hiện
+với "ice" hơn "steam",
+nhưng từ "gas"
+có lẽ đồng xuất hiện với "steam"
+thường xuyên hơn "ice".
+Bên cạnh đó,
+thống kê toàn cục của kho ngữ liệu
+về các đồng xuất hiện như vậy
+có thể được tính trước:
+điều này có thể dẫn tới huấn luyện hiệu quả hơn.
+Để tận dụng thông tin thống kê
+trong toàn bộ kho ngữ liệu
+cho word embedding,
+trước hết hãy xem lại
+mô hình skip-gram trong <a href="#subsec_skip-gram">subsec_skip-gram</a>,
+nhưng diễn giải nó
+bằng các thống kê toàn cục của kho ngữ liệu
+như số lần đồng xuất hiện.</p>
+<h2 id="skip-gram-voi-thong-ke-toan-cuc-cua-kho-ngu-lieu">Skip-Gram Với Thống Kê Toàn Cục Của Kho Ngữ Liệu<a class="headerlink" href="#skip-gram-voi-thong-ke-toan-cuc-cua-kho-ngu-lieu" title="Permanent link">&para;</a></h2>
+<p><a id="subsec_skipgram-global"></a></p>
+<p>Ký hiệu <span class="arithmatex">\(q_{ij}\)</span>
+là xác suất có điều kiện
+<span class="arithmatex">\(P(w_j\mid w_i)\)</span>
+của từ <span class="arithmatex">\(w_j\)</span> khi biết từ <span class="arithmatex">\(w_i\)</span>
+trong mô hình skip-gram,
+ta có</p>
+<div class="arithmatex">\[q_{ij}=\frac{\exp(\mathbf{u}_j^\top \mathbf{v}_i)}{ \sum_{k \in \mathcal{V}} \exp(\mathbf{u}_k^\top \mathbf{v}_i)},\]</div>
+<p>trong đó
+với bất kỳ chỉ số <span class="arithmatex">\(i\)</span> nào,
+các vector <span class="arithmatex">\(\mathbf{v}_i\)</span> và <span class="arithmatex">\(\mathbf{u}_i\)</span>
+biểu diễn từ <span class="arithmatex">\(w_i\)</span>
+lần lượt như từ trung tâm và từ ngữ cảnh, và <span class="arithmatex">\(\mathcal{V} = \{0, 1, \ldots, |\mathcal{V}|-1\}\)</span>
+là tập chỉ số của từ vựng.</p>
+<p>Xét từ <span class="arithmatex">\(w_i\)</span>
+có thể xuất hiện nhiều lần
+trong kho ngữ liệu.
+Trong toàn bộ kho ngữ liệu,
+tất cả các từ ngữ cảnh
+ở bất kỳ nơi nào <span class="arithmatex">\(w_i\)</span> được lấy làm từ trung tâm
+tạo thành một <em>multiset</em> <span class="arithmatex">\(\mathcal{C}_i\)</span>
+các chỉ số từ,
+<em>cho phép nhiều bản sao của cùng một phần tử</em>.
+Với bất kỳ phần tử nào,
+số bản sao của nó được gọi là <em>bội số</em>.
+Để minh họa bằng một ví dụ,
+giả sử từ <span class="arithmatex">\(w_i\)</span> xuất hiện hai lần trong kho ngữ liệu
+và chỉ số của các từ ngữ cảnh
+lấy <span class="arithmatex">\(w_i\)</span> làm từ trung tâm
+trong hai cửa sổ ngữ cảnh
+là
+<span class="arithmatex">\(k, j, m, k\)</span> và <span class="arithmatex">\(k, l, k, j\)</span>.
+Do đó, multiset <span class="arithmatex">\(\mathcal{C}_i = \{j, j, k, k, k, k, l, m\}\)</span>, trong đó
+bội số của các phần tử <span class="arithmatex">\(j, k, l, m\)</span>
+lần lượt là 2, 4, 1, 1.</p>
+<p>Bây giờ hãy ký hiệu bội số của phần tử <span class="arithmatex">\(j\)</span> trong
+multiset <span class="arithmatex">\(\mathcal{C}_i\)</span> là <span class="arithmatex">\(x_{ij}\)</span>.
+Đây là số lần đồng xuất hiện toàn cục
+của từ <span class="arithmatex">\(w_j\)</span> (làm từ ngữ cảnh)
+và từ <span class="arithmatex">\(w_i\)</span> (làm từ trung tâm)
+trong cùng cửa sổ ngữ cảnh
+trên toàn bộ kho ngữ liệu.
+Dùng các thống kê toàn cục của kho ngữ liệu như vậy,
+hàm mất mát của mô hình skip-gram
+tương đương với</p>
+<div class="arithmatex">\[-\sum_{i\in\mathcal{V}}\sum_{j\in\mathcal{V}} x_{ij} \log\,q_{ij}.\]</div>
+<p>Ta ký hiệu thêm
+<span class="arithmatex">\(x_i\)</span>
+là số lượng tất cả các từ ngữ cảnh
+trong các cửa sổ ngữ cảnh
+nơi <span class="arithmatex">\(w_i\)</span> xuất hiện làm từ trung tâm,
+tương đương với <span class="arithmatex">\(|\mathcal{C}_i|\)</span>.
+Đặt <span class="arithmatex">\(p_{ij}\)</span>
+là xác suất có điều kiện
+<span class="arithmatex">\(x_{ij}/x_i\)</span> để sinh
+từ ngữ cảnh <span class="arithmatex">\(w_j\)</span> khi biết từ trung tâm <span class="arithmatex">\(w_i\)</span>,
+:eqref:<code>eq_skipgram-x_ij</code>
+có thể được viết lại thành</p>
+<div class="arithmatex">\[-\sum_{i\in\mathcal{V}} x_i \sum_{j\in\mathcal{V}} p_{ij} \log\,q_{ij}.\]</div>
+<p>Trong :eqref:<code>eq_skipgram-p_ij</code>, <span class="arithmatex">\(-\sum_{j\in\mathcal{V}} p_{ij} \log\,q_{ij}\)</span> tính
+cross-entropy
+của
+phân bố có điều kiện <span class="arithmatex">\(p_{ij}\)</span>
+từ thống kê toàn cục của kho ngữ liệu
+và
+phân bố có điều kiện <span class="arithmatex">\(q_{ij}\)</span>
+của dự đoán mô hình.
+Mất mát này
+cũng được gán trọng số bởi <span class="arithmatex">\(x_i\)</span> như đã giải thích ở trên.
+Tối thiểu hóa hàm mất mát trong
+:eqref:<code>eq_skipgram-p_ij</code>
+sẽ cho phép
+phân bố có điều kiện dự đoán
+tiệm cận
+phân bố có điều kiện
+từ thống kê toàn cục của kho ngữ liệu.</p>
+<p>Mặc dù thường được dùng
+để đo khoảng cách
+giữa các phân bố xác suất,
+hàm mất mát cross-entropy có thể không phải là lựa chọn tốt ở đây.
+Một mặt, như đã đề cập trong <a href="#sec_approx_train">sec_approx_train</a>,
+chi phí chuẩn hóa đúng <span class="arithmatex">\(q_{ij}\)</span>
+dẫn tới phép lấy tổng trên toàn bộ từ vựng,
+có thể tốn kém về tính toán.
+Mặt khác,
+một số lượng lớn các sự kiện hiếm
+từ một kho ngữ liệu lớn
+thường được mô hình hóa bởi mất mát cross-entropy
+với trọng số
+quá lớn.</p>
+<h2 id="mo-hinh-glove">Mô Hình GloVe<a class="headerlink" href="#mo-hinh-glove" title="Permanent link">&para;</a></h2>
+<p>Từ góc nhìn này,
+mô hình <em>GloVe</em> thực hiện ba thay đổi
+với mô hình skip-gram dựa trên mất mát bình phương [Pennington.Socher.Manning.2014]:</p>
+<ol>
+<li>Dùng các biến <span class="arithmatex">\(p'_{ij}=x_{ij}\)</span> và <span class="arithmatex">\(q'_{ij}=\exp(\mathbf{u}_j^\top \mathbf{v}_i)\)</span> không phải là phân bố xác suất và lấy logarit của cả hai, nên hạng tử mất mát bình phương là <span class="arithmatex">\(\left(\log\,p'_{ij} - \log\,q'_{ij}\right)^2 = \left(\mathbf{u}_j^\top \mathbf{v}_i - \log\,x_{ij}\right)^2\)</span>.</li>
+<li>Thêm hai tham số mô hình vô hướng cho mỗi từ <span class="arithmatex">\(w_i\)</span>: bias từ trung tâm <span class="arithmatex">\(b_i\)</span> và bias từ ngữ cảnh <span class="arithmatex">\(c_i\)</span>.</li>
+<li>Thay trọng số của mỗi hạng tử mất mát bằng hàm trọng số <span class="arithmatex">\(h(x_{ij})\)</span>, trong đó <span class="arithmatex">\(h(x)\)</span> tăng trên khoảng <span class="arithmatex">\([0, 1]\)</span>.</li>
+</ol>
+<p>Gộp tất cả lại, huấn luyện GloVe là tối thiểu hóa hàm mất mát sau:</p>
+<div class="arithmatex">\[\sum_{i\in\mathcal{V}} \sum_{j\in\mathcal{V}} h(x_{ij}) \left(\mathbf{u}_j^\top \mathbf{v}_i + b_i + c_j - \log\,x_{ij}\right)^2.\]</div>
+<p>Với hàm trọng số, một lựa chọn được gợi ý là:
+<span class="arithmatex">\(h(x) = (x/c) ^\alpha\)</span> (ví dụ <span class="arithmatex">\(\alpha = 0.75\)</span>) nếu <span class="arithmatex">\(x &lt; c\)</span> (ví dụ, <span class="arithmatex">\(c = 100\)</span>); ngược lại <span class="arithmatex">\(h(x) = 1\)</span>.
+Trong trường hợp này,
+vì <span class="arithmatex">\(h(0)=0\)</span>,
+hạng tử mất mát bình phương cho bất kỳ <span class="arithmatex">\(x_{ij}=0\)</span> nào có thể được bỏ qua
+để tính toán hiệu quả hơn.
+Ví dụ,
+khi dùng minibatch stochastic gradient descent để huấn luyện,
+tại mỗi vòng lặp,
+chúng ta lấy mẫu ngẫu nhiên một minibatch các <span class="arithmatex">\(x_{ij}\)</span> <em>khác không</em>
+để tính gradient
+và cập nhật tham số mô hình.
+Lưu ý rằng các <span class="arithmatex">\(x_{ij}\)</span> khác không này là các thống kê toàn cục của kho ngữ liệu đã được tính trước;
+do đó, mô hình được gọi là GloVe
+viết tắt của <em>Global Vectors</em>.</p>
+<p>Cần nhấn mạnh rằng
+nếu từ <span class="arithmatex">\(w_i\)</span> xuất hiện trong cửa sổ ngữ cảnh của
+từ <span class="arithmatex">\(w_j\)</span>, thì <em>ngược lại</em> cũng vậy.
+Do đó, <span class="arithmatex">\(x_{ij}=x_{ji}\)</span>.
+Khác với word2vec,
+vốn khớp xác suất có điều kiện bất đối xứng
+<span class="arithmatex">\(p_{ij}\)</span>,
+GloVe khớp <span class="arithmatex">\(\log \, x_{ij}\)</span> đối xứng.
+Vì vậy, vector từ trung tâm và
+vector từ ngữ cảnh của bất kỳ từ nào là tương đương về mặt toán học trong mô hình GloVe.
+Tuy nhiên trong thực tế, do các giá trị khởi tạo khác nhau,
+cùng một từ vẫn có thể nhận các giá trị khác nhau
+trong hai vector này sau khi huấn luyện:
+GloVe cộng chúng lại làm vector đầu ra.</p>
+<h2 id="dien-giai-glove-tu-ti-so-xac-suat-ong-xuat-hien">Diễn Giải GloVe Từ Tỉ Số Xác Suất Đồng Xuất Hiện<a class="headerlink" href="#dien-giai-glove-tu-ti-so-xac-suat-ong-xuat-hien" title="Permanent link">&para;</a></h2>
+<p>Chúng ta cũng có thể diễn giải mô hình GloVe từ một góc nhìn khác.
+Dùng cùng ký hiệu trong
+<a href="#subsec_skipgram-global">subsec_skipgram-global</a>,
+đặt <span class="arithmatex">\(p_{ij} \stackrel{\textrm{def}}{=} P(w_j \mid w_i)\)</span> là xác suất có điều kiện để sinh từ ngữ cảnh <span class="arithmatex">\(w_j\)</span> khi biết <span class="arithmatex">\(w_i\)</span> là từ trung tâm trong kho ngữ liệu.
+<a href="#tab_glove">tab_glove</a>
+liệt kê một số xác suất đồng xuất hiện
+khi biết các từ "ice" và "steam"
+cùng tỉ số của chúng dựa trên thống kê từ một kho ngữ liệu lớn.</p>
+<p>:Xác suất đồng xuất hiện giữa từ với từ và tỉ số của chúng từ một kho ngữ liệu lớn (phỏng theo Bảng 1 trong Pennington.Socher.Manning.2014)
+<a id="tab_glove"></a></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><span class="arithmatex">\(w_k\)</span>=</th>
+<th style="text-align: left;">solid</th>
+<th style="text-align: left;">gas</th>
+<th style="text-align: left;">water</th>
+<th style="text-align: left;">fashion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(p_1=P(w_k\mid \textrm{ice})\)</span></td>
+<td style="text-align: left;">0.00019</td>
+<td style="text-align: left;">0.000066</td>
+<td style="text-align: left;">0.003</td>
+<td style="text-align: left;">0.000017</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(p_2=P(w_k\mid\textrm{steam})\)</span></td>
+<td style="text-align: left;">0.000022</td>
+<td style="text-align: left;">0.00078</td>
+<td style="text-align: left;">0.0022</td>
+<td style="text-align: left;">0.000018</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(p_1/p_2\)</span></td>
+<td style="text-align: left;">8.9</td>
+<td style="text-align: left;">0.085</td>
+<td style="text-align: left;">1.36</td>
+<td style="text-align: left;">0.96</td>
+</tr>
+</tbody>
+</table>
+<p>Chúng ta có thể quan sát các điểm sau từ <a href="#tab_glove">tab_glove</a>:</p>
+<ul>
+<li>Với một từ <span class="arithmatex">\(w_k\)</span> liên quan đến "ice" nhưng không liên quan đến "steam", chẳng hạn <span class="arithmatex">\(w_k=\textrm{solid}\)</span>, chúng ta kỳ vọng tỉ số xác suất đồng xuất hiện lớn hơn, chẳng hạn 8.9.</li>
+<li>Với một từ <span class="arithmatex">\(w_k\)</span> liên quan đến "steam" nhưng không liên quan đến "ice", chẳng hạn <span class="arithmatex">\(w_k=\textrm{gas}\)</span>, chúng ta kỳ vọng tỉ số xác suất đồng xuất hiện nhỏ hơn, chẳng hạn 0.085.</li>
+<li>Với một từ <span class="arithmatex">\(w_k\)</span> liên quan đến cả "ice" và "steam", chẳng hạn <span class="arithmatex">\(w_k=\textrm{water}\)</span>, chúng ta kỳ vọng tỉ số xác suất đồng xuất hiện gần 1, chẳng hạn 1.36.</li>
+<li>Với một từ <span class="arithmatex">\(w_k\)</span> không liên quan đến cả "ice" và "steam", chẳng hạn <span class="arithmatex">\(w_k=\textrm{fashion}\)</span>, chúng ta kỳ vọng tỉ số xác suất đồng xuất hiện gần 1, chẳng hạn 0.96.</li>
+</ul>
+<p>Có thể thấy rằng tỉ số
+của các xác suất đồng xuất hiện
+có thể biểu đạt trực quan
+mối quan hệ giữa các từ.
+Do đó, chúng ta có thể thiết kế một hàm
+của ba vector từ
+để khớp tỉ số này.
+Với tỉ số xác suất đồng xuất hiện
+<span class="arithmatex">\({p_{ij}}/{p_{ik}}\)</span>
+khi <span class="arithmatex">\(w_i\)</span> là từ trung tâm
+và <span class="arithmatex">\(w_j\)</span> cùng <span class="arithmatex">\(w_k\)</span> là các từ ngữ cảnh,
+chúng ta muốn khớp tỉ số này
+bằng một hàm nào đó <span class="arithmatex">\(f\)</span>:</p>
+<div class="arithmatex">\[f(\mathbf{u}_j, \mathbf{u}_k, {\mathbf{v}}_i) \approx \frac{p_{ij}}{p_{ik}}.\]</div>
+<p>Trong nhiều thiết kế khả dĩ cho <span class="arithmatex">\(f\)</span>,
+chúng ta chỉ chọn một lựa chọn hợp lý sau đây.
+Vì tỉ số xác suất đồng xuất hiện
+là một vô hướng,
+chúng ta yêu cầu
+<span class="arithmatex">\(f\)</span> là một hàm vô hướng, chẳng hạn
+<span class="arithmatex">\(f(\mathbf{u}_j, \mathbf{u}_k, {\mathbf{v}}_i) = f\left((\mathbf{u}_j - \mathbf{u}_k)^\top {\mathbf{v}}_i\right)\)</span>.
+Đổi chỉ số từ
+<span class="arithmatex">\(j\)</span> và <span class="arithmatex">\(k\)</span> trong :eqref:<code>eq_glove-f</code>,
+cần có
+<span class="arithmatex">\(f(x)f(-x)=1\)</span>,
+vì vậy một khả năng là <span class="arithmatex">\(f(x)=\exp(x)\)</span>,
+tức là</p>
+<div class="arithmatex">\[f(\mathbf{u}_j, \mathbf{u}_k, {\mathbf{v}}_i) = \frac{\exp\left(\mathbf{u}_j^\top {\mathbf{v}}_i\right)}{\exp\left(\mathbf{u}_k^\top {\mathbf{v}}_i\right)} \approx \frac{p_{ij}}{p_{ik}}.\]</div>
+<p>Bây giờ hãy chọn
+<span class="arithmatex">\(\exp\left(\mathbf{u}_j^\top {\mathbf{v}}_i\right) \approx \alpha p_{ij}\)</span>,
+trong đó <span class="arithmatex">\(\alpha\)</span> là một hằng số.
+Vì <span class="arithmatex">\(p_{ij}=x_{ij}/x_i\)</span>, sau khi lấy logarit hai vế, ta được <span class="arithmatex">\(\mathbf{u}_j^\top {\mathbf{v}}_i \approx \log\,\alpha + \log\,x_{ij} - \log\,x_i\)</span>.
+Chúng ta có thể dùng các hạng tử bias bổ sung để khớp <span class="arithmatex">\(- \log\, \alpha + \log\, x_i\)</span>, chẳng hạn bias từ trung tâm <span class="arithmatex">\(b_i\)</span> và bias từ ngữ cảnh <span class="arithmatex">\(c_j\)</span>:</p>
+<div class="arithmatex">\[\mathbf{u}_j^\top \mathbf{v}_i + b_i + c_j \approx \log\, x_{ij}.\]</div>
+<p>Đo sai số bình phương của
+:eqref:<code>eq_glove-square</code> với trọng số,
+ta thu được hàm mất mát GloVe trong
+:eqref:<code>eq_glove-loss</code>.</p>
+<h2 id="tom-tat">Tóm Tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Mô hình skip-gram có thể được diễn giải bằng các thống kê toàn cục của kho ngữ liệu như số lần đồng xuất hiện giữa từ với từ.</li>
+<li>Mất mát cross-entropy có thể không phải là lựa chọn tốt để đo sai khác giữa hai phân bố xác suất, đặc biệt với một kho ngữ liệu lớn. GloVe dùng mất mát bình phương để khớp các thống kê toàn cục của kho ngữ liệu đã được tính trước.</li>
+<li>Vector từ trung tâm và vector từ ngữ cảnh là tương đương về mặt toán học với bất kỳ từ nào trong GloVe.</li>
+<li>GloVe có thể được diễn giải từ tỉ số xác suất đồng xuất hiện giữa từ với từ.</li>
+</ul>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Nếu các từ <span class="arithmatex">\(w_i\)</span> và <span class="arithmatex">\(w_j\)</span> đồng xuất hiện trong cùng một cửa sổ ngữ cảnh, làm thế nào để dùng khoảng cách của chúng trong chuỗi văn bản để thiết kế lại phương pháp tính xác suất có điều kiện <span class="arithmatex">\(p_{ij}\)</span>? Gợi ý: xem Mục 4.2 của bài báo GloVe [Pennington.Socher.Manning.2014].</li>
+<li>Với bất kỳ từ nào, bias từ trung tâm và bias từ ngữ cảnh của nó có tương đương về mặt toán học trong GloVe không? Vì sao?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/385">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2321 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_recurrent-neural-networks/bptt/">
+      
+      
+        <link rel="prev" href="../rnn-concise/">
+      
+      
+        <link rel="next" href="../../chapter_recurrent-modern/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>BPTT - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lan-truyen-nguoc-qua-thoi-gian" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              BPTT
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chuỗi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text-sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chuỗi văn bản
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../language-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mô hình ngôn ngữ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnn-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnn-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BPTT
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BPTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#phan-tich-gradient-trong-rnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân tích Gradient trong RNN
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phân tích Gradient trong RNN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tinh-toan-ay-u" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính toán Đầy đủ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat-ngan-cac-buoc-thoi-gian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cắt ngắn các Bước Thời gian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat-ngan-ngau-nhien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cắt ngắn Ngẫu nhiên
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#so-sanh-cac-chien-luoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        So sánh các Chiến lược
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lan-truyen-nguoc-qua-thoi-gian-chi-tiet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lan truyền Ngược Qua Thời gian Chi tiết
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#phan-tich-gradient-trong-rnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân tích Gradient trong RNN
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phân tích Gradient trong RNN">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tinh-toan-ay-u" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính toán Đầy đủ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat-ngan-cac-buoc-thoi-gian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cắt ngắn các Bước Thời gian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat-ngan-ngau-nhien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cắt ngắn Ngẫu nhiên
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#so-sanh-cac-chien-luoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        So sánh các Chiến lược
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lan-truyen-nguoc-qua-thoi-gian-chi-tiet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lan truyền Ngược Qua Thời gian Chi tiết
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lan-truyen-nguoc-qua-thoi-gian">Lan truyền Ngược Qua Thời gian<a class="headerlink" href="#lan-truyen-nguoc-qua-thoi-gian" title="Permanent link">&para;</a></h1>
+<p><a id="sec_bptt"></a></p>
+<p>Nếu bạn đã hoàn thành các bài tập trong <a href="#sec_rnn-scratch">sec_rnn-scratch</a>,
+bạn sẽ thấy rằng cắt gradient là điều thiết yếu
+để ngăn các gradient khổng lồ thỉnh thoảng xuất hiện
+làm mất ổn định quá trình huấn luyện.
+Chúng ta đã gợi ý rằng hiện tượng gradient bùng nổ
+bắt nguồn từ việc lan truyền ngược qua các chuỗi dài.
+Trước khi giới thiệu hàng loạt kiến trúc RNN hiện đại,
+hãy xem xét kỹ hơn cách <em>lan truyền ngược</em>
+hoạt động trong các mô hình chuỗi ở mức chi tiết toán học.
+Hy vọng rằng phần thảo luận này sẽ làm rõ hơn
+khái niệm gradient <em>tiêu biến</em> và <em>bùng nổ</em>.
+Nếu bạn còn nhớ phần thảo luận của chúng ta về lan truyền xuôi và lan truyền ngược
+qua đồ thị tính toán
+khi giới thiệu MLP trong <a href="#sec_backprop">sec_backprop</a>,
+thì lan truyền xuôi trong RNN
+sẽ tương đối đơn giản.
+Việc áp dụng lan truyền ngược trong RNN
+được gọi là <em>lan truyền ngược qua thời gian</em> [Werbos.1990].
+Quy trình này yêu cầu chúng ta mở rộng (hoặc trải ra)
+đồ thị tính toán của một RNN
+từng bước thời gian một.
+RNN đã trải ra về cơ bản là
+một mạng nơ-ron truyền thẳng
+với tính chất đặc biệt
+là cùng các tham số
+được lặp lại xuyên suốt mạng đã trải ra,
+xuất hiện ở mỗi bước thời gian.
+Sau đó, giống như trong bất kỳ mạng nơ-ron truyền thẳng nào,
+chúng ta có thể áp dụng quy tắc dây chuyền,
+lan truyền ngược gradient qua mạng đã trải ra.
+Gradient theo từng tham số
+phải được cộng trên tất cả các vị trí
+mà tham số đó xuất hiện trong mạng đã trải ra.
+Việc xử lý sự ràng buộc trọng số như vậy hẳn đã quen thuộc
+từ các chương của chúng ta về mạng nơ-ron tích chập.</p>
+<p>Các phức tạp nảy sinh vì chuỗi
+có thể khá dài.
+Làm việc với các chuỗi văn bản
+gồm hơn một nghìn token không phải là điều hiếm gặp.
+Lưu ý rằng điều này gây ra vấn đề cả từ
+góc độ tính toán (quá nhiều bộ nhớ)
+lẫn tối ưu hóa (bất ổn số học).
+Đầu vào từ bước đầu tiên đi qua
+hơn 1000 phép nhân ma trận trước khi đến đầu ra,
+và cần thêm 1000 phép nhân ma trận nữa
+để tính gradient.
+Bây giờ chúng ta phân tích những điều có thể sai
+và cách xử lý chúng trong thực tế.</p>
+<h2 id="phan-tich-gradient-trong-rnn">Phân tích Gradient trong RNN<a class="headerlink" href="#phan-tich-gradient-trong-rnn" title="Permanent link">&para;</a></h2>
+<p><a id="subsec_bptt_analysis"></a></p>
+<p>Chúng ta bắt đầu với một mô hình đơn giản hóa về cách RNN hoạt động.
+Mô hình này bỏ qua các chi tiết về trạng thái ẩn
+và cách nó được cập nhật.
+Ký hiệu toán học ở đây
+không phân biệt tường minh
+giữa vô hướng, vectơ và ma trận.
+Chúng ta chỉ đang cố gắng xây dựng một số trực giác.
+Trong mô hình đơn giản hóa này,
+chúng ta ký hiệu <span class="arithmatex">\(h_t\)</span> là trạng thái ẩn,
+<span class="arithmatex">\(x_t\)</span> là đầu vào, và <span class="arithmatex">\(o_t\)</span> là đầu ra
+tại bước thời gian <span class="arithmatex">\(t\)</span>.
+Nhắc lại các thảo luận của chúng ta trong
+<a href="#subsec_rnn_w_hidden_states">subsec_rnn_w_hidden_states</a>
+rằng đầu vào và trạng thái ẩn
+có thể được nối lại trước khi được nhân
+với một biến trọng số trong lớp ẩn.
+Do đó, chúng ta dùng <span class="arithmatex">\(w_\textrm{h}\)</span> và <span class="arithmatex">\(w_\textrm{o}\)</span> để chỉ các trọng số
+của lớp ẩn và lớp đầu ra, tương ứng.
+Kết quả là, các trạng thái ẩn và đầu ra
+tại mỗi bước thời gian là</p>
+<div class="arithmatex">\[\begin{aligned}h_t &amp;= f(x_t, h_{t-1}, w_\textrm{h}),\\o_t &amp;= g(h_t, w_\textrm{o}),\end{aligned}\]</div>
+<p>trong đó <span class="arithmatex">\(f\)</span> và <span class="arithmatex">\(g\)</span> lần lượt là các phép biến đổi
+của lớp ẩn và lớp đầu ra.
+Vì vậy, chúng ta có một chuỗi các giá trị
+<span class="arithmatex">\(\{\ldots, (x_{t-1}, h_{t-1}, o_{t-1}), (x_{t}, h_{t}, o_t), \ldots\}\)</span>
+phụ thuộc lẫn nhau thông qua tính toán hồi quy.
+Lan truyền xuôi khá đơn giản.
+Tất cả những gì cần làm là lặp qua các bộ ba <span class="arithmatex">\((x_t, h_t, o_t)\)</span> từng bước thời gian một.
+Sai khác giữa đầu ra <span class="arithmatex">\(o_t\)</span> và mục tiêu mong muốn <span class="arithmatex">\(y_t\)</span>
+sau đó được đánh giá bằng một hàm mục tiêu
+trên toàn bộ <span class="arithmatex">\(T\)</span> bước thời gian như sau</p>
+<div class="arithmatex">\[L(x_1, \ldots, x_T, y_1, \ldots, y_T, w_\textrm{h}, w_\textrm{o}) = \frac{1}{T}\sum_{t=1}^T l(y_t, o_t).\]</div>
+<p>Đối với lan truyền ngược, vấn đề phức tạp hơn một chút,
+đặc biệt khi chúng ta tính gradient
+theo các tham số <span class="arithmatex">\(w_\textrm{h}\)</span> của hàm mục tiêu <span class="arithmatex">\(L\)</span>.
+Cụ thể, theo quy tắc dây chuyền,</p>
+<div class="arithmatex">\[\begin{aligned}\frac{\partial L}{\partial w_\textrm{h}}  &amp; = \frac{1}{T}\sum_{t=1}^T \frac{\partial l(y_t, o_t)}{\partial w_\textrm{h}}  \\&amp; = \frac{1}{T}\sum_{t=1}^T \frac{\partial l(y_t, o_t)}{\partial o_t} \frac{\partial g(h_t, w_\textrm{o})}{\partial h_t}  \frac{\partial h_t}{\partial w_\textrm{h}}.\end{aligned}\]</div>
+<p>Thừa số thứ nhất và thứ hai của tích
+trong :eqref:<code>eq_bptt_partial_L_wh</code>
+dễ tính.
+Thừa số thứ ba <span class="arithmatex">\(\partial h_t/\partial w_\textrm{h}\)</span> là nơi mọi thứ trở nên khó hơn,
+vì chúng ta cần tính một cách hồi quy ảnh hưởng của tham số <span class="arithmatex">\(w_\textrm{h}\)</span> lên <span class="arithmatex">\(h_t\)</span>.
+Theo phép tính hồi quy
+trong :eqref:<code>eq_bptt_ht_ot</code>,
+<span class="arithmatex">\(h_t\)</span> phụ thuộc vào cả <span class="arithmatex">\(h_{t-1}\)</span> và <span class="arithmatex">\(w_\textrm{h}\)</span>,
+trong đó việc tính <span class="arithmatex">\(h_{t-1}\)</span>
+cũng phụ thuộc vào <span class="arithmatex">\(w_\textrm{h}\)</span>.
+Do đó, đánh giá đạo hàm toàn phần của <span class="arithmatex">\(h_t\)</span>
+theo <span class="arithmatex">\(w_\textrm{h}\)</span> bằng quy tắc dây chuyền cho ta</p>
+<div class="arithmatex">\[\frac{\partial h_t}{\partial w_\textrm{h}}= \frac{\partial f(x_{t},h_{t-1},w_\textrm{h})}{\partial w_\textrm{h}} +\frac{\partial f(x_{t},h_{t-1},w_\textrm{h})}{\partial h_{t-1}} \frac{\partial h_{t-1}}{\partial w_\textrm{h}}.\]</div>
+<p>Để suy ra gradient ở trên, giả sử rằng chúng ta có
+ba dãy <span class="arithmatex">\(\{a_{t}\},\{b_{t}\},\{c_{t}\}\)</span>
+thỏa mãn <span class="arithmatex">\(a_{0}=0\)</span> và <span class="arithmatex">\(a_{t}=b_{t}+c_{t}a_{t-1}\)</span> với <span class="arithmatex">\(t=1, 2,\ldots\)</span>.
+Khi đó với <span class="arithmatex">\(t\geq 1\)</span>, dễ dàng chứng minh rằng</p>
+<div class="arithmatex">\[a_{t}=b_{t}+\sum_{i=1}^{t-1}\left(\prod_{j=i+1}^{t}c_{j}\right)b_{i}.\]</div>
+<p>Bằng cách thay <span class="arithmatex">\(a_t\)</span>, <span class="arithmatex">\(b_t\)</span>, và <span class="arithmatex">\(c_t\)</span> theo</p>
+<div class="arithmatex">\[\begin{aligned}a_t &amp;= \frac{\partial h_t}{\partial w_\textrm{h}},\\
+b_t &amp;= \frac{\partial f(x_{t},h_{t-1},w_\textrm{h})}{\partial w_\textrm{h}}, \\
+c_t &amp;= \frac{\partial f(x_{t},h_{t-1},w_\textrm{h})}{\partial h_{t-1}},\end{aligned}\]</div>
+<p>phép tính gradient trong :eqref:<code>eq_bptt_partial_ht_wh_recur</code> thỏa mãn
+<span class="arithmatex">\(a_{t}=b_{t}+c_{t}a_{t-1}\)</span>.
+Do đó, theo :eqref:<code>eq_bptt_at</code>,
+chúng ta có thể loại bỏ phép tính hồi quy
+trong :eqref:<code>eq_bptt_partial_ht_wh_recur</code> bằng</p>
+<div class="arithmatex">\[\frac{\partial h_t}{\partial w_\textrm{h}}=\frac{\partial f(x_{t},h_{t-1},w_\textrm{h})}{\partial w_\textrm{h}}+\sum_{i=1}^{t-1}\left(\prod_{j=i+1}^{t} \frac{\partial f(x_{j},h_{j-1},w_\textrm{h})}{\partial h_{j-1}} \right) \frac{\partial f(x_{i},h_{i-1},w_\textrm{h})}{\partial w_\textrm{h}}.\]</div>
+<p>Mặc dù chúng ta có thể dùng quy tắc dây chuyền để tính <span class="arithmatex">\(\partial h_t/\partial w_\textrm{h}\)</span> một cách đệ quy,
+chuỗi này có thể trở nên rất dài khi <span class="arithmatex">\(t\)</span> lớn.
+Hãy thảo luận một số chiến lược để xử lý vấn đề này.</p>
+<h3 id="tinh-toan-ay-u">Tính toán Đầy đủ<a class="headerlink" href="#tinh-toan-ay-u" title="Permanent link">&para;</a></h3>
+<p>Một ý tưởng có thể là tính tổng đầy đủ trong :eqref:<code>eq_bptt_partial_ht_wh_gen</code>.
+Tuy nhiên, cách này rất chậm và gradient có thể bùng nổ,
+vì những thay đổi tinh tế trong điều kiện ban đầu
+có thể ảnh hưởng rất lớn đến kết quả.
+Nói cách khác, chúng ta có thể thấy các hiện tượng tương tự hiệu ứng cánh bướm,
+trong đó những thay đổi tối thiểu ở điều kiện ban đầu
+dẫn đến những thay đổi không tương xứng ở kết quả.
+Điều này nhìn chung là không mong muốn.
+Rốt cuộc, chúng ta đang tìm kiếm các bộ ước lượng vững chắc có khả năng khái quát hóa tốt.
+Vì vậy, chiến lược này hầu như không bao giờ được dùng trong thực tế.</p>
+<h3 id="cat-ngan-cac-buoc-thoi-gian">Cắt ngắn các Bước Thời gian<a class="headerlink" href="#cat-ngan-cac-buoc-thoi-gian" title="Permanent link">&para;</a></h3>
+<p>Ngoài ra,
+chúng ta có thể cắt ngắn tổng trong
+:eqref:<code>eq_bptt_partial_ht_wh_gen</code>
+sau <span class="arithmatex">\(\tau\)</span> bước.
+Đây là điều chúng ta đã thảo luận cho đến nay.
+Điều này dẫn đến một <em>xấp xỉ</em> của gradient thật,
+đơn giản bằng cách kết thúc tổng tại <span class="arithmatex">\(\partial h_{t-\tau}/\partial w_\textrm{h}\)</span>.
+Trong thực tế, cách này hoạt động khá tốt.
+Đây là điều thường được gọi là lan truyền ngược qua thời gian
+bị cắt ngắn [Jaeger.2002].
+Một hệ quả của việc này là mô hình
+tập trung chủ yếu vào ảnh hưởng ngắn hạn
+thay vì các hệ quả dài hạn.
+Điều này thực ra là <em>mong muốn</em>, vì nó làm lệch ước lượng
+về phía các mô hình đơn giản và ổn định hơn.</p>
+<h3 id="cat-ngan-ngau-nhien">Cắt ngắn Ngẫu nhiên<a class="headerlink" href="#cat-ngan-ngau-nhien" title="Permanent link">&para;</a></h3>
+<p>Cuối cùng, chúng ta có thể thay <span class="arithmatex">\(\partial h_t/\partial w_\textrm{h}\)</span>
+bằng một biến ngẫu nhiên đúng về mặt kỳ vọng
+nhưng cắt ngắn chuỗi.
+Điều này đạt được bằng cách dùng một dãy <span class="arithmatex">\(\xi_t\)</span>
+với <span class="arithmatex">\(0 \leq \pi_t \leq 1\)</span> được định trước,
+trong đó <span class="arithmatex">\(P(\xi_t = 0) = 1-\pi_t\)</span> và
+<span class="arithmatex">\(P(\xi_t = \pi_t^{-1}) = \pi_t\)</span>, do đó <span class="arithmatex">\(E[\xi_t] = 1\)</span>.
+Chúng ta dùng điều này để thay gradient
+<span class="arithmatex">\(\partial h_t/\partial w_\textrm{h}\)</span>
+trong :eqref:<code>eq_bptt_partial_ht_wh_recur</code>
+bằng</p>
+<div class="arithmatex">\[z_t= \frac{\partial f(x_{t},h_{t-1},w_\textrm{h})}{\partial w_\textrm{h}} +\xi_t \frac{\partial f(x_{t},h_{t-1},w_\textrm{h})}{\partial h_{t-1}} \frac{\partial h_{t-1}}{\partial w_\textrm{h}}.\]</div>
+<p>Từ định nghĩa của <span class="arithmatex">\(\xi_t\)</span> suy ra
+rằng <span class="arithmatex">\(E[z_t] = \partial h_t/\partial w_\textrm{h}\)</span>.
+Bất cứ khi nào <span class="arithmatex">\(\xi_t = 0\)</span>, phép tính hồi quy
+kết thúc tại bước thời gian <span class="arithmatex">\(t\)</span> đó.
+Điều này dẫn đến một tổng có trọng số của các chuỗi có độ dài khác nhau,
+trong đó các chuỗi dài hiếm gặp nhưng được gán trọng số lớn một cách phù hợp.
+Ý tưởng này được đề xuất bởi
+Tallec.Ollivier.2017.</p>
+<h3 id="so-sanh-cac-chien-luoc">So sánh các Chiến lược<a class="headerlink" href="#so-sanh-cac-chien-luoc" title="Permanent link">&para;</a></h3>
+<p><img alt="So sánh các chiến lược để tính gradient trong RNN. Từ trên xuống dưới: cắt ngắn ngẫu nhiên, cắt ngắn thông thường, và tính toán đầy đủ." src="../../img/truncated-bptt.svg" />
+<a id="fig_truncated_bptt"></a></p>
+<p><a href="#fig_truncated_bptt">fig_truncated_bptt</a> minh họa ba chiến lược
+khi phân tích vài ký tự đầu tiên của <em>The Time Machine</em>
+bằng lan truyền ngược qua thời gian cho RNN:</p>
+<ul>
+<li>Hàng đầu tiên là cắt ngắn ngẫu nhiên, chia văn bản thành các đoạn có độ dài khác nhau.</li>
+<li>Hàng thứ hai là cắt ngắn thông thường, chia văn bản thành các chuỗi con có cùng độ dài. Đây là điều chúng ta đã làm trong các thí nghiệm RNN.</li>
+<li>Hàng thứ ba là lan truyền ngược qua thời gian đầy đủ, dẫn đến một biểu thức không khả thi về mặt tính toán.</li>
+</ul>
+<p>Đáng tiếc là, dù hấp dẫn về mặt lý thuyết,
+cắt ngắn ngẫu nhiên không hoạt động
+tốt hơn nhiều so với cắt ngắn thông thường,
+rất có thể do một số yếu tố.
+Thứ nhất, ảnh hưởng của một quan sát
+sau một số bước lan truyền ngược
+về quá khứ là khá đủ
+để nắm bắt các phụ thuộc trong thực tế.
+Thứ hai, phương sai tăng lên chống lại thực tế
+rằng gradient chính xác hơn khi có nhiều bước hơn.
+Thứ ba, chúng ta thực sự <em>muốn</em> các mô hình chỉ có
+phạm vi tương tác ngắn.
+Vì vậy, lan truyền ngược qua thời gian được cắt ngắn đều đặn
+có một hiệu ứng chính quy hóa nhẹ có thể là điều mong muốn.</p>
+<h2 id="lan-truyen-nguoc-qua-thoi-gian-chi-tiet">Lan truyền Ngược Qua Thời gian Chi tiết<a class="headerlink" href="#lan-truyen-nguoc-qua-thoi-gian-chi-tiet" title="Permanent link">&para;</a></h2>
+<p>Sau khi thảo luận nguyên lý chung,
+hãy thảo luận chi tiết về lan truyền ngược qua thời gian.
+Trái với phần phân tích trong <a href="#subsec_bptt_analysis">subsec_bptt_analysis</a>,
+trong phần sau chúng ta sẽ chỉ ra cách tính
+gradient của hàm mục tiêu
+theo tất cả các tham số mô hình đã được phân rã.
+Để đơn giản, chúng ta xét
+một RNN không có tham số hệ số chặn,
+có hàm kích hoạt trong lớp ẩn
+sử dụng ánh xạ đồng nhất (<span class="arithmatex">\(\phi(x)=x\)</span>).
+Với bước thời gian <span class="arithmatex">\(t\)</span>, giả sử đầu vào của một ví dụ đơn lẻ
+và mục tiêu lần lượt là <span class="arithmatex">\(\mathbf{x}_t \in \mathbb{R}^d\)</span> và <span class="arithmatex">\(y_t\)</span>.
+Trạng thái ẩn <span class="arithmatex">\(\mathbf{h}_t \in \mathbb{R}^h\)</span>
+và đầu ra <span class="arithmatex">\(\mathbf{o}_t \in \mathbb{R}^q\)</span>
+được tính như sau</p>
+<div class="arithmatex">\[\begin{aligned}\mathbf{h}_t &amp;= \mathbf{W}_\textrm{hx} \mathbf{x}_t + \mathbf{W}_\textrm{hh} \mathbf{h}_{t-1},\\
+\mathbf{o}_t &amp;= \mathbf{W}_\textrm{qh} \mathbf{h}_{t},\end{aligned}\]</div>
+<p>trong đó <span class="arithmatex">\(\mathbf{W}_\textrm{hx} \in \mathbb{R}^{h \times d}\)</span>, <span class="arithmatex">\(\mathbf{W}_\textrm{hh} \in \mathbb{R}^{h \times h}\)</span>, và
+<span class="arithmatex">\(\mathbf{W}_\textrm{qh} \in \mathbb{R}^{q \times h}\)</span>
+là các tham số trọng số.
+Ký hiệu <span class="arithmatex">\(l(\mathbf{o}_t, y_t)\)</span>
+là mất mát tại bước thời gian <span class="arithmatex">\(t\)</span>.
+Do đó, hàm mục tiêu của chúng ta,
+mất mát trên <span class="arithmatex">\(T\)</span> bước thời gian
+từ đầu chuỗi là</p>
+<div class="arithmatex">\[L = \frac{1}{T} \sum_{t=1}^T l(\mathbf{o}_t, y_t).\]</div>
+<p>Để trực quan hóa các phụ thuộc giữa
+các biến và tham số mô hình trong quá trình tính toán
+của RNN,
+chúng ta có thể vẽ một đồ thị tính toán cho mô hình,
+như được minh họa trong <a href="#fig_rnn_bptt">fig_rnn_bptt</a>.
+Ví dụ, việc tính các trạng thái ẩn của bước thời gian 3,
+<span class="arithmatex">\(\mathbf{h}_3\)</span>, phụ thuộc vào các tham số mô hình
+<span class="arithmatex">\(\mathbf{W}_\textrm{hx}\)</span> và <span class="arithmatex">\(\mathbf{W}_\textrm{hh}\)</span>,
+trạng thái ẩn của bước thời gian trước đó <span class="arithmatex">\(\mathbf{h}_2\)</span>,
+và đầu vào của bước thời gian hiện tại <span class="arithmatex">\(\mathbf{x}_3\)</span>.</p>
+<p><img alt="Đồ thị tính toán thể hiện các phụ thuộc cho một mô hình RNN với ba bước thời gian. Các hộp biểu diễn biến (không tô bóng) hoặc tham số (tô bóng), còn các hình tròn biểu diễn toán tử." src="../../img/rnn-bptt.svg" />
+<a id="fig_rnn_bptt"></a></p>
+<p>Như vừa đề cập, các tham số mô hình trong <a href="#fig_rnn_bptt">fig_rnn_bptt</a>
+là <span class="arithmatex">\(\mathbf{W}_\textrm{hx}\)</span>, <span class="arithmatex">\(\mathbf{W}_\textrm{hh}\)</span>, và <span class="arithmatex">\(\mathbf{W}_\textrm{qh}\)</span>.
+Nhìn chung, huấn luyện mô hình này đòi hỏi
+tính gradient theo các tham số này
+<span class="arithmatex">\(\partial L/\partial \mathbf{W}_\textrm{hx}\)</span>, <span class="arithmatex">\(\partial L/\partial \mathbf{W}_\textrm{hh}\)</span>, và <span class="arithmatex">\(\partial L/\partial \mathbf{W}_\textrm{qh}\)</span>.
+Theo các phụ thuộc trong <a href="#fig_rnn_bptt">fig_rnn_bptt</a>,
+chúng ta có thể duyệt theo hướng ngược lại của các mũi tên
+để lần lượt tính và lưu trữ các gradient.
+Để biểu diễn linh hoạt phép nhân của
+ma trận, vectơ và vô hướng có các hình dạng khác nhau
+trong quy tắc dây chuyền,
+chúng ta tiếp tục dùng toán tử <span class="arithmatex">\(\textrm{prod}\)</span>
+như đã mô tả trong <a href="#sec_backprop">sec_backprop</a>.</p>
+<p>Trước hết, lấy đạo hàm hàm mục tiêu
+theo đầu ra mô hình tại bất kỳ bước thời gian <span class="arithmatex">\(t\)</span> nào
+là khá đơn giản:</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial \mathbf{o}_t} =  \frac{\partial l (\mathbf{o}_t, y_t)}{T \cdot \partial \mathbf{o}_t} \in \mathbb{R}^q.\]</div>
+<p>Bây giờ chúng ta có thể tính gradient của hàm mục tiêu
+theo tham số <span class="arithmatex">\(\mathbf{W}_\textrm{qh}\)</span>
+trong lớp đầu ra:
+<span class="arithmatex">\(\partial L/\partial \mathbf{W}_\textrm{qh} \in \mathbb{R}^{q \times h}\)</span>.
+Dựa trên <a href="#fig_rnn_bptt">fig_rnn_bptt</a>,
+hàm mục tiêu <span class="arithmatex">\(L\)</span> phụ thuộc vào <span class="arithmatex">\(\mathbf{W}_\textrm{qh}\)</span>
+thông qua <span class="arithmatex">\(\mathbf{o}_1, \ldots, \mathbf{o}_T\)</span>.
+Sử dụng quy tắc dây chuyền cho ta</p>
+<div class="arithmatex">\[
+\frac{\partial L}{\partial \mathbf{W}_\textrm{qh}}
+= \sum_{t=1}^T \textrm{prod}\left(\frac{\partial L}{\partial \mathbf{o}_t}, \frac{\partial \mathbf{o}_t}{\partial \mathbf{W}_\textrm{qh}}\right)
+= \sum_{t=1}^T \frac{\partial L}{\partial \mathbf{o}_t} \mathbf{h}_t^\top,
+\]</div>
+<p>trong đó <span class="arithmatex">\(\partial L/\partial \mathbf{o}_t\)</span>
+được cho bởi :eqref:<code>eq_bptt_partial_L_ot</code>.</p>
+<p>Tiếp theo, như thể hiện trong <a href="#fig_rnn_bptt">fig_rnn_bptt</a>,
+tại bước thời gian cuối cùng <span class="arithmatex">\(T\)</span>,
+hàm mục tiêu
+<span class="arithmatex">\(L\)</span> chỉ phụ thuộc vào trạng thái ẩn <span class="arithmatex">\(\mathbf{h}_T\)</span>
+thông qua <span class="arithmatex">\(\mathbf{o}_T\)</span>.
+Do đó, chúng ta có thể dễ dàng tìm gradient
+<span class="arithmatex">\(\partial L/\partial \mathbf{h}_T \in \mathbb{R}^h\)</span>
+bằng quy tắc dây chuyền:</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial \mathbf{h}_T} = \textrm{prod}\left(\frac{\partial L}{\partial \mathbf{o}_T}, \frac{\partial \mathbf{o}_T}{\partial \mathbf{h}_T} \right) = \mathbf{W}_\textrm{qh}^\top \frac{\partial L}{\partial \mathbf{o}_T}.\]</div>
+<p>Mọi thứ trở nên phức tạp hơn với bất kỳ bước thời gian <span class="arithmatex">\(t &lt; T\)</span> nào,
+trong đó hàm mục tiêu <span class="arithmatex">\(L\)</span> phụ thuộc vào
+<span class="arithmatex">\(\mathbf{h}_t\)</span> thông qua <span class="arithmatex">\(\mathbf{h}_{t+1}\)</span> và <span class="arithmatex">\(\mathbf{o}_t\)</span>.
+Theo quy tắc dây chuyền,
+gradient của trạng thái ẩn
+<span class="arithmatex">\(\partial L/\partial \mathbf{h}_t \in \mathbb{R}^h\)</span>
+tại bất kỳ bước thời gian <span class="arithmatex">\(t &lt; T\)</span> nào có thể được tính hồi quy như sau:</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial \mathbf{h}_t} = \textrm{prod}\left(\frac{\partial L}{\partial \mathbf{h}_{t+1}}, \frac{\partial \mathbf{h}_{t+1}}{\partial \mathbf{h}_t} \right) + \textrm{prod}\left(\frac{\partial L}{\partial \mathbf{o}_t}, \frac{\partial \mathbf{o}_t}{\partial \mathbf{h}_t} \right) = \mathbf{W}_\textrm{hh}^\top \frac{\partial L}{\partial \mathbf{h}_{t+1}} + \mathbf{W}_\textrm{qh}^\top \frac{\partial L}{\partial \mathbf{o}_t}.\]</div>
+<p>Để phân tích, mở rộng phép tính hồi quy
+cho bất kỳ bước thời gian <span class="arithmatex">\(1 \leq t \leq T\)</span> nào cho ta</p>
+<div class="arithmatex">\[\frac{\partial L}{\partial \mathbf{h}_t}= \sum_{i=t}^T {\left(\mathbf{W}_\textrm{hh}^\top\right)}^{T-i} \mathbf{W}_\textrm{qh}^\top \frac{\partial L}{\partial \mathbf{o}_{T+t-i}}.\]</div>
+<p>Từ :eqref:<code>eq_bptt_partial_L_ht</code>, chúng ta có thể thấy
+rằng ví dụ tuyến tính đơn giản này đã
+thể hiện một số vấn đề then chốt của các mô hình chuỗi dài:
+nó liên quan đến các lũy thừa có thể rất lớn của <span class="arithmatex">\(\mathbf{W}_\textrm{hh}^\top\)</span>.
+Trong đó, các trị riêng nhỏ hơn 1 sẽ tiêu biến
+và các trị riêng lớn hơn 1 sẽ phân kỳ.
+Điều này bất ổn về mặt số học,
+biểu hiện dưới dạng gradient tiêu biến
+và bùng nổ.
+Một cách để xử lý điều này là cắt ngắn các bước thời gian
+ở một kích thước thuận tiện về mặt tính toán
+như đã thảo luận trong <a href="#subsec_bptt_analysis">subsec_bptt_analysis</a>.
+Trong thực tế, việc cắt ngắn này cũng có thể được thực hiện
+bằng cách tách gradient sau một số bước thời gian nhất định.
+Về sau, chúng ta sẽ thấy cách các mô hình chuỗi tinh vi hơn
+như long short-term memory có thể giảm nhẹ thêm vấn đề này.</p>
+<p>Cuối cùng, <a href="#fig_rnn_bptt">fig_rnn_bptt</a> cho thấy
+rằng hàm mục tiêu <span class="arithmatex">\(L\)</span>
+phụ thuộc vào các tham số mô hình <span class="arithmatex">\(\mathbf{W}_\textrm{hx}\)</span> và <span class="arithmatex">\(\mathbf{W}_\textrm{hh}\)</span>
+trong lớp ẩn thông qua các trạng thái ẩn
+<span class="arithmatex">\(\mathbf{h}_1, \ldots, \mathbf{h}_T\)</span>.
+Để tính gradient theo các tham số như vậy
+<span class="arithmatex">\(\partial L / \partial \mathbf{W}_\textrm{hx} \in \mathbb{R}^{h \times d}\)</span> và <span class="arithmatex">\(\partial L / \partial \mathbf{W}_\textrm{hh} \in \mathbb{R}^{h \times h}\)</span>,
+chúng ta áp dụng quy tắc dây chuyền, thu được</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\frac{\partial L}{\partial \mathbf{W}_\textrm{hx}}
+&amp;= \sum_{t=1}^T \textrm{prod}\left(\frac{\partial L}{\partial \mathbf{h}_t}, \frac{\partial \mathbf{h}_t}{\partial \mathbf{W}_\textrm{hx}}\right)
+= \sum_{t=1}^T \frac{\partial L}{\partial \mathbf{h}_t} \mathbf{x}_t^\top,\\
+\frac{\partial L}{\partial \mathbf{W}_\textrm{hh}}
+&amp;= \sum_{t=1}^T \textrm{prod}\left(\frac{\partial L}{\partial \mathbf{h}_t}, \frac{\partial \mathbf{h}_t}{\partial \mathbf{W}_\textrm{hh}}\right)
+= \sum_{t=1}^T \frac{\partial L}{\partial \mathbf{h}_t} \mathbf{h}_{t-1}^\top,
+\end{aligned}
+\]</div>
+<p>trong đó <span class="arithmatex">\(\partial L/\partial \mathbf{h}_t\)</span>,
+được tính hồi quy bởi
+:eqref:<code>eq_bptt_partial_L_hT_final_step</code>
+và :eqref:<code>eq_bptt_partial_L_ht_recur</code>,
+là đại lượng then chốt ảnh hưởng đến độ ổn định số học.</p>
+<p>Vì lan truyền ngược qua thời gian là việc áp dụng lan truyền ngược trong RNN,
+như chúng ta đã giải thích trong <a href="#sec_backprop">sec_backprop</a>,
+huấn luyện RNN luân phiên giữa lan truyền xuôi và
+lan truyền ngược qua thời gian.
+Hơn nữa, lan truyền ngược qua thời gian
+lần lượt tính và lưu trữ các gradient ở trên.
+Cụ thể, các giá trị trung gian đã lưu
+được tái sử dụng để tránh các phép tính trùng lặp,
+chẳng hạn như lưu <span class="arithmatex">\(\partial L/\partial \mathbf{h}_t\)</span>
+để dùng trong việc tính cả <span class="arithmatex">\(\partial L / \partial \mathbf{W}_\textrm{hx}\)</span>
+và <span class="arithmatex">\(\partial L / \partial \mathbf{W}_\textrm{hh}\)</span>.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Lan truyền ngược qua thời gian chỉ đơn thuần là việc áp dụng lan truyền ngược cho các mô hình chuỗi có trạng thái ẩn.
+Cần cắt ngắn, chẳng hạn như cắt ngắn thông thường hoặc ngẫu nhiên, để thuận tiện về mặt tính toán và đảm bảo độ ổn định số học.
+Các lũy thừa bậc cao của ma trận có thể dẫn đến các trị riêng phân kỳ hoặc tiêu biến. Điều này biểu hiện dưới dạng gradient bùng nổ hoặc tiêu biến.
+Để tính toán hiệu quả, các giá trị trung gian được lưu đệm trong quá trình lan truyền ngược qua thời gian.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Giả sử chúng ta có một ma trận đối xứng <span class="arithmatex">\(\mathbf{M} \in \mathbb{R}^{n \times n}\)</span> với các trị riêng <span class="arithmatex">\(\lambda_i\)</span> có các vectơ riêng tương ứng là <span class="arithmatex">\(\mathbf{v}_i\)</span> (<span class="arithmatex">\(i = 1, \ldots, n\)</span>). Không mất tính tổng quát, giả sử chúng được sắp xếp theo thứ tự <span class="arithmatex">\(|\lambda_i| \geq |\lambda_{i+1}|\)</span>.</li>
+<li>Chứng minh rằng <span class="arithmatex">\(\mathbf{M}^k\)</span> có các trị riêng <span class="arithmatex">\(\lambda_i^k\)</span>.</li>
+<li>Chứng minh rằng với một vectơ ngẫu nhiên <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^n\)</span>, với xác suất cao <span class="arithmatex">\(\mathbf{M}^k \mathbf{x}\)</span> sẽ gần như thẳng hàng với vectơ riêng <span class="arithmatex">\(\mathbf{v}_1\)</span>
+của <span class="arithmatex">\(\mathbf{M}\)</span>. Hãy hình thức hóa phát biểu này.</li>
+<li>Kết quả trên có ý nghĩa gì đối với gradient trong RNN?</li>
+<li>Ngoài cắt gradient, bạn có thể nghĩ ra phương pháp nào khác để đối phó với gradient bùng nổ trong mạng nơ-ron hồi quy không?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/334">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

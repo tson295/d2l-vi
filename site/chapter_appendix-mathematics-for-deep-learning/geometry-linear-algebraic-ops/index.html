@@ -1,0 +1,2792 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../eigendecomposition/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Hình học và Đại số tuyến tính - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hinh-hoc-va-cac-phep-toan-ai-so-tuyen-tinh" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hình học và Đại số tuyến tính
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Toán học
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hình học và Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hình học và Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hinh-hoc-cua-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình học của vector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tich-vo-huong-va-goc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tích vô hướng và góc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tích vô hướng và góc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-tuong-ong-cosin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Độ tương đồng cosin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sieu-phang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Siêu phẳng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hinh-hoc-cua-cac-phep-bien-oi-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình học của các phép biến đổi tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phu-thuoc-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phụ thuộc tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hạng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kha-nghich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khả nghịch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Khả nghịch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#van-e-so-hoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vấn đề số học
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inh-thuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định thức
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensor-va-cac-phep-toan-ai-so-tuyen-tinh-pho-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tensor và các phép toán đại số tuyến tính phổ biến
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tensor và các phép toán đại số tuyến tính phổ biến">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cac-vi-du-pho-bien-tu-ai-so-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các ví dụ phổ biến từ đại số tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bieu-dien-trong-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biểu diễn trong mã
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eigendecomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích trị riêng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-variable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích một biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multivariable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích nhiều biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integral-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích tích phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../random-variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biến ngẫu nhiên
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maximum-likelihood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maximum Likelihood
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../naive-bayes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Naive Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thống kê
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../information-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lý thuyết thông tin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hinh-hoc-cua-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình học của vector
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tich-vo-huong-va-goc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tích vô hướng và góc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tích vô hướng và góc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-tuong-ong-cosin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Độ tương đồng cosin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sieu-phang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Siêu phẳng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hinh-hoc-cua-cac-phep-bien-oi-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình học của các phép biến đổi tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phu-thuoc-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phụ thuộc tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hạng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kha-nghich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khả nghịch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Khả nghịch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#van-e-so-hoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vấn đề số học
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inh-thuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định thức
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tensor-va-cac-phep-toan-ai-so-tuyen-tinh-pho-bien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tensor và các phép toán đại số tuyến tính phổ biến
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tensor và các phép toán đại số tuyến tính phổ biến">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cac-vi-du-pho-bien-tu-ai-so-tuyen-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Các ví dụ phổ biến từ đại số tuyến tính
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bieu-dien-trong-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biểu diễn trong mã
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="hinh-hoc-va-cac-phep-toan-ai-so-tuyen-tinh">Hình học và các phép toán đại số tuyến tính<a class="headerlink" href="#hinh-hoc-va-cac-phep-toan-ai-so-tuyen-tinh" title="Permanent link">&para;</a></h1>
+<p><a id="sec_geometry-linear-algebraic-ops"></a></p>
+<p>Trong <a href="#sec_linear-algebra">sec_linear-algebra</a>, chúng ta đã gặp các kiến thức cơ bản của đại số tuyến tính và thấy cách nó có thể được dùng để biểu diễn những phép toán phổ biến nhằm biến đổi dữ liệu. Đại số tuyến tính là một trong những trụ cột toán học then chốt nằm dưới phần lớn công việc chúng ta làm trong học sâu và rộng hơn là trong học máy. Mặc dù <a href="#sec_linear-algebra">sec_linear-algebra</a> đã chứa đủ công cụ để truyền đạt cơ chế của các mô hình học sâu hiện đại, chủ đề này còn nhiều điều hơn thế. Trong phần này, chúng ta sẽ đi sâu hơn, làm nổi bật một số diễn giải hình học của các phép toán đại số tuyến tính, và giới thiệu vài khái niệm nền tảng, bao gồm trị riêng và vector riêng.</p>
+<h2 id="hinh-hoc-cua-vector">Hình học của vector<a class="headerlink" href="#hinh-hoc-cua-vector" title="Permanent link">&para;</a></h2>
+<p>Trước hết, chúng ta cần thảo luận hai cách diễn giải hình học phổ biến của vector: hoặc là điểm, hoặc là hướng trong không gian. Về cơ bản, một vector là một danh sách các số, chẳng hạn danh sách Python dưới đây.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">v</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</code></pre></div>
+<p>Các nhà toán học thường viết nó dưới dạng vector <em>cột</em> hoặc vector <em>hàng</em>, tức là một trong hai dạng</p>
+<div class="arithmatex">\[
+\mathbf{x} = \begin{bmatrix}1\\7\\0\\1\end{bmatrix},
+\]</div>
+<p>hoặc</p>
+<div class="arithmatex">\[
+\mathbf{x}^\top = \begin{bmatrix}1 &amp; 7 &amp; 0 &amp; 1\end{bmatrix}.
+\]</div>
+<p>Những dạng này thường có các diễn giải khác nhau, trong đó ví dụ dữ liệu là vector cột, còn trọng số dùng để tạo tổng có trọng số là vector hàng. Tuy nhiên, linh hoạt trong cách nhìn là có lợi. Như đã mô tả trong <a href="#sec_linear-algebra">sec_linear-algebra</a>, mặc dù hướng mặc định của một vector riêng lẻ là vector cột, với bất kỳ ma trận nào biểu diễn một bộ dữ liệu dạng bảng, cách quy ước phổ biến hơn là xem mỗi ví dụ dữ liệu như một vector hàng trong ma trận.</p>
+<p>Với một vector, diễn giải đầu tiên mà chúng ta nên gán cho nó là một điểm trong không gian. Trong hai hoặc ba chiều, chúng ta có thể trực quan hóa các điểm này bằng cách dùng các thành phần của vector để xác định vị trí của điểm trong không gian so với một mốc cố định gọi là <em>gốc tọa độ</em>. Điều này được minh họa trong <a href="#fig_grid">fig_grid</a>.</p>
+<p><img alt="Minh họa việc trực quan hóa vector như các điểm trong mặt phẳng. Thành phần đầu tiên của vector cho tọa độ \(\mathit{x}\), thành phần thứ hai cho tọa độ \(\mathit{y}\). Các chiều cao hơn là tương tự, dù khó trực quan hóa hơn nhiều." src="../../img/grid-points.svg" />
+<a id="fig_grid"></a></p>
+<p>Quan điểm hình học này cho phép chúng ta xem xét vấn đề ở một mức trừu tượng hơn. Thay vì đối mặt với một bài toán có vẻ không thể vượt qua như phân loại ảnh là mèo hay chó, chúng ta có thể bắt đầu xem xét các tác vụ một cách trừu tượng như những tập điểm trong không gian, và hình dung tác vụ là khám phá cách tách hai cụm điểm khác nhau.</p>
+<p>Song song với đó, có một góc nhìn thứ hai mà mọi người thường dùng đối với vector: xem chúng như các hướng trong không gian. Ta không chỉ có thể nghĩ về vector <span class="arithmatex">\(\mathbf{v} = [3,2]^\top\)</span> như vị trí cách gốc tọa độ <span class="arithmatex">\(3\)</span> đơn vị sang phải và <span class="arithmatex">\(2\)</span> đơn vị lên trên, mà còn có thể nghĩ về chính nó như hướng để đi <span class="arithmatex">\(3\)</span> bước sang phải và <span class="arithmatex">\(2\)</span> bước lên. Theo cách này, chúng ta xem tất cả vector trong hình <a href="#fig_arrow">fig_arrow</a> là như nhau.</p>
+<p><img alt="Bất kỳ vector nào cũng có thể được trực quan hóa như một mũi tên trong mặt phẳng. Trong trường hợp này, mọi vector được vẽ đều là một biểu diễn của vector \((3,2)^\top\)." src="../../img/par-vec.svg" />
+<a id="fig_arrow"></a></p>
+<p>Một lợi ích của sự thay đổi góc nhìn này là chúng ta có thể hiểu trực quan phép cộng vector. Cụ thể, ta đi theo hướng được cho bởi một vector, rồi tiếp tục đi theo hướng được cho bởi vector còn lại, như trong <a href="#fig_add-vec">fig_add-vec</a>.</p>
+<p><img alt="Ta có thể trực quan hóa phép cộng vector bằng cách đi theo một vector trước, rồi đi theo vector khác." src="../../img/vec-add.svg" />
+<a id="fig_add-vec"></a></p>
+<p>Phép trừ vector có một diễn giải tương tự. Bằng cách xét đồng nhất thức <span class="arithmatex">\(\mathbf{u} = \mathbf{v} + (\mathbf{u}-\mathbf{v})\)</span>, ta thấy vector <span class="arithmatex">\(\mathbf{u}-\mathbf{v}\)</span> là hướng đưa ta từ điểm <span class="arithmatex">\(\mathbf{v}\)</span> đến điểm <span class="arithmatex">\(\mathbf{u}\)</span>.</p>
+<h2 id="tich-vo-huong-va-goc">Tích vô hướng và góc<a class="headerlink" href="#tich-vo-huong-va-goc" title="Permanent link">&para;</a></h2>
+<p>Như đã thấy trong <a href="#sec_linear-algebra">sec_linear-algebra</a>, nếu lấy hai vector cột <span class="arithmatex">\(\mathbf{u}\)</span> và <span class="arithmatex">\(\mathbf{v}\)</span>, ta có thể tạo tích vô hướng của chúng bằng cách tính:</p>
+<div class="arithmatex">\[\mathbf{u}^\top\mathbf{v} = \sum_i u_i\cdot v_i.\]</div>
+<p>Vì :eqref:<code>eq_dot_def</code> có tính đối xứng, chúng ta sẽ mô phỏng ký hiệu của phép nhân cổ điển và viết</p>
+<div class="arithmatex">\[
+\mathbf{u}\cdot\mathbf{v} = \mathbf{u}^\top\mathbf{v} = \mathbf{v}^\top\mathbf{u},
+\]</div>
+<p>để nhấn mạnh rằng đổi thứ tự hai vector vẫn cho cùng một kết quả.</p>
+<p>Tích vô hướng :eqref:<code>eq_dot_def</code> cũng có một diễn giải hình học: nó liên hệ chặt chẽ với góc giữa hai vector. Hãy xét góc được minh họa trong <a href="#fig_angle">fig_angle</a>.</p>
+<p><img alt="Giữa bất kỳ hai vector nào trong mặt phẳng đều có một góc \(\theta\) xác định rõ. Ta sẽ thấy góc này gắn chặt với tích vô hướng." src="../../img/vec-angle.svg" />
+<a id="fig_angle"></a></p>
+<p>Để bắt đầu, hãy xét hai vector cụ thể:</p>
+<div class="arithmatex">\[
+\mathbf{v} = (r,0) \; \textrm{and} \; \mathbf{w} = (s\cos(\theta), s \sin(\theta)).
+\]</div>
+<p>Vector <span class="arithmatex">\(\mathbf{v}\)</span> có độ dài <span class="arithmatex">\(r\)</span> và song song với trục <span class="arithmatex">\(x\)</span>, còn vector <span class="arithmatex">\(\mathbf{w}\)</span> có độ dài <span class="arithmatex">\(s\)</span> và tạo góc <span class="arithmatex">\(\theta\)</span> với trục <span class="arithmatex">\(x\)</span>. Nếu tính tích vô hướng của hai vector này, ta thấy</p>
+<div class="arithmatex">\[
+\mathbf{v}\cdot\mathbf{w} = rs\cos(\theta) = \|\mathbf{v}\|\|\mathbf{w}\|\cos(\theta).
+\]</div>
+<p>Với một chút biến đổi đại số đơn giản, ta có thể sắp xếp lại các hạng để thu được</p>
+<div class="arithmatex">\[
+\theta = \arccos\left(\frac{\mathbf{v}\cdot\mathbf{w}}{\|\mathbf{v}\|\|\mathbf{w}\|}\right).
+\]</div>
+<p>Tóm lại, với hai vector cụ thể này, tích vô hướng kết hợp với các chuẩn cho ta góc giữa hai vector. Sự thật tương tự cũng đúng nói chung. Ở đây chúng ta sẽ không suy ra biểu thức này, tuy nhiên nếu xét cách viết <span class="arithmatex">\(\|\mathbf{v} - \mathbf{w}\|^2\)</span> theo hai cách: một cách dùng tích vô hướng, và cách kia dùng định luật cosin theo hình học, ta có thể thu được quan hệ đầy đủ. Thật vậy, với bất kỳ hai vector <span class="arithmatex">\(\mathbf{v}\)</span> và <span class="arithmatex">\(\mathbf{w}\)</span> nào, góc giữa hai vector là</p>
+<div class="arithmatex">\[\theta = \arccos\left(\frac{\mathbf{v}\cdot\mathbf{w}}{\|\mathbf{v}\|\|\mathbf{w}\|}\right).\]</div>
+<p>Đây là một kết quả đẹp vì không có gì trong phép tính tham chiếu đến không gian hai chiều. Thật vậy, ta có thể dùng nó trong ba chiều hoặc ba triệu chiều mà không gặp vấn đề.</p>
+<p>Như một ví dụ đơn giản, hãy xem cách tính góc giữa một cặp vector:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet</span><span class="w"> </span><span class="kn">import</span> <span class="n">gluon</span><span class="p">,</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">angle</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">angle</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">angle</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">IPython</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">angle</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">w</span><span class="p">)))</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">angle</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+</code></pre></div>
+<p>Hiện tại chúng ta chưa dùng đến nó, nhưng cần biết rằng ta sẽ gọi các vector có góc bằng <span class="arithmatex">\(\pi/2\)</span> (hoặc tương đương <span class="arithmatex">\(90^{\circ}\)</span>) là <em>trực giao</em>. Bằng cách xem phương trình trên, ta thấy điều này xảy ra khi <span class="arithmatex">\(\theta = \pi/2\)</span>, cũng chính là <span class="arithmatex">\(\cos(\theta) = 0\)</span>. Cách duy nhất để điều này xảy ra là bản thân tích vô hướng bằng không, và hai vector trực giao khi và chỉ khi <span class="arithmatex">\(\mathbf{v}\cdot\mathbf{w} = 0\)</span>. Đây sẽ là một công thức hữu ích khi hiểu các đối tượng theo hình học.</p>
+<p>Một câu hỏi hợp lý là: tại sao tính góc lại hữu ích? Câu trả lời nằm ở kiểu bất biến mà ta kỳ vọng dữ liệu có. Hãy xét một ảnh và một bản sao của ảnh đó, trong đó mọi giá trị pixel đều giống nhau nhưng độ sáng chỉ bằng <span class="arithmatex">\(10\%\)</span>. Các giá trị của từng pixel nhìn chung khác xa giá trị ban đầu. Vì vậy, nếu tính khoảng cách giữa ảnh gốc và ảnh tối hơn, khoảng cách có thể lớn. Tuy nhiên, với hầu hết ứng dụng ML, <em>nội dung</em> là như nhau, nó vẫn là ảnh một con mèo xét theo bộ phân loại mèo/chó. Nếu xét góc, không khó để thấy rằng với bất kỳ vector <span class="arithmatex">\(\mathbf{v}\)</span> nào, góc giữa <span class="arithmatex">\(\mathbf{v}\)</span> và <span class="arithmatex">\(0.1\cdot\mathbf{v}\)</span> bằng không. Điều này tương ứng với việc co giãn vector giữ nguyên hướng và chỉ thay đổi độ dài. Góc xem ảnh tối hơn là giống hệt.</p>
+<p>Các ví dụ như vậy xuất hiện khắp nơi. Trong văn bản, ta có thể muốn chủ đề đang được thảo luận không thay đổi nếu ta viết một tài liệu dài gấp đôi nhưng nói cùng một điều. Với một số cách mã hóa (chẳng hạn đếm số lần xuất hiện của các từ trong một từ vựng), điều này tương ứng với việc nhân đôi vector mã hóa tài liệu, nên một lần nữa ta có thể dùng góc.</p>
+<h3 id="o-tuong-ong-cosin">Độ tương đồng cosin<a class="headerlink" href="#o-tuong-ong-cosin" title="Permanent link">&para;</a></h3>
+<p>Trong các ngữ cảnh ML nơi góc được dùng để đo độ gần nhau của hai vector, người thực hành dùng thuật ngữ <em>độ tương đồng cosin</em> để chỉ phần
+$$
+\cos(\theta) = \frac{\mathbf{v}\cdot\mathbf{w}}{|\mathbf{v}||\mathbf{w}|}.
+$$</p>
+<p>Cosin đạt giá trị lớn nhất là <span class="arithmatex">\(1\)</span> khi hai vector chỉ cùng hướng, giá trị nhỏ nhất là <span class="arithmatex">\(-1\)</span> khi chúng chỉ theo hai hướng đối nhau, và bằng <span class="arithmatex">\(0\)</span> khi hai vector trực giao. Lưu ý rằng nếu các thành phần của vector số chiều cao được lấy mẫu ngẫu nhiên với trung bình <span class="arithmatex">\(0\)</span>, cosin của chúng gần như luôn gần <span class="arithmatex">\(0\)</span>.</p>
+<h2 id="sieu-phang">Siêu phẳng<a class="headerlink" href="#sieu-phang" title="Permanent link">&para;</a></h2>
+<p>Bên cạnh làm việc với vector, một đối tượng then chốt khác mà bạn phải hiểu để tiến xa trong đại số tuyến tính là <em>siêu phẳng</em>, một tổng quát hóa lên chiều cao hơn của đường thẳng (hai chiều) hoặc mặt phẳng (ba chiều). Trong một không gian vector <span class="arithmatex">\(d\)</span> chiều, một siêu phẳng có <span class="arithmatex">\(d-1\)</span> chiều và chia không gian thành hai nửa không gian.</p>
+<p>Hãy bắt đầu bằng một ví dụ. Giả sử ta có một vector cột <span class="arithmatex">\(\mathbf{w}=[2,1]^\top\)</span>. Ta muốn biết: "các điểm <span class="arithmatex">\(\mathbf{v}\)</span> nào thỏa <span class="arithmatex">\(\mathbf{w}\cdot\mathbf{v} = 1\)</span>?" Nhớ lại mối liên hệ giữa tích vô hướng và góc ở trên :eqref:<code>eq_angle_forumla</code>, ta có thể thấy điều này tương đương với
+$$
+|\mathbf{v}||\mathbf{w}|\cos(\theta) = 1 \; \iff \; |\mathbf{v}|\cos(\theta) = \frac{1}{|\mathbf{w}|} = \frac{1}{\sqrt{5}}.
+$$</p>
+<p><img alt="Nhớ lại lượng giác, ta thấy công thức \(\|\mathbf{v}\|\cos(\theta)\) là độ dài của hình chiếu vector \(\mathbf{v}\) lên hướng của \(\mathbf{w}\)" src="../../img/proj-vec.svg" />
+<a id="fig_vector-project"></a></p>
+<p>Nếu xét ý nghĩa hình học của biểu thức này, ta thấy nó tương đương với việc nói rằng độ dài hình chiếu của <span class="arithmatex">\(\mathbf{v}\)</span> lên hướng của <span class="arithmatex">\(\mathbf{w}\)</span> đúng bằng <span class="arithmatex">\(1/\|\mathbf{w}\|\)</span>, như trong <a href="#fig_vector-project">fig_vector-project</a>. Tập tất cả các điểm mà điều này đúng là một đường thẳng vuông góc với vector <span class="arithmatex">\(\mathbf{w}\)</span>. Nếu muốn, ta có thể tìm phương trình của đường thẳng này và thấy nó là <span class="arithmatex">\(2x + y = 1\)</span> hoặc tương đương <span class="arithmatex">\(y = 1 - 2x\)</span>.</p>
+<p>Nếu bây giờ xét điều gì xảy ra khi hỏi về tập các điểm có <span class="arithmatex">\(\mathbf{w}\cdot\mathbf{v} &gt; 1\)</span> hoặc <span class="arithmatex">\(\mathbf{w}\cdot\mathbf{v} &lt; 1\)</span>, ta thấy đây là các trường hợp mà hình chiếu lần lượt dài hơn hoặc ngắn hơn <span class="arithmatex">\(1/\|\mathbf{w}\|\)</span>. Vì vậy, hai bất đẳng thức này xác định hai phía của đường thẳng. Theo cách này, ta đã tìm được một cách cắt không gian thành hai nửa, trong đó mọi điểm ở một phía có tích vô hướng dưới một ngưỡng, còn phía kia thì trên ngưỡng, như trong <a href="#fig_space-division">fig_space-division</a>.</p>
+<p><img alt="Nếu bây giờ xét phiên bản bất đẳng thức của biểu thức, ta thấy siêu phẳng của mình (trong trường hợp này chỉ là một đường thẳng) tách không gian thành hai nửa." src="../../img/space-division.svg" />
+<a id="fig_space-division"></a></p>
+<p>Câu chuyện trong chiều cao hơn cũng tương tự. Nếu bây giờ lấy <span class="arithmatex">\(\mathbf{w} = [1,2,3]^\top\)</span> và hỏi về các điểm trong ba chiều có <span class="arithmatex">\(\mathbf{w}\cdot\mathbf{v} = 1\)</span>, ta thu được một mặt phẳng vuông góc với vector đã cho <span class="arithmatex">\(\mathbf{w}\)</span>. Hai bất đẳng thức lại xác định hai phía của mặt phẳng như trong <a href="#fig_higher-division">fig_higher-division</a>.</p>
+<p><img alt="Siêu phẳng trong bất kỳ chiều nào cũng tách không gian thành hai nửa." src="../../img/space-division-3d.svg" />
+<a id="fig_higher-division"></a></p>
+<p>Dù khả năng trực quan hóa của chúng ta dừng lại ở đây, không có gì ngăn ta thực hiện điều này trong hàng chục, hàng trăm hoặc hàng tỷ chiều. Điều này thường xảy ra khi suy nghĩ về các mô hình học máy. Ví dụ, ta có thể hiểu các mô hình phân loại tuyến tính như trong <a href="#sec_softmax">sec_softmax</a> là các phương pháp tìm siêu phẳng tách các lớp mục tiêu khác nhau. Trong ngữ cảnh này, các siêu phẳng như vậy thường được gọi là <em>mặt phẳng quyết định</em>. Phần lớn các mô hình phân loại học sâu kết thúc bằng một tầng tuyến tính đưa vào softmax, vì vậy ta có thể diễn giải vai trò của mạng nơ-ron sâu là tìm một embedding phi tuyến sao cho các lớp mục tiêu có thể được tách rõ ràng bằng các siêu phẳng.</p>
+<p>Để đưa ra một ví dụ tự xây dựng, hãy lưu ý rằng ta có thể tạo một mô hình hợp lý để phân loại các ảnh nhỏ của áo phông và quần dài từ bộ dữ liệu Fashion-MNIST (xem <a href="#sec_fashion_mnist">sec_fashion_mnist</a>) chỉ bằng cách lấy vector giữa các trung bình của chúng để định nghĩa mặt phẳng quyết định và ước lượng thô một ngưỡng bằng mắt. Trước tiên, ta sẽ nạp dữ liệu và tính các trung bình.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Load in the dataset</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">train</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">test</span> <span class="o">=</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">X_train_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">train</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">X_train_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">train</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">y_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1"># Compute averages</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">ave_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train_0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="n">ave_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train_1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Load in the dataset</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">trans</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">trans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">())</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">trans</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">trans</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">train</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;../data&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">trans</span><span class="p">,</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>                                          <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">test</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">FashionMNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s2">&quot;../data&quot;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">trans</span><span class="p">,</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>                                         <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">X_train_0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">train</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">X_train_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">train</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">X_test</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="n">y_test</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">test</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>                      <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="c1"># Compute averages</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="n">ave_0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train_0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="n">ave_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train_1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># Load in the dataset</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="p">((</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">))</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">X_train_0</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">train_images</span><span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">train_labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="n">X_train_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">train_images</span><span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="n">train_labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">X_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">test_images</span><span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>    <span class="n">test_labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="n">y_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">test_images</span><span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="n">test_labels</span><span class="p">)</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">256</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c1"># Compute averages</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="n">ave_0</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">X_train_0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">ave_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">X_train_1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<p>Việc xem xét chi tiết các trung bình này có thể hữu ích, nên hãy vẽ chúng trông như thế nào. Trong trường hợp này, ta thấy trung bình quả thật giống một ảnh áo phông bị làm mờ.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab mxnet, pytorch</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Plot average t-shirt</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ave_0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># Plot average t-shirt</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ave_0</span><span class="p">,</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>Trong trường hợp thứ hai, ta lại thấy trung bình giống một ảnh quần dài bị làm mờ.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">#@tab mxnet, pytorch</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># Plot average trousers</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ave_1</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1"># Plot average trousers</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">ave_1</span><span class="p">,</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>Trong một nghiệm học máy đầy đủ, ta sẽ học ngưỡng từ bộ dữ liệu. Ở đây, tôi chỉ ước lượng bằng mắt một ngưỡng trông hợp lý trên dữ liệu huấn luyện.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># Print test set accuracy with eyeballed threshold</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="n">ave_1</span> <span class="o">-</span> <span class="n">ave_0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">predictions</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1500000</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># Accuracy</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="c1"># Print test set accuracy with eyeballed threshold</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="n">ave_1</span> <span class="o">-</span> <span class="n">ave_0</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># &#39;@&#39; is Matrix Multiplication operator in pytorch.</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">predictions</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">@</span> <span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1500000</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Accuracy</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">predictions</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># Print test set accuracy with eyeballed threshold</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">ave_1</span> <span class="o">-</span> <span class="n">ave_0</span><span class="p">)</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">predictions</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">X_test</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">nest</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1500000</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c1"># Accuracy</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+</code></pre></div>
+<h2 id="hinh-hoc-cua-cac-phep-bien-oi-tuyen-tinh">Hình học của các phép biến đổi tuyến tính<a class="headerlink" href="#hinh-hoc-cua-cac-phep-bien-oi-tuyen-tinh" title="Permanent link">&para;</a></h2>
+<p>Thông qua <a href="#sec_linear-algebra">sec_linear-algebra</a> và các thảo luận ở trên, chúng ta đã có hiểu biết vững chắc về hình học của vector, độ dài và góc. Tuy nhiên, có một đối tượng quan trọng mà ta đã bỏ qua, đó là cách hiểu hình học về các phép biến đổi tuyến tính được biểu diễn bởi ma trận. Việc thực sự thấm nhuần những gì ma trận có thể làm để biến đổi dữ liệu giữa hai không gian số chiều cao có thể khác nhau đòi hỏi nhiều luyện tập, và nằm ngoài phạm vi phụ lục này. Tuy vậy, ta có thể bắt đầu xây dựng trực giác trong hai chiều.</p>
+<p>Giả sử ta có một ma trận:</p>
+<div class="arithmatex">\[
+\mathbf{A} = \begin{bmatrix}
+a &amp; b \\ c &amp; d
+\end{bmatrix}.
+\]</div>
+<p>Nếu muốn áp dụng nó cho một vector tùy ý <span class="arithmatex">\(\mathbf{v} = [x, y]^\top\)</span>, ta nhân và thấy rằng</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\mathbf{A}\mathbf{v} &amp; = \begin{bmatrix}a &amp; b \\ c &amp; d\end{bmatrix}\begin{bmatrix}x \\ y\end{bmatrix} \\
+&amp; = \begin{bmatrix}ax+by\\ cx+dy\end{bmatrix} \\
+&amp; = x\begin{bmatrix}a \\ c\end{bmatrix} + y\begin{bmatrix}b \\d\end{bmatrix} \\
+&amp; = x\left\{\mathbf{A}\begin{bmatrix}1\\0\end{bmatrix}\right\} + y\left\{\mathbf{A}\begin{bmatrix}0\\1\end{bmatrix}\right\}.
+\end{aligned}
+\]</div>
+<p>Phép tính này có thể trông kỳ lạ, nơi một điều rõ ràng trở nên hơi khó hiểu. Tuy nhiên, nó cho ta biết rằng ta có thể viết cách một ma trận biến đổi <em>bất kỳ</em> vector nào theo cách nó biến đổi <em>hai vector cụ thể</em>: <span class="arithmatex">\([1,0]^\top\)</span> và <span class="arithmatex">\([0,1]^\top\)</span>. Điều này đáng để suy nghĩ một lát. Về cơ bản, ta đã giảm một bài toán vô hạn (điều gì xảy ra với bất kỳ cặp số thực nào) thành một bài toán hữu hạn (điều gì xảy ra với các vector cụ thể này). Các vector này là một ví dụ về <em>cơ sở</em>, trong đó ta có thể viết bất kỳ vector nào trong không gian của mình như một tổng có trọng số của các <em>vector cơ sở</em> này.</p>
+<p>Hãy vẽ điều gì xảy ra khi ta dùng ma trận cụ thể</p>
+<div class="arithmatex">\[
+\mathbf{A} = \begin{bmatrix}
+1 &amp; 2 \\
+-1 &amp; 3
+\end{bmatrix}.
+\]</div>
+<p>Nếu nhìn vào vector cụ thể <span class="arithmatex">\(\mathbf{v} = [2, -1]^\top\)</span>, ta thấy nó là <span class="arithmatex">\(2\cdot[1,0]^\top + -1\cdot[0,1]^\top\)</span>, và do đó biết rằng ma trận <span class="arithmatex">\(A\)</span> sẽ gửi nó tới <span class="arithmatex">\(2(\mathbf{A}[1,0]^\top) + -1(\mathbf{A}[0,1])^\top = 2[1, -1]^\top - [2,3]^\top = [0, -5]^\top\)</span>. Nếu theo dõi logic này cẩn thận, chẳng hạn bằng cách xét lưới của tất cả các cặp điểm nguyên, ta thấy phép nhân ma trận có thể làm nghiêng, xoay và co giãn lưới, nhưng cấu trúc lưới phải vẫn giữ như trong <a href="#fig_grid-transform">fig_grid-transform</a>.</p>
+<p><img alt="Ma trận \(\mathbf{A}\) tác động lên các vector cơ sở đã cho. Lưu ý cách toàn bộ lưới được vận chuyển theo chúng." src="../../img/grid-transform.svg" />
+<a id="fig_grid-transform"></a></p>
+<p>Đây là điểm trực giác quan trọng nhất cần thấm nhuần về các phép biến đổi tuyến tính được biểu diễn bởi ma trận. Ma trận không có khả năng làm biến dạng một số phần của không gian khác với những phần khác. Tất cả những gì chúng có thể làm là lấy các tọa độ ban đầu trên không gian của ta và làm nghiêng, xoay, co giãn chúng.</p>
+<p>Một số biến dạng có thể rất mạnh. Chẳng hạn ma trận</p>
+<div class="arithmatex">\[
+\mathbf{B} = \begin{bmatrix}
+2 &amp; -1 \\ 4 &amp; -2
+\end{bmatrix},
+\]</div>
+<p>nén toàn bộ mặt phẳng hai chiều xuống một đường thẳng duy nhất. Nhận diện và làm việc với các phép biến đổi như vậy là chủ đề của một phần sau, nhưng về mặt hình học ta có thể thấy điều này khác về bản chất với các kiểu biến đổi đã thấy ở trên. Ví dụ, kết quả từ ma trận <span class="arithmatex">\(\mathbf{A}\)</span> có thể được "uốn trở lại" lưới ban đầu. Kết quả từ ma trận <span class="arithmatex">\(\mathbf{B}\)</span> thì không thể, vì ta sẽ không bao giờ biết vector <span class="arithmatex">\([1,2]^\top\)</span> đến từ đâu, là <span class="arithmatex">\([1,1]^\top\)</span> hay <span class="arithmatex">\([0, -1]^\top\)</span>?</p>
+<p>Mặc dù hình ảnh này dành cho một ma trận <span class="arithmatex">\(2\times2\)</span>, không có gì ngăn ta mang các bài học đã học lên chiều cao hơn. Nếu lấy các vector cơ sở tương tự như <span class="arithmatex">\([1,0, \ldots,0]\)</span> và xem ma trận gửi chúng tới đâu, ta có thể bắt đầu cảm nhận cách phép nhân ma trận làm biến dạng toàn bộ không gian ở bất kỳ số chiều nào mà ta đang xử lý.</p>
+<h2 id="phu-thuoc-tuyen-tinh">Phụ thuộc tuyến tính<a class="headerlink" href="#phu-thuoc-tuyen-tinh" title="Permanent link">&para;</a></h2>
+<p>Xét lại ma trận</p>
+<div class="arithmatex">\[
+\mathbf{B} = \begin{bmatrix}
+2 &amp; -1 \\ 4 &amp; -2
+\end{bmatrix}.
+\]</div>
+<p>Ma trận này nén toàn bộ mặt phẳng xuống nằm trên đường thẳng duy nhất <span class="arithmatex">\(y = 2x\)</span>. Câu hỏi lúc này là: có cách nào phát hiện điều này chỉ bằng cách nhìn vào chính ma trận không? Câu trả lời là có. Hãy lấy <span class="arithmatex">\(\mathbf{b}_1 = [2,4]^\top\)</span> và <span class="arithmatex">\(\mathbf{b}_2 = [-1, -2]^\top\)</span> là hai cột của <span class="arithmatex">\(\mathbf{B}\)</span>. Nhớ rằng ta có thể viết mọi thứ được biến đổi bởi ma trận <span class="arithmatex">\(\mathbf{B}\)</span> như một tổng có trọng số của các cột của ma trận, chẳng hạn <span class="arithmatex">\(a_1\mathbf{b}_1 + a_2\mathbf{b}_2\)</span>. Ta gọi đây là một <em>tổ hợp tuyến tính</em>. Sự thật rằng <span class="arithmatex">\(\mathbf{b}_1 = -2\cdot\mathbf{b}_2\)</span> có nghĩa là ta có thể viết bất kỳ tổ hợp tuyến tính nào của hai cột đó hoàn toàn theo <span class="arithmatex">\(\mathbf{b}_2\)</span>, vì</p>
+<div class="arithmatex">\[
+a_1\mathbf{b}_1 + a_2\mathbf{b}_2 = -2a_1\mathbf{b}_2 + a_2\mathbf{b}_2 = (a_2-2a_1)\mathbf{b}_2.
+\]</div>
+<p>Điều này có nghĩa là một trong các cột, theo một nghĩa nào đó, là dư thừa vì nó không xác định một hướng duy nhất trong không gian. Điều này không nên làm ta quá ngạc nhiên, vì ta đã thấy ma trận này làm sụp toàn bộ mặt phẳng xuống một đường thẳng duy nhất. Hơn nữa, ta thấy rằng phụ thuộc tuyến tính <span class="arithmatex">\(\mathbf{b}_1 = -2\cdot\mathbf{b}_2\)</span> nắm bắt điều này. Để làm nó đối xứng hơn giữa hai vector, ta sẽ viết là</p>
+<div class="arithmatex">\[
+\mathbf{b}_1  + 2\cdot\mathbf{b}_2 = 0.
+\]</div>
+<p>Nói chung, ta sẽ nói rằng một tập vector <span class="arithmatex">\(\mathbf{v}_1, \ldots, \mathbf{v}_k\)</span> là <em>phụ thuộc tuyến tính</em> nếu tồn tại các hệ số <span class="arithmatex">\(a_1, \ldots, a_k\)</span> <em>không phải tất cả đều bằng không</em> sao cho</p>
+<div class="arithmatex">\[
+\sum_{i=1}^k a_i\mathbf{v_i} = 0.
+\]</div>
+<p>Trong trường hợp này, ta có thể giải một trong các vector theo một tổ hợp nào đó của các vector còn lại, và về mặt hiệu quả khiến nó trở nên dư thừa. Vì vậy, một phụ thuộc tuyến tính trong các cột của ma trận là bằng chứng cho việc ma trận của ta đang nén không gian xuống một chiều thấp hơn nào đó. Nếu không có phụ thuộc tuyến tính, ta nói các vector là <em>độc lập tuyến tính</em>. Nếu các cột của một ma trận độc lập tuyến tính, không có sự nén nào xảy ra và phép toán có thể được đảo ngược.</p>
+<h2 id="hang">Hạng<a class="headerlink" href="#hang" title="Permanent link">&para;</a></h2>
+<p>Nếu có một ma trận tổng quát <span class="arithmatex">\(n\times m\)</span>, câu hỏi hợp lý là ma trận ánh xạ vào không gian có số chiều bao nhiêu. Một khái niệm gọi là <em>hạng</em> sẽ là câu trả lời của ta. Trong phần trước, ta lưu ý rằng phụ thuộc tuyến tính làm chứng cho sự nén không gian xuống chiều thấp hơn, và vì vậy ta có thể dùng điều này để định nghĩa khái niệm hạng. Cụ thể, hạng của một ma trận <span class="arithmatex">\(\mathbf{A}\)</span> là số lượng lớn nhất các cột độc lập tuyến tính trong tất cả các tập con của các cột. Ví dụ, ma trận</p>
+<div class="arithmatex">\[
+\mathbf{B} = \begin{bmatrix}
+2 &amp; 4 \\ -1 &amp; -2
+\end{bmatrix},
+\]</div>
+<p>có <span class="arithmatex">\(\textrm{rank}(B)=1\)</span>, vì hai cột phụ thuộc tuyến tính, nhưng bất kỳ cột riêng lẻ nào cũng không phụ thuộc tuyến tính. Với một ví dụ khó hơn, ta có thể xét</p>
+<div class="arithmatex">\[
+\mathbf{C} = \begin{bmatrix}
+1&amp; 3 &amp; 0 &amp; -1 &amp; 0 \\
+-1 &amp; 0 &amp; 1 &amp; 1 &amp; -1 \\
+0 &amp; 3 &amp; 1 &amp; 0 &amp; -1 \\
+2 &amp; 3 &amp; -1 &amp; -2 &amp; 1
+\end{bmatrix},
+\]</div>
+<p>và chỉ ra rằng <span class="arithmatex">\(\mathbf{C}\)</span> có hạng hai vì, chẳng hạn, hai cột đầu tiên độc lập tuyến tính, nhưng bất kỳ tập nào trong bốn tập gồm ba cột đều phụ thuộc.</p>
+<p>Thủ tục như mô tả ở trên rất kém hiệu quả. Nó đòi hỏi xem xét mọi tập con của các cột trong ma trận đã cho, và do đó có thể tăng theo hàm mũ theo số cột. Sau này ta sẽ thấy một cách hiệu quả hơn về mặt tính toán để tính hạng của một ma trận, nhưng hiện tại điều này đủ để thấy khái niệm được định nghĩa tốt và hiểu ý nghĩa của nó.</p>
+<h2 id="kha-nghich">Khả nghịch<a class="headerlink" href="#kha-nghich" title="Permanent link">&para;</a></h2>
+<p>Ở trên, ta đã thấy rằng nhân với một ma trận có các cột phụ thuộc tuyến tính không thể được đảo ngược, tức là không có phép toán nghịch đảo nào luôn khôi phục được đầu vào. Tuy nhiên, với phép nhân bởi một ma trận hạng đầy đủ (tức một <span class="arithmatex">\(\mathbf{A}\)</span> nào đó là ma trận <span class="arithmatex">\(n \times n\)</span> có hạng <span class="arithmatex">\(n\)</span>), ta luôn nên có thể đảo ngược nó. Xét ma trận</p>
+<div class="arithmatex">\[
+\mathbf{I} = \begin{bmatrix}
+1 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; 1 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; 1
+\end{bmatrix}.
+\]</div>
+<p>đó là ma trận có các số một trên đường chéo và số không ở nơi khác. Ta gọi đây là ma trận <em>đơn vị</em>. Đây là ma trận giữ dữ liệu của ta không đổi khi được áp dụng. Để tìm một ma trận đảo ngược những gì ma trận <span class="arithmatex">\(\mathbf{A}\)</span> đã làm, ta muốn tìm một ma trận <span class="arithmatex">\(\mathbf{A}^{-1}\)</span> sao cho</p>
+<div class="arithmatex">\[
+\mathbf{A}^{-1}\mathbf{A} = \mathbf{A}\mathbf{A}^{-1} =  \mathbf{I}.
+\]</div>
+<p>Nếu xem đây như một hệ, ta có <span class="arithmatex">\(n \times n\)</span> ẩn (các phần tử của <span class="arithmatex">\(\mathbf{A}^{-1}\)</span>) và <span class="arithmatex">\(n \times n\)</span> phương trình (đẳng thức cần đúng giữa mọi phần tử của tích <span class="arithmatex">\(\mathbf{A}^{-1}\mathbf{A}\)</span> và mọi phần tử của <span class="arithmatex">\(\mathbf{I}\)</span>), nên nói chung ta kỳ vọng có nghiệm. Thật vậy, trong phần tiếp theo ta sẽ thấy một đại lượng gọi là <em>định thức</em>, có tính chất rằng miễn là định thức khác không, ta có thể tìm được nghiệm. Ta gọi ma trận <span class="arithmatex">\(\mathbf{A}^{-1}\)</span> như vậy là ma trận <em>nghịch đảo</em>. Ví dụ, nếu <span class="arithmatex">\(\mathbf{A}\)</span> là ma trận <span class="arithmatex">\(2 \times 2\)</span> tổng quát</p>
+<div class="arithmatex">\[
+\mathbf{A} = \begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix},
+\]</div>
+<p>thì ta có thể thấy nghịch đảo là</p>
+<div class="arithmatex">\[
+ \frac{1}{ad-bc}  \begin{bmatrix}
+d &amp; -b \\
+-c &amp; a
+\end{bmatrix}.
+\]</div>
+<p>Ta có thể kiểm tra điều này bằng cách thấy rằng nhân với nghịch đảo được cho bởi công thức trên hoạt động trong thực tế.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">M_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">M_inv</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">M</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">M_inv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">M_inv</span> <span class="o">@</span> <span class="n">M</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">M</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">M_inv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">M_inv</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="van-e-so-hoc">Vấn đề số học<a class="headerlink" href="#van-e-so-hoc" title="Permanent link">&para;</a></h3>
+<p>Mặc dù nghịch đảo của một ma trận hữu ích về mặt lý thuyết, ta phải nói rằng phần lớn thời gian trong thực tế ta không muốn <em>dùng</em> ma trận nghịch đảo để giải một bài toán. Nói chung, có những thuật toán ổn định số hơn nhiều để giải các phương trình tuyến tính như</p>
+<div class="arithmatex">\[
+\mathbf{A}\mathbf{x} = \mathbf{b},
+\]</div>
+<p>so với việc tính nghịch đảo rồi nhân để thu được</p>
+<div class="arithmatex">\[
+\mathbf{x} = \mathbf{A}^{-1}\mathbf{b}.
+\]</div>
+<p>Cũng như chia cho một số nhỏ có thể dẫn đến bất ổn định số, nghịch đảo một ma trận gần hạng thấp cũng có thể như vậy.</p>
+<p>Hơn nữa, ma trận <span class="arithmatex">\(\mathbf{A}\)</span> thường là <em>thưa</em>, nghĩa là nó chỉ chứa một số nhỏ các giá trị khác không. Nếu khám phá các ví dụ, ta sẽ thấy điều này không có nghĩa là nghịch đảo cũng thưa. Ngay cả khi <span class="arithmatex">\(\mathbf{A}\)</span> là một ma trận <span class="arithmatex">\(1\)</span> triệu nhân <span class="arithmatex">\(1\)</span> triệu với chỉ <span class="arithmatex">\(5\)</span> triệu phần tử khác không (và do đó ta chỉ cần lưu trữ <span class="arithmatex">\(5\)</span> triệu phần tử đó), nghịch đảo thường sẽ có gần như mọi phần tử khác không, đòi hỏi ta lưu trữ toàn bộ <span class="arithmatex">\(1\textrm{M}^2\)</span> phần tử, tức <span class="arithmatex">\(1\)</span> nghìn tỷ phần tử!</p>
+<p>Dù chúng ta không có thời gian đi sâu hoàn toàn vào các vấn đề số học gai góc thường gặp khi làm việc với đại số tuyến tính, chúng ta muốn cung cấp một số trực giác về thời điểm cần thận trọng, và nhìn chung tránh nghịch đảo trong thực tế là một quy tắc kinh nghiệm tốt.</p>
+<h2 id="inh-thuc">Định thức<a class="headerlink" href="#inh-thuc" title="Permanent link">&para;</a></h2>
+<p>Góc nhìn hình học của đại số tuyến tính cho ta một cách trực giác để diễn giải một đại lượng nền tảng gọi là <em>định thức</em>. Xét ảnh lưới ở trên, nhưng giờ với một vùng được tô nổi bật (<a href="#fig_grid-filled">fig_grid-filled</a>).</p>
+<p><img alt="Ma trận \(\mathbf{A}\) một lần nữa làm biến dạng lưới. Lần này, tôi muốn đặc biệt chú ý đến điều xảy ra với hình vuông được tô nổi bật." src="../../img/grid-transform-filled.svg" />
+<a id="fig_grid-filled"></a></p>
+<p>Hãy nhìn vào hình vuông được tô nổi bật. Đây là một hình vuông có các cạnh cho bởi <span class="arithmatex">\((0, 1)\)</span> và <span class="arithmatex">\((1, 0)\)</span>, nên có diện tích một. Sau khi <span class="arithmatex">\(\mathbf{A}\)</span> biến đổi hình vuông này, ta thấy nó trở thành một hình bình hành. Không có lý do gì để hình bình hành này có cùng diện tích với ban đầu, và thật vậy trong trường hợp cụ thể ở đây với</p>
+<div class="arithmatex">\[
+\mathbf{A} = \begin{bmatrix}
+1 &amp; 2 \\
+-1 &amp; 3
+\end{bmatrix},
+\]</div>
+<p>việc tính diện tích hình bình hành này là một bài tập hình học tọa độ và cho kết quả diện tích là <span class="arithmatex">\(5\)</span>.</p>
+<p>Nói chung, nếu có một ma trận</p>
+<div class="arithmatex">\[
+\mathbf{A} = \begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix},
+\]</div>
+<p>ta có thể thấy bằng một số phép tính rằng diện tích của hình bình hành thu được là <span class="arithmatex">\(ad-bc\)</span>. Diện tích này được gọi là <em>định thức</em>.</p>
+<p>Hãy kiểm tra nhanh điều này bằng một vài đoạn mã ví dụ.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">tf</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+</code></pre></div>
+<p>Những người tinh mắt sẽ nhận thấy biểu thức này có thể bằng không hoặc thậm chí âm. Với hạng âm, đây là một vấn đề quy ước thường được dùng trong toán học: nếu ma trận lật hình, ta nói diện tích bị đổi dấu. Bây giờ hãy xem khi định thức bằng không thì ta học được thêm điều gì.</p>
+<p>Hãy xét</p>
+<div class="arithmatex">\[
+\mathbf{B} = \begin{bmatrix}
+2 &amp; 4 \\ -1 &amp; -2
+\end{bmatrix}.
+\]</div>
+<p>Nếu tính định thức của ma trận này, ta thu được <span class="arithmatex">\(2\cdot(-2 ) - 4\cdot(-1) = 0\)</span>. Với hiểu biết ở trên, điều này hợp lý. <span class="arithmatex">\(\mathbf{B}\)</span> nén hình vuông từ ảnh ban đầu xuống một đoạn thẳng, có diện tích bằng không. Và thật vậy, bị nén vào một không gian chiều thấp hơn là cách duy nhất để có diện tích bằng không sau phép biến đổi. Vì vậy ta thấy kết quả sau là đúng: một ma trận <span class="arithmatex">\(A\)</span> khả nghịch khi và chỉ khi định thức khác không.</p>
+<p>Như một nhận xét cuối, hãy tưởng tượng ta có một hình bất kỳ được vẽ trên mặt phẳng. Suy nghĩ như các nhà khoa học máy tính, ta có thể phân rã hình đó thành một tập các hình vuông nhỏ, sao cho diện tích của hình về bản chất chỉ là số hình vuông trong phân rã. Nếu bây giờ biến đổi hình đó bằng một ma trận, ta gửi từng hình vuông này thành các hình bình hành, mỗi hình có diện tích được cho bởi định thức. Ta thấy rằng với bất kỳ hình nào, định thức cho biết hệ số (có dấu) mà một ma trận dùng để co giãn diện tích của hình đó.</p>
+<p>Tính định thức cho ma trận lớn hơn có thể vất vả, nhưng trực giác thì như nhau. Định thức vẫn là hệ số mà các ma trận <span class="arithmatex">\(n\times n\)</span> dùng để co giãn thể tích <span class="arithmatex">\(n\)</span> chiều.</p>
+<h2 id="tensor-va-cac-phep-toan-ai-so-tuyen-tinh-pho-bien">Tensor và các phép toán đại số tuyến tính phổ biến<a class="headerlink" href="#tensor-va-cac-phep-toan-ai-so-tuyen-tinh-pho-bien" title="Permanent link">&para;</a></h2>
+<p>Trong <a href="#sec_linear-algebra">sec_linear-algebra</a>, khái niệm tensor đã được giới thiệu. Trong phần này, chúng ta sẽ đi sâu hơn vào co tensor (tương đương của phép nhân ma trận đối với tensor), và thấy cách nó có thể cung cấp một góc nhìn thống nhất cho nhiều phép toán ma trận và vector.</p>
+<p>Với ma trận và vector, ta đã biết cách nhân chúng để biến đổi dữ liệu. Ta cần có một định nghĩa tương tự cho tensor nếu chúng hữu ích với ta. Hãy nghĩ về phép nhân ma trận:</p>
+<div class="arithmatex">\[
+\mathbf{C} = \mathbf{A}\mathbf{B},
+\]</div>
+<p>hoặc tương đương</p>
+<div class="arithmatex">\[ c_{i, j} = \sum_{k} a_{i, k}b_{k, j}.\]</div>
+<p>Mẫu này là thứ ta có thể lặp lại cho tensor. Với tensor, không có một trường hợp duy nhất nào về việc tổng theo chỉ số nào có thể được chọn phổ quát, vì vậy ta cần chỉ rõ chính xác những chỉ số nào muốn lấy tổng. Chẳng hạn ta có thể xét</p>
+<div class="arithmatex">\[
+y_{il} = \sum_{jk} x_{ijkl}a_{jk}.
+\]</div>
+<p>Một phép biến đổi như vậy được gọi là <em>co tensor</em>. Nó có thể biểu diễn một họ phép biến đổi linh hoạt hơn nhiều so với chỉ phép nhân ma trận.</p>
+<p>Như một đơn giản hóa ký hiệu thường dùng, ta có thể nhận thấy tổng được lấy đúng trên những chỉ số xuất hiện nhiều hơn một lần trong biểu thức, vì vậy người ta thường làm việc với <em>ký hiệu Einstein</em>, trong đó phép lấy tổng được ngầm định trên mọi chỉ số lặp lại. Điều này cho biểu thức gọn:</p>
+<div class="arithmatex">\[
+y_{il} = x_{ijkl}a_{jk}.
+\]</div>
+<h3 id="cac-vi-du-pho-bien-tu-ai-so-tuyen-tinh">Các ví dụ phổ biến từ đại số tuyến tính<a class="headerlink" href="#cac-vi-du-pho-bien-tu-ai-so-tuyen-tinh" title="Permanent link">&para;</a></h3>
+<p>Hãy xem có bao nhiêu định nghĩa đại số tuyến tính đã gặp trước đây có thể được biểu diễn bằng ký hiệu tensor rút gọn này:</p>
+<ul>
+<li><span class="arithmatex">\(\mathbf{v} \cdot \mathbf{w} = \sum_i v_iw_i\)</span></li>
+<li><span class="arithmatex">\(\|\mathbf{v}\|_2^{2} = \sum_i v_iv_i\)</span></li>
+<li><span class="arithmatex">\((\mathbf{A}\mathbf{v})_i = \sum_j a_{ij}v_j\)</span></li>
+<li><span class="arithmatex">\((\mathbf{A}\mathbf{B})_{ik} = \sum_j a_{ij}b_{jk}\)</span></li>
+<li><span class="arithmatex">\(\textrm{tr}(\mathbf{A}) = \sum_i a_{ii}\)</span></li>
+</ul>
+<p>Theo cách này, ta có thể thay thế vô số ký hiệu chuyên biệt bằng các biểu thức tensor ngắn.</p>
+<h3 id="bieu-dien-trong-ma">Biểu diễn trong mã<a class="headerlink" href="#bieu-dien-trong-ma" title="Permanent link">&para;</a></h3>
+<p>Tensor cũng có thể được thao tác linh hoạt trong mã. Như đã thấy trong <a href="#sec_linear-algebra">sec_linear-algebra</a>, ta có thể tạo tensor như dưới đây.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># Define tensors</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]]])</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># Print out the shapes</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1"># Define tensors</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">B</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]]])</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">A</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="n">v</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1"># Print out the shapes</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># Define tensors</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">B</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="p">[[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]]])</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">v</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># Print out the shapes</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div>
+<p>Phép tổng Einstein đã được triển khai trực tiếp. Các chỉ số xuất hiện trong tổng Einstein có thể được truyền dưới dạng một chuỗi, theo sau là các tensor được tác động. Chẳng hạn, để triển khai phép nhân ma trận, ta có thể xét tổng Einstein đã thấy ở trên (<span class="arithmatex">\(\mathbf{A}\mathbf{v} = a_{ij}v_j\)</span>) và tách các chỉ số ra để có triển khai:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="c1"># Reimplement matrix multiplication</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij, j -&gt; i&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="c1"># Reimplement matrix multiplication</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij, j -&gt; i&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">A</span><span class="nd">@v</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1"># Reimplement matrix multiplication</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ij, j -&gt; i&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</code></pre></div>
+<p>Đây là một ký hiệu rất linh hoạt. Chẳng hạn nếu ta muốn tính thứ thường được viết là</p>
+<div class="arithmatex">\[
+c_{kl} = \sum_{ij} \mathbf{b}_{ijk}\mathbf{a}_{il}v_j.
+\]</div>
+<p>nó có thể được triển khai thông qua tổng Einstein như sau:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijk, il, j -&gt; kl&quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="n">torch</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijk, il, j -&gt; kl&quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijk, il, j -&gt; kl&quot;</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div>
+<p>Ký hiệu này dễ đọc và hiệu quả cho con người, tuy nhiên cồng kềnh nếu vì lý do nào đó ta cần sinh một phép co tensor theo chương trình. Vì lý do này, <code>einsum</code> cung cấp một ký hiệu thay thế bằng cách cung cấp các chỉ số nguyên cho từng tensor. Ví dụ, cùng phép co tensor này cũng có thể được viết là:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">A</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">v</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="c1"># PyTorch does not support this type of notation.</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="c1"># TensorFlow does not support this type of notation.</span>
+</code></pre></div>
+<p>Cả hai ký hiệu đều cho phép biểu diễn ngắn gọn và hiệu quả các phép co tensor trong mã.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Vector có thể được diễn giải hình học như điểm hoặc hướng trong không gian.</li>
+<li>Tích vô hướng định nghĩa khái niệm góc cho các không gian có số chiều tùy ý cao.</li>
+<li>Siêu phẳng là tổng quát hóa số chiều cao của đường thẳng và mặt phẳng. Chúng có thể được dùng để định nghĩa các mặt phẳng quyết định, thường được dùng như bước cuối trong một tác vụ phân loại.</li>
+<li>Phép nhân ma trận có thể được diễn giải hình học như các biến dạng đồng đều của các tọa độ nền. Chúng biểu diễn một cách rất hạn chế, nhưng sạch về mặt toán học, để biến đổi vector.</li>
+<li>Phụ thuộc tuyến tính là một cách để biết khi một tập vector nằm trong không gian chiều thấp hơn ta kỳ vọng (chẳng hạn bạn có <span class="arithmatex">\(3\)</span> vector sống trong không gian <span class="arithmatex">\(2\)</span> chiều). Hạng của một ma trận là kích thước của tập con lớn nhất trong các cột của nó mà độc lập tuyến tính.</li>
+<li>Khi nghịch đảo của một ma trận được định nghĩa, nghịch đảo ma trận cho phép ta tìm một ma trận khác đảo ngược tác động của ma trận đầu tiên. Nghịch đảo ma trận hữu ích về lý thuyết, nhưng cần cẩn trọng trong thực tế do bất ổn định số.</li>
+<li>Định thức cho phép ta đo một ma trận mở rộng hoặc co lại một không gian bao nhiêu. Định thức khác không ngụ ý một ma trận khả nghịch (không suy biến), còn định thức bằng không nghĩa là ma trận không khả nghịch (suy biến).</li>
+<li>Co tensor và tổng Einstein cung cấp một ký hiệu gọn gàng, sạch sẽ để biểu diễn nhiều phép tính thường thấy trong học máy.</li>
+</ul>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Góc giữa hai vector sau là bao nhiêu?
+$$
+\vec v_1 = \begin{bmatrix}
+1 \ 0 \ -1 \ 2
+\end{bmatrix}, \qquad \vec v_2 = \begin{bmatrix}
+3 \ 1 \ 0 \ 1
+\end{bmatrix}?
+$$</li>
+<li>Đúng hay sai: <span class="arithmatex">\(\begin{bmatrix}1 &amp; 2\\0&amp;1\end{bmatrix}\)</span> và <span class="arithmatex">\(\begin{bmatrix}1 &amp; -2\\0&amp;1\end{bmatrix}\)</span> là nghịch đảo của nhau?</li>
+<li>Giả sử ta vẽ một hình trên mặt phẳng với diện tích <span class="arithmatex">\(100\textrm{m}^2\)</span>. Diện tích sau khi biến đổi hình bằng ma trận sau là bao nhiêu?
+$$
+\begin{bmatrix}
+2 &amp; 3\
+1 &amp; 2
+\end{bmatrix}.
+$$</li>
+<li>Tập vector nào sau đây độc lập tuyến tính?</li>
+<li><span class="arithmatex">\(\left\{\begin{pmatrix}1\\0\\-1\end{pmatrix}, \begin{pmatrix}2\\1\\-1\end{pmatrix}, \begin{pmatrix}3\\1\\1\end{pmatrix}\right\}\)</span></li>
+<li><span class="arithmatex">\(\left\{\begin{pmatrix}3\\1\\1\end{pmatrix}, \begin{pmatrix}1\\1\\1\end{pmatrix}, \begin{pmatrix}0\\0\\0\end{pmatrix}\right\}\)</span></li>
+<li><span class="arithmatex">\(\left\{\begin{pmatrix}1\\1\\0\end{pmatrix}, \begin{pmatrix}0\\1\\-1\end{pmatrix}, \begin{pmatrix}1\\0\\1\end{pmatrix}\right\}\)</span></li>
+<li>Giả sử bạn có một ma trận được viết là <span class="arithmatex">\(A = \begin{bmatrix}c\\d\end{bmatrix}\cdot\begin{bmatrix}a &amp; b\end{bmatrix}\)</span> với một lựa chọn giá trị nào đó cho <span class="arithmatex">\(a, b, c\)</span> và <span class="arithmatex">\(d\)</span>. Đúng hay sai: định thức của ma trận như vậy luôn bằng <span class="arithmatex">\(0\)</span>?</li>
+<li>Các vector <span class="arithmatex">\(e_1 = \begin{bmatrix}1\\0\end{bmatrix}\)</span> và <span class="arithmatex">\(e_2 = \begin{bmatrix}0\\1\end{bmatrix}\)</span> là trực giao. Điều kiện trên một ma trận <span class="arithmatex">\(A\)</span> là gì để <span class="arithmatex">\(Ae_1\)</span> và <span class="arithmatex">\(Ae_2\)</span> trực giao?</li>
+<li>Bạn có thể viết <span class="arithmatex">\(\textrm{tr}(\mathbf{A}^4)\)</span> bằng ký hiệu Einstein cho một ma trận tùy ý <span class="arithmatex">\(A\)</span> như thế nào?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/1084">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

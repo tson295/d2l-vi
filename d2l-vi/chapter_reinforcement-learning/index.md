@@ -11,7 +11,6 @@ Những bài toán ra quyết định tuần tự như vậy xuất hiện ở n
 Trong chương này, chúng ta sẽ phát triển các nền tảng của học tăng cường và có trải nghiệm thực hành khi triển khai một số phương pháp học tăng cường phổ biến. Trước tiên, chúng ta sẽ phát triển một khái niệm gọi là Markov Decision Process (MDP), cho phép chúng ta suy nghĩ về các bài toán ra quyết định tuần tự như vậy. Một thuật toán gọi là Value Iteration sẽ là cái nhìn đầu tiên của chúng ta về cách giải các bài toán học tăng cường dưới giả định rằng chúng ta biết các biến không kiểm soát được trong một MDP (trong RL, các biến không kiểm soát được này được gọi là môi trường) thường hành xử như thế nào. Sử dụng phiên bản tổng quát hơn của Value Iteration, một thuật toán gọi là Q-Learning, chúng ta sẽ có thể thực hiện các hành động phù hợp ngay cả khi không nhất thiết có đầy đủ hiểu biết về môi trường. Sau đó, chúng ta sẽ nghiên cứu cách dùng mạng sâu cho các bài toán học tăng cường bằng cách bắt chước hành động của một chuyên gia. Và cuối cùng, chúng ta sẽ phát triển một phương pháp học tăng cường dùng mạng sâu để thực hiện hành động trong các môi trường chưa biết. Những kỹ thuật này tạo thành nền tảng của các thuật toán RL nâng cao hơn hiện được dùng trong nhiều ứng dụng thực tế, một số trong đó chúng ta sẽ chỉ ra trong chương.
 
 ![Cấu trúc học tăng cường](../img/RL_main.png)
-:width:`400px`
 <a id="fig_rl_big"></a>
 
 ```toc

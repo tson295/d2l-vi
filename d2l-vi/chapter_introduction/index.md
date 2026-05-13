@@ -701,7 +701,6 @@ một truyện cổ tích Đức nổi tiếng có bốn con vật
 ([fig_stackedanimals](#fig_stackedanimals)).
 
 ![Một con lừa, một con chó, một con mèo và một con gà trống.](../img/stackedanimals.png)
-:width:`300px`
 <a id="fig_stackedanimals"></a>
 
 Như bạn có thể thấy, bức ảnh có một con mèo,

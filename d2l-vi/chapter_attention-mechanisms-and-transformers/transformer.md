@@ -51,7 +51,6 @@ bộ mã hóa và bộ giải mã
 có các mô-đun xếp chồng dựa trên self-attention.
 
 ![Kiến trúc Transformer.](../img/transformer.svg)
-:width:`320px`
 <a id="fig_transformer"></a>
 
 

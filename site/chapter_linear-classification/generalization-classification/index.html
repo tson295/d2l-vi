@@ -1,0 +1,2427 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_linear-classification/generalization-classification/">
+      
+      
+        <link rel="prev" href="../softmax-regression-concise/">
+      
+      
+        <link rel="next" href="../environment-and-distribution-shift/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Tổng quát hóa - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tong-quat-hoa-trong-phan-loai" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tổng quát hóa
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phân loại tuyến tính
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../softmax-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Softmax Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../image-classification-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu phân loại ảnh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../softmax-regression-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../softmax-regression-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tap-kiem-tra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tập Kiểm tra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tai-su-dung-tap-kiem-tra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tái sử dụng Tập Kiểm tra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ly-thuyet-hoc-thong-ke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lý thuyết Học Thống kê
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../environment-and-distribution-shift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối và dịch chuyển
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lớp phân loại
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tap-kiem-tra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tập Kiểm tra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tai-su-dung-tap-kiem-tra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tái sử dụng Tập Kiểm tra
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ly-thuyet-hoc-thong-ke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lý thuyết Học Thống kê
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tong-quat-hoa-trong-phan-loai">Tổng quát hóa trong Phân loại<a class="headerlink" href="#tong-quat-hoa-trong-phan-loai" title="Permanent link">&para;</a></h1>
+<p><a id="chap_classification_generalization"></a></p>
+<p>Cho đến nay, chúng ta đã tập trung vào cách giải quyết các bài toán phân loại đa lớp
+bằng cách huấn luyện mạng nơ-ron (tuyến tính) với nhiều đầu ra và hàm softmax.
+Bằng cách diễn giải đầu ra của mô hình như các dự đoán xác suất,
+chúng ta đã động lực hóa và suy dẫn hàm mất mát cross-entropy,
+tính log-likelihood âm mà mô hình của chúng ta (với một tập tham số cố định)
+gán cho các nhãn thực.
+Và cuối cùng, chúng ta đã đưa các công cụ này vào thực tế
+bằng cách khớp mô hình với tập huấn luyện.
+Tuy nhiên, như thường lệ, mục tiêu của chúng ta là học <em>các mẫu tổng quát</em>,
+được đánh giá thực nghiệm trên dữ liệu chưa từng thấy (tập kiểm tra).
+Độ chính xác cao trên tập huấn luyện không có nghĩa lý gì.
+Mỗi khi mỗi đầu vào của chúng ta là duy nhất
+(và thực sự điều này đúng với hầu hết các bộ dữ liệu nhiều chiều),
+chúng ta có thể đạt được độ chính xác hoàn hảo trên tập huấn luyện
+chỉ bằng cách ghi nhớ bộ dữ liệu trong epoch huấn luyện đầu tiên,
+và sau đó tra cứu nhãn mỗi khi thấy ảnh mới.
+Tuy nhiên, ghi nhớ chính xác các nhãn
+liên quan đến các mẫu huấn luyện chính xác
+không cho chúng ta biết cách phân loại các mẫu mới.
+Nếu không có hướng dẫn thêm, chúng ta có thể phải dựa vào
+đoán ngẫu nhiên mỗi khi gặp các mẫu mới.</p>
+<p>Một số câu hỏi cấp bách đòi hỏi sự chú ý ngay lập tức:</p>
+<ol>
+<li>Chúng ta cần bao nhiêu mẫu kiểm tra để có ước tính tốt về độ chính xác của các bộ phân loại trên tổng thể?</li>
+<li>Điều gì xảy ra nếu chúng ta tiếp tục đánh giá mô hình trên cùng một tập kiểm tra nhiều lần?</li>
+<li>Tại sao chúng ta nên kỳ vọng rằng việc khớp các mô hình tuyến tính với tập huấn luyện
+   sẽ tốt hơn sơ đồ ghi nhớ ngây thơ của chúng ta?</li>
+</ol>
+<p>Trong khi <a href="#sec_generalization_basics">sec_generalization_basics</a> đã giới thiệu
+các kiến thức cơ bản về quá khớp và tổng quát hóa
+trong ngữ cảnh hồi quy tuyến tính,
+chương này sẽ đi sâu hơn một chút,
+giới thiệu một số ý tưởng nền tảng
+của lý thuyết học thống kê.
+Hóa ra chúng ta thường có thể đảm bảo tổng quát hóa <em>a priori</em>:
+với nhiều mô hình,
+và với bất kỳ giới hạn trên mong muốn nào
+trên khoảng cách tổng quát hóa <span class="arithmatex">\(\epsilon\)</span>,
+chúng ta thường có thể xác định một số lượng mẫu cần thiết <span class="arithmatex">\(n\)</span>
+sao cho nếu tập huấn luyện của chúng ta chứa ít nhất <span class="arithmatex">\(n\)</span>
+mẫu, lỗi thực nghiệm của chúng ta sẽ nằm
+trong <span class="arithmatex">\(\epsilon\)</span> của lỗi thực,
+<em>với bất kỳ phân phối tạo dữ liệu nào</em>.
+Thật không may, cũng hóa ra
+rằng trong khi những đảm bảo này cung cấp
+một tập hợp khối xây dựng trí tuệ sâu sắc,
+chúng có giá trị thực tế hạn chế
+cho người thực hành deep learning.
+Nói ngắn gọn, những đảm bảo này gợi ý
+rằng đảm bảo tổng quát hóa
+của mạng nơ-ron sâu <em>a priori</em>
+đòi hỏi một số lượng mẫu vô lý
+(có thể hàng nghìn tỷ hoặc hơn),
+ngay cả khi chúng ta thấy rằng, với các tác vụ chúng ta quan tâm,
+mạng nơ-ron sâu thường tổng quát hóa
+rất tốt với ít mẫu hơn nhiều (hàng nghìn).
+Do đó, người thực hành deep learning thường từ bỏ
+các đảm bảo <em>a priori</em> hoàn toàn,
+thay vào đó sử dụng các phương pháp
+đã tổng quát hóa tốt
+trên các bài toán tương tự trong quá khứ,
+và chứng nhận tổng quát hóa <em>post hoc</em>
+thông qua đánh giá thực nghiệm.
+Khi chúng ta đến <a href="#chap_perceptrons">chap_perceptrons</a>,
+chúng ta sẽ xem xét lại tổng quát hóa
+và cung cấp giới thiệu nhẹ nhàng
+về tài liệu khoa học rộng lớn
+đã nảy sinh trong các nỗ lực
+giải thích tại sao mạng nơ-ron sâu tổng quát hóa trong thực tế.</p>
+<h2 id="tap-kiem-tra">Tập Kiểm tra<a class="headerlink" href="#tap-kiem-tra" title="Permanent link">&para;</a></h2>
+<p>Vì chúng ta đã bắt đầu dựa vào tập kiểm tra
+như phương pháp tiêu chuẩn vàng
+để đánh giá lỗi tổng quát hóa,
+hãy bắt đầu bằng cách thảo luận
+về tính chất của các ước tính lỗi như vậy.
+Hãy tập trung vào một bộ phân loại cố định <span class="arithmatex">\(f\)</span>,
+không cần lo lắng về cách nó được thu được.
+Hơn nữa giả sử rằng chúng ta sở hữu
+một <em>tập dữ liệu mới</em> gồm các mẫu <span class="arithmatex">\(\mathcal{D} = {(\mathbf{x}^{(i)},y^{(i)})}_{i=1}^n\)</span>
+không được dùng để huấn luyện bộ phân loại <span class="arithmatex">\(f\)</span>.
+<em>Lỗi thực nghiệm</em> của bộ phân loại <span class="arithmatex">\(f\)</span> trên <span class="arithmatex">\(\mathcal{D}\)</span>
+đơn giản là tỷ lệ các mẫu
+mà dự đoán <span class="arithmatex">\(f(\mathbf{x}^{(i)})\)</span>
+không đồng ý với nhãn thực <span class="arithmatex">\(y^{(i)}\)</span>,
+và được cho bởi biểu thức sau:</p>
+<div class="arithmatex">\[\epsilon_\mathcal{D}(f) = \frac{1}{n}\sum_{i=1}^n \mathbf{1}(f(\mathbf{x}^{(i)}) \neq y^{(i)}).\]</div>
+<p>Ngược lại, <em>lỗi tổng thể</em>
+là tỷ lệ <em>kỳ vọng</em>
+của các mẫu trong tổng thể cơ bản
+(một phân phối <span class="arithmatex">\(P(X,Y)\)</span> được mô tả
+bởi hàm mật độ xác suất <span class="arithmatex">\(p(\mathbf{x},y)\)</span>)
+mà bộ phân loại của chúng ta không đồng ý
+với nhãn thực:</p>
+<div class="arithmatex">\[\epsilon(f) =  E_{(\mathbf{x}, y) \sim P} \mathbf{1}(f(\mathbf{x}) \neq y) =
+\int\int \mathbf{1}(f(\mathbf{x}) \neq y) p(\mathbf{x}, y) \;d\mathbf{x} dy.\]</div>
+<p>Trong khi <span class="arithmatex">\(\epsilon(f)\)</span> là đại lượng chúng ta thực sự quan tâm,
+chúng ta không thể quan sát nó trực tiếp,
+giống như chúng ta không thể trực tiếp
+quan sát chiều cao trung bình trong một dân số lớn
+mà không đo từng người.
+Chúng ta chỉ có thể ước tính đại lượng này dựa trên mẫu.
+Vì tập kiểm tra <span class="arithmatex">\(\mathcal{D}\)</span> của chúng ta
+có tính đại diện thống kê
+của tổng thể cơ bản,
+chúng ta có thể xem <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span> như một bộ ước lượng thống kê
+của lỗi tổng thể <span class="arithmatex">\(\epsilon(f)\)</span>.
+Hơn nữa, vì đại lượng quan tâm <span class="arithmatex">\(\epsilon(f)\)</span> của chúng ta
+là kỳ vọng (của biến ngẫu nhiên <span class="arithmatex">\(\mathbf{1}(f(X) \neq Y)\)</span>)
+và bộ ước lượng tương ứng <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span>
+là trung bình mẫu,
+ước tính lỗi tổng thể
+đơn giản là bài toán ước lượng trung bình cổ điển,
+bạn có thể nhớ từ <a href="#sec_prob">sec_prob</a>.</p>
+<p>Một kết quả cổ điển quan trọng từ lý thuyết xác suất
+gọi là <em>định lý giới hạn trung tâm</em> đảm bảo
+rằng bất cứ khi nào chúng ta sở hữu <span class="arithmatex">\(n\)</span> mẫu ngẫu nhiên <span class="arithmatex">\(a_1, ..., a_n\)</span>
+được rút từ bất kỳ phân phối nào với trung bình <span class="arithmatex">\(\mu\)</span> và độ lệch chuẩn <span class="arithmatex">\(\sigma\)</span>,
+thì khi số mẫu <span class="arithmatex">\(n\)</span> tiến đến vô cùng,
+trung bình mẫu <span class="arithmatex">\(\hat{\mu}\)</span> xấp xỉ
+có xu hướng về phân phối chuẩn tập trung
+tại trung bình thực và với độ lệch chuẩn <span class="arithmatex">\(\sigma/\sqrt{n}\)</span>.
+Điều này đã cho chúng ta biết điều quan trọng:
+khi số mẫu tăng lớn,
+lỗi kiểm tra <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span> của chúng ta
+nên tiến gần đến lỗi thực <span class="arithmatex">\(\epsilon(f)\)</span>
+với tốc độ <span class="arithmatex">\(\mathcal{O}(1/\sqrt{n})\)</span>.
+Do đó, để ước tính lỗi kiểm tra của chúng ta chính xác gấp đôi,
+chúng ta phải thu thập tập kiểm tra lớn gấp bốn lần.
+Để giảm lỗi kiểm tra của chúng ta xuống một trăm lần,
+chúng ta phải thu thập tập kiểm tra lớn gấp mười nghìn lần.
+Nhìn chung, tốc độ <span class="arithmatex">\(\mathcal{O}(1/\sqrt{n})\)</span> như vậy
+thường là điều tốt nhất chúng ta có thể hy vọng trong thống kê.</p>
+<p>Bây giờ chúng ta đã biết về tốc độ tiệm cận
+mà lỗi kiểm tra <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span> hội tụ về lỗi thực <span class="arithmatex">\(\epsilon(f)\)</span>,
+chúng ta có thể phóng to vào một số chi tiết quan trọng.
+Nhớ lại rằng biến ngẫu nhiên quan tâm
+<span class="arithmatex">\(\mathbf{1}(f(X) \neq Y)\)</span>
+chỉ có thể lấy giá trị <span class="arithmatex">\(0\)</span> và <span class="arithmatex">\(1\)</span>
+và do đó là biến ngẫu nhiên Bernoulli,
+được đặc trưng bởi một tham số
+chỉ ra xác suất mà nó lấy giá trị <span class="arithmatex">\(1\)</span>.
+Ở đây, <span class="arithmatex">\(1\)</span> có nghĩa là bộ phân loại của chúng ta mắc lỗi,
+do đó tham số của biến ngẫu nhiên
+thực ra là tỷ lệ lỗi thực <span class="arithmatex">\(\epsilon(f)\)</span>.
+Phương sai <span class="arithmatex">\(\sigma^2\)</span> của Bernoulli
+phụ thuộc vào tham số của nó (ở đây là <span class="arithmatex">\(\epsilon(f)\)</span>)
+theo biểu thức <span class="arithmatex">\(\epsilon(f)(1-\epsilon(f))\)</span>.
+Trong khi <span class="arithmatex">\(\epsilon(f)\)</span> ban đầu chưa biết,
+chúng ta biết rằng nó không thể lớn hơn <span class="arithmatex">\(1\)</span>.
+Nghiên cứu nhỏ về hàm này
+tiết lộ rằng phương sai của chúng ta là cao nhất
+khi tỷ lệ lỗi thực gần <span class="arithmatex">\(0.5\)</span>
+và có thể thấp hơn nhiều khi nó gần
+<span class="arithmatex">\(0\)</span> hoặc gần <span class="arithmatex">\(1\)</span>.
+Điều này cho chúng ta biết rằng độ lệch chuẩn tiệm cận
+của ước tính <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span> về lỗi <span class="arithmatex">\(\epsilon(f)\)</span>
+(trên việc chọn <span class="arithmatex">\(n\)</span> mẫu kiểm tra)
+không thể lớn hơn <span class="arithmatex">\(\sqrt{0.25/n}\)</span>.</p>
+<p>Nếu chúng ta bỏ qua thực tế rằng tốc độ này mô tả
+hành vi khi kích thước tập kiểm tra tiến đến vô cùng
+thay vì khi chúng ta có mẫu hữu hạn,
+điều này cho chúng ta biết rằng nếu muốn lỗi kiểm tra <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span>
+xấp xỉ lỗi tổng thể <span class="arithmatex">\(\epsilon(f)\)</span>
+sao cho một độ lệch chuẩn tương ứng
+với khoảng <span class="arithmatex">\(\pm 0.01\)</span>,
+thì chúng ta nên thu thập khoảng 2500 mẫu.
+Nếu muốn hai độ lệch chuẩn
+trong phạm vi đó và do đó tự tin 95%
+rằng <span class="arithmatex">\(\epsilon_\mathcal{D}(f) \in \epsilon(f) \pm 0.01\)</span>,
+thì chúng ta sẽ cần 10,000 mẫu!</p>
+<p>Hóa ra đây chính là kích thước của tập kiểm tra
+cho nhiều benchmark phổ biến trong machine learning.
+Bạn có thể ngạc nhiên khi biết rằng hàng nghìn
+bài báo deep learning ứng dụng được xuất bản mỗi năm
+làm to chuyện về cải thiện tỷ lệ lỗi <span class="arithmatex">\(0.01\)</span> hoặc ít hơn.
+Tất nhiên, khi tỷ lệ lỗi gần <span class="arithmatex">\(0\)</span> hơn nhiều,
+thì cải thiện <span class="arithmatex">\(0.01\)</span> thực sự có thể là điều quan trọng.</p>
+<p>Một đặc điểm khó chịu của phân tích đến nay
+là nó thực sự chỉ cho chúng ta biết về tiệm cận,
+tức là cách mối quan hệ giữa <span class="arithmatex">\(\epsilon_\mathcal{D}\)</span> và <span class="arithmatex">\(\epsilon\)</span>
+phát triển khi kích thước mẫu tiến đến vô cùng.
+May mắn thay, vì biến ngẫu nhiên của chúng ta bị chặn,
+chúng ta có thể thu được các giới hạn mẫu hữu hạn hợp lệ
+bằng cách áp dụng bất đẳng thức do Hoeffding (1963) đề xuất:</p>
+<div class="arithmatex">\[P(\epsilon_\mathcal{D}(f) - \epsilon(f) \geq t) &lt; \exp\left( - 2n t^2 \right).\]</div>
+<p>Giải cho kích thước tập dữ liệu nhỏ nhất
+cho phép chúng ta kết luận
+với độ tự tin 95% rằng khoảng cách <span class="arithmatex">\(t\)</span>
+giữa ước tính <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span>
+và tỷ lệ lỗi thực <span class="arithmatex">\(\epsilon(f)\)</span>
+không vượt quá <span class="arithmatex">\(0.01\)</span>,
+bạn sẽ thấy rằng cần khoảng 15,000 mẫu
+so với 10,000 mẫu do phân tích tiệm cận ở trên đề xuất.
+Nếu bạn đi sâu hơn vào thống kê
+bạn sẽ thấy xu hướng này thường đúng.
+Các đảm bảo giữ ngay cả trong mẫu hữu hạn
+thường hơi bảo thủ hơn.
+Lưu ý rằng trong bức tranh tổng thể,
+các con số này không quá khác nhau,
+phản ánh tính hữu ích chung
+của phân tích tiệm cận trong việc cung cấp
+các con số ước lượng ngay cả khi chúng không phải là
+đảm bảo chúng ta có thể đưa ra tòa.</p>
+<h2 id="tai-su-dung-tap-kiem-tra">Tái sử dụng Tập Kiểm tra<a class="headerlink" href="#tai-su-dung-tap-kiem-tra" title="Permanent link">&para;</a></h2>
+<p>Theo một nghĩa nào đó, bây giờ bạn đã được chuẩn bị để thành công
+trong việc tiến hành nghiên cứu machine learning thực nghiệm.
+Gần như tất cả các mô hình thực tế được phát triển
+và kiểm định dựa trên hiệu suất tập kiểm tra
+và bây giờ bạn là chuyên gia về tập kiểm tra.
+Với bất kỳ bộ phân loại cố định <span class="arithmatex">\(f\)</span> nào,
+bạn biết cách đánh giá lỗi kiểm tra <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span> của nó,
+và biết chính xác điều gì có thể (và không thể)
+được nói về lỗi tổng thể <span class="arithmatex">\(\epsilon(f)\)</span> của nó.</p>
+<p>Vậy giả sử bạn lấy kiến thức này
+và chuẩn bị huấn luyện mô hình đầu tiên <span class="arithmatex">\(f_1\)</span>.
+Biết chính xác bạn cần tự tin bao nhiêu
+về hiệu suất tỷ lệ lỗi của bộ phân loại
+bạn áp dụng phân tích ở trên để xác định
+số lượng mẫu thích hợp
+cần dành riêng cho tập kiểm tra.
+Hơn nữa, giả sử bạn đã học bài học từ
+<a href="#sec_generalization_basics">sec_generalization_basics</a> và
+đảm bảo giữ gìn sự thiêng liêng của tập kiểm tra
+bằng cách tiến hành tất cả phân tích sơ bộ,
+điều chỉnh siêu tham số, và thậm chí lựa chọn
+giữa nhiều kiến trúc mô hình cạnh tranh
+trên tập kiểm định.
+Cuối cùng bạn đánh giá mô hình <span class="arithmatex">\(f_1\)</span> của mình
+trên tập kiểm tra và báo cáo ước tính không thiên lệch
+của lỗi tổng thể
+với khoảng tin cậy liên quan.</p>
+<p>Đến đây mọi thứ có vẻ đang diễn ra tốt.
+Tuy nhiên, đêm đó bạn thức dậy lúc 3 giờ sáng
+với một ý tưởng xuất sắc cho phương pháp mô hình hóa mới.
+Ngày hôm sau, bạn code mô hình mới,
+điều chỉnh siêu tham số trên tập kiểm định
+và không chỉ bạn làm cho mô hình mới <span class="arithmatex">\(f_2\)</span> hoạt động
+mà tỷ lệ lỗi của nó có vẻ thấp hơn nhiều so với <span class="arithmatex">\(f_1\)</span>.
+Tuy nhiên, niềm vui khám phá đột nhiên phai đi
+khi bạn chuẩn bị cho đánh giá cuối cùng.
+Bạn không có tập kiểm tra!</p>
+<p>Mặc dù tập kiểm tra gốc <span class="arithmatex">\(\mathcal{D}\)</span>
+vẫn còn trên máy chủ của bạn,
+bạn bây giờ đối mặt với hai vấn đề đáng kể.
+Đầu tiên, khi bạn thu thập tập kiểm tra,
+bạn đã xác định mức độ chính xác cần thiết
+dưới giả định rằng bạn đang đánh giá
+một bộ phân loại duy nhất <span class="arithmatex">\(f\)</span>.
+Tuy nhiên, nếu bạn bước vào lĩnh vực
+đánh giá nhiều bộ phân loại <span class="arithmatex">\(f_1, ..., f_k\)</span>
+trên cùng một tập kiểm tra,
+bạn phải xem xét vấn đề khám phá sai.
+Trước đây, bạn có thể đã 95% chắc chắn
+rằng <span class="arithmatex">\(\epsilon_\mathcal{D}(f) \in \epsilon(f) \pm 0.01\)</span>
+với một bộ phân loại duy nhất <span class="arithmatex">\(f\)</span>
+và do đó xác suất của kết quả gây hiểu nhầm
+chỉ là 5%.
+Với <span class="arithmatex">\(k\)</span> bộ phân loại trong cuộc,
+có thể khó đảm bảo
+rằng không có một bộ phân loại nào trong số đó
+có hiệu suất tập kiểm tra gây hiểu nhầm.
+Với 20 bộ phân loại được xem xét,
+bạn có thể không có khả năng nào
+để loại trừ khả năng
+rằng ít nhất một trong số chúng
+nhận được điểm số gây hiểu nhầm.
+Vấn đề này liên quan đến kiểm định giả thuyết bội,
+mặc dù có tài liệu rộng lớn trong thống kê,
+vẫn là vấn đề dai dẳng ảnh hưởng đến nghiên cứu khoa học.</p>
+<p>Nếu điều đó chưa đủ lo lắng bạn,
+có một lý do đặc biệt để không tin vào
+kết quả bạn nhận được trong các đánh giá tiếp theo.
+Nhớ lại rằng phân tích của chúng ta về hiệu suất tập kiểm tra
+dựa trên giả định rằng bộ phân loại
+được chọn khi không có tiếp xúc với tập kiểm tra
+và do đó chúng ta có thể xem tập kiểm tra
+như được rút ngẫu nhiên từ tổng thể cơ bản.
+Ở đây, không chỉ bạn đang kiểm tra nhiều hàm,
+hàm tiếp theo <span class="arithmatex">\(f_2\)</span> được chọn
+sau khi bạn quan sát hiệu suất tập kiểm tra của <span class="arithmatex">\(f_1\)</span>.
+Một khi thông tin từ tập kiểm tra đã rò rỉ cho người mô hình hóa,
+nó không bao giờ có thể là tập kiểm tra thực sự nữa theo nghĩa nghiêm ngặt.
+Vấn đề này được gọi là <em>quá khớp thích nghi</em> và gần đây đã nổi lên
+như một chủ đề quan tâm mãnh liệt của các nhà lý thuyết học và thống kê
+[dwork2015preserving].
+May mắn thay, trong khi có thể
+rò rỉ tất cả thông tin ra khỏi tập giữ lại,
+và các tình huống xấu nhất theo lý thuyết rất u ám,
+các phân tích này có thể quá bảo thủ.
+Trong thực tế, hãy cẩn thận tạo ra các tập kiểm tra thực,
+tham khảo chúng càng ít càng tốt,
+tính đến kiểm định giả thuyết bội
+khi báo cáo khoảng tin cậy,
+và tăng cảnh giác mạnh mẽ hơn
+khi cổ phần cao và kích thước tập dữ liệu nhỏ.
+Khi chạy một loạt thách thức benchmark,
+thường là thực hành tốt để duy trì
+một số tập kiểm tra để sau mỗi vòng,
+tập kiểm tra cũ có thể được hạ xuống làm tập kiểm định.</p>
+<h2 id="ly-thuyet-hoc-thong-ke">Lý thuyết Học Thống kê<a class="headerlink" href="#ly-thuyet-hoc-thong-ke" title="Permanent link">&para;</a></h2>
+<p>Nói đơn giản, <em>tập kiểm tra là tất cả những gì chúng ta thực sự có</em>,
+và tuy nhiên sự thật này có vẻ kỳ lạ không thỏa mãn.
+Đầu tiên, chúng ta hiếm khi sở hữu <em>tập kiểm tra thực sự</em>---trừ khi
+chúng ta là người tạo ra bộ dữ liệu,
+ai đó khác có thể đã đánh giá
+bộ phân loại của riêng họ trên "tập kiểm tra" danh nghĩa của chúng ta.
+Và ngay cả khi chúng ta có quyền đầu tiên,
+chúng ta sớm thấy mình thất vọng, muốn có thể
+đánh giá các lần mô hình hóa tiếp theo
+mà không có cảm giác khó chịu
+rằng chúng ta không thể tin vào các con số của mình.
+Hơn nữa, ngay cả tập kiểm tra thực sự cũng chỉ có thể cho chúng ta biết <em>post hoc</em>
+liệu bộ phân loại có thực sự tổng quát hóa cho tổng thể hay không,
+không phải liệu chúng ta có bất kỳ lý do để kỳ vọng <em>a priori</em>
+rằng nó nên tổng quát hóa.</p>
+<p>Với những lo ngại này trong tâm trí,
+bạn có thể bây giờ đủ chuẩn bị
+để thấy sức hút của <em>lý thuyết học thống kê</em>,
+lĩnh vực con toán học của machine learning
+mà những người thực hành nhằm làm rõ các
+nguyên lý cơ bản giải thích
+tại sao/khi nào các mô hình được huấn luyện trên dữ liệu thực nghiệm
+có thể/sẽ tổng quát hóa cho dữ liệu chưa thấy.
+Một trong những mục tiêu chính
+của các nhà nghiên cứu học thống kê
+là giới hạn khoảng cách tổng quát hóa,
+liên quan các tính chất của lớp mô hình
+với số lượng mẫu trong bộ dữ liệu.</p>
+<p>Các nhà lý thuyết học nhằm giới hạn sự khác biệt
+giữa <em>lỗi thực nghiệm</em> <span class="arithmatex">\(\epsilon_\mathcal{S}(f_\mathcal{S})\)</span>
+của bộ phân loại đã học <span class="arithmatex">\(f_\mathcal{S}\)</span>,
+được huấn luyện và đánh giá
+trên tập huấn luyện <span class="arithmatex">\(\mathcal{S}\)</span>,
+và lỗi thực <span class="arithmatex">\(\epsilon(f_\mathcal{S})\)</span>
+của cùng bộ phân loại đó trên tổng thể cơ bản.
+Điều này có thể trông giống với bài toán đánh giá
+mà chúng ta vừa giải quyết nhưng có sự khác biệt lớn.
+Trước đó, bộ phân loại <span class="arithmatex">\(f\)</span> được cố định
+và chúng ta chỉ cần một bộ dữ liệu
+cho mục đích đánh giá.
+Và thực sự, bất kỳ bộ phân loại cố định nào đều tổng quát hóa:
+lỗi của nó trên một bộ dữ liệu (chưa thấy trước đây)
+là ước tính không thiên lệch của lỗi tổng thể.
+Nhưng chúng ta có thể nói gì khi bộ phân loại
+được huấn luyện và đánh giá trên cùng một bộ dữ liệu?
+Chúng ta có thể tự tin rằng lỗi huấn luyện
+sẽ gần với lỗi kiểm tra không?</p>
+<p>Giả sử bộ phân loại đã học <span class="arithmatex">\(f_\mathcal{S}\)</span> của chúng ta phải được chọn
+từ một tập hàm được chỉ định trước <span class="arithmatex">\(\mathcal{F}\)</span>.
+Nhớ lại từ thảo luận của chúng ta về tập kiểm tra
+rằng trong khi dễ ước tính
+lỗi của một bộ phân loại duy nhất,
+mọi thứ trở nên phức tạp khi chúng ta bắt đầu
+xem xét các tập hợp bộ phân loại.
+Ngay cả khi lỗi thực nghiệm
+của bất kỳ (cố định) bộ phân loại nào
+sẽ gần với lỗi thực của nó
+với xác suất cao,
+một khi chúng ta xem xét một tập hợp bộ phân loại,
+chúng ta cần lo lắng về khả năng
+rằng <em>chỉ một</em> trong số chúng
+sẽ nhận được lỗi được ước tính tệ.
+Mối lo ngại là chúng ta có thể chọn bộ phân loại như vậy
+và do đó đánh giá thấp nghiêm trọng
+lỗi tổng thể.
+Hơn nữa, ngay cả với các mô hình tuyến tính,
+vì tham số của chúng có giá trị liên tục,
+chúng ta thường chọn từ
+một lớp hàm vô hạn (<span class="arithmatex">\(|\mathcal{F}| = \infty\)</span>).</p>
+<p>Một giải pháp tham vọng cho vấn đề
+là phát triển các công cụ phân tích
+để chứng minh hội tụ đồng đều, tức là
+với xác suất cao,
+tỷ lệ lỗi thực nghiệm của mọi bộ phân loại trong lớp <span class="arithmatex">\(f\in\mathcal{F}\)</span>
+sẽ <em>đồng thời</em> hội tụ về tỷ lệ lỗi thực của nó.
+Nói cách khác, chúng ta tìm kiếm một nguyên lý lý thuyết
+cho phép chúng ta nói rằng
+với xác suất ít nhất <span class="arithmatex">\(1-\delta\)</span>
+(với một <span class="arithmatex">\(\delta\)</span> nhỏ)
+không có tỷ lệ lỗi <span class="arithmatex">\(\epsilon(f)\)</span> của bộ phân loại nào
+(trong số tất cả bộ phân loại trong lớp <span class="arithmatex">\(\mathcal{F}\)</span>)
+sẽ bị ước tính sai hơn
+một lượng nhỏ <span class="arithmatex">\(\alpha\)</span>.
+Rõ ràng, chúng ta không thể đưa ra những tuyên bố như vậy
+cho tất cả các lớp mô hình <span class="arithmatex">\(\mathcal{F}\)</span>.
+Nhớ lại lớp các máy ghi nhớ
+luôn đạt lỗi thực nghiệm <span class="arithmatex">\(0\)</span>
+nhưng không bao giờ vượt qua đoán ngẫu nhiên
+trên tổng thể cơ bản.</p>
+<p>Theo một nghĩa nào đó, lớp các máy ghi nhớ quá linh hoạt.
+Không có kết quả hội tụ đồng đều nào như vậy có thể xảy ra.
+Mặt khác, một bộ phân loại cố định là vô dụng---nó
+tổng quát hóa hoàn hảo, nhưng không khớp
+dữ liệu huấn luyện lẫn dữ liệu kiểm tra.
+Câu hỏi trung tâm của học
+do đó theo truyền thống được đóng khung như sự đánh đổi
+giữa các lớp mô hình linh hoạt hơn (phương sai cao hơn)
+khớp dữ liệu huấn luyện tốt hơn nhưng có nguy cơ quá khớp,
+so với các lớp mô hình cứng hơn (hệ số chặn cao hơn)
+tổng quát hóa tốt nhưng có nguy cơ dưới khớp.
+Một câu hỏi trung tâm trong lý thuyết học
+là phát triển phân tích toán học thích hợp để định lượng
+vị trí của mô hình dọc theo phổ này,
+và cung cấp các đảm bảo liên quan.</p>
+<p>Trong một loạt các bài báo seminal,
+Vapnik và Chervonenkis đã mở rộng
+lý thuyết về hội tụ
+của tần số tương đối
+sang các lớp hàm tổng quát hơn
+[VapChe64, VapChe68, VapChe71, VapChe74b, VapChe81, VapChe91].
+Một trong những đóng góp chính của dòng công trình này
+là chiều Vapnik--Chervonenkis (VC),
+đo (một khái niệm về)
+độ phức tạp (linh hoạt) của một lớp mô hình.
+Hơn nữa, một trong những kết quả chính của họ giới hạn
+sự khác biệt giữa lỗi thực nghiệm
+và lỗi tổng thể như một hàm
+của chiều VC và số lượng mẫu:</p>
+<div class="arithmatex">\[P\left(R[p, f] - R_\textrm{emp}[\mathbf{X}, \mathbf{Y}, f] &lt; \alpha\right) \geq 1-\delta
+\ \textrm{ for }\ \alpha \geq c \sqrt{(\textrm{VC} - \log \delta)/n}.\]</div>
+<p>Ở đây <span class="arithmatex">\(\delta &gt; 0\)</span> là xác suất mà giới hạn bị vi phạm,
+<span class="arithmatex">\(\alpha\)</span> là giới hạn trên của khoảng cách tổng quát hóa,
+và <span class="arithmatex">\(n\)</span> là kích thước tập dữ liệu.
+Cuối cùng, <span class="arithmatex">\(c &gt; 0\)</span> là một hằng số phụ thuộc
+chỉ vào quy mô của mất mát có thể phát sinh.
+Một cách sử dụng giới hạn là điền vào các giá trị mong muốn
+của <span class="arithmatex">\(\delta\)</span> và <span class="arithmatex">\(\alpha\)</span>
+để xác định số lượng mẫu cần thu thập.
+Chiều VC định lượng số lớn nhất
+của điểm dữ liệu mà chúng ta có thể gán
+bất kỳ nhãn (nhị phân) tùy ý nào
+và cho mỗi điểm tìm một số mô hình <span class="arithmatex">\(f\)</span> trong lớp
+đồng ý với nhãn đó.
+Ví dụ, các mô hình tuyến tính trên đầu vào <span class="arithmatex">\(d\)</span> chiều
+có chiều VC <span class="arithmatex">\(d+1\)</span>.
+Dễ dàng thấy rằng một đường thẳng có thể gán
+bất kỳ nhãn nào cho ba điểm trong hai chiều,
+nhưng không thể cho bốn điểm.
+Thật không may, lý thuyết có xu hướng
+quá bi quan với các mô hình phức tạp hơn
+và thu được đảm bảo này thường đòi hỏi
+nhiều mẫu hơn nhiều so với thực tế cần thiết
+để đạt tỷ lệ lỗi mong muốn.
+Lưu ý cũng rằng khi cố định lớp mô hình và <span class="arithmatex">\(\delta\)</span>,
+tỷ lệ lỗi của chúng ta một lần nữa giảm
+với tốc độ <span class="arithmatex">\(\mathcal{O}(1/\sqrt{n})\)</span> thông thường.
+Có vẻ không thể chúng ta làm tốt hơn về mặt <span class="arithmatex">\(n\)</span>.
+Tuy nhiên, khi chúng ta thay đổi lớp mô hình,
+chiều VC có thể trình bày
+một bức tranh bi quan
+của khoảng cách tổng quát hóa.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Cách đơn giản nhất để đánh giá mô hình
+là tham khảo tập kiểm tra bao gồm dữ liệu chưa từng thấy.
+Đánh giá tập kiểm tra cung cấp ước tính không thiên lệch của lỗi thực
+và hội tụ với tốc độ <span class="arithmatex">\(\mathcal{O}(1/\sqrt{n})\)</span> mong muốn khi tập kiểm tra tăng.
+Chúng ta có thể cung cấp khoảng tin cậy gần đúng
+dựa trên phân phối tiệm cận chính xác
+hoặc khoảng tin cậy mẫu hữu hạn hợp lệ
+dựa trên (bảo thủ hơn) đảm bảo mẫu hữu hạn.
+Thực sự đánh giá tập kiểm tra là nền tảng
+của nghiên cứu machine learning hiện đại.
+Tuy nhiên, tập kiểm tra hiếm khi là tập kiểm tra thực sự
+(được nhiều nhà nghiên cứu sử dụng lại nhiều lần).
+Một khi cùng một tập kiểm tra được dùng
+để đánh giá nhiều mô hình,
+việc kiểm soát khám phá sai có thể khó khăn.
+Điều này có thể gây ra các vấn đề lớn trong lý thuyết.
+Trong thực tế, tầm quan trọng của vấn đề
+phụ thuộc vào kích thước của tập giữ lại được đề cập
+và liệu chúng chỉ đang được dùng để chọn siêu tham số
+hay liệu chúng đang rò rỉ thông tin trực tiếp hơn.
+Tuy nhiên, đây là thực hành tốt để thu thập tập kiểm tra thực (hoặc nhiều tập)
+và bảo thủ nhất có thể về tần suất chúng được sử dụng.</p>
+<p>Hy vọng cung cấp giải pháp thỏa mãn hơn,
+các nhà lý thuyết học thống kê đã phát triển các phương pháp
+để đảm bảo hội tụ đồng đều trên một lớp mô hình.
+Nếu thực sự lỗi thực nghiệm của mọi mô hình đồng thời
+hội tụ về lỗi thực của nó,
+thì chúng ta được tự do chọn mô hình hoạt động
+tốt nhất, tối thiểu hóa lỗi huấn luyện,
+biết rằng nó cũng sẽ hoạt động tương tự tốt
+trên dữ liệu giữ lại.
+Quan trọng là, bất kỳ kết quả nào như vậy phải phụ thuộc
+vào một số tính chất của lớp mô hình.
+Vladimir Vapnik và Alexey Chernovenkis
+đã giới thiệu chiều VC,
+trình bày các kết quả hội tụ đồng đều
+giữ cho tất cả các mô hình trong lớp VC.
+Lỗi huấn luyện của tất cả các mô hình trong lớp
+được đảm bảo (đồng thời)
+gần với lỗi thực của chúng,
+và được đảm bảo hội tụ gần hơn nữa
+với tốc độ <span class="arithmatex">\(\mathcal{O}(1/\sqrt{n})\)</span>.
+Sau khám phá cách mạng về chiều VC,
+nhiều thước đo độ phức tạp thay thế đã được đề xuất,
+mỗi cái tạo điều kiện cho đảm bảo tổng quát hóa tương tự.
+Xem boucheron2005theory để thảo luận chi tiết
+về một số cách đo độ phức tạp hàm tiên tiến.
+Thật không may, trong khi các thước đo độ phức tạp này
+đã trở thành công cụ hữu ích rộng rãi trong lý thuyết thống kê,
+chúng hóa ra không có sức mạnh
+(như áp dụng trực tiếp)
+để giải thích tại sao mạng nơ-ron sâu tổng quát hóa.
+Mạng nơ-ron sâu thường có hàng triệu tham số (hoặc hơn),
+và có thể dễ dàng gán nhãn ngẫu nhiên cho các tập hợp điểm lớn.
+Tuy nhiên, chúng tổng quát hóa tốt trên các bài toán thực tế
+và, đáng ngạc nhiên, chúng thường tổng quát hóa tốt hơn,
+khi chúng lớn hơn và sâu hơn,
+mặc dù có chiều VC cao hơn.
+Trong chương tiếp theo, chúng ta sẽ xem xét lại tổng quát hóa
+trong ngữ cảnh deep learning.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Nếu chúng ta muốn ước tính lỗi của mô hình cố định <span class="arithmatex">\(f\)</span>
+   trong phạm vi <span class="arithmatex">\(0.0001\)</span> với xác suất lớn hơn 99.9%,
+   chúng ta cần bao nhiêu mẫu?</li>
+<li>Giả sử rằng người khác sở hữu tập kiểm tra có nhãn
+   <span class="arithmatex">\(\mathcal{D}\)</span> và chỉ cung cấp các đầu vào không có nhãn (đặc trưng).
+   Bây giờ giả sử rằng bạn chỉ có thể truy cập các nhãn tập kiểm tra
+   bằng cách chạy mô hình <span class="arithmatex">\(f\)</span> (không có ràng buộc nào được đặt ra trên lớp mô hình)
+   trên mỗi đầu vào không có nhãn
+   và nhận lỗi tương ứng <span class="arithmatex">\(\epsilon_\mathcal{D}(f)\)</span>.
+   Bạn cần đánh giá bao nhiêu mô hình
+   trước khi rò rỉ toàn bộ tập kiểm tra
+   và do đó có thể xuất hiện có lỗi <span class="arithmatex">\(0\)</span>,
+   bất kể lỗi thực của bạn là gì?</li>
+<li>Chiều VC của lớp đa thức bậc năm là bao nhiêu?</li>
+<li>Chiều VC của hình chữ nhật căn chỉnh theo trục trên dữ liệu hai chiều là bao nhiêu?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/6829">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

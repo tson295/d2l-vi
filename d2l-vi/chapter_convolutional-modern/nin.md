@@ -51,7 +51,6 @@ giữa VGG và NiN, và các khối của chúng.
 Lưu ý cả sự khác biệt trong các khối NiN (tích chập ban đầu được theo sau bởi các tích chập $1 \times 1$, trong khi VGG giữ lại các tích chập $3 \times 3$) và ở cuối nơi chúng ta không còn cần một lớp kết nối đầy đủ khổng lồ.
 
 ![So sánh kiến trúc của VGG và NiN, và các khối của chúng.](../img/nin.svg)
-:width:`600px`
 <a id="fig_nin"></a>
 
 

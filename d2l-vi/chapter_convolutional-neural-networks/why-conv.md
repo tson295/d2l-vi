@@ -88,7 +88,6 @@ khai thác nó để học các biểu diễn hữu ích
 với ít tham số hơn.
 
 ![Bạn có thể tìm thấy Waldo (hình ảnh cảm ơn William Murphy (Infomatique))?](../img/waldo-football.jpg)
-:width:`400px`
 <a id="img_waldo"></a>
 
 Bây giờ chúng ta có thể làm cho những trực giác này cụ thể hơn
@@ -251,7 +250,6 @@ bất cứ nơi nào "độ waldo" cao nhất,
 chúng ta nên tìm một đỉnh trong các biểu diễn lớp ẩn.
 
 ![Phát hiện Waldo (hình ảnh cảm ơn William Murphy (Infomatique)).](../img/waldo-mask.jpg)
-:width:`400px`
 <a id="fig_waldo_mask"></a>
 
 Chỉ có một vấn đề với cách tiếp cận này.

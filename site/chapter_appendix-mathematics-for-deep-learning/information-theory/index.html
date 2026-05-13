@@ -1,0 +1,2985 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_appendix-mathematics-for-deep-learning/information-theory/">
+      
+      
+        <link rel="prev" href="../statistics/">
+      
+      
+        <link rel="next" href="../../chapter_appendix-tools-for-deep-learning/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Lý thuyết thông tin - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ly-thuyet-thong-tin" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lý thuyết thông tin
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Toán học
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../geometry-linear-algebraic-ops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hình học và Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eigendecomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích trị riêng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../single-variable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích một biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multivariable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích nhiều biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integral-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích tích phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../random-variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biến ngẫu nhiên
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../maximum-likelihood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maximum Likelihood
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../naive-bayes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Naive Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thống kê
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lý thuyết thông tin
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lý thuyết thông tin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#thong-tin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thông Tin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tu-thong-tin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tự Thông Tin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Entropy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ong-co-cho-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Động Cơ Cho Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định Nghĩa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dien-giai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diễn Giải
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat-cua-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất Của Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thong-tin-tuong-ho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thông Tin Tương Hỗ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entropy-ong-thoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy Đồng Thời
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entropy-co-ieu-kien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy Có Điều Kiện
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thong-tin-tuong-ho_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat-cua-thong-tin-tuong-ho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất Của Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thong-tin-tuong-ho-theo-iem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin Tương Hỗ Theo Điểm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ung-dung-cua-thong-tin-tuong-ho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ứng Dụng Của Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phan-ky-kullback-leibler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân Kỳ Kullback-Leibler
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phân Kỳ Kullback-Leibler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định Nghĩa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat-cua-phan-ky-kl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất Của Phân Kỳ KL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vi-du" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ví Dụ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Entropy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Entropy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia-hinh-thuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định Nghĩa Hình Thức
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-entropy-la-ham-muc-tieu-cua-phan-loai-a-lop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Entropy Là Hàm Mục Tiêu Của Phân Loại Đa Lớp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#thong-tin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thông Tin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tu-thong-tin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tự Thông Tin
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Entropy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ong-co-cho-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Động Cơ Cho Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định Nghĩa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dien-giai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diễn Giải
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat-cua-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất Của Entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thong-tin-tuong-ho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thông Tin Tương Hỗ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entropy-ong-thoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy Đồng Thời
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entropy-co-ieu-kien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entropy Có Điều Kiện
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thong-tin-tuong-ho_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat-cua-thong-tin-tuong-ho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất Của Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thong-tin-tuong-ho-theo-iem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thông Tin Tương Hỗ Theo Điểm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ung-dung-cua-thong-tin-tuong-ho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ứng Dụng Của Thông Tin Tương Hỗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phan-ky-kullback-leibler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phân Kỳ Kullback-Leibler
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phân Kỳ Kullback-Leibler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định Nghĩa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat-cua-phan-ky-kl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất Của Phân Kỳ KL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vi-du" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ví Dụ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Entropy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cross-Entropy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inh-nghia-hinh-thuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định Nghĩa Hình Thức
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-entropy-la-ham-muc-tieu-cua-phan-loai-a-lop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-Entropy Là Hàm Mục Tiêu Của Phân Loại Đa Lớp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ly-thuyet-thong-tin">Lý Thuyết Thông Tin<a class="headerlink" href="#ly-thuyet-thong-tin" title="Permanent link">&para;</a></h1>
+<p><a id="sec_information_theory"></a></p>
+<p>Vũ trụ tràn ngập thông tin. Thông tin cung cấp một ngôn ngữ chung vượt qua các ranh giới ngành học: từ Sonnet của Shakespeare đến bài báo của các nhà nghiên cứu trên Cornell ArXiv, từ bản in Starry Night của Van Gogh đến Symphony No. 5 của Beethoven, từ ngôn ngữ lập trình đầu tiên Plankalkül đến các thuật toán machine learning hiện đại. Mọi thứ đều phải tuân theo các quy tắc của lý thuyết thông tin, bất kể định dạng. Với lý thuyết thông tin, ta có thể đo và so sánh lượng thông tin có trong các tín hiệu khác nhau. Trong phần này, chúng ta sẽ khảo sát các khái niệm nền tảng của lý thuyết thông tin và các ứng dụng của lý thuyết thông tin trong machine learning.</p>
+<p>Trước khi bắt đầu, hãy phác thảo quan hệ giữa machine learning và lý thuyết thông tin. Machine learning nhằm trích xuất các tín hiệu thú vị từ dữ liệu và đưa ra các dự đoán quan trọng. Mặt khác, lý thuyết thông tin nghiên cứu việc mã hóa, giải mã, truyền và thao tác thông tin. Do đó, lý thuyết thông tin cung cấp ngôn ngữ nền tảng để thảo luận về xử lý thông tin trong các hệ thống machine learning. Ví dụ, nhiều ứng dụng machine learning dùng mất mát cross-entropy như mô tả trong <a href="#sec_softmax">sec_softmax</a>. Mất mát này có thể được suy ra trực tiếp từ các cân nhắc lý thuyết thông tin.</p>
+<h2 id="thong-tin">Thông Tin<a class="headerlink" href="#thong-tin" title="Permanent link">&para;</a></h2>
+<p>Hãy bắt đầu với "linh hồn" của lý thuyết thông tin: thông tin. <em>Thông tin</em> có thể được mã hóa trong bất cứ thứ gì với một chuỗi cụ thể gồm một hoặc nhiều định dạng mã hóa. Giả sử ta giao cho mình nhiệm vụ cố gắng định nghĩa một khái niệm thông tin. Điểm khởi đầu của ta có thể là gì?</p>
+<p>Hãy xét thí nghiệm tưởng tượng sau. Ta có một người bạn với một bộ bài. Người đó sẽ xáo bộ bài, lật một số lá, và nói cho ta các phát biểu về các lá bài. Ta sẽ cố gắng đánh giá nội dung thông tin của từng phát biểu.</p>
+<p>Trước hết, người bạn lật một lá bài và nói: "Tôi thấy một lá bài." Điều này không cung cấp cho ta thông tin nào cả. Ta vốn đã chắc chắn rằng điều này sẽ xảy ra, nên ta hy vọng thông tin bằng không.</p>
+<p>Tiếp theo, người bạn lật một lá bài và nói: "Tôi thấy một lá cơ." Điều này cung cấp cho ta một chút thông tin, nhưng thực tế chỉ có <span class="arithmatex">\(4\)</span> chất bài khác nhau có thể xảy ra, mỗi chất có xác suất như nhau, nên ta không ngạc nhiên trước kết quả này. Ta hy vọng rằng bất kể thước đo thông tin là gì, biến cố này nên có nội dung thông tin thấp.</p>
+<p>Tiếp theo, người bạn lật một lá bài và nói: "Đây là lá <span class="arithmatex">\(3\)</span> bích." Đây là nhiều thông tin hơn. Thật vậy, có <span class="arithmatex">\(52\)</span> kết quả có thể xảy ra với xác suất như nhau, và người bạn cho ta biết đó là kết quả nào. Điều này nên là một lượng thông tin trung bình.</p>
+<p>Hãy đẩy điều này đến cực hạn logic. Giả sử cuối cùng người bạn lật mọi lá trong bộ bài và đọc toàn bộ chuỗi của bộ bài đã xáo. Có <span class="arithmatex">\(52!\)</span> thứ tự khác nhau của bộ bài, một lần nữa đều có xác suất như nhau, nên ta cần rất nhiều thông tin để biết đó là thứ tự nào.</p>
+<p>Bất kỳ khái niệm thông tin nào ta phát triển cũng phải phù hợp với trực giác này. Thật vậy, trong các phần tiếp theo, ta sẽ học cách tính rằng các biến cố này lần lượt có <span class="arithmatex">\(0\textrm{ bits}\)</span>, <span class="arithmatex">\(2\textrm{ bits}\)</span>, <span class="arithmatex">\(~5.7\textrm{ bits}\)</span> và <span class="arithmatex">\(~225.6\textrm{ bits}\)</span> thông tin.</p>
+<p>Nếu đọc qua các thí nghiệm tưởng tượng này, ta thấy một ý tưởng tự nhiên. Là điểm khởi đầu, thay vì quan tâm đến tri thức, ta có thể xây dựng trên ý tưởng rằng thông tin biểu diễn mức độ bất ngờ hoặc khả năng trừu tượng của biến cố. Ví dụ, nếu muốn mô tả một biến cố bất thường, ta cần rất nhiều thông tin. Với một biến cố phổ biến, ta có thể không cần nhiều thông tin.</p>
+<p>Năm 1948, Claude E. Shannon công bố <em>A Mathematical Theory of Communication</em> [Shannon.1948], đặt nền móng cho lý thuyết thông tin. Trong bài viết của mình, Shannon lần đầu giới thiệu khái niệm entropy thông tin. Chúng ta sẽ bắt đầu hành trình tại đây.</p>
+<h3 id="tu-thong-tin">Tự Thông Tin<a class="headerlink" href="#tu-thong-tin" title="Permanent link">&para;</a></h3>
+<p>Vì thông tin hiện thân cho khả năng trừu tượng của một biến cố, làm thế nào để ta ánh xạ khả năng đó thành số bit? Shannon giới thiệu thuật ngữ <em>bit</em> làm đơn vị thông tin, vốn ban đầu do John Tukey tạo ra. Vậy "bit" là gì và vì sao ta dùng nó để đo thông tin? Về lịch sử, một bộ phát cổ chỉ có thể gửi hoặc nhận hai loại mã: <span class="arithmatex">\(0\)</span> và <span class="arithmatex">\(1\)</span>. Thật vậy, mã hóa nhị phân vẫn được sử dụng phổ biến trên mọi máy tính số hiện đại. Theo cách này, mọi thông tin được mã hóa bằng một chuỗi các <span class="arithmatex">\(0\)</span> và <span class="arithmatex">\(1\)</span>. Do đó, một chuỗi chữ số nhị phân độ dài <span class="arithmatex">\(n\)</span> chứa <span class="arithmatex">\(n\)</span> bit thông tin.</p>
+<p>Bây giờ, giả sử với bất kỳ chuỗi mã nào, mỗi <span class="arithmatex">\(0\)</span> hoặc <span class="arithmatex">\(1\)</span> xuất hiện với xác suất <span class="arithmatex">\(\frac{1}{2}\)</span>. Do đó, một biến cố <span class="arithmatex">\(X\)</span> với một chuỗi mã độ dài <span class="arithmatex">\(n\)</span> xảy ra với xác suất <span class="arithmatex">\(\frac{1}{2^n}\)</span>. Đồng thời, như đã nhắc trước đó, chuỗi này chứa <span class="arithmatex">\(n\)</span> bit thông tin. Vậy ta có thể tổng quát hóa thành một hàm toán học chuyển xác suất <span class="arithmatex">\(p\)</span> thành số bit không? Shannon đưa ra câu trả lời bằng cách định nghĩa <em>tự thông tin</em></p>
+<div class="arithmatex">\[I(X) = - \log_2 (p),\]</div>
+<p>là số <em>bit</em> thông tin ta nhận được cho biến cố <span class="arithmatex">\(X\)</span> này. Lưu ý rằng trong phần này ta sẽ luôn dùng logarit cơ số 2. Để đơn giản, phần còn lại của mục này sẽ bỏ chỉ số dưới 2 trong ký hiệu logarit, tức <span class="arithmatex">\(\log(.)\)</span> luôn chỉ <span class="arithmatex">\(\log_2(.)\)</span>. Ví dụ, mã "0010" có tự thông tin</p>
+<div class="arithmatex">\[I(\textrm{"0010"}) = - \log (p(\textrm{"0010"})) = - \log \left( \frac{1}{2^4} \right) = 4 \textrm{ bits}.\]</div>
+<p>Ta có thể tính tự thông tin như minh họa bên dưới. Trước đó, hãy nhập tất cả các gói cần thiết trong phần này.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet</span><span class="w"> </span><span class="kn">import</span> <span class="n">np</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet.metric</span><span class="w"> </span><span class="kn">import</span> <span class="n">NegativeLogLikelihood</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet.ndarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">nansum</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">self_information</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">self_information</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">64</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="kn">import</span> <span class="n">NLLLoss</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">nansum</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="c1"># Define nansum, as pytorch does not offer it inbuilt.</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="o">~</span><span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">self_information</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="k">return</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">self_information</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">64</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">log2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">nansum</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">is_nan</span><span class="p">(</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="n">x</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">self_information</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="k">return</span> <span class="o">-</span><span class="n">log2</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">p</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">self_information</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">64</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="entropy">Entropy<a class="headerlink" href="#entropy" title="Permanent link">&para;</a></h2>
+<p>Vì tự thông tin chỉ đo thông tin của một biến cố rời rạc đơn lẻ, ta cần một thước đo tổng quát hơn cho bất kỳ biến ngẫu nhiên nào có phân phối rời rạc hoặc liên tục.</p>
+<h3 id="ong-co-cho-entropy">Động Cơ Cho Entropy<a class="headerlink" href="#ong-co-cho-entropy" title="Permanent link">&para;</a></h3>
+<p>Hãy cố gắng cụ thể hóa điều ta muốn. Đây sẽ là một phát biểu phi hình thức của những gì được gọi là <em>các tiên đề entropy Shannon</em>. Hóa ra tập hợp các phát biểu theo lẽ thường sau đây buộc ta đi đến một định nghĩa duy nhất của thông tin. Một phiên bản hình thức của các tiên đề này, cùng với một số tiên đề khác, có thể tìm thấy trong Csiszar.2008.</p>
+<ol>
+<li>Thông tin ta thu được khi quan sát một biến ngẫu nhiên không phụ thuộc vào cách ta gọi các phần tử, hoặc sự hiện diện của các phần tử bổ sung có xác suất bằng không.</li>
+<li>Thông tin ta thu được khi quan sát hai biến ngẫu nhiên không nhiều hơn tổng thông tin ta thu được khi quan sát chúng riêng rẽ. Nếu chúng độc lập, thì nó đúng bằng tổng.</li>
+<li>Thông tin thu được khi quan sát các biến cố (gần như) chắc chắn là (gần như) bằng không.</li>
+</ol>
+<p>Dù việc chứng minh sự thật này nằm ngoài phạm vi văn bản của chúng ta, điều quan trọng là biết rằng nó xác định duy nhất dạng mà entropy phải có. Sự mơ hồ duy nhất mà các tiên đề này cho phép là lựa chọn đơn vị nền tảng, thường được chuẩn hóa bằng cách chọn như ta đã thấy trước đó: thông tin do một lần tung đồng xu công bằng cung cấp là một bit.</p>
+<h3 id="inh-nghia">Định Nghĩa<a class="headerlink" href="#inh-nghia" title="Permanent link">&para;</a></h3>
+<p>Với bất kỳ biến ngẫu nhiên <span class="arithmatex">\(X\)</span> nào tuân theo một phân phối xác suất <span class="arithmatex">\(P\)</span> với hàm mật độ xác suất (p.d.f.) hoặc hàm khối xác suất (p.m.f.) <span class="arithmatex">\(p(x)\)</span>, ta đo lượng thông tin kỳ vọng thông qua <em>entropy</em> (hoặc <em>entropy Shannon</em>)</p>
+<div class="arithmatex">\[H(X) = - E_{x \sim P} [\log p(x)].\]</div>
+<p>Cụ thể, nếu <span class="arithmatex">\(X\)</span> rời rạc, $<span class="arithmatex">\(H(X) = - \sum_i p_i \log p_i \textrm{, where } p_i = P(X_i).\)</span>$</p>
+<p>Ngược lại, nếu <span class="arithmatex">\(X\)</span> liên tục, ta cũng gọi entropy là <em>entropy vi phân</em></p>
+<div class="arithmatex">\[H(X) = - \int_x p(x) \log p(x) \; dx.\]</div>
+<p>Ta có thể định nghĩa entropy như bên dưới.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">entropy</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">entropy</span> <span class="o">=</span> <span class="o">-</span> <span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">entropy</span><span class="o">.</span><span class="n">as_nd_ndarray</span><span class="p">())</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">entropy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">entropy</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">entropy</span> <span class="o">=</span> <span class="o">-</span> <span class="n">p</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">entropy</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">entropy</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">entropy</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="k">return</span> <span class="n">nansum</span><span class="p">(</span><span class="o">-</span> <span class="n">p</span> <span class="o">*</span> <span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]))</span>
+</code></pre></div>
+<h3 id="dien-giai">Diễn Giải<a class="headerlink" href="#dien-giai" title="Permanent link">&para;</a></h3>
+<p>Bạn có thể tò mò: trong định nghĩa entropy :eqref:<code>eq_ent_def</code>, vì sao ta dùng kỳ vọng của logarit âm? Dưới đây là một số trực giác.</p>
+<p>Thứ nhất, vì sao ta dùng hàm <em>logarit</em> <span class="arithmatex">\(\log\)</span>? Giả sử <span class="arithmatex">\(p(x) = f_1(x) f_2(x) \ldots, f_n(x)\)</span>, trong đó mỗi hàm thành phần <span class="arithmatex">\(f_i(x)\)</span> độc lập với nhau. Điều này có nghĩa là mỗi <span class="arithmatex">\(f_i(x)\)</span> đóng góp độc lập vào tổng thông tin thu được từ <span class="arithmatex">\(p(x)\)</span>. Như đã thảo luận ở trên, ta muốn công thức entropy có tính cộng trên các biến ngẫu nhiên độc lập. May mắn thay, <span class="arithmatex">\(\log\)</span> có thể tự nhiên biến một tích các phân phối xác suất thành tổng các hạng tử riêng lẻ.</p>
+<p>Tiếp theo, vì sao ta dùng <span class="arithmatex">\(\log\)</span> <em>âm</em>? Về trực giác, các biến cố thường xuyên hơn nên chứa ít thông tin hơn các biến cố ít phổ biến hơn, vì ta thường thu được nhiều thông tin hơn từ một trường hợp bất thường so với một trường hợp thông thường. Tuy nhiên, <span class="arithmatex">\(\log\)</span> tăng đơn điệu theo xác suất, và thật ra âm với mọi giá trị trong <span class="arithmatex">\([0, 1]\)</span>. Ta cần xây dựng một quan hệ giảm đơn điệu giữa xác suất của các biến cố và entropy của chúng, lý tưởng là luôn dương (vì không điều gì ta quan sát nên buộc ta quên đi những gì đã biết). Do đó, ta thêm dấu âm trước hàm <span class="arithmatex">\(\log\)</span>.</p>
+<p>Cuối cùng, hàm <em>kỳ vọng</em> đến từ đâu? Xét một biến ngẫu nhiên <span class="arithmatex">\(X\)</span>. Ta có thể diễn giải tự thông tin (<span class="arithmatex">\(-\log(p)\)</span>) là lượng <em>bất ngờ</em> ta có khi thấy một kết quả cụ thể. Thật vậy, khi xác suất tiến đến không, sự bất ngờ trở thành vô hạn. Tương tự, ta có thể diễn giải entropy là lượng bất ngờ trung bình khi quan sát <span class="arithmatex">\(X\)</span>. Ví dụ, hãy tưởng tượng một hệ thống máy đánh bạc phát ra các ký hiệu độc lập thống kê <span class="arithmatex">\({s_1, \ldots, s_k}\)</span> với các xác suất tương ứng <span class="arithmatex">\({p_1, \ldots, p_k}\)</span>. Khi đó entropy của hệ thống này bằng tự thông tin trung bình khi quan sát từng đầu ra, tức là</p>
+<div class="arithmatex">\[H(S) = \sum_i {p_i \cdot I(s_i)} = - \sum_i {p_i \cdot \log p_i}.\]</div>
+<h3 id="tinh-chat-cua-entropy">Tính Chất Của Entropy<a class="headerlink" href="#tinh-chat-cua-entropy" title="Permanent link">&para;</a></h3>
+<p>Từ các ví dụ và diễn giải trên, ta có thể suy ra các tính chất sau của entropy :eqref:<code>eq_ent_def</code>. Ở đây, ta gọi <span class="arithmatex">\(X\)</span> là một biến cố và <span class="arithmatex">\(P\)</span> là phân phối xác suất của <span class="arithmatex">\(X\)</span>.</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(H(X) \geq 0\)</span> với mọi <span class="arithmatex">\(X\)</span> rời rạc (entropy có thể âm với <span class="arithmatex">\(X\)</span> liên tục).</p>
+</li>
+<li>
+<p>Nếu <span class="arithmatex">\(X \sim P\)</span> với p.d.f. hoặc p.m.f. <span class="arithmatex">\(p(x)\)</span>, và ta cố gắng ước lượng <span class="arithmatex">\(P\)</span> bằng một phân phối xác suất mới <span class="arithmatex">\(Q\)</span> với p.d.f. hoặc p.m.f. <span class="arithmatex">\(q(x)\)</span>, thì $<span class="arithmatex">\(H(X) = - E_{x \sim P} [\log p(x)] \leq  - E_{x \sim P} [\log q(x)], \textrm{ with equality if and only if } P = Q.\)</span>$ Nói cách khác, <span class="arithmatex">\(H(X)\)</span> cho một cận dưới của số bit trung bình cần để mã hóa các ký hiệu được rút ra từ <span class="arithmatex">\(P\)</span>.</p>
+</li>
+<li>
+<p>Nếu <span class="arithmatex">\(X \sim P\)</span>, thì <span class="arithmatex">\(x\)</span> truyền tải lượng thông tin tối đa nếu nó được phân bố đều giữa tất cả các kết quả có thể. Cụ thể, nếu phân phối xác suất <span class="arithmatex">\(P\)</span> là rời rạc với <span class="arithmatex">\(k\)</span> lớp <span class="arithmatex">\(\{p_1, \ldots, p_k \}\)</span>, thì $<span class="arithmatex">\(H(X) \leq \log(k), \textrm{ with equality if and only if } p_i = \frac{1}{k}, \forall i.\)</span>$ Nếu <span class="arithmatex">\(P\)</span> là một biến ngẫu nhiên liên tục, câu chuyện trở nên phức tạp hơn nhiều. Tuy nhiên, nếu ta thêm ràng buộc rằng <span class="arithmatex">\(P\)</span> có giá trên một khoảng hữu hạn (với mọi giá trị nằm giữa <span class="arithmatex">\(0\)</span> và <span class="arithmatex">\(1\)</span>), thì <span class="arithmatex">\(P\)</span> có entropy cao nhất nếu nó là phân phối đều trên khoảng đó.</p>
+</li>
+</ul>
+<h2 id="thong-tin-tuong-ho">Thông Tin Tương Hỗ<a class="headerlink" href="#thong-tin-tuong-ho" title="Permanent link">&para;</a></h2>
+<p>Trước đó ta đã định nghĩa entropy của một biến ngẫu nhiên đơn <span class="arithmatex">\(X\)</span>, vậy entropy của một cặp biến ngẫu nhiên <span class="arithmatex">\((X, Y)\)</span> thì sao? Ta có thể nghĩ các kỹ thuật này như đang cố gắng trả lời loại câu hỏi sau: "Thông tin nào được chứa trong <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> cùng nhau so với từng biến riêng lẻ? Có thông tin dư thừa không, hay tất cả đều là duy nhất?"</p>
+<p>Trong thảo luận sau, ta luôn dùng <span class="arithmatex">\((X, Y)\)</span> làm một cặp biến ngẫu nhiên tuân theo phân phối xác suất đồng thời <span class="arithmatex">\(P\)</span> với p.d.f. hoặc p.m.f. <span class="arithmatex">\(p_{X, Y}(x, y)\)</span>, trong khi <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> lần lượt tuân theo phân phối xác suất <span class="arithmatex">\(p_X(x)\)</span> và <span class="arithmatex">\(p_Y(y)\)</span>.</p>
+<h3 id="entropy-ong-thoi">Entropy Đồng Thời<a class="headerlink" href="#entropy-ong-thoi" title="Permanent link">&para;</a></h3>
+<p>Tương tự entropy của một biến ngẫu nhiên đơn :eqref:<code>eq_ent_def</code>, ta định nghĩa <em>entropy đồng thời</em> <span class="arithmatex">\(H(X, Y)\)</span> của một cặp biến ngẫu nhiên <span class="arithmatex">\((X, Y)\)</span> là</p>
+<div class="arithmatex">\[H(X, Y) = -E_{(x, y) \sim P} [\log p_{X, Y}(x, y)]. \]</div>
+<p>Chính xác hơn, một mặt, nếu <span class="arithmatex">\((X, Y)\)</span> là một cặp biến ngẫu nhiên rời rạc, thì</p>
+<div class="arithmatex">\[H(X, Y) = - \sum_{x} \sum_{y} p_{X, Y}(x, y) \log p_{X, Y}(x, y).\]</div>
+<p>Mặt khác, nếu <span class="arithmatex">\((X, Y)\)</span> là một cặp biến ngẫu nhiên liên tục, thì ta định nghĩa <em>entropy đồng thời vi phân</em> là</p>
+<div class="arithmatex">\[H(X, Y) = - \int_{x, y} p_{X, Y}(x, y) \ \log p_{X, Y}(x, y) \;dx \;dy.\]</div>
+<p>Ta có thể nghĩ :eqref:<code>eq_joint_ent_def</code> cho ta biết tổng độ ngẫu nhiên trong cặp biến ngẫu nhiên. Ở hai cực, nếu <span class="arithmatex">\(X = Y\)</span> là hai biến ngẫu nhiên giống hệt nhau, thì thông tin trong cặp chính xác là thông tin trong một biến và ta có <span class="arithmatex">\(H(X, Y) = H(X) = H(Y)\)</span>. Ở cực kia, nếu <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> độc lập thì <span class="arithmatex">\(H(X, Y) = H(X) + H(Y)\)</span>. Thật vậy, ta luôn có rằng thông tin chứa trong một cặp biến ngẫu nhiên không nhỏ hơn entropy của một trong hai biến ngẫu nhiên và không lớn hơn tổng của cả hai.</p>
+<div class="arithmatex">\[
+H(X), H(Y) \le H(X, Y) \le H(X) + H(Y).
+\]</div>
+<p>Hãy cài đặt entropy đồng thời từ đầu.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">joint_entropy</span><span class="p">(</span><span class="n">p_xy</span><span class="p">):</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">joint_ent</span> <span class="o">=</span> <span class="o">-</span><span class="n">p_xy</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p_xy</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">joint_ent</span><span class="o">.</span><span class="n">as_nd_ndarray</span><span class="p">())</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="n">joint_entropy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">joint_entropy</span><span class="p">(</span><span class="n">p_xy</span><span class="p">):</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="n">joint_ent</span> <span class="o">=</span> <span class="o">-</span><span class="n">p_xy</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p_xy</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">joint_ent</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">joint_entropy</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">joint_entropy</span><span class="p">(</span><span class="n">p_xy</span><span class="p">):</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">joint_ent</span> <span class="o">=</span> <span class="o">-</span><span class="n">p_xy</span> <span class="o">*</span> <span class="n">log2</span><span class="p">(</span><span class="n">p_xy</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">joint_ent</span><span class="p">)</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">joint_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]))</span>
+</code></pre></div>
+<p>Lưu ý rằng đây là cùng một <em>code</em> như trước, nhưng giờ ta diễn giải nó khác đi: làm việc trên phân phối đồng thời của hai biến ngẫu nhiên.</p>
+<h3 id="entropy-co-ieu-kien">Entropy Có Điều Kiện<a class="headerlink" href="#entropy-co-ieu-kien" title="Permanent link">&para;</a></h3>
+<p>Entropy đồng thời được định nghĩa ở trên đo lượng thông tin chứa trong một cặp biến ngẫu nhiên. Điều này hữu ích, nhưng thường không phải thứ ta quan tâm. Xét bối cảnh machine learning. Hãy lấy <span class="arithmatex">\(X\)</span> là biến ngẫu nhiên (hoặc vector các biến ngẫu nhiên) mô tả các giá trị pixel của một ảnh, và <span class="arithmatex">\(Y\)</span> là biến ngẫu nhiên biểu thị nhãn lớp. <span class="arithmatex">\(X\)</span> nên chứa lượng thông tin đáng kể: một ảnh tự nhiên là một thứ phức tạp. Tuy nhiên, thông tin chứa trong <span class="arithmatex">\(Y\)</span> sau khi ảnh đã được hiển thị nên thấp. Thật vậy, ảnh của một chữ số nên đã chứa thông tin về chữ số đó là gì, trừ khi chữ số không đọc được. Vì vậy, để tiếp tục mở rộng vốn từ vựng về lý thuyết thông tin, ta cần có khả năng lập luận về nội dung thông tin trong một biến ngẫu nhiên có điều kiện trên một biến khác.</p>
+<p>Trong lý thuyết xác suất, ta đã thấy định nghĩa <em>xác suất có điều kiện</em> để đo quan hệ giữa các biến. Bây giờ ta muốn định nghĩa tương tự <em>entropy có điều kiện</em> <span class="arithmatex">\(H(Y \mid X)\)</span>. Ta có thể viết nó là</p>
+<div class="arithmatex">\[ H(Y \mid X) = - E_{(x, y) \sim P} [\log p(y \mid x)],\]</div>
+<p>trong đó <span class="arithmatex">\(p(y \mid x) = \frac{p_{X, Y}(x, y)}{p_X(x)}\)</span> là xác suất có điều kiện. Cụ thể, nếu <span class="arithmatex">\((X, Y)\)</span> là một cặp biến ngẫu nhiên rời rạc, thì</p>
+<div class="arithmatex">\[H(Y \mid X) = - \sum_{x} \sum_{y} p(x, y) \log p(y \mid x).\]</div>
+<p>Nếu <span class="arithmatex">\((X, Y)\)</span> là một cặp biến ngẫu nhiên liên tục, thì <em>entropy có điều kiện vi phân</em> được định nghĩa tương tự là</p>
+<div class="arithmatex">\[H(Y \mid X) = - \int_x \int_y p(x, y) \ \log p(y \mid x) \;dx \;dy.\]</div>
+<p>Bây giờ tự nhiên ta hỏi: <em>entropy có điều kiện</em> <span class="arithmatex">\(H(Y \mid X)\)</span> liên hệ thế nào với entropy <span class="arithmatex">\(H(X)\)</span> và entropy đồng thời <span class="arithmatex">\(H(X, Y)\)</span>? Dùng các định nghĩa ở trên, ta có thể biểu diễn điều này gọn gàng:</p>
+<div class="arithmatex">\[H(Y \mid X) = H(X, Y) - H(X).\]</div>
+<p>Điều này có một diễn giải trực giác: thông tin trong <span class="arithmatex">\(Y\)</span> khi biết <span class="arithmatex">\(X\)</span> (<span class="arithmatex">\(H(Y \mid X)\)</span>) giống như thông tin trong cả <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> cùng nhau (<span class="arithmatex">\(H(X, Y)\)</span>) trừ đi thông tin đã chứa trong <span class="arithmatex">\(X\)</span>. Điều này cho ta thông tin trong <span class="arithmatex">\(Y\)</span> mà không đồng thời được biểu diễn trong <span class="arithmatex">\(X\)</span>.</p>
+<p>Bây giờ, hãy cài đặt entropy có điều kiện :eqref:<code>eq_cond_ent_def</code> từ đầu.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">conditional_entropy</span><span class="p">(</span><span class="n">p_xy</span><span class="p">,</span> <span class="n">p_x</span><span class="p">):</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="n">p_y_given_x</span> <span class="o">=</span> <span class="n">p_xy</span><span class="o">/</span><span class="n">p_x</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">cond_ent</span> <span class="o">=</span> <span class="o">-</span><span class="n">p_xy</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p_y_given_x</span><span class="p">)</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">cond_ent</span><span class="o">.</span><span class="n">as_nd_ndarray</span><span class="p">())</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">conditional_entropy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">conditional_entropy</span><span class="p">(</span><span class="n">p_xy</span><span class="p">,</span> <span class="n">p_x</span><span class="p">):</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="n">p_y_given_x</span> <span class="o">=</span> <span class="n">p_xy</span><span class="o">/</span><span class="n">p_x</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">cond_ent</span> <span class="o">=</span> <span class="o">-</span><span class="n">p_xy</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p_y_given_x</span><span class="p">)</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">cond_ent</span><span class="p">)</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">conditional_entropy</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]),</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>                    <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">conditional_entropy</span><span class="p">(</span><span class="n">p_xy</span><span class="p">,</span> <span class="n">p_x</span><span class="p">):</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="n">p_y_given_x</span> <span class="o">=</span> <span class="n">p_xy</span><span class="o">/</span><span class="n">p_x</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">cond_ent</span> <span class="o">=</span> <span class="o">-</span><span class="n">p_xy</span> <span class="o">*</span> <span class="n">log2</span><span class="p">(</span><span class="n">p_y_given_x</span><span class="p">)</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">cond_ent</span><span class="p">)</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="n">conditional_entropy</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]),</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>                    <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]))</span>
+</code></pre></div>
+<h3 id="thong-tin-tuong-ho_1">Thông Tin Tương Hỗ<a class="headerlink" href="#thong-tin-tuong-ho_1" title="Permanent link">&para;</a></h3>
+<p>Với bối cảnh trước đó về các biến ngẫu nhiên <span class="arithmatex">\((X, Y)\)</span>, bạn có thể tự hỏi: "Bây giờ khi ta biết bao nhiêu thông tin chứa trong <span class="arithmatex">\(Y\)</span> nhưng không nằm trong <span class="arithmatex">\(X\)</span>, ta có thể tương tự hỏi bao nhiêu thông tin được chia sẻ giữa <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> không?" Câu trả lời sẽ là <em>thông tin tương hỗ</em> của <span class="arithmatex">\((X, Y)\)</span>, mà ta sẽ viết là <span class="arithmatex">\(I(X, Y)\)</span>.</p>
+<p>Thay vì đi thẳng vào định nghĩa hình thức, hãy luyện trực giác bằng cách trước hết cố gắng suy ra một biểu thức cho thông tin tương hỗ hoàn toàn dựa trên các hạng tử ta đã xây dựng trước đó. Ta muốn tìm thông tin được chia sẻ giữa hai biến ngẫu nhiên. Một cách ta có thể thử làm là bắt đầu với toàn bộ thông tin chứa trong cả <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> cùng nhau, rồi loại bỏ các phần không được chia sẻ. Thông tin chứa trong cả <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> cùng nhau được viết là <span class="arithmatex">\(H(X, Y)\)</span>. Ta muốn trừ khỏi nó thông tin chứa trong <span class="arithmatex">\(X\)</span> nhưng không trong <span class="arithmatex">\(Y\)</span>, và thông tin chứa trong <span class="arithmatex">\(Y\)</span> nhưng không trong <span class="arithmatex">\(X\)</span>. Như ta đã thấy trong phần trước, chúng lần lượt được cho bởi <span class="arithmatex">\(H(X \mid Y)\)</span> và <span class="arithmatex">\(H(Y \mid X)\)</span>. Do đó, ta có thông tin tương hỗ nên là</p>
+<div class="arithmatex">\[
+I(X, Y) = H(X, Y) - H(Y \mid X) - H(X \mid Y).
+\]</div>
+<p>Thật vậy, đây là một định nghĩa hợp lệ cho thông tin tương hỗ. Nếu khai triển các định nghĩa của các hạng tử này và kết hợp chúng, một chút đại số cho thấy nó giống với</p>
+<div class="arithmatex">\[I(X, Y) = E_{x} E_{y} \left\{ p_{X, Y}(x, y) \log\frac{p_{X, Y}(x, y)}{p_X(x) p_Y(y)} \right\}. \]</div>
+<p>Ta có thể tóm tắt tất cả các quan hệ này trong hình <a href="#fig_mutual_information">fig_mutual_information</a>. Đây là một bài kiểm tra trực giác rất tốt để xem vì sao các phát biểu sau cũng đều tương đương với <span class="arithmatex">\(I(X, Y)\)</span>.</p>
+<ul>
+<li><span class="arithmatex">\(H(X) - H(X \mid Y)\)</span></li>
+<li><span class="arithmatex">\(H(Y) - H(Y \mid X)\)</span></li>
+<li><span class="arithmatex">\(H(X) + H(Y) - H(X, Y)\)</span></li>
+</ul>
+<p><img alt="Quan hệ của thông tin tương hỗ với entropy đồng thời và entropy có điều kiện." src="../../img/mutual-information.svg" />
+<a id="fig_mutual_information"></a></p>
+<p>Theo nhiều cách, ta có thể nghĩ thông tin tương hỗ :eqref:<code>eq_mut_ent_def</code> là một mở rộng có nguyên tắc của hệ số tương quan đã thấy trong <a href="#sec_random_variables">sec_random_variables</a>. Điều này cho phép ta hỏi không chỉ về các quan hệ tuyến tính giữa các biến, mà còn về lượng thông tin tối đa được chia sẻ giữa hai biến ngẫu nhiên thuộc bất kỳ loại nào.</p>
+<p>Bây giờ, hãy cài đặt thông tin tương hỗ từ đầu.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">mutual_information</span><span class="p">(</span><span class="n">p_xy</span><span class="p">,</span> <span class="n">p_x</span><span class="p">,</span> <span class="n">p_y</span><span class="p">):</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="n">p</span> <span class="o">=</span> <span class="n">p_xy</span> <span class="o">/</span> <span class="p">(</span><span class="n">p_x</span> <span class="o">*</span> <span class="n">p_y</span><span class="p">)</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="n">mutual</span> <span class="o">=</span> <span class="n">p_xy</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">mutual</span><span class="o">.</span><span class="n">as_nd_ndarray</span><span class="p">())</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="n">mutual_information</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]),</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>                   <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">mutual_information</span><span class="p">(</span><span class="n">p_xy</span><span class="p">,</span> <span class="n">p_x</span><span class="p">,</span> <span class="n">p_y</span><span class="p">):</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="n">p</span> <span class="o">=</span> <span class="n">p_xy</span> <span class="o">/</span> <span class="p">(</span><span class="n">p_x</span> <span class="o">*</span> <span class="n">p_y</span><span class="p">)</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="n">mutual</span> <span class="o">=</span> <span class="n">p_xy</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">mutual</span><span class="p">)</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">mutual_information</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]),</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>                   <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">mutual_information</span><span class="p">(</span><span class="n">p_xy</span><span class="p">,</span> <span class="n">p_x</span><span class="p">,</span> <span class="n">p_y</span><span class="p">):</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="n">p</span> <span class="o">=</span> <span class="n">p_xy</span> <span class="o">/</span> <span class="p">(</span><span class="n">p_x</span> <span class="o">*</span> <span class="n">p_y</span><span class="p">)</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    <span class="n">mutual</span> <span class="o">=</span> <span class="n">p_xy</span> <span class="o">*</span> <span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    <span class="c1"># Operator `nansum` will sum up the non-nan number</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">mutual</span><span class="p">)</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    <span class="k">return</span> <span class="n">out</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="n">mutual_information</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]]),</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>                   <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">]),</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">]]))</span>
+</code></pre></div>
+<h3 id="tinh-chat-cua-thong-tin-tuong-ho">Tính Chất Của Thông Tin Tương Hỗ<a class="headerlink" href="#tinh-chat-cua-thong-tin-tuong-ho" title="Permanent link">&para;</a></h3>
+<p>Thay vì ghi nhớ định nghĩa của thông tin tương hỗ :eqref:<code>eq_mut_ent_def</code>, bạn chỉ cần nhớ các tính chất đáng chú ý của nó:</p>
+<ul>
+<li>Thông tin tương hỗ đối xứng, tức <span class="arithmatex">\(I(X, Y) = I(Y, X)\)</span>.</li>
+<li>Thông tin tương hỗ không âm, tức <span class="arithmatex">\(I(X, Y) \geq 0\)</span>.</li>
+<li><span class="arithmatex">\(I(X, Y) = 0\)</span> khi và chỉ khi <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> độc lập. Ví dụ, nếu <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> độc lập, thì biết <span class="arithmatex">\(Y\)</span> không cung cấp bất kỳ thông tin nào về <span class="arithmatex">\(X\)</span> và ngược lại, nên thông tin tương hỗ của chúng bằng không.</li>
+<li>Mặt khác, nếu <span class="arithmatex">\(X\)</span> là một hàm khả nghịch của <span class="arithmatex">\(Y\)</span>, thì <span class="arithmatex">\(Y\)</span> và <span class="arithmatex">\(X\)</span> chia sẻ toàn bộ thông tin và $<span class="arithmatex">\(I(X, Y) = H(Y) = H(X).\)</span>$</li>
+</ul>
+<h3 id="thong-tin-tuong-ho-theo-iem">Thông Tin Tương Hỗ Theo Điểm<a class="headerlink" href="#thong-tin-tuong-ho-theo-iem" title="Permanent link">&para;</a></h3>
+<p>Khi làm việc với entropy ở đầu chương này, ta có thể đưa ra một diễn giải của <span class="arithmatex">\(-\log(p_X(x))\)</span> là mức độ <em>bất ngờ</em> của ta với kết quả cụ thể. Ta có thể đưa ra một diễn giải tương tự cho hạng logarit trong thông tin tương hỗ, thường được gọi là <em>thông tin tương hỗ theo điểm</em>:</p>
+<div class="arithmatex">\[\textrm{pmi}(x, y) = \log\frac{p_{X, Y}(x, y)}{p_X(x) p_Y(y)}.\]</div>
+<p>Ta có thể nghĩ :eqref:<code>eq_pmi_def</code> như phép đo xem tổ hợp cụ thể của các kết quả <span class="arithmatex">\(x\)</span> và <span class="arithmatex">\(y\)</span> có khả năng xảy ra nhiều hơn hoặc ít hơn bao nhiêu so với điều ta kỳ vọng nếu các kết quả ngẫu nhiên độc lập. Nếu nó lớn và dương, thì hai kết quả cụ thể này xảy ra thường xuyên hơn nhiều so với ngẫu nhiên (<em>lưu ý</em>: mẫu số là <span class="arithmatex">\(p_X(x) p_Y(y)\)</span>, là xác suất của hai kết quả nếu chúng độc lập), trong khi nếu nó lớn và âm, nó biểu thị hai kết quả xảy ra ít hơn nhiều so với điều ta kỳ vọng theo ngẫu nhiên.</p>
+<p>Điều này cho phép ta diễn giải thông tin tương hỗ :eqref:<code>eq_mut_ent_def</code> là lượng trung bình mà ta bị bất ngờ khi thấy hai kết quả xảy ra cùng nhau, so với điều ta kỳ vọng nếu chúng độc lập.</p>
+<h3 id="ung-dung-cua-thong-tin-tuong-ho">Ứng Dụng Của Thông Tin Tương Hỗ<a class="headerlink" href="#ung-dung-cua-thong-tin-tuong-ho" title="Permanent link">&para;</a></h3>
+<p>Thông tin tương hỗ có thể hơi trừu tượng trong định nghĩa thuần túy của nó, vậy nó liên quan thế nào đến machine learning? Trong xử lý ngôn ngữ tự nhiên, một trong những bài toán khó nhất là <em>giải quyết nhập nhằng</em>, tức vấn đề nghĩa của một từ không rõ từ ngữ cảnh. Ví dụ, gần đây một tiêu đề trên báo đưa tin rằng "Amazon đang cháy". Bạn có thể tự hỏi liệu công ty Amazon có một tòa nhà đang cháy, hay rừng mưa Amazon đang cháy.</p>
+<p>Trong trường hợp này, thông tin tương hỗ có thể giúp ta giải quyết sự nhập nhằng này. Trước hết ta tìm nhóm các từ có thông tin tương hỗ tương đối lớn với công ty Amazon, chẳng hạn e-commerce, technology và online. Thứ hai, ta tìm một nhóm từ khác có thông tin tương hỗ tương đối lớn với rừng mưa Amazon, chẳng hạn rain, forest và tropical. Khi cần khử nhập nhằng "Amazon", ta có thể so sánh nhóm nào xuất hiện nhiều hơn trong ngữ cảnh của từ Amazon. Trong trường hợp này, bài báo sẽ tiếp tục mô tả khu rừng và làm rõ ngữ cảnh.</p>
+<h2 id="phan-ky-kullback-leibler">Phân Kỳ Kullback-Leibler<a class="headerlink" href="#phan-ky-kullback-leibler" title="Permanent link">&para;</a></h2>
+<p>Như đã thảo luận trong <a href="#sec_linear-algebra">sec_linear-algebra</a>, ta có thể dùng chuẩn để đo khoảng cách giữa hai điểm trong không gian có số chiều bất kỳ. Ta muốn có thể làm một nhiệm vụ tương tự với các phân phối xác suất. Có nhiều cách để thực hiện điều này, nhưng lý thuyết thông tin cung cấp một trong những cách đẹp nhất. Bây giờ ta khảo sát <em>phân kỳ Kullback-Leibler (KL)</em>, cung cấp một cách đo xem hai phân phối có gần nhau hay không.</p>
+<h3 id="inh-nghia_1">Định Nghĩa<a class="headerlink" href="#inh-nghia_1" title="Permanent link">&para;</a></h3>
+<p>Cho một biến ngẫu nhiên <span class="arithmatex">\(X\)</span> tuân theo phân phối xác suất <span class="arithmatex">\(P\)</span> với p.d.f. hoặc p.m.f. <span class="arithmatex">\(p(x)\)</span>, và ta ước lượng <span class="arithmatex">\(P\)</span> bằng một phân phối xác suất khác <span class="arithmatex">\(Q\)</span> với p.d.f. hoặc p.m.f. <span class="arithmatex">\(q(x)\)</span>. Khi đó <em>phân kỳ Kullback-Leibler (KL)</em> (hoặc <em>entropy tương đối</em>) giữa <span class="arithmatex">\(P\)</span> và <span class="arithmatex">\(Q\)</span> là</p>
+<div class="arithmatex">\[D_{\textrm{KL}}(P\|Q) = E_{x \sim P} \left[ \log \frac{p(x)}{q(x)} \right].\]</div>
+<p>Như với thông tin tương hỗ theo điểm :eqref:<code>eq_pmi_def</code>, ta một lần nữa có thể đưa ra một diễn giải cho hạng logarit: <span class="arithmatex">\(-\log \frac{q(x)}{p(x)} = -\log(q(x)) - (-\log(p(x)))\)</span> sẽ lớn và dương nếu ta thấy <span class="arithmatex">\(x\)</span> thường xuyên hơn nhiều dưới <span class="arithmatex">\(P\)</span> so với điều ta kỳ vọng với <span class="arithmatex">\(Q\)</span>, và lớn và âm nếu ta thấy kết quả đó ít hơn nhiều so với kỳ vọng. Theo cách này, ta có thể diễn giải nó là sự bất ngờ <em>tương đối</em> của ta khi quan sát kết quả so với mức độ bất ngờ nếu quan sát nó từ phân phối tham chiếu.</p>
+<p>Hãy cài đặt phân kỳ KL từ đầu.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">kl_divergence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    <span class="n">kl</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">kl</span><span class="o">.</span><span class="n">as_nd_ndarray</span><span class="p">())</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>    <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">asscalar</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">kl_divergence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    <span class="n">kl</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">kl</span><span class="p">)</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">kl_divergence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    <span class="n">kl</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">log2</span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">q</span><span class="p">)</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    <span class="n">out</span> <span class="o">=</span> <span class="n">nansum</span><span class="p">(</span><span class="n">kl</span><span class="p">)</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="tinh-chat-cua-phan-ky-kl">Tính Chất Của Phân Kỳ KL<a class="headerlink" href="#tinh-chat-cua-phan-ky-kl" title="Permanent link">&para;</a></h3>
+<p>Hãy xem một số tính chất của phân kỳ KL :eqref:<code>eq_kl_def</code>.</p>
+<ul>
+<li>Phân kỳ KL không đối xứng, tức tồn tại <span class="arithmatex">\(P,Q\)</span> sao cho $<span class="arithmatex">\(D_{\textrm{KL}}(P\|Q) \neq D_{\textrm{KL}}(Q\|P).\)</span>$</li>
+<li>Phân kỳ KL không âm, tức $<span class="arithmatex">\(D_{\textrm{KL}}(P\|Q) \geq 0.\)</span>$ Lưu ý rằng đẳng thức chỉ xảy ra khi <span class="arithmatex">\(P = Q\)</span>.</li>
+<li>Nếu tồn tại một <span class="arithmatex">\(x\)</span> sao cho <span class="arithmatex">\(p(x) &gt; 0\)</span> và <span class="arithmatex">\(q(x) = 0\)</span>, thì <span class="arithmatex">\(D_{\textrm{KL}}(P\|Q) = \infty\)</span>.</li>
+<li>Có một quan hệ gần gũi giữa phân kỳ KL và thông tin tương hỗ. Ngoài quan hệ thể hiện trong <a href="#fig_mutual_information">fig_mutual_information</a>, <span class="arithmatex">\(I(X, Y)\)</span> cũng tương đương về mặt số học với các hạng sau:<ol>
+<li><span class="arithmatex">\(D_{\textrm{KL}}(P(X, Y)  \ \| \ P(X)P(Y))\)</span>;</li>
+<li><span class="arithmatex">\(E_Y \{ D_{\textrm{KL}}(P(X \mid Y) \ \| \ P(X)) \}\)</span>;</li>
+<li><span class="arithmatex">\(E_X \{ D_{\textrm{KL}}(P(Y \mid X) \ \| \ P(Y)) \}\)</span>.</li>
+</ol>
+</li>
+</ul>
+<p>Với hạng đầu tiên, ta diễn giải thông tin tương hỗ là phân kỳ KL giữa <span class="arithmatex">\(P(X, Y)\)</span> và tích của <span class="arithmatex">\(P(X)\)</span> và <span class="arithmatex">\(P(Y)\)</span>, do đó là một thước đo mức độ khác nhau giữa phân phối đồng thời và phân phối nếu chúng độc lập. Với hạng thứ hai, thông tin tương hỗ cho ta mức giảm độ bất định trung bình về <span class="arithmatex">\(Y\)</span> khi biết giá trị của phân phối của <span class="arithmatex">\(X\)</span>. Hạng thứ ba cũng tương tự.</p>
+<h3 id="vi-du">Ví Dụ<a class="headerlink" href="#vi-du" title="Permanent link">&para;</a></h3>
+<p>Hãy đi qua một ví dụ đồ chơi để thấy rõ tính không đối xứng.</p>
+<p>Trước hết, hãy sinh và sắp xếp ba tensor độ dài <span class="arithmatex">\(10,000\)</span>: một tensor mục tiêu <span class="arithmatex">\(p\)</span> tuân theo phân phối chuẩn <span class="arithmatex">\(N(0, 1)\)</span>, và hai tensor ứng viên <span class="arithmatex">\(q_1\)</span> và <span class="arithmatex">\(q_2\)</span> lần lượt tuân theo các phân phối chuẩn <span class="arithmatex">\(N(-1, 1)\)</span> và <span class="arithmatex">\(N(1, 1)\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="n">nd_len</span> <span class="o">=</span> <span class="mi">10000</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">nd_len</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">nd_len</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="n">q2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">nd_len</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()))</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="n">q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">q1</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()))</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="n">q2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">q2</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="n">tensor_len</span> <span class="o">=</span> <span class="mi">10000</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="n">p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">tensor_len</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="n">q1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">tensor_len</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="n">q2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">tensor_len</span><span class="p">,</span> <span class="p">))</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="n">p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">p</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="n">q1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">q1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="n">q2</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">q2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">tensor_len</span> <span class="o">=</span> <span class="mi">10000</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="n">tensor_len</span><span class="p">,</span> <span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">q1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="n">tensor_len</span><span class="p">,</span> <span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="n">q2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">((</span><span class="n">tensor_len</span><span class="p">,</span> <span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="n">p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="n">q1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">q1</span><span class="p">)</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="n">q2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">q2</span><span class="p">)</span>
+</code></pre></div>
+<p>Vì <span class="arithmatex">\(q_1\)</span> và <span class="arithmatex">\(q_2\)</span> đối xứng qua trục y (tức <span class="arithmatex">\(x=0\)</span>), ta kỳ vọng giá trị phân kỳ KL giữa <span class="arithmatex">\(D_{\textrm{KL}}(p\|q_1)\)</span> và <span class="arithmatex">\(D_{\textrm{KL}}(p\|q_2)\)</span> tương tự nhau. Như bạn có thể thấy bên dưới, chỉ có chênh lệch dưới 3% giữa <span class="arithmatex">\(D_{\textrm{KL}}(p\|q_1)\)</span> và <span class="arithmatex">\(D_{\textrm{KL}}(p\|q_2)\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">kl_pq1</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q1</span><span class="p">)</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">kl_pq2</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q2</span><span class="p">)</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="n">similar_percentage</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">kl_pq1</span> <span class="o">-</span> <span class="n">kl_pq2</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">kl_pq1</span> <span class="o">+</span> <span class="n">kl_pq2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="n">kl_pq1</span><span class="p">,</span> <span class="n">kl_pq2</span><span class="p">,</span> <span class="n">similar_percentage</span>
+</code></pre></div>
+<p>Ngược lại, bạn có thể thấy rằng <span class="arithmatex">\(D_{\textrm{KL}}(q_2 \|p)\)</span> và <span class="arithmatex">\(D_{\textrm{KL}}(p \| q_2)\)</span> chênh nhau rất nhiều, khoảng 40% như minh họa bên dưới.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="n">kl_q2p</span> <span class="o">=</span> <span class="n">kl_divergence</span><span class="p">(</span><span class="n">q2</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">differ_percentage</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">kl_q2p</span> <span class="o">-</span> <span class="n">kl_pq2</span><span class="p">)</span> <span class="o">/</span> <span class="p">((</span><span class="n">kl_q2p</span> <span class="o">+</span> <span class="n">kl_pq2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="n">kl_q2p</span><span class="p">,</span> <span class="n">differ_percentage</span>
+</code></pre></div>
+<h2 id="cross-entropy">Cross-Entropy<a class="headerlink" href="#cross-entropy" title="Permanent link">&para;</a></h2>
+<p>Nếu bạn tò mò về các ứng dụng của lý thuyết thông tin trong deep learning, đây là một ví dụ nhanh. Ta định nghĩa phân phối thật <span class="arithmatex">\(P\)</span> với phân phối xác suất <span class="arithmatex">\(p(x)\)</span>, và phân phối ước lượng <span class="arithmatex">\(Q\)</span> với phân phối xác suất <span class="arithmatex">\(q(x)\)</span>, rồi sẽ dùng chúng trong phần còn lại của mục này.</p>
+<p>Giả sử ta cần giải một bài toán phân loại nhị phân dựa trên <span class="arithmatex">\(n\)</span> ví dụ dữ liệu đã cho {<span class="arithmatex">\(x_1, \ldots, x_n\)</span>}. Giả sử ta mã hóa <span class="arithmatex">\(1\)</span> và <span class="arithmatex">\(0\)</span> lần lượt là nhãn lớp dương và âm <span class="arithmatex">\(y_i\)</span>, và mạng nơ-ron của ta được tham số hóa bởi <span class="arithmatex">\(\theta\)</span>. Nếu ta nhằm tìm <span class="arithmatex">\(\theta\)</span> tốt nhất sao cho <span class="arithmatex">\(\hat{y}_i= p_{\theta}(y_i \mid x_i)\)</span>, thì việc áp dụng cách tiếp cận hợp lý log cực đại như đã thấy trong <a href="#sec_maximum_likelihood">sec_maximum_likelihood</a> là tự nhiên. Cụ thể, với nhãn thật <span class="arithmatex">\(y_i\)</span> và dự đoán <span class="arithmatex">\(\hat{y}_i= p_{\theta}(y_i \mid x_i)\)</span>, xác suất được phân loại là dương là <span class="arithmatex">\(\pi_i= p_{\theta}(y_i = 1 \mid x_i)\)</span>. Do đó, hàm log-likelihood sẽ là</p>
+<div class="arithmatex">\[
+\begin{aligned}
+l(\theta) &amp;= \log L(\theta) \\
+  &amp;= \log \prod_{i=1}^n \pi_i^{y_i} (1 - \pi_i)^{1 - y_i} \\
+  &amp;= \sum_{i=1}^n y_i \log(\pi_i) + (1 - y_i) \log (1 - \pi_i). \\
+\end{aligned}
+\]</div>
+<p>Cực đại hóa hàm log-likelihood <span class="arithmatex">\(l(\theta)\)</span> đồng nhất với cực tiểu hóa <span class="arithmatex">\(- l(\theta)\)</span>, và do đó ta có thể tìm <span class="arithmatex">\(\theta\)</span> tốt nhất từ đây. Để tổng quát hóa mất mát trên cho bất kỳ phân phối nào, ta cũng gọi <span class="arithmatex">\(-l(\theta)\)</span> là <em>mất mát cross-entropy</em> <span class="arithmatex">\(\textrm{CE}(y, \hat{y})\)</span>, trong đó <span class="arithmatex">\(y\)</span> tuân theo phân phối thật <span class="arithmatex">\(P\)</span> và <span class="arithmatex">\(\hat{y}\)</span> tuân theo phân phối ước lượng <span class="arithmatex">\(Q\)</span>.</p>
+<p>Tất cả điều này được suy ra bằng cách làm việc từ góc nhìn hợp lý cực đại. Tuy nhiên, nếu nhìn kỹ, ta có thể thấy các hạng như <span class="arithmatex">\(\log(\pi_i)\)</span> đã đi vào phép tính, một dấu hiệu chắc chắn rằng ta có thể hiểu biểu thức này từ góc nhìn lý thuyết thông tin.</p>
+<h3 id="inh-nghia-hinh-thuc">Định Nghĩa Hình Thức<a class="headerlink" href="#inh-nghia-hinh-thuc" title="Permanent link">&para;</a></h3>
+<p>Giống như phân kỳ KL, với một biến ngẫu nhiên <span class="arithmatex">\(X\)</span>, ta cũng có thể đo phân kỳ giữa phân phối ước lượng <span class="arithmatex">\(Q\)</span> và phân phối thật <span class="arithmatex">\(P\)</span> thông qua <em>cross-entropy</em>,</p>
+<div class="arithmatex">\[\textrm{CE}(P, Q) = - E_{x \sim P} [\log(q(x))].\]</div>
+<p>Bằng cách dùng các tính chất của entropy đã thảo luận ở trên, ta cũng có thể diễn giải nó là tổng của entropy <span class="arithmatex">\(H(P)\)</span> và phân kỳ KL giữa <span class="arithmatex">\(P\)</span> và <span class="arithmatex">\(Q\)</span>, tức là</p>
+<div class="arithmatex">\[\textrm{CE} (P, Q) = H(P) + D_{\textrm{KL}}(P\|Q).\]</div>
+<p>Ta có thể cài đặt mất mát cross-entropy như bên dưới.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    <span class="n">ce</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y_hat</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)),</span> <span class="n">y</span><span class="p">])</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>    <span class="k">return</span> <span class="n">ce</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    <span class="n">ce</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y_hat</span><span class="p">[</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)),</span> <span class="n">y</span><span class="p">])</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>    <span class="k">return</span> <span class="n">ce</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>    <span class="c1"># `tf.gather_nd` is used to select specific indices of a tensor.</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>    <span class="n">ce</span> <span class="o">=</span> <span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">gather_nd</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>        <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)),</span> <span class="n">y</span><span class="p">)]))</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">ce</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+</code></pre></div>
+<p>Bây giờ định nghĩa hai tensor cho nhãn và dự đoán, rồi tính mất mát cross-entropy của chúng.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="n">cross_entropy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="n">cross_entropy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="n">cross_entropy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="tinh-chat">Tính Chất<a class="headerlink" href="#tinh-chat" title="Permanent link">&para;</a></h3>
+<p>Như đã gợi ý ở đầu phần này, cross-entropy :eqref:<code>eq_ce_def</code> có thể được dùng để định nghĩa một hàm mất mát trong bài toán tối ưu hóa. Hóa ra các mục tiêu sau là tương đương:</p>
+<ol>
+<li>Cực đại hóa xác suất dự đoán của <span class="arithmatex">\(Q\)</span> cho phân phối <span class="arithmatex">\(P\)</span>, (tức <span class="arithmatex">\(E_{x
+\sim P} [\log (q(x))]\)</span>);</li>
+<li>Cực tiểu hóa cross-entropy <span class="arithmatex">\(\textrm{CE} (P, Q)\)</span>;</li>
+<li>Cực tiểu hóa phân kỳ KL <span class="arithmatex">\(D_{\textrm{KL}}(P\|Q)\)</span>.</li>
+</ol>
+<p>Định nghĩa cross-entropy gián tiếp chứng minh quan hệ tương đương giữa mục tiêu 2 và mục tiêu 3, miễn là entropy của dữ liệu thật <span class="arithmatex">\(H(P)\)</span> là hằng số.</p>
+<h3 id="cross-entropy-la-ham-muc-tieu-cua-phan-loai-a-lop">Cross-Entropy Là Hàm Mục Tiêu Của Phân Loại Đa Lớp<a class="headerlink" href="#cross-entropy-la-ham-muc-tieu-cua-phan-loai-a-lop" title="Permanent link">&para;</a></h3>
+<p>Nếu đi sâu vào hàm mục tiêu phân loại với mất mát cross-entropy <span class="arithmatex">\(\textrm{CE}\)</span>, ta sẽ thấy cực tiểu hóa <span class="arithmatex">\(\textrm{CE}\)</span> tương đương với cực đại hóa hàm log-likelihood <span class="arithmatex">\(L\)</span>.</p>
+<p>Để bắt đầu, giả sử ta được cho một tập dữ liệu với <span class="arithmatex">\(n\)</span> ví dụ, và nó có thể được phân loại vào <span class="arithmatex">\(k\)</span> lớp. Với mỗi ví dụ dữ liệu <span class="arithmatex">\(i\)</span>, ta biểu diễn bất kỳ nhãn <span class="arithmatex">\(k\)</span> lớp nào <span class="arithmatex">\(\mathbf{y}_i = (y_{i1}, \ldots, y_{ik})\)</span> bằng <em>mã hóa one-hot</em>. Cụ thể, nếu ví dụ <span class="arithmatex">\(i\)</span> thuộc lớp <span class="arithmatex">\(j\)</span>, thì ta đặt thành phần thứ <span class="arithmatex">\(j\)</span> bằng <span class="arithmatex">\(1\)</span>, và mọi thành phần khác bằng <span class="arithmatex">\(0\)</span>, tức</p>
+<div class="arithmatex">\[ y_{ij} = \begin{cases}1 &amp; j \in J; \\ 0 &amp;\textrm{otherwise.}\end{cases}\]</div>
+<p>Chẳng hạn, nếu một bài toán phân loại đa lớp chứa ba lớp <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(B\)</span> và <span class="arithmatex">\(C\)</span>, thì các nhãn <span class="arithmatex">\(\mathbf{y}_i\)</span> có thể được mã hóa thành {<span class="arithmatex">\(A: (1, 0, 0); B: (0, 1, 0); C: (0, 0, 1)\)</span>}.</p>
+<p>Giả sử mạng nơ-ron của ta được tham số hóa bởi <span class="arithmatex">\(\theta\)</span>. Với các vector nhãn thật <span class="arithmatex">\(\mathbf{y}_i\)</span> và dự đoán $<span class="arithmatex">\(\hat{\mathbf{y}}_i= p_{\theta}(\mathbf{y}_i \mid \mathbf{x}_i) = \sum_{j=1}^k y_{ij} p_{\theta} (y_{ij}  \mid  \mathbf{x}_i).\)</span>$</p>
+<p>Do đó, <em>mất mát cross-entropy</em> sẽ là</p>
+<div class="arithmatex">\[
+\textrm{CE}(\mathbf{y}, \hat{\mathbf{y}}) = - \sum_{i=1}^n \mathbf{y}_i \log \hat{\mathbf{y}}_i
+ = - \sum_{i=1}^n \sum_{j=1}^k y_{ij} \log{p_{\theta} (y_{ij}  \mid  \mathbf{x}_i)}.\\
+\]</div>
+<p>Mặt khác, ta cũng có thể tiếp cận bài toán thông qua ước lượng hợp lý cực đại. Để bắt đầu, hãy giới thiệu nhanh một phân phối multinoulli <span class="arithmatex">\(k\)</span> lớp. Đây là một mở rộng của phân phối Bernoulli từ lớp nhị phân sang đa lớp. Nếu một biến ngẫu nhiên <span class="arithmatex">\(\mathbf{z} = (z_{1}, \ldots, z_{k})\)</span> tuân theo một <em>phân phối multinoulli</em> <span class="arithmatex">\(k\)</span> lớp với các xác suất <span class="arithmatex">\(\mathbf{p} =\)</span> (<span class="arithmatex">\(p_{1}, \ldots, p_{k}\)</span>), tức $<span class="arithmatex">\(p(\mathbf{z}) = p(z_1, \ldots, z_k) = \textrm{Multi} (p_1, \ldots, p_k), \textrm{ where } \sum_{i=1}^k p_i = 1,\)</span>$ thì hàm khối xác suất đồng thời (p.m.f.) của <span class="arithmatex">\(\mathbf{z}\)</span> là
+$<span class="arithmatex">\(\mathbf{p}^\mathbf{z} = \prod_{j=1}^k p_{j}^{z_{j}}.\)</span>$</p>
+<p>Có thể thấy nhãn của mỗi ví dụ dữ liệu, <span class="arithmatex">\(\mathbf{y}_i\)</span>, tuân theo một phân phối multinoulli <span class="arithmatex">\(k\)</span> lớp với các xác suất <span class="arithmatex">\(\boldsymbol{\pi} =\)</span> (<span class="arithmatex">\(\pi_{1}, \ldots, \pi_{k}\)</span>). Do đó, p.m.f. đồng thời của mỗi ví dụ dữ liệu <span class="arithmatex">\(\mathbf{y}_i\)</span> là <span class="arithmatex">\(\mathbf{\pi}^{\mathbf{y}_i} = \prod_{j=1}^k \pi_{j}^{y_{ij}}.\)</span>
+Vì vậy, hàm log-likelihood sẽ là</p>
+<div class="arithmatex">\[
+\begin{aligned}
+l(\theta)
+ = \log L(\theta)
+ = \log \prod_{i=1}^n \boldsymbol{\pi}^{\mathbf{y}_i}
+ = \log \prod_{i=1}^n \prod_{j=1}^k \pi_{j}^{y_{ij}}
+ = \sum_{i=1}^n \sum_{j=1}^k y_{ij} \log{\pi_{j}}.\\
+\end{aligned}
+\]</div>
+<p>Vì trong ước lượng hợp lý cực đại, ta cực đại hóa hàm mục tiêu <span class="arithmatex">\(l(\theta)\)</span> bằng cách đặt <span class="arithmatex">\(\pi_{j} = p_{\theta} (y_{ij}  \mid  \mathbf{x}_i)\)</span>. Do đó, với bất kỳ bài toán phân loại đa lớp nào, cực đại hóa hàm log-likelihood <span class="arithmatex">\(l(\theta)\)</span> ở trên tương đương với cực tiểu hóa mất mát CE <span class="arithmatex">\(\textrm{CE}(y, \hat{y})\)</span>.</p>
+<p>Để kiểm tra chứng minh trên, hãy áp dụng phép đo tích hợp sẵn <code>NegativeLogLikelihood</code>. Dùng cùng <code>labels</code> và <code>preds</code> như trong ví dụ trước đó, ta sẽ thu được cùng mất mát số học như ví dụ trước đến chữ số thập phân thứ 5.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="n">nll_loss</span> <span class="o">=</span> <span class="n">NegativeLogLikelihood</span><span class="p">()</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="n">nll_loss</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">as_nd_ndarray</span><span class="p">(),</span> <span class="n">preds</span><span class="o">.</span><span class="n">as_nd_ndarray</span><span class="p">())</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="n">nll_loss</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="c1"># Implementation of cross-entropy loss in PyTorch combines `nn.LogSoftmax()`</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="c1"># and `nn.NLLLoss()`</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="n">nll_loss</span> <span class="o">=</span> <span class="n">NLLLoss</span><span class="p">()</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="n">loss</span> <span class="o">=</span> <span class="n">nll_loss</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">preds</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="n">loss</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">nll_loss</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>    <span class="c1"># Convert labels to one-hot vectors.</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>    <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>    <span class="c1"># We will not calculate negative log-likelihood from the definition.</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>    <span class="c1"># Rather, we will follow a circular argument. Because NLL is same as</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>    <span class="c1"># `cross_entropy`, if we calculate cross_entropy that would give us NLL</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>    <span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">CategoricalCrossentropy</span><span class="p">(</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>        <span class="n">from_logits</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">reduction</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Reduction</span><span class="o">.</span><span class="n">NONE</span><span class="p">)</span>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="n">loss</span> <span class="o">=</span> <span class="n">nll_loss</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">preds</span><span class="p">),</span> <span class="n">labels</span><span class="p">)</span>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="n">loss</span>
+</code></pre></div>
+<h2 id="tom-tat">Tóm Tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Lý thuyết thông tin là một lĩnh vực nghiên cứu về mã hóa, giải mã, truyền và thao tác thông tin.</li>
+<li>Entropy là đơn vị đo lượng thông tin được trình bày trong các tín hiệu khác nhau.</li>
+<li>Phân kỳ KL cũng có thể đo độ phân kỳ giữa hai phân phối.</li>
+<li>Cross-entropy có thể được xem là một hàm mục tiêu của phân loại đa lớp. Cực tiểu hóa mất mát cross-entropy tương đương với cực đại hóa hàm log-likelihood.</li>
+</ul>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Xác minh rằng các ví dụ lá bài từ phần đầu tiên thật sự có entropy như đã tuyên bố.</li>
+<li>Chứng minh rằng phân kỳ KL <span class="arithmatex">\(D(p\|q)\)</span> không âm với mọi phân phối <span class="arithmatex">\(p\)</span> và <span class="arithmatex">\(q\)</span>. Gợi ý: dùng bất đẳng thức Jensen, tức dùng thực tế rằng <span class="arithmatex">\(-\log x\)</span> là một hàm lồi.</li>
+<li>Hãy tính entropy từ một vài nguồn dữ liệu:<ul>
+<li>Giả sử bạn đang xem đầu ra do một con khỉ gõ máy chữ tạo ra. Con khỉ nhấn ngẫu nhiên bất kỳ trong số <span class="arithmatex">\(44\)</span> phím của máy chữ (bạn có thể giả định rằng nó chưa phát hiện ra bất kỳ phím đặc biệt nào hay phím shift). Bạn quan sát bao nhiêu bit ngẫu nhiên trên mỗi ký tự?</li>
+<li>Không hài lòng với con khỉ, bạn thay nó bằng một thợ sắp chữ say rượu. Người này có thể tạo ra các từ, dù không mạch lạc. Thay vào đó, người này chọn một từ ngẫu nhiên từ vốn từ vựng <span class="arithmatex">\(2,000\)</span> từ. Giả sử độ dài trung bình của một từ trong tiếng Anh là <span class="arithmatex">\(4.5\)</span> chữ cái. Bây giờ bạn quan sát bao nhiêu bit ngẫu nhiên trên mỗi ký tự?</li>
+<li>Vẫn không hài lòng với kết quả, bạn thay thợ sắp chữ bằng một mô hình ngôn ngữ chất lượng cao. Mô hình ngôn ngữ hiện có thể đạt perplexity thấp đến <span class="arithmatex">\(15\)</span> điểm trên mỗi từ. <em>Perplexity</em> theo ký tự của một mô hình ngôn ngữ được định nghĩa là nghịch đảo của trung bình hình học của một tập xác suất, mỗi xác suất tương ứng với một ký tự trong từ. Cụ thể, nếu độ dài của một từ cho trước là <span class="arithmatex">\(l\)</span>, thì <span class="arithmatex">\(\textrm{PPL}(\textrm{word}) = \left[\prod_i p(\textrm{character}_i)\right]^{ -\frac{1}{l}} = \exp \left[ - \frac{1}{l} \sum_i{\log p(\textrm{character}_i)} \right].\)</span> Giả sử từ kiểm tra có 4.5 chữ cái, bây giờ bạn quan sát bao nhiêu bit ngẫu nhiên trên mỗi ký tự?</li>
+</ul>
+</li>
+<li>Giải thích trực giác vì sao <span class="arithmatex">\(I(X, Y) = H(X) - H(X \mid Y)\)</span>. Sau đó, chứng minh điều này đúng bằng cách biểu diễn cả hai vế như một kỳ vọng theo phân phối đồng thời.</li>
+<li>Phân kỳ KL giữa hai phân phối Gaussian <span class="arithmatex">\(\mathcal{N}(\mu_1, \sigma_1^2)\)</span> và <span class="arithmatex">\(\mathcal{N}(\mu_2, \sigma_2^2)\)</span> là gì?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/1104">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

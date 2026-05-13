@@ -23,7 +23,6 @@ phân loại ảnh CIFAR-10.
 bạn cần đăng ký một tài khoản Kaggle.
 
 ![Thông tin trang web cuộc thi phân loại ảnh CIFAR-10. Có thể lấy tập dữ liệu cuộc thi bằng cách nhấp vào thẻ "Data".](../img/kaggle-cifar10.png)
-:width:`600px`
 <a id="fig_kaggle_cifar10"></a>
 
 ```python

@@ -94,7 +94,6 @@ các lớp tích chập được nhóm trong các phép biến đổi phi tuyế
 được mô tả trong [fig_vgg](#fig_vgg).
 
 ![Từ AlexNet sang VGG. Sự khác biệt chính là VGG bao gồm các khối lớp, trong khi các lớp của AlexNet đều được thiết kế riêng lẻ.](../img/vgg.svg)
-:width:`400px`
 <a id="fig_vgg"></a>
 
 Phần tích chập của mạng kết nối một số khối VGG từ [fig_vgg](#fig_vgg) (cũng được định nghĩa trong hàm `vgg_block`)

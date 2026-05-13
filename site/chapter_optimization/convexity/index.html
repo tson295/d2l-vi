@@ -1,0 +1,2502 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_optimization/convexity/">
+      
+      
+        <link rel="prev" href="../optimization-intro/">
+      
+      
+        <link rel="next" href="../gd/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Lồi - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tinh-loi" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lồi
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tối ưu hóa
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../optimization-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu tối ưu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lồi
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lồi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#inh-nghia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định nghĩa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Định nghĩa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tap-loi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tập Lồi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-loi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Lồi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bat-ang-thuc-jensen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bất Đẳng Thức Jensen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tinh-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tính Chất">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuc-tieu-cuc-bo-la-cuc-tieu-toan-cuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cực Tiểu Cục Bộ Là Cực Tiểu Toàn Cục
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tap-duoi-cua-ham-loi-la-loi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tập Dưới của Hàm Lồi Là Lồi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-loi-va-ao-ham-bac-hai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Lồi và Đạo Hàm Bậc Hai
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rang-buoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ràng Buộc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ràng Buộc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lagrangian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lagrangian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hinh-phat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình Phạt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chiếu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sgd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SGD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../minibatch-sgd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Minibatch SGD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../momentum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Momentum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adagrad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adagrad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rmsprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RMSProp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adadelta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adadelta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adam
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lr-scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#inh-nghia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Định nghĩa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Định nghĩa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tap-loi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tập Lồi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ham-loi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hàm Lồi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bat-ang-thuc-jensen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bất Đẳng Thức Jensen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tinh-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Chất
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tính Chất">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cuc-tieu-cuc-bo-la-cuc-tieu-toan-cuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cực Tiểu Cục Bộ Là Cực Tiểu Toàn Cục
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tap-duoi-cua-ham-loi-la-loi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tập Dưới của Hàm Lồi Là Lồi
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tinh-loi-va-ao-ham-bac-hai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tính Lồi và Đạo Hàm Bậc Hai
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rang-buoc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ràng Buộc
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ràng Buộc">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lagrangian" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lagrangian
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hinh-phat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hình Phạt
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chiếu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tinh-loi">Tính Lồi<a class="headerlink" href="#tinh-loi" title="Permanent link">&para;</a></h1>
+<p><a id="sec_convexity"></a></p>
+<p>Tính lồi đóng vai trò quan trọng trong thiết kế các thuật toán tối ưu hóa.
+Điều này chủ yếu do thực tế rằng việc phân tích và kiểm tra các thuật toán trong bối cảnh như vậy dễ dàng hơn nhiều.
+Nói cách khác,
+nếu thuật toán hoạt động kém ngay cả trong bối cảnh lồi,
+thông thường chúng ta không nên kỳ vọng sẽ thấy kết quả tốt trong các trường hợp khác.
+Hơn nữa, mặc dù các bài toán tối ưu hóa trong deep learning thường không lồi, chúng thường thể hiện một số tính chất của các bài toán lồi gần các cực tiểu cục bộ. Điều này có thể dẫn đến các biến thể tối ưu hóa mới thú vị như [Izmailov.Podoprikhin.Garipov.ea.2018].</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#@tab mxnet</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">mxnet</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet</span><span class="w"> </span><span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab tensorflow</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits</span><span class="w"> </span><span class="kn">import</span> <span class="n">mplot3d</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+</code></pre></div>
+<h2 id="inh-nghia">Định nghĩa<a class="headerlink" href="#inh-nghia" title="Permanent link">&para;</a></h2>
+<p>Trước khi phân tích lồi,
+chúng ta cần định nghĩa <em>tập lồi</em> và <em>hàm lồi</em>.
+Chúng dẫn đến các công cụ toán học thường được áp dụng trong học máy.</p>
+<h3 id="tap-loi">Tập Lồi<a class="headerlink" href="#tap-loi" title="Permanent link">&para;</a></h3>
+<p>Tập hợp là cơ sở của tính lồi. Nói đơn giản, một tập <span class="arithmatex">\(\mathcal{X}\)</span> trong không gian vector là <em>lồi</em> nếu với bất kỳ <span class="arithmatex">\(a, b \in \mathcal{X}\)</span> nào, đoạn thẳng nối <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span> cũng nằm trong <span class="arithmatex">\(\mathcal{X}\)</span>. Về mặt toán học, điều này có nghĩa là với mọi <span class="arithmatex">\(\lambda \in [0, 1]\)</span> chúng ta có</p>
+<div class="arithmatex">\[\lambda  a + (1-\lambda)  b \in \mathcal{X} \textrm{ khi } a, b \in \mathcal{X}.\]</div>
+<p>Điều này nghe có vẻ hơi trừu tượng. Hãy xem xét <a href="#fig_pacman">fig_pacman</a>. Tập đầu tiên không lồi vì tồn tại các đoạn thẳng không nằm trong nó.
+Hai tập còn lại không gặp vấn đề này.</p>
+<p><img alt="Tập đầu tiên không lồi và hai tập còn lại là lồi." src="../../img/pacman.svg" />
+<a id="fig_pacman"></a></p>
+<p>Các định nghĩa bản thân không đặc biệt hữu ích trừ khi bạn có thể làm gì đó với chúng.
+Trong trường hợp này chúng ta có thể xem xét các giao của tập như được hiển thị trong <a href="#fig_convex_intersect">fig_convex_intersect</a>.
+Giả sử <span class="arithmatex">\(\mathcal{X}\)</span> và <span class="arithmatex">\(\mathcal{Y}\)</span> là các tập lồi. Thì <span class="arithmatex">\(\mathcal{X} \cap \mathcal{Y}\)</span> cũng lồi. Để thấy điều này, xét bất kỳ <span class="arithmatex">\(a, b \in \mathcal{X} \cap \mathcal{Y}\)</span>. Vì <span class="arithmatex">\(\mathcal{X}\)</span> và <span class="arithmatex">\(\mathcal{Y}\)</span> lồi, các đoạn thẳng nối <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span> nằm trong cả <span class="arithmatex">\(\mathcal{X}\)</span> và <span class="arithmatex">\(\mathcal{Y}\)</span>. Do đó, chúng cũng phải nằm trong <span class="arithmatex">\(\mathcal{X} \cap \mathcal{Y}\)</span>, từ đó chứng minh định lý.</p>
+<p><img alt="Giao của hai tập lồi là lồi." src="../../img/convex-intersect.svg" />
+<a id="fig_convex_intersect"></a></p>
+<p>Chúng ta có thể tăng cường kết quả này một cách dễ dàng: cho các tập lồi <span class="arithmatex">\(\mathcal{X}_i\)</span>, giao của chúng <span class="arithmatex">\(\cap_{i} \mathcal{X}_i\)</span> là lồi.
+Để thấy rằng chiều ngược lại không đúng, hãy xét hai tập rời nhau <span class="arithmatex">\(\mathcal{X} \cap \mathcal{Y} = \emptyset\)</span>. Bây giờ chọn <span class="arithmatex">\(a \in \mathcal{X}\)</span> và <span class="arithmatex">\(b \in \mathcal{Y}\)</span>. Đoạn thẳng trong <a href="#fig_nonconvex">fig_nonconvex</a> nối <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span> phải chứa một phần không thuộc <span class="arithmatex">\(\mathcal{X}\)</span> cũng không thuộc <span class="arithmatex">\(\mathcal{Y}\)</span>, vì chúng ta giả định <span class="arithmatex">\(\mathcal{X} \cap \mathcal{Y} = \emptyset\)</span>. Do đó đoạn thẳng cũng không nằm trong <span class="arithmatex">\(\mathcal{X} \cup \mathcal{Y}\)</span>, từ đó chứng minh rằng nói chung hợp của các tập lồi không nhất thiết phải lồi.</p>
+<p><img alt="Hợp của hai tập lồi không nhất thiết phải lồi." src="../../img/nonconvex.svg" />
+<a id="fig_nonconvex"></a></p>
+<p>Thông thường các bài toán trong deep learning được định nghĩa trên các tập lồi. Ví dụ, <span class="arithmatex">\(\mathbb{R}^d\)</span>,
+tập các vector thực <span class="arithmatex">\(d\)</span> chiều,
+là một tập lồi (xét cho cùng, đoạn thẳng giữa hai điểm bất kỳ trong <span class="arithmatex">\(\mathbb{R}^d\)</span> vẫn nằm trong <span class="arithmatex">\(\mathbb{R}^d\)</span>). Trong một số trường hợp chúng ta làm việc với các biến có độ dài bị chặn, chẳng hạn như các quả cầu bán kính <span class="arithmatex">\(r\)</span> được định nghĩa bởi <span class="arithmatex">\(\{\mathbf{x} | \mathbf{x} \in \mathbb{R}^d \textrm{ và } \|\mathbf{x}\| \leq r\}\)</span>.</p>
+<h3 id="ham-loi">Hàm Lồi<a class="headerlink" href="#ham-loi" title="Permanent link">&para;</a></h3>
+<p>Bây giờ chúng ta đã có tập lồi, chúng ta có thể giới thiệu <em>hàm lồi</em> <span class="arithmatex">\(f\)</span>.
+Cho một tập lồi <span class="arithmatex">\(\mathcal{X}\)</span>, một hàm <span class="arithmatex">\(f: \mathcal{X} \to \mathbb{R}\)</span> là <em>lồi</em> nếu với mọi <span class="arithmatex">\(x, x' \in \mathcal{X}\)</span> và với mọi <span class="arithmatex">\(\lambda \in [0, 1]\)</span> chúng ta có</p>
+<div class="arithmatex">\[\lambda f(x) + (1-\lambda) f(x') \geq f(\lambda x + (1-\lambda) x').\]</div>
+<p>Để minh họa điều này, hãy vẽ một số hàm và kiểm tra xem những hàm nào thỏa mãn yêu cầu.
+Dưới đây chúng ta định nghĩa một số hàm, cả lồi và không lồi.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># Convex</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">g</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">d2l</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># Nonconvex</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">h</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">d2l</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># Convex</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">x</span><span class="p">,</span> <span class="n">segment</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span> <span class="n">d2l</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">d2l</span><span class="o">.</span><span class="n">use_svg_display</span><span class="p">()</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">h</span><span class="p">]):</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">segment</span><span class="p">],</span> <span class="p">[</span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">func</span><span class="p">(</span><span class="n">segment</span><span class="p">)],</span> <span class="n">axes</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</code></pre></div>
+<p>Đúng như kỳ vọng, hàm cosine là <em>không lồi</em>, trong khi hàm parabol và hàm mũ thì lồi. Lưu ý rằng yêu cầu <span class="arithmatex">\(\mathcal{X}\)</span> là tập lồi là cần thiết để điều kiện có ý nghĩa. Nếu không, kết quả của <span class="arithmatex">\(f(\lambda x + (1-\lambda) x')\)</span> có thể không được xác định rõ.</p>
+<h3 id="bat-ang-thuc-jensen">Bất Đẳng Thức Jensen<a class="headerlink" href="#bat-ang-thuc-jensen" title="Permanent link">&para;</a></h3>
+<p>Cho một hàm lồi <span class="arithmatex">\(f\)</span>,
+một trong những công cụ toán học hữu ích nhất
+là <em>bất đẳng thức Jensen</em>.
+Nó tổng quát hóa định nghĩa của tính lồi:</p>
+<div class="arithmatex">\[\sum_i \alpha_i f(x_i)  \geq f\left(\sum_i \alpha_i x_i\right)    \textrm{ và }    E_X[f(X)]  \geq f\left(E_X[X]\right),\]</div>
+<p>trong đó <span class="arithmatex">\(\alpha_i\)</span> là các số thực không âm sao cho <span class="arithmatex">\(\sum_i \alpha_i = 1\)</span> và <span class="arithmatex">\(X\)</span> là một biến ngẫu nhiên.
+Nói cách khác, kỳ vọng của một hàm lồi không nhỏ hơn hàm lồi của kỳ vọng, trong đó kỳ vọng sau thường là biểu thức đơn giản hơn.
+Để chứng minh bất đẳng thức đầu tiên, chúng ta liên tục áp dụng định nghĩa tính lồi cho từng số hạng trong tổng.</p>
+<p>Một trong những ứng dụng phổ biến của bất đẳng thức Jensen là
+giới hạn một biểu thức phức tạp hơn bằng một biểu thức đơn giản hơn.
+Ví dụ,
+ứng dụng của nó có thể liên quan đến
+log-likelihood của các biến ngẫu nhiên quan sát một phần. Tức là, chúng ta sử dụng</p>
+<div class="arithmatex">\[E_{Y \sim P(Y)}[-\log P(X \mid Y)] \geq -\log P(X),\]</div>
+<p>vì <span class="arithmatex">\(\int P(Y) P(X \mid Y) dY = P(X)\)</span>.
+Điều này có thể được sử dụng trong các phương pháp biến phân. Ở đây <span class="arithmatex">\(Y\)</span> thường là biến ngẫu nhiên không quan sát được, <span class="arithmatex">\(P(Y)\)</span> là ước đoán tốt nhất về phân phối của nó, và <span class="arithmatex">\(P(X)\)</span> là phân phối với <span class="arithmatex">\(Y\)</span> được tích phân ra ngoài. Ví dụ, trong phân cụm <span class="arithmatex">\(Y\)</span> có thể là nhãn cụm và <span class="arithmatex">\(P(X \mid Y)\)</span> là mô hình sinh khi áp dụng nhãn cụm.</p>
+<h2 id="tinh-chat">Tính Chất<a class="headerlink" href="#tinh-chat" title="Permanent link">&para;</a></h2>
+<p>Hàm lồi có nhiều tính chất hữu ích. Chúng ta mô tả một số tính chất thường dùng dưới đây.</p>
+<h3 id="cuc-tieu-cuc-bo-la-cuc-tieu-toan-cuc">Cực Tiểu Cục Bộ Là Cực Tiểu Toàn Cục<a class="headerlink" href="#cuc-tieu-cuc-bo-la-cuc-tieu-toan-cuc" title="Permanent link">&para;</a></h3>
+<p>Trước hết, cực tiểu cục bộ của hàm lồi cũng là cực tiểu toàn cục.
+Chúng ta có thể chứng minh điều này bằng phản chứng như sau.</p>
+<p>Xét một hàm lồi <span class="arithmatex">\(f\)</span> được định nghĩa trên tập lồi <span class="arithmatex">\(\mathcal{X}\)</span>.
+Giả sử <span class="arithmatex">\(x^{\ast} \in \mathcal{X}\)</span> là một cực tiểu cục bộ:
+tồn tại một giá trị dương nhỏ <span class="arithmatex">\(p\)</span> sao cho với <span class="arithmatex">\(x \in \mathcal{X}\)</span> thỏa <span class="arithmatex">\(0 &lt; |x - x^{\ast}| \leq p\)</span> chúng ta có <span class="arithmatex">\(f(x^{\ast}) &lt; f(x)\)</span>.</p>
+<p>Giả sử cực tiểu cục bộ <span class="arithmatex">\(x^{\ast}\)</span>
+không phải là cực tiểu toàn cục của <span class="arithmatex">\(f\)</span>:
+tồn tại <span class="arithmatex">\(x' \in \mathcal{X}\)</span> sao cho <span class="arithmatex">\(f(x') &lt; f(x^{\ast})\)</span>.
+Tồn tại
+<span class="arithmatex">\(\lambda \in [0, 1)\)</span> như <span class="arithmatex">\(\lambda = 1 - \frac{p}{|x^{\ast} - x'|}\)</span>
+sao cho
+<span class="arithmatex">\(0 &lt; |\lambda x^{\ast} + (1-\lambda) x' - x^{\ast}| \leq p\)</span>.</p>
+<p>Tuy nhiên,
+theo định nghĩa hàm lồi, chúng ta có</p>
+<div class="arithmatex">\[\begin{aligned}
+    f(\lambda x^{\ast} + (1-\lambda) x') &amp;\leq \lambda f(x^{\ast}) + (1-\lambda) f(x') \\
+    &amp;&lt; \lambda f(x^{\ast}) + (1-\lambda) f(x^{\ast}) \\
+    &amp;= f(x^{\ast}),
+\end{aligned}\]</div>
+<p>điều này mâu thuẫn với phát biểu rằng <span class="arithmatex">\(x^{\ast}\)</span> là cực tiểu cục bộ.
+Do đó, không tồn tại <span class="arithmatex">\(x' \in \mathcal{X}\)</span> sao cho <span class="arithmatex">\(f(x') &lt; f(x^{\ast})\)</span>. Cực tiểu cục bộ <span class="arithmatex">\(x^{\ast}\)</span> cũng là cực tiểu toàn cục.</p>
+<p>Ví dụ, hàm lồi <span class="arithmatex">\(f(x) = (x-1)^2\)</span> có cực tiểu cục bộ tại <span class="arithmatex">\(x=1\)</span>, cũng là cực tiểu toàn cục.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab all</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">segment</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">segment</span><span class="p">)],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p>Thực tế là cực tiểu cục bộ của hàm lồi cũng là cực tiểu toàn cục rất thuận tiện.
+Điều này có nghĩa là nếu chúng ta tối thiểu hóa hàm thì không thể "bị mắc kẹt".
+Tuy nhiên, lưu ý rằng điều này không có nghĩa là không thể có nhiều hơn một cực tiểu toàn cục hoặc rằng thậm chí có thể không tồn tại cực tiểu toàn cục. Ví dụ, hàm <span class="arithmatex">\(f(x) = \mathrm{max}(|x|-1, 0)\)</span> đạt giá trị nhỏ nhất trên khoảng <span class="arithmatex">\([-1, 1]\)</span>. Ngược lại, hàm <span class="arithmatex">\(f(x) = \exp(x)\)</span> không đạt giá trị nhỏ nhất trên <span class="arithmatex">\(\mathbb{R}\)</span>: khi <span class="arithmatex">\(x \to -\infty\)</span> nó tiệm cận đến <span class="arithmatex">\(0\)</span>, nhưng không có <span class="arithmatex">\(x\)</span> nào để <span class="arithmatex">\(f(x) = 0\)</span>.</p>
+<h3 id="tap-duoi-cua-ham-loi-la-loi">Tập Dưới của Hàm Lồi Là Lồi<a class="headerlink" href="#tap-duoi-cua-ham-loi-la-loi" title="Permanent link">&para;</a></h3>
+<p>Chúng ta có thể
+định nghĩa các tập lồi một cách thuận tiện
+thông qua <em>tập dưới</em> của hàm lồi.
+Cụ thể,
+cho một hàm lồi <span class="arithmatex">\(f\)</span> được định nghĩa trên tập lồi <span class="arithmatex">\(\mathcal{X}\)</span>,
+bất kỳ tập dưới nào</p>
+<div class="arithmatex">\[\mathcal{S}_b \stackrel{\textrm{def}}{=} \{x | x \in \mathcal{X} \textrm{ và } f(x) \leq b\}\]</div>
+<p>đều là lồi.</p>
+<p>Hãy chứng minh điều này nhanh chóng. Nhớ lại rằng với bất kỳ <span class="arithmatex">\(x, x' \in \mathcal{S}_b\)</span> chúng ta cần chỉ ra rằng <span class="arithmatex">\(\lambda x + (1-\lambda) x' \in \mathcal{S}_b\)</span> miễn là <span class="arithmatex">\(\lambda \in [0, 1]\)</span>.
+Vì <span class="arithmatex">\(f(x) \leq b\)</span> và <span class="arithmatex">\(f(x') \leq b\)</span>,
+theo định nghĩa tính lồi chúng ta có</p>
+<div class="arithmatex">\[f(\lambda x + (1-\lambda) x') \leq \lambda f(x) + (1-\lambda) f(x') \leq b.\]</div>
+<h3 id="tinh-loi-va-ao-ham-bac-hai">Tính Lồi và Đạo Hàm Bậc Hai<a class="headerlink" href="#tinh-loi-va-ao-ham-bac-hai" title="Permanent link">&para;</a></h3>
+<p>Khi đạo hàm bậc hai của hàm <span class="arithmatex">\(f: \mathbb{R}^n \rightarrow \mathbb{R}\)</span> tồn tại, việc kiểm tra <span class="arithmatex">\(f\)</span> có lồi hay không rất dễ dàng.
+Tất cả những gì chúng ta cần làm là kiểm tra xem Hessian của <span class="arithmatex">\(f\)</span> có nửa xác định dương không: <span class="arithmatex">\(\nabla^2f \succeq 0\)</span>, tức là,
+ký hiệu ma trận Hessian <span class="arithmatex">\(\nabla^2f\)</span> là <span class="arithmatex">\(\mathbf{H}\)</span>,
+<span class="arithmatex">\(\mathbf{x}^\top \mathbf{H} \mathbf{x} \geq 0\)</span>
+với mọi <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^n\)</span>.
+Ví dụ, hàm <span class="arithmatex">\(f(\mathbf{x}) = \frac{1}{2} \|\mathbf{x}\|^2\)</span> là lồi vì <span class="arithmatex">\(\nabla^2 f = \mathbf{1}\)</span>, tức là Hessian của nó là ma trận đơn vị.</p>
+<p>Hình thức hơn, một hàm một chiều khả vi hai lần <span class="arithmatex">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span> là lồi
+khi và chỉ khi đạo hàm bậc hai <span class="arithmatex">\(f'' \geq 0\)</span>. Với bất kỳ hàm đa chiều khả vi hai lần <span class="arithmatex">\(f: \mathbb{R}^{n} \rightarrow \mathbb{R}\)</span>,
+nó lồi khi và chỉ khi Hessian của nó <span class="arithmatex">\(\nabla^2f \succeq 0\)</span>.</p>
+<p>Đầu tiên, chúng ta cần chứng minh trường hợp một chiều.
+Để thấy rằng
+tính lồi của <span class="arithmatex">\(f\)</span> kéo theo
+<span class="arithmatex">\(f'' \geq 0\)</span>, chúng ta sử dụng thực tế rằng</p>
+<div class="arithmatex">\[\frac{1}{2} f(x + \epsilon) + \frac{1}{2} f(x - \epsilon) \geq f\left(\frac{x + \epsilon}{2} + \frac{x - \epsilon}{2}\right) = f(x).\]</div>
+<p>Vì đạo hàm bậc hai được cho bởi giới hạn trên sai phân hữu hạn, suy ra</p>
+<div class="arithmatex">\[f''(x) = \lim_{\epsilon \to 0} \frac{f(x+\epsilon) + f(x - \epsilon) - 2f(x)}{\epsilon^2} \geq 0.\]</div>
+<p>Để thấy rằng
+<span class="arithmatex">\(f'' \geq 0\)</span> kéo theo <span class="arithmatex">\(f\)</span> là lồi,
+chúng ta sử dụng thực tế rằng <span class="arithmatex">\(f'' \geq 0\)</span> kéo theo <span class="arithmatex">\(f'\)</span> là hàm đơn điệu không giảm. Cho <span class="arithmatex">\(a &lt; x &lt; b\)</span> là ba điểm trong <span class="arithmatex">\(\mathbb{R}\)</span>,
+trong đó <span class="arithmatex">\(x = (1-\lambda)a + \lambda b\)</span> và <span class="arithmatex">\(\lambda \in (0, 1)\)</span>.
+Theo định lý giá trị trung bình,
+tồn tại <span class="arithmatex">\(\alpha \in [a, x]\)</span> và <span class="arithmatex">\(\beta \in [x, b]\)</span>
+sao cho</p>
+<div class="arithmatex">\[f'(\alpha) = \frac{f(x) - f(a)}{x-a} \textrm{ và } f'(\beta) = \frac{f(b) - f(x)}{b-x}.\]</div>
+<p>Bởi tính đơn điệu <span class="arithmatex">\(f'(\beta) \geq f'(\alpha)\)</span>, do đó</p>
+<div class="arithmatex">\[\frac{x-a}{b-a}f(b) + \frac{b-x}{b-a}f(a) \geq f(x).\]</div>
+<p>Vì <span class="arithmatex">\(x = (1-\lambda)a + \lambda b\)</span>,
+chúng ta có</p>
+<div class="arithmatex">\[\lambda f(b) + (1-\lambda)f(a) \geq f((1-\lambda)a + \lambda b),\]</div>
+<p>từ đó chứng minh tính lồi.</p>
+<p>Thứ hai, chúng ta cần một bổ đề trước khi
+chứng minh trường hợp đa chiều:
+<span class="arithmatex">\(f: \mathbb{R}^n \rightarrow \mathbb{R}\)</span>
+là lồi khi và chỉ khi với mọi <span class="arithmatex">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^n\)</span></p>
+<div class="arithmatex">\[g(z) \stackrel{\textrm{def}}{=} f(z \mathbf{x} + (1-z)  \mathbf{y}) \textrm{ trong đó } z \in [0,1]\]</div>
+<p>là lồi.</p>
+<p>Để chứng minh rằng tính lồi của <span class="arithmatex">\(f\)</span> kéo theo <span class="arithmatex">\(g\)</span> là lồi,
+chúng ta có thể chỉ ra rằng với mọi <span class="arithmatex">\(a, b, \lambda \in [0, 1]\)</span> (do đó
+<span class="arithmatex">\(0 \leq \lambda a + (1-\lambda) b \leq 1\)</span>)</p>
+<div class="arithmatex">\[\begin{aligned} &amp;g(\lambda a + (1-\lambda) b)\\
+=&amp;f\left(\left(\lambda a + (1-\lambda) b\right)\mathbf{x} + \left(1-\lambda a - (1-\lambda) b\right)\mathbf{y} \right)\\
+=&amp;f\left(\lambda \left(a \mathbf{x} + (1-a)  \mathbf{y}\right)  + (1-\lambda) \left(b \mathbf{x} + (1-b)  \mathbf{y}\right) \right)\\
+\leq&amp; \lambda f\left(a \mathbf{x} + (1-a)  \mathbf{y}\right)  + (1-\lambda) f\left(b \mathbf{x} + (1-b)  \mathbf{y}\right) \\
+=&amp; \lambda g(a) + (1-\lambda) g(b).
+\end{aligned}\]</div>
+<p>Để chứng minh chiều ngược lại,
+chúng ta có thể chỉ ra rằng với
+mọi <span class="arithmatex">\(\lambda \in [0, 1]\)</span></p>
+<div class="arithmatex">\[\begin{aligned} &amp;f(\lambda \mathbf{x} + (1-\lambda) \mathbf{y})\\
+=&amp;g(\lambda \cdot 1 + (1-\lambda) \cdot 0)\\
+\leq&amp; \lambda g(1)  + (1-\lambda) g(0) \\
+=&amp; \lambda f(\mathbf{x}) + (1-\lambda) f(\mathbf{y}).
+\end{aligned}\]</div>
+<p>Cuối cùng,
+sử dụng bổ đề trên và kết quả của trường hợp một chiều,
+trường hợp đa chiều
+có thể được chứng minh như sau.
+Một hàm đa chiều <span class="arithmatex">\(f: \mathbb{R}^n \rightarrow \mathbb{R}\)</span> là lồi
+khi và chỉ khi với mọi <span class="arithmatex">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^n\)</span>, <span class="arithmatex">\(g(z) \stackrel{\textrm{def}}{=} f(z \mathbf{x} + (1-z)  \mathbf{y})\)</span>, trong đó <span class="arithmatex">\(z \in [0,1]\)</span>,
+là lồi.
+Theo trường hợp một chiều,
+điều này đúng khi và chỉ khi
+<span class="arithmatex">\(g'' = (\mathbf{x} - \mathbf{y})^\top \mathbf{H}(\mathbf{x} - \mathbf{y}) \geq 0\)</span> (<span class="arithmatex">\(\mathbf{H} \stackrel{\textrm{def}}{=} \nabla^2f\)</span>)
+với mọi <span class="arithmatex">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^n\)</span>,
+tương đương với <span class="arithmatex">\(\mathbf{H} \succeq 0\)</span>
+theo định nghĩa của ma trận nửa xác định dương.</p>
+<h2 id="rang-buoc">Ràng Buộc<a class="headerlink" href="#rang-buoc" title="Permanent link">&para;</a></h2>
+<p>Một trong những tính chất tuyệt đẹp của tối ưu hóa lồi là nó cho phép chúng ta xử lý các ràng buộc một cách hiệu quả. Tức là, nó cho phép chúng ta giải các bài toán <em>tối ưu hóa có ràng buộc</em> có dạng:</p>
+<div class="arithmatex">\[\begin{aligned} \mathop{\textrm{minimize~}}_{\mathbf{x}} &amp; f(\mathbf{x}) \\
+    \textrm{ subject to } &amp; c_i(\mathbf{x}) \leq 0 \textrm{ for all } i \in \{1, \ldots, n\},
+\end{aligned}\]</div>
+<p>trong đó <span class="arithmatex">\(f\)</span> là hàm mục tiêu và các hàm <span class="arithmatex">\(c_i\)</span> là các hàm ràng buộc. Để thấy tác dụng của điều này, hãy xét trường hợp <span class="arithmatex">\(c_1(\mathbf{x}) = \|\mathbf{x}\|_2 - 1\)</span>. Trong trường hợp này các tham số <span class="arithmatex">\(\mathbf{x}\)</span> bị ràng buộc trong quả cầu đơn vị. Nếu ràng buộc thứ hai là <span class="arithmatex">\(c_2(\mathbf{x}) = \mathbf{v}^\top \mathbf{x} + b\)</span>, thì tương ứng với tất cả <span class="arithmatex">\(\mathbf{x}\)</span> nằm trong một nửa không gian. Thỏa mãn cả hai ràng buộc đồng thời tương đương với việc chọn một lát cắt của quả cầu.</p>
+<h3 id="lagrangian">Lagrangian<a class="headerlink" href="#lagrangian" title="Permanent link">&para;</a></h3>
+<p>Nói chung, việc giải một bài toán tối ưu hóa có ràng buộc là khó. Một cách giải quyết có nguồn gốc từ vật lý với trực giác khá đơn giản. Hãy tưởng tượng một quả bóng trong một hộp. Quả bóng sẽ lăn đến nơi thấp nhất và lực hấp dẫn sẽ được cân bằng bởi các lực mà các cạnh của hộp có thể tác dụng lên quả bóng. Tóm lại, gradient của hàm mục tiêu (tức là trọng lực) sẽ được bù lại bởi gradient của hàm ràng buộc (quả bóng cần ở trong hộp bởi vì các bức tường "đẩy ngược lại").
+Lưu ý rằng một số ràng buộc có thể không hoạt động:
+các bức tường không bị chạm bởi quả bóng
+sẽ không thể tác dụng lực lên quả bóng.</p>
+<p>Bỏ qua phần dẫn xuất của <em>Lagrangian</em> <span class="arithmatex">\(L\)</span>,
+lý luận trên
+có thể được biểu diễn thông qua bài toán tối ưu hóa điểm yên ngựa sau:</p>
+<div class="arithmatex">\[L(\mathbf{x}, \alpha_1, \ldots, \alpha_n) = f(\mathbf{x}) + \sum_{i=1}^n \alpha_i c_i(\mathbf{x}) \textrm{ trong đó } \alpha_i \geq 0.\]</div>
+<p>Ở đây các biến <span class="arithmatex">\(\alpha_i\)</span> (<span class="arithmatex">\(i=1,\ldots,n\)</span>) được gọi là <em>nhân tử Lagrange</em> đảm bảo các ràng buộc được thực thi đúng cách. Chúng được chọn vừa đủ lớn để đảm bảo <span class="arithmatex">\(c_i(\mathbf{x}) \leq 0\)</span> với mọi <span class="arithmatex">\(i\)</span>. Ví dụ, với bất kỳ <span class="arithmatex">\(\mathbf{x}\)</span> nào mà <span class="arithmatex">\(c_i(\mathbf{x}) &lt; 0\)</span> tự nhiên, chúng ta sẽ chọn <span class="arithmatex">\(\alpha_i = 0\)</span>. Hơn nữa, đây là bài toán tối ưu hóa điểm yên ngựa trong đó người ta muốn <em>tối đa hóa</em> <span class="arithmatex">\(L\)</span> theo tất cả <span class="arithmatex">\(\alpha_i\)</span> và đồng thời <em>tối thiểu hóa</em> nó theo <span class="arithmatex">\(\mathbf{x}\)</span>. Có nhiều tài liệu phong phú giải thích cách đi đến hàm <span class="arithmatex">\(L(\mathbf{x}, \alpha_1, \ldots, \alpha_n)\)</span>. Với mục đích của chúng ta, chỉ cần biết rằng điểm yên ngựa của <span class="arithmatex">\(L\)</span> là nơi bài toán tối ưu hóa có ràng buộc gốc được giải một cách tối ưu.</p>
+<h3 id="hinh-phat">Hình Phạt<a class="headerlink" href="#hinh-phat" title="Permanent link">&para;</a></h3>
+<p>Một cách thỏa mãn các bài toán tối ưu hóa có ràng buộc ít nhất là <em>xấp xỉ</em> là thích nghi Lagrangian <span class="arithmatex">\(L\)</span>.
+Thay vì thỏa mãn <span class="arithmatex">\(c_i(\mathbf{x}) \leq 0\)</span> chúng ta chỉ đơn giản thêm <span class="arithmatex">\(\alpha_i c_i(\mathbf{x})\)</span> vào hàm mục tiêu <span class="arithmatex">\(f(x)\)</span>. Điều này đảm bảo rằng các ràng buộc sẽ không bị vi phạm quá nhiều.</p>
+<p>Thực ra, chúng ta đã sử dụng thủ thuật này suốt từ đầu. Hãy xem xét weight decay trong <a href="#sec_weight_decay">sec_weight_decay</a>. Trong đó chúng ta thêm <span class="arithmatex">\(\frac{\lambda}{2} \|\mathbf{w}\|^2\)</span> vào hàm mục tiêu để đảm bảo <span class="arithmatex">\(\mathbf{w}\)</span> không tăng quá lớn. Từ góc độ tối ưu hóa có ràng buộc chúng ta có thể thấy rằng điều này sẽ đảm bảo <span class="arithmatex">\(\|\mathbf{w}\|^2 - r^2 \leq 0\)</span> với một bán kính <span class="arithmatex">\(r\)</span> nào đó. Điều chỉnh giá trị của <span class="arithmatex">\(\lambda\)</span> cho phép chúng ta thay đổi kích thước của <span class="arithmatex">\(\mathbf{w}\)</span>.</p>
+<p>Nói chung, việc thêm hình phạt là một cách tốt để đảm bảo thỏa mãn ràng buộc xấp xỉ. Trong thực tế điều này hóa ra mạnh mẽ hơn nhiều so với thỏa mãn chính xác. Hơn nữa, đối với các bài toán không lồi, nhiều tính chất làm cho cách tiếp cận chính xác hấp dẫn trong trường hợp lồi (ví dụ: tính tối ưu) không còn đúng nữa.</p>
+<h3 id="chieu">Chiếu<a class="headerlink" href="#chieu" title="Permanent link">&para;</a></h3>
+<p>Một chiến lược thay thế để thỏa mãn các ràng buộc là phép chiếu. Chúng ta cũng đã gặp chúng trước đây, ví dụ khi xử lý cắt gradient trong <a href="#sec_rnn-scratch">sec_rnn-scratch</a>. Ở đó chúng ta đảm bảo gradient có độ dài bị chặn bởi <span class="arithmatex">\(\theta\)</span> thông qua</p>
+<div class="arithmatex">\[\mathbf{g} \leftarrow \mathbf{g} \cdot \mathrm{min}(1, \theta/\|\mathbf{g}\|).\]</div>
+<p>Điều này hóa ra là <em>phép chiếu</em> của <span class="arithmatex">\(\mathbf{g}\)</span> lên quả cầu bán kính <span class="arithmatex">\(\theta\)</span>. Tổng quát hơn, phép chiếu lên tập lồi <span class="arithmatex">\(\mathcal{X}\)</span> được định nghĩa là</p>
+<div class="arithmatex">\[\textrm{Proj}_\mathcal{X}(\mathbf{x}) = \mathop{\mathrm{argmin}}_{\mathbf{x}' \in \mathcal{X}} \|\mathbf{x} - \mathbf{x}'\|,\]</div>
+<p>là điểm gần nhất trong <span class="arithmatex">\(\mathcal{X}\)</span> với <span class="arithmatex">\(\mathbf{x}\)</span>.</p>
+<p><img alt="Phép chiếu lồi." src="../../img/projections.svg" />
+<a id="fig_projections"></a></p>
+<p>Định nghĩa toán học của phép chiếu nghe có vẻ hơi trừu tượng. <a href="#fig_projections">fig_projections</a> giải thích nó rõ ràng hơn. Trong đó chúng ta có hai tập lồi, một đường tròn và một hình thoi.
+Các điểm bên trong cả hai tập (màu vàng) không thay đổi khi chiếu.
+Các điểm bên ngoài cả hai tập (màu đen) được chiếu lên
+các điểm bên trong các tập (màu đỏ) gần nhất với các điểm gốc (màu đen).
+Trong khi với quả cầu <span class="arithmatex">\(\ell_2\)</span> điều này giữ nguyên hướng, điều này không nhất thiết đúng trong trường hợp tổng quát, như có thể thấy trong trường hợp hình thoi.</p>
+<p>Một trong những ứng dụng của phép chiếu lồi là tính toán các vector trọng số thưa. Trong trường hợp này chúng ta chiếu các vector trọng số lên quả cầu <span class="arithmatex">\(\ell_1\)</span>,
+là phiên bản tổng quát của trường hợp hình thoi trong <a href="#fig_projections">fig_projections</a>.</p>
+<h2 id="tom-tat">Tóm Tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Trong bối cảnh deep learning, mục đích chính của hàm lồi là thúc đẩy các thuật toán tối ưu hóa và giúp chúng ta hiểu chúng một cách chi tiết. Trong phần tiếp theo, chúng ta sẽ thấy cách gradient descent và stochastic gradient descent có thể được dẫn xuất tương ứng.</p>
+<ul>
+<li>Giao của các tập lồi là lồi. Hợp thì không.</li>
+<li>Kỳ vọng của một hàm lồi không nhỏ hơn hàm lồi của kỳ vọng (bất đẳng thức Jensen).</li>
+<li>Một hàm khả vi hai lần là lồi khi và chỉ khi Hessian của nó (ma trận đạo hàm bậc hai) là nửa xác định dương.</li>
+<li>Ràng buộc lồi có thể được thêm vào thông qua Lagrangian. Trong thực tế chúng ta có thể đơn giản thêm chúng với hình phạt vào hàm mục tiêu.</li>
+<li>Phép chiếu ánh xạ đến các điểm trong tập lồi gần nhất với các điểm gốc.</li>
+</ul>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Giả sử chúng ta muốn xác minh tính lồi của một tập bằng cách vẽ tất cả các đường thẳng giữa các điểm trong tập và kiểm tra xem các đường có nằm trong tập không.<ol>
+<li>Chứng minh rằng chỉ cần kiểm tra các điểm trên biên là đủ.</li>
+<li>Chứng minh rằng chỉ cần kiểm tra các đỉnh của tập là đủ.</li>
+</ol>
+</li>
+<li>Ký hiệu <span class="arithmatex">\(\mathcal{B}_p[r] \stackrel{\textrm{def}}{=} \{\mathbf{x} | \mathbf{x} \in \mathbb{R}^d \textrm{ và } \|\mathbf{x}\|_p \leq r\}\)</span> là quả cầu bán kính <span class="arithmatex">\(r\)</span> sử dụng chuẩn <span class="arithmatex">\(p\)</span>. Chứng minh rằng <span class="arithmatex">\(\mathcal{B}_p[r]\)</span> là lồi với mọi <span class="arithmatex">\(p \geq 1\)</span>.</li>
+<li>Cho các hàm lồi <span class="arithmatex">\(f\)</span> và <span class="arithmatex">\(g\)</span>, chỉ ra rằng <span class="arithmatex">\(\mathrm{max}(f, g)\)</span> cũng là lồi. Chứng minh rằng <span class="arithmatex">\(\mathrm{min}(f, g)\)</span> không lồi.</li>
+<li>Chứng minh rằng chuẩn hóa của hàm softmax là lồi. Cụ thể hơn hãy chứng minh tính lồi của
+    <span class="arithmatex">\(f(x) = \log \sum_i \exp(x_i)\)</span>.</li>
+<li>Chứng minh rằng các không gian con tuyến tính, tức là <span class="arithmatex">\(\mathcal{X} = \{\mathbf{x} | \mathbf{W} \mathbf{x} = \mathbf{b}\}\)</span>, là các tập lồi.</li>
+<li>Chứng minh rằng trong trường hợp các không gian con tuyến tính với <span class="arithmatex">\(\mathbf{b} = \mathbf{0}\)</span>, phép chiếu <span class="arithmatex">\(\textrm{Proj}_\mathcal{X}\)</span> có thể được viết là <span class="arithmatex">\(\mathbf{M} \mathbf{x}\)</span> với một ma trận <span class="arithmatex">\(\mathbf{M}\)</span> nào đó.</li>
+<li>Chỉ ra rằng với các hàm lồi khả vi hai lần <span class="arithmatex">\(f\)</span> chúng ta có thể viết <span class="arithmatex">\(f(x + \epsilon) = f(x) + \epsilon f'(x) + \frac{1}{2} \epsilon^2 f''(x + \xi)\)</span> với một <span class="arithmatex">\(\xi \in [0, \epsilon]\)</span> nào đó.</li>
+<li>Cho một tập lồi <span class="arithmatex">\(\mathcal{X}\)</span> và hai vector <span class="arithmatex">\(\mathbf{x}\)</span> và <span class="arithmatex">\(\mathbf{y}\)</span>, chứng minh rằng phép chiếu không bao giờ làm tăng khoảng cách, tức là <span class="arithmatex">\(\|\mathbf{x} - \mathbf{y}\| \geq \|\textrm{Proj}_\mathcal{X}(\mathbf{x}) - \textrm{Proj}_\mathcal{X}(\mathbf{y})\|\)</span>.</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/350">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

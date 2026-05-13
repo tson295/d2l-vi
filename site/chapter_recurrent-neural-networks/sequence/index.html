@@ -1,0 +1,2439 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_recurrent-neural-networks/sequence/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../text-sequence/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Chuỗi - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lam-viec-voi-chuoi" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chuỗi
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chuỗi
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chuỗi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-tu-hoi-quy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình Tự hồi quy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-chuoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình Chuỗi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mô hình Chuỗi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mo-hinh-markov" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình Markov
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thu-tu-giai-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thứ tự Giải mã
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#huan-luyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Huấn luyện
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#du-oan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dự đoán
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../text-sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chuỗi văn bản
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../language-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mô hình ngôn ngữ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnn-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rnn-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bptt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BPTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-tu-hoi-quy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình Tự hồi quy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mo-hinh-chuoi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình Chuỗi
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mô hình Chuỗi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mo-hinh-markov" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mô hình Markov
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thu-tu-giai-ma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thứ tự Giải mã
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#huan-luyen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Huấn luyện
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#du-oan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dự đoán
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="lam-viec-voi-chuoi">Làm việc với Chuỗi<a class="headerlink" href="#lam-viec-voi-chuoi" title="Permanent link">&para;</a></h1>
+<p><a id="sec_sequence"></a></p>
+<p>Cho đến nay, chúng ta đã tập trung vào các mô hình mà đầu vào
+bao gồm một vector đặc trưng duy nhất <span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^d\)</span>.
+Sự thay đổi quan điểm chính khi phát triển các mô hình
+có khả năng xử lý dữ liệu tuần tự là bây giờ chúng ta
+tập trung vào các đầu vào bao gồm một danh sách có thứ tự
+các vector đặc trưng <span class="arithmatex">\(\mathbf{x}_1, \dots, \mathbf{x}_T\)</span>,
+trong đó mỗi vector đặc trưng <span class="arithmatex">\(\mathbf{x}_t\)</span> được
+đánh chỉ số bởi một bước thời gian <span class="arithmatex">\(t \in \mathbb{Z}^+\)</span>
+nằm trong <span class="arithmatex">\(\mathbb{R}^d\)</span>.</p>
+<p>Một số tập dữ liệu bao gồm một chuỗi lớn duy nhất.
+Hãy xem xét, ví dụ, các luồng cực dài
+của các số liệu đọc từ cảm biến có thể có sẵn cho các nhà khoa học khí hậu.
+Trong những trường hợp như vậy, chúng ta có thể tạo tập dữ liệu huấn luyện
+bằng cách lấy mẫu ngẫu nhiên các chuỗi con có độ dài được xác định trước.
+Thường xuyên hơn, dữ liệu của chúng ta đến dưới dạng một tập hợp các chuỗi.
+Hãy xem xét các ví dụ sau:
+(i) một tập hợp các tài liệu,
+mỗi tài liệu được biểu diễn dưới dạng chuỗi từ của riêng nó,
+và mỗi tài liệu có độ dài riêng <span class="arithmatex">\(T_i\)</span>;
+(ii) biểu diễn chuỗi của
+các lần bệnh nhân nằm viện,
+trong đó mỗi lần nằm viện bao gồm một số sự kiện
+và độ dài chuỗi phụ thuộc xấp xỉ
+vào thời gian nằm viện.</p>
+<p>Trước đây, khi xử lý các đầu vào riêng lẻ,
+chúng ta giả định rằng chúng được lấy mẫu độc lập
+từ cùng một phân phối nền <span class="arithmatex">\(P(X)\)</span>.
+Trong khi chúng ta vẫn giả định rằng toàn bộ chuỗi
+(ví dụ: toàn bộ tài liệu hoặc quỹ đạo bệnh nhân)
+được lấy mẫu độc lập,
+chúng ta không thể giả định rằng dữ liệu đến
+tại mỗi bước thời gian là độc lập với nhau.
+Ví dụ, các từ có khả năng xuất hiện sau trong tài liệu
+phụ thuộc nhiều vào các từ xuất hiện trước đó trong tài liệu.
+Thuốc mà bệnh nhân có thể nhận được
+vào ngày thứ 10 của một lần nhập viện
+phụ thuộc nhiều vào những gì đã xảy ra
+trong chín ngày trước đó.</p>
+<p>Điều này không nên gây bất ngờ.
+Nếu chúng ta không tin rằng các phần tử trong một chuỗi có liên quan với nhau,
+chúng ta sẽ không bận tâm mô hình hóa chúng dưới dạng một chuỗi ngay từ đầu.
+Hãy xem xét tính hữu ích của các tính năng tự động điền
+phổ biến trên các công cụ tìm kiếm và các ứng dụng email hiện đại.
+Chúng hữu ích chính xác vì thường có thể
+dự đoán (không hoàn hảo, nhưng tốt hơn đoán ngẫu nhiên)
+những phần tiếp theo có thể có của một chuỗi,
+khi có một tiền tố ban đầu.
+Đối với hầu hết các mô hình chuỗi,
+chúng ta không yêu cầu tính độc lập,
+hay thậm chí tính dừng, của các chuỗi.
+Thay vào đó, chúng ta chỉ yêu cầu
+bản thân các chuỗi được lấy mẫu
+từ một phân phối nền cố định nào đó
+trên toàn bộ các chuỗi.</p>
+<p>Cách tiếp cận linh hoạt này cho phép các hiện tượng như
+(i) tài liệu trông khác nhau đáng kể
+ở phần đầu so với phần cuối;
+hoặc (ii) tình trạng bệnh nhân phát triển theo hướng
+hồi phục hoặc tử vong
+trong suốt quá trình nằm viện;
+hoặc (iii) sở thích của khách hàng phát triển theo những cách có thể dự đoán được
+trong quá trình tương tác liên tục với hệ thống gợi ý.</p>
+<p>Đôi khi chúng ta muốn dự đoán một mục tiêu cố định <span class="arithmatex">\(y\)</span>
+khi có đầu vào có cấu trúc tuần tự
+(ví dụ: phân loại cảm xúc dựa trên đánh giá phim).
+Những lúc khác, chúng ta muốn dự đoán một mục tiêu có cấu trúc tuần tự
+(<span class="arithmatex">\(y_1, \ldots, y_T\)</span>)
+khi có đầu vào cố định (ví dụ: chú thích ảnh).
+Vẫn còn những lúc khác, mục tiêu của chúng ta là dự đoán các mục tiêu có cấu trúc tuần tự
+dựa trên các đầu vào có cấu trúc tuần tự
+(ví dụ: dịch máy hoặc chú thích video).
+Các nhiệm vụ chuỗi-sang-chuỗi như vậy có hai dạng:
+(i) <em>căn chỉnh</em>: trong đó đầu vào tại mỗi bước thời gian
+tương ứng với một mục tiêu tương ứng (ví dụ: gán nhãn từ loại);
+(ii) <em>không căn chỉnh</em>: trong đó đầu vào và mục tiêu
+không nhất thiết thể hiện sự tương ứng từng bước
+(ví dụ: dịch máy).</p>
+<p>Trước khi lo lắng về việc xử lý các mục tiêu thuộc bất kỳ loại nào,
+chúng ta có thể giải quyết vấn đề đơn giản nhất:
+mô hình hóa mật độ không có giám sát (còn gọi là <em>mô hình hóa chuỗi</em>).
+Ở đây, khi có một tập hợp các chuỗi,
+mục tiêu của chúng ta là ước tính hàm khối xác suất
+cho biết chúng ta có thể quan sát thấy bất kỳ chuỗi nào đó như thế nào,
+tức là <span class="arithmatex">\(p(\mathbf{x}_1, \ldots, \mathbf{x}_T)\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+</code></pre></div>
+<h2 id="mo-hinh-tu-hoi-quy">Mô hình Tự hồi quy<a class="headerlink" href="#mo-hinh-tu-hoi-quy" title="Permanent link">&para;</a></h2>
+<p>Trước khi giới thiệu các mạng nơ-ron chuyên biệt
+được thiết kế để xử lý dữ liệu có cấu trúc tuần tự,
+hãy cùng xem qua một số dữ liệu chuỗi thực tế
+và xây dựng một số trực giác cơ bản và các công cụ thống kê.
+Cụ thể, chúng ta sẽ tập trung vào dữ liệu giá cổ phiếu
+từ chỉ số FTSE 100 (<a href="#fig_ftse100">fig_ftse100</a>).
+Tại mỗi <em>bước thời gian</em> <span class="arithmatex">\(t \in \mathbb{Z}^+\)</span>, chúng ta quan sát
+giá, <span class="arithmatex">\(x_t\)</span>, của chỉ số tại thời điểm đó.</p>
+<p><img alt="Chỉ số FTSE 100 trong khoảng 30 năm." src="../../img/ftse100.png" />
+<a id="fig_ftse100"></a></p>
+<p>Bây giờ giả sử một nhà giao dịch muốn thực hiện các giao dịch ngắn hạn,
+chiến lược tham gia hoặc thoát khỏi chỉ số,
+tùy thuộc vào việc họ có tin
+rằng nó sẽ tăng hay giảm
+trong bước thời gian tiếp theo.
+Không có bất kỳ đặc trưng nào khác
+(tin tức, dữ liệu báo cáo tài chính, v.v.),
+tín hiệu duy nhất có sẵn để dự đoán
+giá trị tiếp theo là lịch sử giá cho đến nay.
+Do đó, nhà giao dịch quan tâm đến việc biết
+phân phối xác suất</p>
+<div class="arithmatex">\[P(x_t \mid x_{t-1}, \ldots, x_1)\]</div>
+<p>trên các giá mà chỉ số có thể đạt được
+ở bước thời gian tiếp theo.
+Trong khi việc ước tính toàn bộ phân phối
+trên một biến ngẫu nhiên có giá trị liên tục
+có thể khó khăn, nhà giao dịch sẽ hài lòng với
+việc tập trung vào một vài thống kê quan trọng của phân phối,
+đặc biệt là giá trị kỳ vọng và phương sai.
+Một chiến lược đơn giản để ước tính kỳ vọng có điều kiện</p>
+<div class="arithmatex">\[\mathbb{E}[(x_t \mid x_{t-1}, \ldots, x_1)],\]</div>
+<p>sẽ là áp dụng một mô hình hồi quy tuyến tính
+(nhớ lại <a href="#sec_linear_regression">sec_linear_regression</a>).
+Các mô hình như vậy hồi quy giá trị của một tín hiệu
+theo các giá trị trước đó của cùng tín hiệu đó
+được gọi một cách tự nhiên là <em>mô hình tự hồi quy</em>.
+Chỉ có một vấn đề lớn: số lượng đầu vào,
+<span class="arithmatex">\(x_{t-1}, \ldots, x_1\)</span> thay đổi, tùy thuộc vào <span class="arithmatex">\(t\)</span>.
+Nói cách khác, số lượng đầu vào tăng lên
+với lượng dữ liệu mà chúng ta gặp phải.
+Do đó, nếu chúng ta muốn xử lý dữ liệu lịch sử
+như một tập huấn luyện, chúng ta phải đối mặt với vấn đề
+rằng mỗi ví dụ có số lượng đặc trưng khác nhau.
+Phần lớn nội dung tiếp theo trong chương này
+sẽ xoay quanh các kỹ thuật
+để vượt qua những thách thức này
+khi tham gia vào các bài toán mô hình hóa <em>tự hồi quy</em> như vậy
+trong đó đối tượng quan tâm là
+<span class="arithmatex">\(P(x_t \mid x_{t-1}, \ldots, x_1)\)</span>
+hoặc một số thống kê của phân phối này.</p>
+<p>Một vài chiến lược thường xuyên xuất hiện.
+Trước hết,
+chúng ta có thể tin rằng mặc dù các chuỗi dài
+<span class="arithmatex">\(x_{t-1}, \ldots, x_1\)</span> có sẵn,
+nhưng có thể không cần thiết
+phải nhìn lại xa trong lịch sử
+khi dự đoán tương lai gần.
+Trong trường hợp này, chúng ta có thể thỏa mãn
+khi điều kiện hóa trên một cửa sổ có độ dài <span class="arithmatex">\(\tau\)</span>
+và chỉ sử dụng <span class="arithmatex">\(x_{t-1}, \ldots, x_{t-\tau}\)</span> quan sát.
+Lợi ích trực tiếp là bây giờ số lượng đối số
+luôn giống nhau, ít nhất với <span class="arithmatex">\(t &gt; \tau\)</span>.
+Điều này cho phép chúng ta huấn luyện bất kỳ mô hình tuyến tính hoặc mạng sâu nào
+đòi hỏi các vector có độ dài cố định làm đầu vào.
+Thứ hai, chúng ta có thể phát triển các mô hình duy trì
+một tóm tắt <span class="arithmatex">\(h_t\)</span> về các quan sát trong quá khứ
+(xem <a href="#fig_sequence-model">fig_sequence-model</a>)
+và đồng thời cập nhật <span class="arithmatex">\(h_t\)</span>
+ngoài dự đoán <span class="arithmatex">\(\hat{x}_t\)</span>.
+Điều này dẫn đến các mô hình không chỉ ước tính <span class="arithmatex">\(x_t\)</span>
+với <span class="arithmatex">\(\hat{x}_t = P(x_t \mid h_{t})\)</span>
+mà còn cập nhật dạng
+<span class="arithmatex">\(h_t = g(h_{t-1}, x_{t-1})\)</span>.
+Vì <span class="arithmatex">\(h_t\)</span> không bao giờ được quan sát,
+các mô hình này còn được gọi là
+<em>mô hình tự hồi quy ẩn</em>.</p>
+<p><img alt="Một mô hình tự hồi quy ẩn." src="../../img/sequence-model.svg" />
+<a id="fig_sequence-model"></a></p>
+<p>Để xây dựng dữ liệu huấn luyện từ dữ liệu lịch sử,
+thường tạo ra các ví dụ bằng cách lấy mẫu ngẫu nhiên các cửa sổ.
+Nói chung, chúng ta không mong đợi thời gian đứng yên.
+Tuy nhiên, chúng ta thường giả định rằng trong khi
+các giá trị cụ thể của <span class="arithmatex">\(x_t\)</span> có thể thay đổi,
+nhưng các động lực theo đó mỗi quan sát tiếp theo
+được tạo ra khi có các quan sát trước thì không thay đổi.
+Các nhà thống kê gọi các động lực không thay đổi là <em>dừng</em>.</p>
+<h2 id="mo-hinh-chuoi">Mô hình Chuỗi<a class="headerlink" href="#mo-hinh-chuoi" title="Permanent link">&para;</a></h2>
+<p>Đôi khi, đặc biệt khi làm việc với ngôn ngữ,
+chúng ta muốn ước tính xác suất kết hợp
+của toàn bộ chuỗi.
+Đây là nhiệm vụ thường gặp khi làm việc với các chuỗi
+bao gồm các <em>token</em> rời rạc, chẳng hạn như các từ.
+Nói chung, các hàm ước tính này được gọi là <em>mô hình chuỗi</em>
+và đối với dữ liệu ngôn ngữ tự nhiên, chúng được gọi là <em>mô hình ngôn ngữ</em>.
+Lĩnh vực mô hình hóa chuỗi đã được thúc đẩy nhiều bởi xử lý ngôn ngữ tự nhiên,
+đến mức chúng ta thường mô tả các mô hình chuỗi là "mô hình ngôn ngữ",
+ngay cả khi xử lý dữ liệu phi ngôn ngữ.
+Mô hình ngôn ngữ hữu ích vì nhiều lý do.
+Đôi khi chúng ta muốn đánh giá khả năng xuất hiện của các câu.
+Ví dụ, chúng ta có thể muốn so sánh
+mức độ tự nhiên của hai đầu ra ứng cử
+được tạo bởi một hệ thống dịch máy
+hoặc bởi một hệ thống nhận dạng giọng nói.
+Nhưng mô hình ngôn ngữ không chỉ cho chúng ta
+khả năng <em>đánh giá</em> xác suất,
+mà còn có khả năng <em>lấy mẫu</em> các chuỗi,
+và thậm chí tối ưu hóa để tìm các chuỗi có xác suất cao nhất.</p>
+<p>Trong khi mô hình ngôn ngữ thoạt nhìn có vẻ không phải là
+một bài toán tự hồi quy,
+chúng ta có thể rút gọn mô hình ngôn ngữ thành dự đoán tự hồi quy
+bằng cách phân tích mật độ kết hợp của chuỗi <span class="arithmatex">\(p(x_1, \ldots, x_T)\)</span>
+thành tích các mật độ có điều kiện
+theo hướng từ trái sang phải
+bằng cách áp dụng quy tắc chuỗi của xác suất:</p>
+<div class="arithmatex">\[P(x_1, \ldots, x_T) = P(x_1) \prod_{t=2}^T P(x_t \mid x_{t-1}, \ldots, x_1).\]</div>
+<p>Lưu ý rằng nếu chúng ta đang làm việc với các tín hiệu rời rạc như các từ,
+thì mô hình tự hồi quy phải là một bộ phân loại xác suất,
+xuất ra phân phối xác suất đầy đủ
+trên từ điển cho bất kỳ từ nào sẽ đến tiếp theo,
+khi có ngữ cảnh bên trái.</p>
+<h3 id="mo-hinh-markov">Mô hình Markov<a class="headerlink" href="#mo-hinh-markov" title="Permanent link">&para;</a></h3>
+<p><a id="subsec_markov-models"></a></p>
+<p>Bây giờ giả sử chúng ta muốn áp dụng chiến lược được đề cập ở trên,
+trong đó chúng ta chỉ điều kiện hóa trên <span class="arithmatex">\(\tau\)</span> bước thời gian trước đó,
+tức là <span class="arithmatex">\(x_{t-1}, \ldots, x_{t-\tau}\)</span>, thay vì
+toàn bộ lịch sử chuỗi <span class="arithmatex">\(x_{t-1}, \ldots, x_1\)</span>.
+Khi nào chúng ta có thể loại bỏ lịch sử
+ngoài <span class="arithmatex">\(\tau\)</span> bước trước đó
+mà không mất bất kỳ sức mạnh dự đoán nào,
+chúng ta nói rằng chuỗi thỏa mãn <em>điều kiện Markov</em>,
+tức là <em>tương lai độc lập có điều kiện với quá khứ,
+khi có lịch sử gần đây</em>.
+Khi <span class="arithmatex">\(\tau = 1\)</span>, chúng ta nói rằng dữ liệu được đặc trưng
+bởi một <em>mô hình Markov bậc một</em>,
+và khi <span class="arithmatex">\(\tau = k\)</span>, chúng ta nói rằng dữ liệu được đặc trưng
+bởi một mô hình Markov bậc <span class="arithmatex">\(k^{\textrm{th}}\)</span>.
+Khi điều kiện Markov bậc một được thỏa mãn (<span class="arithmatex">\(\tau = 1\)</span>),
+phân tích xác suất kết hợp của chúng ta trở thành tích
+các xác suất của mỗi từ khi có <em>từ</em> trước đó:</p>
+<div class="arithmatex">\[P(x_1, \ldots, x_T) = P(x_1) \prod_{t=2}^T P(x_t \mid x_{t-1}).\]</div>
+<p>Chúng ta thường thấy hữu ích khi làm việc với các mô hình hoạt động
+như thể điều kiện Markov được thỏa mãn,
+ngay cả khi chúng ta biết rằng điều này chỉ <em>xấp xỉ</em> đúng.
+Với các tài liệu văn bản thực, chúng ta tiếp tục thu được thông tin
+khi đưa vào ngày càng nhiều ngữ cảnh bên trái hơn.
+Nhưng những lợi ích này giảm nhanh chóng.
+Do đó, đôi khi chúng ta thỏa hiệp, loại bỏ các khó khăn tính toán và thống kê
+bằng cách huấn luyện các mô hình mà tính hợp lệ phụ thuộc
+vào một điều kiện Markov bậc <span class="arithmatex">\(k^{\textrm{th}}\)</span>.
+Ngay cả các mô hình ngôn ngữ dựa trên RNN và Transformer khổng lồ ngày nay
+hiếm khi kết hợp hơn hàng nghìn từ ngữ cảnh.</p>
+<p>Với dữ liệu rời rạc, một mô hình Markov thực sự
+chỉ đơn giản đếm số lần
+mỗi từ xuất hiện trong mỗi ngữ cảnh, tạo ra
+ước tính tần suất tương đối của <span class="arithmatex">\(P(x_t \mid x_{t-1})\)</span>.
+Bất cứ khi nào dữ liệu chỉ nhận các giá trị rời rạc
+(như trong ngôn ngữ),
+chuỗi từ có khả năng nhất có thể được tính toán hiệu quả
+bằng cách sử dụng lập trình động.</p>
+<h3 id="thu-tu-giai-ma">Thứ tự Giải mã<a class="headerlink" href="#thu-tu-giai-ma" title="Permanent link">&para;</a></h3>
+<p>Bạn có thể tự hỏi tại sao chúng ta biểu diễn
+sự phân tích của chuỗi văn bản <span class="arithmatex">\(P(x_1, \ldots, x_T)\)</span>
+như một chuỗi xác suất có điều kiện từ trái sang phải.
+Tại sao không phải từ phải sang trái hay một thứ tự ngẫu nhiên nào khác?
+Về nguyên tắc, không có gì sai khi khai triển
+<span class="arithmatex">\(P(x_1, \ldots, x_T)\)</span> theo thứ tự ngược lại.
+Kết quả là một phân tích hợp lệ:</p>
+<div class="arithmatex">\[P(x_1, \ldots, x_T) = P(x_T) \prod_{t=T-1}^1 P(x_t \mid x_{t+1}, \ldots, x_T).\]</div>
+<p>Tuy nhiên, có nhiều lý do tại sao việc phân tích văn bản
+theo cùng hướng mà chúng ta đọc nó
+(từ trái sang phải đối với hầu hết các ngôn ngữ,
+nhưng từ phải sang trái đối với tiếng Ả Rập và tiếng Do Thái)
+được ưa thích cho nhiệm vụ mô hình hóa ngôn ngữ.
+Thứ nhất, đây chỉ là hướng tự nhiên hơn để chúng ta suy nghĩ.
+Dù sao đi nữa, tất cả chúng ta đều đọc văn bản mỗi ngày,
+và quá trình này được hướng dẫn bởi khả năng của chúng ta
+để dự đoán những từ và cụm từ nào
+có khả năng xuất hiện tiếp theo.
+Hãy nghĩ về bao nhiêu lần bạn đã hoàn thành
+câu của người khác.
+Do đó, ngay cả khi chúng ta không có lý do nào khác để ưa thích các giải mã có thứ tự như vậy,
+chúng sẽ hữu ích chỉ vì chúng ta có trực giác tốt hơn
+về những gì nên có xác suất cao khi dự đoán theo thứ tự này.</p>
+<p>Thứ hai, bằng cách phân tích theo thứ tự,
+chúng ta có thể gán xác suất cho các chuỗi có độ dài tùy ý
+sử dụng cùng một mô hình ngôn ngữ.
+Để chuyển đổi một xác suất qua các bước <span class="arithmatex">\(1\)</span> đến <span class="arithmatex">\(t\)</span>
+thành một xác suất mở rộng đến từ <span class="arithmatex">\(t+1\)</span>, chúng ta chỉ cần
+nhân với xác suất có điều kiện
+của token bổ sung khi có các token trước đó:
+<span class="arithmatex">\(P(x_{t+1}, \ldots, x_1) = P(x_{t}, \ldots, x_1) \cdot P(x_{t+1} \mid x_{t}, \ldots, x_1)\)</span>.</p>
+<p>Thứ ba, chúng ta có các mô hình dự đoán mạnh hơn
+để dự đoán các từ liền kề hơn so với
+các từ ở các vị trí tùy ý khác.
+Trong khi tất cả các thứ tự phân tích đều hợp lệ,
+chúng không nhất thiết đại diện cho các bài toán
+mô hình hóa dự đoán có độ khó như nhau.
+Điều này đúng không chỉ với ngôn ngữ,
+mà còn với các loại dữ liệu khác,
+ví dụ, khi dữ liệu có cấu trúc nhân quả.
+Ví dụ, chúng ta tin rằng các sự kiện tương lai không thể ảnh hưởng đến quá khứ.
+Do đó, nếu chúng ta thay đổi <span class="arithmatex">\(x_t\)</span>, chúng ta có thể ảnh hưởng
+đến những gì xảy ra với <span class="arithmatex">\(x_{t+1}\)</span> về phía trước nhưng không phải ngược lại.
+Nghĩa là, nếu chúng ta thay đổi <span class="arithmatex">\(x_t\)</span>, phân phối của các sự kiện quá khứ sẽ không thay đổi.
+Trong một số ngữ cảnh, điều này khiến việc dự đoán <span class="arithmatex">\(P(x_{t+1} \mid x_t)\)</span>
+dễ hơn so với dự đoán <span class="arithmatex">\(P(x_t \mid x_{t+1})\)</span>.
+Ví dụ, trong một số trường hợp, chúng ta có thể tìm <span class="arithmatex">\(x_{t+1} = f(x_t) + \epsilon\)</span>
+cho một số nhiễu cộng <span class="arithmatex">\(\epsilon\)</span>,
+trong khi điều ngược lại không đúng [Hoyer.Janzing.Mooij.ea.2009].
+Đây là tin tuyệt vời, vì thường hướng thuận
+là hướng mà chúng ta quan tâm đến việc ước tính.
+Cuốn sách của Peters.Janzing.Scholkopf.2017 có thêm nội dung về chủ đề này.
+Chúng ta chỉ mới chạm bề mặt của nó.</p>
+<h2 id="huan-luyen">Huấn luyện<a class="headerlink" href="#huan-luyen" title="Permanent link">&para;</a></h2>
+<p>Trước khi tập trung vào dữ liệu văn bản,
+hãy thử điều này trước với một số
+dữ liệu tổng hợp có giá trị liên tục.</p>
+<p>(<strong>Ở đây, 1000 dữ liệu tổng hợp của chúng ta sẽ tuân theo
+hàm lượng giác <code>sin</code>,
+áp dụng cho 0.01 lần bước thời gian.
+Để làm cho bài toán thú vị hơn một chút,
+chúng ta tạo nhiễu cho mỗi mẫu bằng nhiễu cộng.</strong>)
+Từ chuỗi này, chúng ta trích xuất các ví dụ huấn luyện,
+mỗi ví dụ bao gồm các đặc trưng và một nhãn.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Data</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">DataModule</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">num_train</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">save_hyperparameters</span><span class="p">()</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">d2l</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;mxnet&#39;</span><span class="p">,</span> <span class="s1">&#39;pytorch&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="n">d2l</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;tensorflow&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="n">d2l</span><span class="o">.</span><span class="n">normal</span><span class="p">([</span><span class="n">T</span><span class="p">])</span> <span class="o">*</span> <span class="mf">0.2</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="k">if</span> <span class="n">tab</span><span class="o">.</span><span class="n">selected</span><span class="p">(</span><span class="s1">&#39;jax&#39;</span><span class="p">):</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>            <span class="n">key</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">get_key</span><span class="p">()</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.01</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">)</span> <span class="o">+</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">key</span><span class="p">,</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>                                                                   <span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">*</span> <span class="mf">0.2</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<p>Để bắt đầu, chúng ta thử một mô hình hoạt động như thể
+dữ liệu thỏa mãn điều kiện Markov bậc <span class="arithmatex">\(\tau^{\textrm{th}}\)</span>,
+và do đó dự đoán <span class="arithmatex">\(x_t\)</span> chỉ sử dụng <span class="arithmatex">\(\tau\)</span> quan sát trước đó.
+[<strong>Do đó với mỗi bước thời gian, chúng ta có một ví dụ
+với nhãn <span class="arithmatex">\(y  = x_t\)</span> và các đặc trưng
+<span class="arithmatex">\(\mathbf{x}_t = [x_{t-\tau}, \ldots, x_{t-1}]\)</span>.</strong>]
+Người đọc tinh tế có thể nhận thấy rằng
+điều này dẫn đến <span class="arithmatex">\(1000-\tau\)</span> ví dụ,
+vì chúng ta thiếu lịch sử đủ cho <span class="arithmatex">\(y_1, \ldots, y_\tau\)</span>.
+Trong khi chúng ta có thể đệm <span class="arithmatex">\(\tau\)</span> chuỗi đầu tiên bằng số không,
+để đơn giản, chúng ta bỏ chúng đi.
+Tập dữ liệu kết quả chứa <span class="arithmatex">\(T - \tau\)</span> ví dụ,
+trong đó mỗi đầu vào của mô hình có độ dài chuỗi <span class="arithmatex">\(\tau\)</span>.
+Chúng ta (<strong>tạo một bộ lặp dữ liệu trên 600 ví dụ đầu tiên</strong>),
+bao phủ một khoảng của hàm sin.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nd">@d2l</span><span class="o">.</span><span class="n">add_to_class</span><span class="p">(</span><span class="n">Data</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="o">+</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">)]</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tau</span><span class="p">:],</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">i</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_train</span><span class="p">)</span> <span class="k">if</span> <span class="n">train</span> <span class="k">else</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_train</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tensorloader</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">],</span> <span class="n">train</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+<p>Trong ví dụ này, mô hình của chúng ta sẽ là hồi quy tuyến tính chuẩn.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">model</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">trainer</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="du-oan">Dự đoán<a class="headerlink" href="#du-oan" title="Permanent link">&para;</a></h2>
+<p>[<strong>Để đánh giá mô hình của chúng ta, trước tiên chúng ta kiểm tra
+mức độ thực hiện tốt ở dự đoán trước một bước</strong>].</p>
+<p>Các dự đoán này trông tốt,
+ngay cả gần cuối tại <span class="arithmatex">\(t=1000\)</span>.</p>
+<p>Nhưng nếu chúng ta chỉ quan sát dữ liệu chuỗi
+cho đến bước thời gian 604 (<code>n_train + tau</code>)
+và muốn thực hiện dự đoán nhiều bước
+vào tương lai thì sao?
+Thật không may, chúng ta không thể trực tiếp tính toán
+dự đoán trước một bước cho bước thời gian 609,
+vì chúng ta không biết các đầu vào tương ứng,
+chỉ thấy đến <span class="arithmatex">\(x_{604}\)</span>.
+Chúng ta có thể giải quyết vấn đề này bằng cách thay thế
+các dự đoán trước đó của chúng ta làm đầu vào cho mô hình
+để thực hiện các dự đoán tiếp theo,
+chiếu về phía trước, từng bước một,
+cho đến khi đạt được bước thời gian mong muốn:</p>
+<div class="arithmatex">\[\begin{aligned}
+\hat{x}_{605} &amp;= f(x_{601}, x_{602}, x_{603}, x_{604}), \\
+\hat{x}_{606} &amp;= f(x_{602}, x_{603}, x_{604}, \hat{x}_{605}), \\
+\hat{x}_{607} &amp;= f(x_{603}, x_{604}, \hat{x}_{605}, \hat{x}_{606}),\\
+\hat{x}_{608} &amp;= f(x_{604}, \hat{x}_{605}, \hat{x}_{606}, \hat{x}_{607}),\\
+\hat{x}_{609} &amp;= f(\hat{x}_{605}, \hat{x}_{606}, \hat{x}_{607}, \hat{x}_{608}),\\
+&amp;\vdots\end{aligned}\]</div>
+<p>Nói chung, với một chuỗi quan sát <span class="arithmatex">\(x_1, \ldots, x_t\)</span>,
+đầu ra dự đoán của nó <span class="arithmatex">\(\hat{x}_{t+k}\)</span> tại bước thời gian <span class="arithmatex">\(t+k\)</span>
+được gọi là <em>dự đoán trước <span class="arithmatex">\(k\)</span> bước</em>.
+Vì chúng ta đã quan sát đến <span class="arithmatex">\(x_{604}\)</span>,
+dự đoán trước <span class="arithmatex">\(k\)</span> bước của nó là <span class="arithmatex">\(\hat{x}_{604+k}\)</span>.
+Nói cách khác, chúng ta sẽ phải
+tiếp tục sử dụng các dự đoán của chính mình
+để thực hiện các dự đoán nhiều bước.
+Hãy xem điều này hoạt động như thế nào.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">data</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">tau</span><span class="p">:],</span> <span class="n">data</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">num_train</span><span class="o">+</span><span class="n">data</span><span class="o">.</span><span class="n">tau</span><span class="p">:]],</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>         <span class="p">[</span><span class="n">onestep_preds</span><span class="p">,</span> <span class="n">multistep_preds</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">num_train</span><span class="o">+</span><span class="n">data</span><span class="o">.</span><span class="n">tau</span><span class="p">:]],</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>         <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;1-step preds&#39;</span><span class="p">,</span> <span class="s1">&#39;multistep preds&#39;</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<p>Thật không may, trong trường hợp này, chúng ta thất bại hoàn toàn.
+Các dự đoán hội tụ về một hằng số
+khá nhanh sau vài bước.
+Tại sao thuật toán lại thực hiện tệ hơn nhiều
+khi dự đoán xa hơn vào tương lai?
+Về cơ bản, điều này là do thực tế
+rằng các sai số tích lũy lại.
+Giả sử rằng sau bước 1 chúng ta có một sai số nào đó <span class="arithmatex">\(\epsilon_1 = \bar\epsilon\)</span>.
+Bây giờ <em>đầu vào</em> cho bước 2 bị nhiễu loạn bởi <span class="arithmatex">\(\epsilon_1\)</span>,
+do đó chúng ta chịu một sai số theo thứ bậc
+<span class="arithmatex">\(\epsilon_2 = \bar\epsilon + c \epsilon_1\)</span>
+cho một hằng số <span class="arithmatex">\(c\)</span> nào đó, và cứ thế.
+Các dự đoán có thể phân kỳ nhanh chóng
+khỏi các quan sát thực tế.
+Bạn có thể đã quen thuộc
+với hiện tượng phổ biến này.
+Ví dụ, các dự báo thời tiết cho 24 giờ tới
+có xu hướng khá chính xác, nhưng ngoài khoảng đó,
+độ chính xác giảm nhanh chóng.
+Chúng ta sẽ thảo luận về các phương pháp để cải thiện điều này
+trong suốt chương này và hơn thế nữa.</p>
+<p>Hãy [<strong>xem xét kỹ hơn những khó khăn trong dự đoán trước <span class="arithmatex">\(k\)</span> bước</strong>]
+bằng cách tính toán các dự đoán trên toàn bộ chuỗi cho <span class="arithmatex">\(k = 1, 4, 16, 64\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">steps</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">preds</span> <span class="o">=</span> <span class="n">k_step_pred</span><span class="p">(</span><span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">time</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">tau</span><span class="o">+</span><span class="n">steps</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">:],</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>         <span class="p">[</span><span class="n">d2l</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">],</span> <span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>         <span class="n">legend</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">-step preds&#39;</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">steps</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<p>Điều này rõ ràng minh họa cách chất lượng dự đoán thay đổi
+khi chúng ta cố gắng dự đoán xa hơn vào tương lai.
+Trong khi các dự đoán trước 4 bước vẫn trông tốt,
+bất cứ điều gì ngoài điều đó gần như vô dụng.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Có sự khác biệt khá lớn về độ khó
+giữa nội suy và ngoại suy.
+Do đó, nếu bạn có một chuỗi, hãy luôn tôn trọng
+thứ tự thời gian của dữ liệu khi huấn luyện,
+tức là không bao giờ huấn luyện trên dữ liệu tương lai.
+Khi có loại dữ liệu này,
+các mô hình chuỗi đòi hỏi các công cụ thống kê chuyên biệt để ước tính.
+Hai lựa chọn phổ biến là mô hình tự hồi quy
+và mô hình tự hồi quy ẩn.
+Đối với các mô hình nhân quả (ví dụ: thời gian tiến về phía trước),
+ước tính theo hướng thuận thường
+dễ hơn nhiều so với hướng ngược.
+Đối với một chuỗi quan sát đến bước thời gian <span class="arithmatex">\(t\)</span>,
+đầu ra dự đoán của nó tại bước thời gian <span class="arithmatex">\(t+k\)</span>
+là <em>dự đoán trước <span class="arithmatex">\(k\)</span> bước</em>.
+Khi chúng ta dự đoán xa hơn trong thời gian bằng cách tăng <span class="arithmatex">\(k\)</span>,
+các sai số tích lũy và chất lượng dự đoán giảm,
+thường là đáng kể.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Cải thiện mô hình trong thí nghiệm của phần này.<ol>
+<li>Kết hợp nhiều hơn bốn quan sát trong quá khứ? Bạn thực sự cần bao nhiêu?</li>
+<li>Bạn cần bao nhiêu quan sát trong quá khứ nếu không có nhiễu? Gợi ý: bạn có thể viết <span class="arithmatex">\(\sin\)</span> và <span class="arithmatex">\(\cos\)</span> dưới dạng một phương trình vi phân.</li>
+<li>Bạn có thể kết hợp các quan sát cũ hơn trong khi giữ nguyên tổng số đặc trưng không? Điều này có cải thiện độ chính xác không? Tại sao?</li>
+<li>Thay đổi kiến trúc mạng nơ-ron và đánh giá hiệu suất. Bạn có thể huấn luyện mô hình mới với nhiều epoch hơn. Bạn quan sát thấy gì?</li>
+</ol>
+</li>
+<li>Một nhà đầu tư muốn tìm một chứng khoán tốt để mua.
+   Họ xem xét lợi nhuận trong quá khứ để quyết định cái nào có khả năng hoạt động tốt.
+   Điều gì có thể sai với chiến lược này?</li>
+<li>Tính nhân quả có áp dụng cho văn bản không? Đến mức độ nào?</li>
+<li>Đưa ra một ví dụ khi cần mô hình tự hồi quy ẩn
+   để nắm bắt động lực của dữ liệu.</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/114">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

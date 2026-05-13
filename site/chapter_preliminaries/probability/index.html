@@ -1,0 +1,2854 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_preliminaries/probability/">
+      
+      
+        <link rel="prev" href="../autograd/">
+      
+      
+        <link rel="next" href="../lookup-api/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Xác suất - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#xac-suat-va-thong-ke" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Xác suất
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kiến thức nền
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ndarray/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thao tác với dữ liệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiền xử lý dữ liệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autograd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tự động vi phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác suất
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác suất
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vi-du-on-gian-tung-ong-xu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ví dụ Đơn giản: Tung Đồng xu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xu-ly-chinh-thuc-hon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xử lý Chính thức Hơn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bien-ngau-nhien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biến Ngẫu nhiên
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nhieu-bien-ngau-nhien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nhiều Biến Ngẫu nhiên
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mot-vi-du" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một Ví dụ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ky-vong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kỳ vọng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thảo luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lookup-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tài liệu API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vi-du-on-gian-tung-ong-xu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ví dụ Đơn giản: Tung Đồng xu
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xu-ly-chinh-thuc-hon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Xử lý Chính thức Hơn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bien-ngau-nhien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Biến Ngẫu nhiên
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nhieu-bien-ngau-nhien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nhiều Biến Ngẫu nhiên
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mot-vi-du" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Một Ví dụ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ky-vong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kỳ vọng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thao-luan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thảo luận
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="xac-suat-va-thong-ke">Xác suất và Thống kê<a class="headerlink" href="#xac-suat-va-thong-ke" title="Permanent link">&para;</a></h1>
+<p><a id="sec_prob"></a></p>
+<p>Dù theo cách nào,
+machine learning đều xoay quanh sự không chắc chắn.
+Trong học có giám sát, ta muốn dự đoán
+một điều gì đó chưa biết (<em>mục tiêu</em>)
+dựa trên điều gì đó đã biết (<em>đặc trưng</em>).
+Tùy thuộc vào mục tiêu của ta,
+ta có thể cố gắng dự đoán
+giá trị có khả năng nhất của mục tiêu.
+Hoặc ta có thể dự đoán giá trị có
+khoảng cách kỳ vọng nhỏ nhất từ mục tiêu.
+Và đôi khi ta không chỉ muốn
+dự đoán một giá trị cụ thể
+mà còn muốn <em>lượng hóa sự không chắc chắn của ta</em>.
+Ví dụ, dựa trên một số đặc trưng
+mô tả bệnh nhân,
+ta có thể muốn biết <em>khả năng</em> họ
+bị đau tim trong năm tới là bao nhiêu.
+Trong học không giám sát,
+ta thường quan tâm đến sự không chắc chắn.
+Để xác định xem một tập hợp các phép đo có bất thường không,
+sẽ hữu ích khi biết khả năng
+quan sát các giá trị trong quần thể quan tâm.
+Hơn nữa, trong học tăng cường,
+ta muốn phát triển các tác tử
+hành động thông minh trong các môi trường khác nhau.
+Điều này đòi hỏi suy luận về
+cách môi trường có thể thay đổi
+và phần thưởng nào ta có thể nhận được
+tương ứng với mỗi hành động có thể.</p>
+<p><em>Xác suất</em> là lĩnh vực toán học
+liên quan đến suy luận trong điều kiện không chắc chắn.
+Với mô hình xác suất của một quá trình nào đó,
+ta có thể suy luận về khả năng xảy ra của các sự kiện khác nhau.
+Việc dùng xác suất để mô tả
+tần suất của các sự kiện có thể lặp lại
+(như tung đồng xu)
+khá không gây tranh cãi.
+Trên thực tế, các học giả <em>tần suất</em> tuân theo
+cách hiểu về xác suất
+chỉ áp dụng cho các sự kiện có thể lặp lại như vậy.
+Ngược lại, các học giả <em>Bayesian</em>
+dùng ngôn ngữ xác suất rộng hơn
+để hình thức hóa suy luận trong điều kiện không chắc chắn.
+Xác suất Bayesian được đặc trưng
+bởi hai tính năng độc đáo:
+(i) gán mức độ tin tưởng
+cho các sự kiện không thể lặp lại,
+ví dụ: <em>xác suất</em> một con đập sẽ sụp đổ là bao nhiêu?;
+và (ii) tính chủ quan. Trong khi xác suất Bayesian
+cung cấp các quy tắc rõ ràng
+về cách cập nhật niềm tin
+dưới ánh sáng của bằng chứng mới,
+nó cho phép các cá nhân khác nhau
+bắt đầu với các niềm tin <em>tiên nghiệm</em> khác nhau.
+<em>Thống kê</em> giúp ta suy luận ngược lại,
+bắt đầu từ việc thu thập và tổ chức dữ liệu
+và rút ra những suy luận
+ta có thể đưa ra về quá trình
+đã tạo ra dữ liệu.
+Bất cứ khi nào ta phân tích tập dữ liệu, tìm kiếm các mẫu
+mà ta hy vọng có thể đặc trưng cho quần thể rộng hơn,
+ta đang sử dụng tư duy thống kê.
+Nhiều khóa học, chuyên ngành, luận văn, nghề nghiệp, bộ môn,
+công ty và tổ chức đã được dành riêng
+cho việc nghiên cứu xác suất và thống kê.
+Mặc dù phần này chỉ chạm bề mặt,
+ta sẽ cung cấp nền tảng
+mà bạn cần để bắt đầu xây dựng mô hình.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch.distributions.multinomial</span><span class="w"> </span><span class="kn">import</span> <span class="n">Multinomial</span>
+</code></pre></div>
+<h2 id="vi-du-on-gian-tung-ong-xu">Ví dụ Đơn giản: Tung Đồng xu<a class="headerlink" href="#vi-du-on-gian-tung-ong-xu" title="Permanent link">&para;</a></h2>
+<p>Hãy tưởng tượng ta định tung một đồng xu
+và muốn lượng hóa khả năng
+ta thấy mặt ngửa (so với mặt úp).
+Nếu đồng xu <em>cân bằng</em>,
+thì cả hai kết quả
+(ngửa và úp),
+đều có xác suất bằng nhau.
+Hơn nữa, nếu ta định tung đồng xu <span class="arithmatex">\(n\)</span> lần
+thì tỷ lệ mặt ngửa
+mà ta <em>kỳ vọng</em> sẽ thấy
+phải khớp chính xác với
+tỷ lệ <em>kỳ vọng</em> của mặt úp.
+Một cách trực quan để thấy điều này
+là qua tính đối xứng:
+với mỗi kết quả có thể
+với <span class="arithmatex">\(n_\textrm{h}\)</span> lần ngửa và <span class="arithmatex">\(n_\textrm{t} = (n - n_\textrm{h})\)</span> lần úp,
+có một kết quả có xác suất bằng nhau
+với <span class="arithmatex">\(n_\textrm{t}\)</span> lần ngửa và <span class="arithmatex">\(n_\textrm{h}\)</span> lần úp.
+Lưu ý rằng điều này chỉ có thể
+nếu trung bình ta kỳ vọng thấy
+<span class="arithmatex">\(1/2\)</span> lần tung ra ngửa
+và <span class="arithmatex">\(1/2\)</span> ra úp.
+Tất nhiên, nếu bạn thực hiện thí nghiệm này
+nhiều lần với <span class="arithmatex">\(n=1000000\)</span> lần tung mỗi lần,
+bạn có thể không bao giờ thấy một thử nghiệm
+mà <span class="arithmatex">\(n_\textrm{h} = n_\textrm{t}\)</span> chính xác.</p>
+<p>Chính thức, đại lượng <span class="arithmatex">\(1/2\)</span> được gọi là <em>xác suất</em>
+và ở đây nó nắm bắt sự chắc chắn mà với đó
+bất kỳ lần tung nào sẽ ra mặt ngửa.
+Xác suất gán điểm từ <span class="arithmatex">\(0\)</span> đến <span class="arithmatex">\(1\)</span>
+cho các kết quả quan tâm, được gọi là <em>sự kiện</em>.
+Ở đây sự kiện quan tâm là <span class="arithmatex">\(\textrm{ngửa}\)</span>
+và ta ký hiệu xác suất tương ứng là <span class="arithmatex">\(P(\textrm{ngửa})\)</span>.
+Xác suất <span class="arithmatex">\(1\)</span> chỉ sự chắc chắn tuyệt đối
+(hãy tưởng tượng đồng xu hai mặt đều là ngửa)
+và xác suất <span class="arithmatex">\(0\)</span> chỉ sự không thể xảy ra
+(ví dụ: nếu cả hai mặt đều là úp).
+Các tần suất <span class="arithmatex">\(n_\textrm{h}/n\)</span> và <span class="arithmatex">\(n_\textrm{t}/n\)</span> không phải là xác suất
+mà là <em>thống kê</em>.
+Xác suất là các đại lượng <em>lý thuyết</em>
+nằm bên dưới quá trình tạo dữ liệu.
+Ở đây, xác suất <span class="arithmatex">\(1/2\)</span>
+là thuộc tính của chính đồng xu.
+Ngược lại, thống kê là các đại lượng <em>thực nghiệm</em>
+được tính là hàm của dữ liệu quan sát.
+Mối quan tâm của ta đối với các đại lượng xác suất và thống kê
+gắn bó không thể tách rời.
+Ta thường thiết kế các thống kê đặc biệt gọi là <em>ước lượng</em>
+mà, dựa trên tập dữ liệu, tạo ra các <em>ước lượng</em>
+về các tham số mô hình như xác suất.
+Hơn nữa, khi những ước lượng đó thỏa mãn
+một thuộc tính tốt gọi là <em>nhất quán</em>,
+các ước lượng của ta sẽ hội tụ
+về xác suất tương ứng.
+Đổi lại, những xác suất suy ra này
+nói về các thuộc tính thống kê có thể có
+của dữ liệu từ cùng quần thể
+mà ta có thể gặp trong tương lai.</p>
+<p>Giả sử ta tình cờ tìm thấy một đồng xu thực
+mà ta không biết
+giá trị thực của <span class="arithmatex">\(P(\textrm{ngửa})\)</span>.
+Để điều tra đại lượng này
+bằng các phương pháp thống kê,
+ta cần (i) thu thập một số dữ liệu;
+và (ii) thiết kế một ước lượng.
+Thu thập dữ liệu ở đây rất dễ;
+ta có thể tung đồng xu nhiều lần
+và ghi lại tất cả kết quả.
+Chính thức, việc lấy các thực hiện
+từ một quá trình ngẫu nhiên cơ bản nào đó
+được gọi là <em>lấy mẫu</em>.
+Như bạn có thể đã đoán,
+một ước lượng tự nhiên
+là tỷ lệ của
+số lần quan sát <em>ngửa</em>
+trên tổng số lần tung.</p>
+<p>Bây giờ, giả sử đồng xu thực sự cân bằng,
+tức là <span class="arithmatex">\(P(\textrm{ngửa}) = 0.5\)</span>.
+Để mô phỏng các lần tung đồng xu cân bằng,
+ta có thể gọi bất kỳ bộ tạo số ngẫu nhiên nào.
+Có một số cách dễ để lấy mẫu
+sự kiện với xác suất <span class="arithmatex">\(0.5\)</span>.
+Ví dụ <code>random.random</code> của Python
+tạo ra các số trong khoảng <span class="arithmatex">\([0,1]\)</span>
+trong đó xác suất nằm
+trong bất kỳ khoảng con <span class="arithmatex">\([a, b] \subset [0,1]\)</span> nào
+bằng <span class="arithmatex">\(b-a\)</span>.
+Do đó ta có thể lấy ra <code>0</code> và <code>1</code> với xác suất <code>0.5</code> mỗi loại
+bằng cách kiểm tra xem số thực được trả về có lớn hơn <code>0.5</code> không:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">num_tosses</span> <span class="o">=</span> <span class="mi">100</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">heads</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_tosses</span><span class="p">)])</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">tails</span> <span class="o">=</span> <span class="n">num_tosses</span> <span class="o">-</span> <span class="n">heads</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;heads, tails: &quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">heads</span><span class="p">,</span> <span class="n">tails</span><span class="p">])</span>
+</code></pre></div>
+<p>Tổng quát hơn, ta có thể mô phỏng nhiều lần rút
+từ bất kỳ biến nào với số hữu hạn
+các kết quả có thể
+(như lần tung đồng xu hoặc con xúc xắc)
+bằng cách gọi hàm multinomial,
+đặt đối số đầu tiên
+là số lần rút
+và đối số thứ hai là danh sách xác suất
+liên quan đến mỗi kết quả có thể.
+Để mô phỏng mười lần tung đồng xu cân bằng,
+ta gán vector xác suất <code>[0.5, 0.5]</code>,
+diễn giải chỉ số 0 là ngửa
+và chỉ số 1 là úp.
+Hàm trả về vector
+có độ dài bằng số
+kết quả có thể (ở đây là 2),
+trong đó thành phần đầu tiên cho ta biết
+số lần xuất hiện ngửa
+và thành phần thứ hai cho ta biết
+số lần xuất hiện úp.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">fair_probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">Multinomial</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</code></pre></div>
+<p>Mỗi lần bạn chạy quá trình lấy mẫu này,
+bạn sẽ nhận được một giá trị ngẫu nhiên mới
+có thể khác với kết quả trước.
+Chia cho số lần tung
+cho ta <em>tần suất</em>
+của mỗi kết quả trong dữ liệu.
+Lưu ý rằng các tần suất này,
+giống như các xác suất
+mà chúng định ước lượng, có tổng bằng <span class="arithmatex">\(1\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">Multinomial</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span> <span class="o">/</span> <span class="mi">100</span>
+</code></pre></div>
+<p>Ở đây, mặc dù đồng xu mô phỏng của ta cân bằng
+(ta tự đặt xác suất <code>[0.5, 0.5]</code>),
+số lần ngửa và úp có thể không giống hệt nhau.
+Đó là vì ta chỉ rút một số mẫu tương đối nhỏ.
+Nếu ta không tự triển khai mô phỏng,
+mà chỉ thấy kết quả,
+làm sao ta biết đồng xu có hơi lệch không
+hay nếu độ lệch có thể từ <span class="arithmatex">\(1/2\)</span>
+chỉ là hiệu ứng của cỡ mẫu nhỏ?
+Hãy xem điều gì xảy ra khi ta mô phỏng 10.000 lần tung.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">counts</span> <span class="o">=</span> <span class="n">Multinomial</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">counts</span> <span class="o">/</span> <span class="mi">10000</span>
+</code></pre></div>
+<p>Nói chung, đối với trung bình của các sự kiện lặp lại (như tung đồng xu),
+khi số lần lặp lại tăng,
+các ước lượng của ta được đảm bảo hội tụ
+về xác suất cơ bản thực sự.
+Công thức toán học của hiện tượng này
+được gọi là <em>luật số lớn</em>
+và <em>định lý giới hạn trung tâm</em>
+cho ta biết rằng trong nhiều tình huống,
+khi cỡ mẫu <span class="arithmatex">\(n\)</span> tăng,
+các lỗi này nên giảm
+ở tốc độ <span class="arithmatex">\((1/\sqrt{n})\)</span>.
+Hãy có thêm trực giác bằng cách nghiên cứu
+cách ước lượng của ta phát triển khi ta tăng
+số lần tung từ 1 đến 10.000.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">counts</span> <span class="o">=</span> <span class="n">Multinomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">fair_probs</span><span class="p">)</span><span class="o">.</span><span class="n">sample</span><span class="p">((</span><span class="mi">10000</span><span class="p">,))</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">cum_counts</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">estimates</span> <span class="o">=</span> <span class="n">cum_counts</span> <span class="o">/</span> <span class="n">cum_counts</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">estimates</span> <span class="o">=</span> <span class="n">estimates</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">((</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">))</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimates</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;P(coin=heads)&quot;</span><span class="p">))</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">estimates</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;P(coin=tails)&quot;</span><span class="p">))</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Samples&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Estimated probability&#39;</span><span class="p">)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</code></pre></div>
+<p>Mỗi đường cong liền nét tương ứng với một trong hai giá trị của đồng xu
+và cho ta xác suất ước lượng rằng đồng xu ra giá trị đó
+sau mỗi nhóm thí nghiệm.
+Đường đứt đoạn màu đen cho biết xác suất cơ bản thực sự.
+Khi ta có thêm dữ liệu bằng cách thực hiện nhiều thí nghiệm hơn,
+các đường cong hội tụ về xác suất thực.
+Bạn có thể đã bắt đầu thấy hình dạng
+của một số câu hỏi nâng cao hơn
+mà các nhà thống kê bận tâm:
+Quá trình hội tụ này xảy ra nhanh như thế nào?
+Nếu ta đã kiểm tra nhiều đồng xu
+được sản xuất tại cùng một nhà máy,
+ta có thể kết hợp thông tin này như thế nào?</p>
+<h2 id="xu-ly-chinh-thuc-hon">Xử lý Chính thức Hơn<a class="headerlink" href="#xu-ly-chinh-thuc-hon" title="Permanent link">&para;</a></h2>
+<p>Ta đã đi khá xa: đặt ra
+mô hình xác suất,
+tạo dữ liệu tổng hợp,
+chạy ước lượng thống kê,
+đánh giá thực nghiệm sự hội tụ,
+và báo cáo số liệu lỗi (kiểm tra độ lệch).
+Tuy nhiên, để đi xa hơn nhiều,
+ta cần chính xác hơn.</p>
+<p>Khi xử lý ngẫu nhiên,
+ta ký hiệu tập hợp các kết quả có thể là <span class="arithmatex">\(\mathcal{S}\)</span>
+và gọi nó là <em>không gian mẫu</em> hoặc <em>không gian kết quả</em>.
+Ở đây, mỗi phần tử là một <em>kết quả</em> có thể phân biệt.
+Trong trường hợp tung một đồng xu,
+<span class="arithmatex">\(\mathcal{S} = \{\textrm{ngửa}, \textrm{úp}\}\)</span>.
+Với một con xúc xắc, <span class="arithmatex">\(\mathcal{S} = \{1, 2, 3, 4, 5, 6\}\)</span>.
+Khi tung hai đồng xu, các kết quả có thể là
+<span class="arithmatex">\(\{(\textrm{ngửa}, \textrm{ngửa}), (\textrm{ngửa}, \textrm{úp}), (\textrm{úp}, \textrm{ngửa}),  (\textrm{úp}, \textrm{úp})\}\)</span>.
+<em>Sự kiện</em> là tập con của không gian mẫu.
+Ví dụ, sự kiện "lần tung đầu tiên ra ngửa"
+tương ứng với tập hợp <span class="arithmatex">\(\{(\textrm{ngửa}, \textrm{ngửa}), (\textrm{ngửa}, \textrm{úp})\}\)</span>.
+Bất cứ khi nào kết quả <span class="arithmatex">\(z\)</span> của thí nghiệm ngẫu nhiên thỏa mãn
+<span class="arithmatex">\(z \in \mathcal{A}\)</span>, thì sự kiện <span class="arithmatex">\(\mathcal{A}\)</span> đã xảy ra.
+Với một lần tung xúc xắc, ta có thể định nghĩa các sự kiện
+"thấy số <span class="arithmatex">\(5\)</span>" (<span class="arithmatex">\(\mathcal{A} = \{5\}\)</span>)
+và "thấy số lẻ" (<span class="arithmatex">\(\mathcal{B} = \{1, 3, 5\}\)</span>).
+Trong trường hợp này, nếu xúc xắc ra số <span class="arithmatex">\(5\)</span>,
+ta nói rằng cả <span class="arithmatex">\(\mathcal{A}\)</span> và <span class="arithmatex">\(\mathcal{B}\)</span> đều xảy ra.
+Mặt khác, nếu <span class="arithmatex">\(z = 3\)</span>,
+thì <span class="arithmatex">\(\mathcal{A}\)</span> không xảy ra
+nhưng <span class="arithmatex">\(\mathcal{B}\)</span> xảy ra.</p>
+<p><em>Hàm xác suất</em> ánh xạ các sự kiện
+sang các giá trị thực <span class="arithmatex">\({P: \mathcal{A} \subseteq \mathcal{S} \rightarrow [0,1]}\)</span>.
+Xác suất, ký hiệu <span class="arithmatex">\(P(\mathcal{A})\)</span>, của sự kiện <span class="arithmatex">\(\mathcal{A}\)</span>
+trong không gian mẫu <span class="arithmatex">\(\mathcal{S}\)</span> đã cho,
+có các tính chất sau:</p>
+<ul>
+<li>Xác suất của bất kỳ sự kiện <span class="arithmatex">\(\mathcal{A}\)</span> nào là số thực không âm, tức là <span class="arithmatex">\(P(\mathcal{A}) \geq 0\)</span>;</li>
+<li>Xác suất của toàn bộ không gian mẫu là <span class="arithmatex">\(1\)</span>, tức là <span class="arithmatex">\(P(\mathcal{S}) = 1\)</span>;</li>
+<li>Với bất kỳ dãy đếm được các sự kiện <span class="arithmatex">\(\mathcal{A}_1, \mathcal{A}_2, \ldots\)</span> <em>loại trừ lẫn nhau</em> (tức là <span class="arithmatex">\(\mathcal{A}_i \cap \mathcal{A}_j = \emptyset\)</span> với mọi <span class="arithmatex">\(i \neq j\)</span>), xác suất để bất kỳ sự kiện nào trong số chúng xảy ra bằng tổng xác suất riêng lẻ của chúng, tức là <span class="arithmatex">\(P(\bigcup_{i=1}^{\infty} \mathcal{A}_i) = \sum_{i=1}^{\infty} P(\mathcal{A}_i)\)</span>.</li>
+</ul>
+<p>Các tiên đề của lý thuyết xác suất này,
+được đề xuất bởi Kolmogorov.1933,
+có thể được áp dụng để nhanh chóng rút ra một số hệ quả quan trọng.
+Ví dụ, từ đó ngay lập tức suy ra
+rằng xác suất để sự kiện <span class="arithmatex">\(\mathcal{A}\)</span> bất kỳ
+<em>hoặc</em> phần bù <span class="arithmatex">\(\mathcal{A}'\)</span> của nó xảy ra là 1
+(vì <span class="arithmatex">\(\mathcal{A} \cup \mathcal{A}' = \mathcal{S}\)</span>).
+Ta cũng có thể chứng minh rằng <span class="arithmatex">\(P(\emptyset) = 0\)</span>
+vì <span class="arithmatex">\(1 = P(\mathcal{S} \cup \mathcal{S}') = P(\mathcal{S} \cup \emptyset) = P(\mathcal{S}) + P(\emptyset) = 1 + P(\emptyset)\)</span>.
+Do đó, xác suất để sự kiện <span class="arithmatex">\(\mathcal{A}\)</span> bất kỳ
+<em>và</em> phần bù <span class="arithmatex">\(\mathcal{A}'\)</span> của nó xảy ra đồng thời
+là <span class="arithmatex">\(P(\mathcal{A} \cap \mathcal{A}') = 0\)</span>.
+Nói không chính thức, điều này cho ta biết rằng các sự kiện không thể
+có xác suất xảy ra bằng không.</p>
+<h2 id="bien-ngau-nhien">Biến Ngẫu nhiên<a class="headerlink" href="#bien-ngau-nhien" title="Permanent link">&para;</a></h2>
+<p>Khi ta nói về các sự kiện như tung xúc xắc
+ra số lẻ hay lần tung đồng xu đầu tiên ra ngửa,
+ta đang gợi lên ý tưởng về một <em>biến ngẫu nhiên</em>.
+Chính thức, biến ngẫu nhiên là các ánh xạ
+từ không gian mẫu cơ bản
+sang một tập hợp (có thể là nhiều) giá trị.
+Bạn có thể tự hỏi biến ngẫu nhiên
+khác gì với không gian mẫu,
+vì cả hai đều là tập hợp kết quả.
+Quan trọng là, biến ngẫu nhiên có thể thô hơn nhiều
+so với không gian mẫu thô.
+Ta có thể định nghĩa biến ngẫu nhiên nhị phân như "lớn hơn 0.5"
+ngay cả khi không gian mẫu cơ bản là vô hạn,
+ví dụ: các điểm trên đoạn thẳng giữa <span class="arithmatex">\(0\)</span> và <span class="arithmatex">\(1\)</span>.
+Ngoài ra, nhiều biến ngẫu nhiên
+có thể chia sẻ cùng không gian mẫu cơ bản.
+Ví dụ "liệu báo động nhà tôi có kêu không"
+và "liệu nhà tôi có bị trộm không"
+đều là các biến ngẫu nhiên nhị phân
+chia sẻ không gian mẫu cơ bản.
+Do đó, biết giá trị của một biến ngẫu nhiên
+có thể cho ta biết điều gì đó về giá trị có thể của biến ngẫu nhiên khác.
+Biết rằng báo động đã kêu,
+ta có thể nghi ngờ rằng nhà có thể đã bị trộm.</p>
+<p>Mỗi giá trị được lấy bởi biến ngẫu nhiên tương ứng
+với một tập con của không gian mẫu cơ bản.
+Do đó, sự xuất hiện mà biến ngẫu nhiên <span class="arithmatex">\(X\)</span>
+nhận giá trị <span class="arithmatex">\(v\)</span>, ký hiệu là <span class="arithmatex">\(X=v\)</span>, là một <em>sự kiện</em>
+và <span class="arithmatex">\(P(X=v)\)</span> biểu thị xác suất của nó.
+Đôi khi ký hiệu này có thể cồng kềnh,
+và ta có thể lạm dụng ký hiệu khi ngữ cảnh rõ ràng.
+Ví dụ, ta có thể dùng <span class="arithmatex">\(P(X)\)</span> để chỉ rộng rãi
+<em>phân phối</em> của <span class="arithmatex">\(X\)</span>, tức là
+hàm cho ta biết xác suất
+<span class="arithmatex">\(X\)</span> nhận bất kỳ giá trị nào.
+Các lúc khác ta viết các biểu thức
+như <span class="arithmatex">\(P(X,Y) = P(X) P(Y)\)</span>,
+như cách viết tắt để biểu thị một phát biểu
+đúng với tất cả các giá trị
+mà các biến ngẫu nhiên <span class="arithmatex">\(X\)</span> và <span class="arithmatex">\(Y\)</span> có thể nhận, tức là
+với mọi <span class="arithmatex">\(i,j\)</span> ta có <span class="arithmatex">\(P(X=i \textrm{ và } Y=j) = P(X=i)P(Y=j)\)</span>.
+Các lúc khác, ta lạm dụng ký hiệu bằng cách viết
+<span class="arithmatex">\(P(v)\)</span> khi biến ngẫu nhiên rõ ràng từ ngữ cảnh.
+Vì một sự kiện trong lý thuyết xác suất là tập hợp kết quả từ không gian mẫu,
+ta có thể chỉ định một phạm vi giá trị để biến ngẫu nhiên nhận.
+Ví dụ, <span class="arithmatex">\(P(1 \leq X \leq 3)\)</span> biểu thị xác suất của sự kiện <span class="arithmatex">\(\{1 \leq X \leq 3\}\)</span>.</p>
+<p>Lưu ý rằng có sự khác biệt tinh tế
+giữa các biến ngẫu nhiên <em>rời rạc</em>,
+như lần tung đồng xu hoặc tung xúc xắc,
+và các biến <em>liên tục</em>,
+như cân nặng và chiều cao của một người
+được lấy mẫu ngẫu nhiên từ quần thể.
+Trong trường hợp này ta hiếm khi thực sự quan tâm đến
+chiều cao chính xác của ai đó.
+Hơn nữa, nếu ta thực hiện các phép đo đủ chính xác,
+ta sẽ thấy rằng không có hai người nào trên hành tinh
+có chiều cao giống hệt nhau.
+Trên thực tế, với các phép đo đủ tinh,
+bạn sẽ không bao giờ có cùng chiều cao
+khi thức dậy và khi đi ngủ.
+Hỏi về xác suất chính xác của ai đó
+cao 1.801392782910287192 mét không có nhiều ý nghĩa.
+Thay vào đó, ta thường quan tâm hơn đến khả năng nói
+liệu chiều cao của ai đó có nằm trong khoảng đã cho không,
+chẳng hạn giữa 1.79 và 1.81 mét.
+Trong những trường hợp này ta làm việc với <em>mật độ</em> xác suất.
+Chiều cao chính xác 1.80 mét
+không có xác suất, nhưng mật độ khác không.
+Để tính xác suất được gán cho một khoảng,
+ta phải lấy <em>tích phân</em> của mật độ
+trên khoảng đó.</p>
+<h2 id="nhieu-bien-ngau-nhien">Nhiều Biến Ngẫu nhiên<a class="headerlink" href="#nhieu-bien-ngau-nhien" title="Permanent link">&para;</a></h2>
+<p>Bạn có thể nhận thấy rằng ta thậm chí không thể
+đi qua phần trước mà không
+đưa ra các phát biểu liên quan đến tương tác
+giữa nhiều biến ngẫu nhiên
+(nhớ lại rằng <span class="arithmatex">\(P(X,Y) = P(X) P(Y)\)</span>).
+Hầu hết machine learning
+liên quan đến các mối quan hệ như vậy.
+Ở đây, không gian mẫu sẽ là
+quần thể quan tâm,
+ví dụ như khách hàng giao dịch với doanh nghiệp,
+ảnh trên Internet,
+hoặc protein được các nhà sinh học biết đến.
+Mỗi biến ngẫu nhiên sẽ biểu diễn
+giá trị (chưa biết) của một thuộc tính khác nhau.
+Bất cứ khi nào ta lấy mẫu một cá thể từ quần thể,
+ta quan sát một thực hiện của mỗi biến ngẫu nhiên.
+Vì các giá trị được lấy bởi biến ngẫu nhiên
+tương ứng với các tập con của không gian mẫu
+có thể chồng lên nhau, chồng lên nhau một phần,
+hoặc hoàn toàn rời nhau,
+biết giá trị của một biến ngẫu nhiên
+có thể khiến ta cập nhật niềm tin của mình
+về giá trị nào của biến ngẫu nhiên khác là có thể.
+Nếu bệnh nhân vào bệnh viện
+và ta quan sát thấy họ
+đang khó thở
+và mất khứu giác,
+thì ta tin rằng họ có nhiều khả năng
+mắc COVID-19 hơn ta có thể
+nếu họ không khó thở
+và khứu giác hoàn toàn bình thường.</p>
+<p>Khi làm việc với nhiều biến ngẫu nhiên,
+ta có thể xây dựng các sự kiện tương ứng
+với mọi tổ hợp giá trị
+mà các biến có thể nhận cùng nhau.
+Hàm xác suất gán
+xác suất cho mỗi tổ hợp này
+(ví dụ: <span class="arithmatex">\(A=a\)</span> và <span class="arithmatex">\(B=b\)</span>)
+được gọi là hàm <em>xác suất kết hợp</em>
+và đơn giản trả về xác suất được gán
+cho giao của các tập con tương ứng
+của không gian mẫu.
+<em>Xác suất kết hợp</em> được gán cho sự kiện
+mà các biến ngẫu nhiên <span class="arithmatex">\(A\)</span> và <span class="arithmatex">\(B\)</span>
+nhận giá trị <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span> tương ứng,
+được ký hiệu là <span class="arithmatex">\(P(A = a, B = b)\)</span>,
+trong đó dấu phẩy chỉ "và".
+Lưu ý rằng với giá trị <span class="arithmatex">\(a\)</span> và <span class="arithmatex">\(b\)</span> bất kỳ,
+từ đó suy ra</p>
+<div class="arithmatex">\[P(A=a, B=b) \leq P(A=a) \textrm{ và } P(A=a, B=b) \leq P(B = b),\]</div>
+<p>vì để <span class="arithmatex">\(A=a\)</span> và <span class="arithmatex">\(B=b\)</span> xảy ra,
+<span class="arithmatex">\(A=a\)</span> phải xảy ra <em>và</em> <span class="arithmatex">\(B=b\)</span> cũng phải xảy ra.
+Thú vị là, xác suất kết hợp
+cho ta biết tất cả những gì ta có thể biết về các
+biến ngẫu nhiên này theo nghĩa xác suất,
+và có thể được dùng để suy ra nhiều đại lượng hữu ích khác,
+bao gồm khôi phục các
+phân phối riêng lẻ <span class="arithmatex">\(P(A)\)</span> và <span class="arithmatex">\(P(B)\)</span>.
+Để khôi phục <span class="arithmatex">\(P(A=a)\)</span> ta chỉ cần tính tổng
+<span class="arithmatex">\(P(A=a, B=v)\)</span> theo tất cả các giá trị <span class="arithmatex">\(v\)</span>
+mà biến ngẫu nhiên <span class="arithmatex">\(B\)</span> có thể nhận:
+<span class="arithmatex">\(P(A=a) = \sum_v P(A=a, B=v)\)</span>.</p>
+<p>Tỷ lệ <span class="arithmatex">\(\frac{P(A=a, B=b)}{P(A=a)} \leq 1\)</span>
+hóa ra cực kỳ quan trọng.
+Nó được gọi là <em>xác suất có điều kiện</em>,
+và được ký hiệu qua ký tự "<span class="arithmatex">\(\mid\)</span>":</p>
+<div class="arithmatex">\[P(B=b \mid A=a) = P(A=a,B=b)/P(A=a).\]</div>
+<p>Nó cho ta biết xác suất mới
+liên quan đến sự kiện <span class="arithmatex">\(B=b\)</span>,
+sau khi ta điều kiện hóa trên thực tế <span class="arithmatex">\(A=a\)</span> đã xảy ra.
+Ta có thể coi xác suất có điều kiện này
+là hạn chế sự chú ý chỉ vào tập con
+của không gian mẫu liên quan đến <span class="arithmatex">\(A=a\)</span>
+và sau đó chuẩn hóa lại để
+tất cả xác suất tổng bằng 1.
+Xác suất có điều kiện
+thực ra chỉ là các xác suất thông thường
+và do đó tuân thủ tất cả các tiên đề,
+miễn là ta điều kiện hóa tất cả các số hạng
+theo cùng sự kiện và do đó
+hạn chế sự chú ý vào cùng không gian mẫu.
+Ví dụ, với các sự kiện rời nhau
+<span class="arithmatex">\(\mathcal{B}\)</span> và <span class="arithmatex">\(\mathcal{B}'\)</span>, ta có
+<span class="arithmatex">\(P(\mathcal{B} \cup \mathcal{B}' \mid A = a) = P(\mathcal{B} \mid A = a) + P(\mathcal{B}' \mid A = a)\)</span>.</p>
+<p>Sử dụng định nghĩa về xác suất có điều kiện,
+ta có thể rút ra kết quả nổi tiếng gọi là <em>định lý Bayes</em>.
+Theo định nghĩa, ta có <span class="arithmatex">\(P(A, B) = P(B\mid A) P(A)\)</span>
+và <span class="arithmatex">\(P(A, B) = P(A\mid B) P(B)\)</span>.
+Kết hợp cả hai phương trình cho ta
+<span class="arithmatex">\(P(B\mid A) P(A) = P(A\mid B) P(B)\)</span> và do đó</p>
+<div class="arithmatex">\[P(A \mid B) = \frac{P(B\mid A) P(A)}{P(B)}.\]</div>
+<p>Phương trình đơn giản này có những hệ quả sâu sắc vì
+nó cho phép ta đảo ngược thứ tự điều kiện hóa.
+Nếu ta biết cách ước lượng <span class="arithmatex">\(P(B\mid A)\)</span>, <span class="arithmatex">\(P(A)\)</span> và <span class="arithmatex">\(P(B)\)</span>,
+thì ta có thể ước lượng <span class="arithmatex">\(P(A\mid B)\)</span>.
+Ta thường thấy dễ dàng ước lượng một số hạng trực tiếp
+nhưng không phải số hạng kia và định lý Bayes có thể đến giải cứu ở đây.
+Ví dụ, nếu ta biết tỷ lệ phổ biến của các triệu chứng đối với một bệnh nhất định,
+và tỷ lệ phổ biến tổng thể của bệnh và triệu chứng tương ứng,
+ta có thể xác định khả năng ai đó
+mắc bệnh dựa trên các triệu chứng của họ.
+Trong một số trường hợp ta có thể không có quyền truy cập trực tiếp vào <span class="arithmatex">\(P(B)\)</span>,
+chẳng hạn như tỷ lệ phổ biến của triệu chứng.
+Trong trường hợp này một phiên bản đơn giản hóa của định lý Bayes có ích:</p>
+<div class="arithmatex">\[P(A \mid B) \propto P(B \mid A) P(A).\]</div>
+<p>Vì ta biết rằng <span class="arithmatex">\(P(A \mid B)\)</span> phải được chuẩn hóa về <span class="arithmatex">\(1\)</span>, tức là <span class="arithmatex">\(\sum_a P(A=a \mid B) = 1\)</span>,
+ta có thể dùng nó để tính</p>
+<div class="arithmatex">\[P(A \mid B) = \frac{P(B \mid A) P(A)}{\sum_a P(B \mid A=a) P(A = a)}.\]</div>
+<p>Trong thống kê Bayesian, ta coi người quan sát
+là sở hữu một số niềm tin tiên nghiệm (chủ quan)
+về khả năng của các giả thuyết có sẵn
+được mã hóa trong <em>tiên nghiệm</em> <span class="arithmatex">\(P(H)\)</span>,
+và <em>hàm khả năng</em> cho biết khả năng
+quan sát bất kỳ giá trị nào của bằng chứng thu thập được
+cho mỗi giả thuyết trong lớp <span class="arithmatex">\(P(E \mid H)\)</span>.
+Định lý Bayes sau đó được giải thích là cho ta biết
+cách cập nhật <em>tiên nghiệm</em> ban đầu <span class="arithmatex">\(P(H)\)</span>
+dưới ánh sáng của bằng chứng có sẵn <span class="arithmatex">\(E\)</span>
+để tạo ra niềm tin <em>hậu nghiệm</em>
+<span class="arithmatex">\(P(H \mid E) = \frac{P(E \mid H) P(H)}{P(E)}\)</span>.
+Nói không chính thức, điều này có thể được phát biểu là
+"hậu nghiệm bằng tiên nghiệm nhân khả năng, chia cho bằng chứng".
+Bây giờ, vì bằng chứng <span class="arithmatex">\(P(E)\)</span> giống nhau với tất cả giả thuyết,
+ta có thể thoát ra bằng cách đơn giản là chuẩn hóa trên các giả thuyết.</p>
+<p>Lưu ý rằng <span class="arithmatex">\(\sum_a P(A=a \mid B) = 1\)</span> cũng cho phép ta <em>lề hóa</em> theo các biến ngẫu nhiên. Tức là, ta có thể bỏ các biến khỏi phân phối kết hợp như <span class="arithmatex">\(P(A, B)\)</span>. Xét cho cùng, ta có</p>
+<div class="arithmatex">\[\sum_a P(B \mid A=a) P(A=a) = \sum_a P(B, A=a) = P(B).\]</div>
+<p>Độc lập là một khái niệm quan trọng cơ bản khác
+tạo thành xương sống của
+nhiều ý tưởng quan trọng trong thống kê.
+Nói ngắn gọn, hai biến là <em>độc lập</em>
+nếu điều kiện hóa theo giá trị của <span class="arithmatex">\(A\)</span> không
+gây ra bất kỳ thay đổi nào trong phân phối xác suất
+liên quan đến <span class="arithmatex">\(B\)</span> và ngược lại.
+Chính thức hơn, sự độc lập, ký hiệu là <span class="arithmatex">\(A \perp B\)</span>,
+đòi hỏi rằng <span class="arithmatex">\(P(A \mid B) = P(A)\)</span> và do đó,
+rằng <span class="arithmatex">\(P(A,B) = P(A \mid B) P(B) = P(A) P(B)\)</span>.
+Sự độc lập thường là một giả định phù hợp.
+Ví dụ, nếu biến ngẫu nhiên <span class="arithmatex">\(A\)</span>
+biểu diễn kết quả từ lần tung một đồng xu cân bằng
+và biến ngẫu nhiên <span class="arithmatex">\(B\)</span>
+biểu diễn kết quả từ lần tung một đồng xu khác,
+thì biết liệu <span class="arithmatex">\(A\)</span> ra ngửa
+không nên ảnh hưởng đến xác suất
+<span class="arithmatex">\(B\)</span> ra ngửa.</p>
+<p>Sự độc lập đặc biệt hữu ích khi nó giữ giữa các lần rút liên tiếp
+dữ liệu của ta từ phân phối cơ bản nào đó
+(cho phép ta đưa ra kết luận thống kê mạnh)
+hoặc khi nó giữ giữa các biến khác nhau trong dữ liệu của ta,
+cho phép ta làm việc với các mô hình đơn giản hơn
+mã hóa cấu trúc độc lập này.
+Mặt khác, ước lượng các phụ thuộc
+giữa các biến ngẫu nhiên thường là mục tiêu chính của học.
+Ta quan tâm đến ước lượng xác suất của bệnh dựa trên triệu chứng
+chính xác vì ta tin
+rằng bệnh và triệu chứng <em>không</em> độc lập.</p>
+<p>Lưu ý rằng vì xác suất có điều kiện là các xác suất thông thường,
+các khái niệm về độc lập và phụ thuộc cũng áp dụng cho chúng.
+Hai biến ngẫu nhiên <span class="arithmatex">\(A\)</span> và <span class="arithmatex">\(B\)</span> là <em>độc lập có điều kiện</em>
+cho một biến thứ ba <span class="arithmatex">\(C\)</span> khi và chỉ khi <span class="arithmatex">\(P(A, B \mid C) = P(A \mid C)P(B \mid C)\)</span>.
+Thú vị là, hai biến có thể độc lập nói chung
+nhưng trở nên phụ thuộc khi điều kiện hóa trên biến thứ ba.
+Điều này thường xảy ra khi hai biến ngẫu nhiên <span class="arithmatex">\(A\)</span> và <span class="arithmatex">\(B\)</span>
+tương ứng với các nguyên nhân của biến thứ ba <span class="arithmatex">\(C\)</span>.
+Ví dụ, xương gãy và ung thư phổi có thể độc lập
+trong quần thể nói chung nhưng nếu ta điều kiện hóa là đang ở bệnh viện
+thì ta có thể thấy rằng xương gãy có tương quan âm với ung thư phổi.
+Đó là vì xương gãy <em>giải thích tại sao</em> một người đang ở bệnh viện
+và do đó giảm xác suất rằng họ nhập viện vì ung thư phổi.</p>
+<p>Và ngược lại, hai biến ngẫu nhiên phụ thuộc
+có thể trở nên độc lập khi điều kiện hóa trên biến thứ ba.
+Điều này thường xảy ra khi hai sự kiện không liên quan
+có một nguyên nhân chung.
+Cỡ giày và trình độ đọc có tương quan cao
+trong học sinh tiểu học,
+nhưng tương quan này biến mất nếu ta điều kiện hóa theo tuổi.</p>
+<h2 id="mot-vi-du">Một Ví dụ<a class="headerlink" href="#mot-vi-du" title="Permanent link">&para;</a></h2>
+<p><a id="subsec_probability_hiv_app"></a></p>
+<p>Hãy kiểm tra các kỹ năng của ta.
+Giả sử một bác sĩ thực hiện xét nghiệm HIV cho bệnh nhân.
+Xét nghiệm này khá chính xác và chỉ thất bại với xác suất 1%
+nếu bệnh nhân khỏe mạnh nhưng được báo cáo là bệnh,
+tức là bệnh nhân khỏe mạnh xét nghiệm dương tính trong 1% trường hợp.
+Hơn nữa, nó không bao giờ không phát hiện HIV nếu bệnh nhân thực sự có HIV.
+Ta dùng <span class="arithmatex">\(D_1 \in \{0, 1\}\)</span> để chỉ ra chẩn đoán
+(<span class="arithmatex">\(0\)</span> nếu âm tính và <span class="arithmatex">\(1\)</span> nếu dương tính)
+và <span class="arithmatex">\(H \in \{0, 1\}\)</span> để biểu thị tình trạng HIV.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Xác suất có điều kiện</th>
+<th style="text-align: right;"><span class="arithmatex">\(H=1\)</span></th>
+<th style="text-align: right;"><span class="arithmatex">\(H=0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(P(D_1 = 1 \mid H)\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(P(D_1 = 0 \mid H)\)</span></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.99</td>
+</tr>
+</tbody>
+</table>
+<p>Lưu ý rằng các tổng cột đều là 1 (nhưng tổng hàng không phải),
+vì chúng là xác suất có điều kiện.
+Hãy tính xác suất bệnh nhân có HIV
+nếu xét nghiệm trả về dương tính, tức là <span class="arithmatex">\(P(H = 1 \mid D_1 = 1)\)</span>.
+Theo trực giác, điều này sẽ phụ thuộc vào tỷ lệ phổ biến của bệnh,
+vì nó ảnh hưởng đến số lượng cảnh báo sai.
+Giả sử quần thể khá không có bệnh, ví dụ: <span class="arithmatex">\(P(H=1) = 0.0015\)</span>.
+Để áp dụng định lý Bayes, ta cần áp dụng lề hóa
+để xác định</p>
+<div class="arithmatex">\[\begin{aligned}
+P(D_1 = 1)
+=&amp; P(D_1=1, H=0) + P(D_1=1, H=1)  \\
+=&amp; P(D_1=1 \mid H=0) P(H=0) + P(D_1=1 \mid H=1) P(H=1) \\
+=&amp; 0.011485.
+\end{aligned}
+\]</div>
+<p>Điều này dẫn ta đến</p>
+<div class="arithmatex">\[P(H = 1 \mid D_1 = 1) = \frac{P(D_1=1 \mid H=1) P(H=1)}{P(D_1=1)} = 0.1306.\]</div>
+<p>Nói cách khác, chỉ có 13.06% cơ hội
+bệnh nhân thực sự có HIV,
+mặc dù xét nghiệm khá chính xác.
+Như ta thấy, xác suất có thể phản trực giác.
+Bệnh nhân nên làm gì khi nhận được tin tức đáng sợ như vậy?
+Có lẽ, bệnh nhân sẽ yêu cầu bác sĩ
+thực hiện thêm một xét nghiệm khác để làm rõ.
+Xét nghiệm thứ hai có các đặc điểm khác nhau
+và không tốt bằng xét nghiệm đầu tiên.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Xác suất có điều kiện</th>
+<th style="text-align: right;"><span class="arithmatex">\(H=1\)</span></th>
+<th style="text-align: right;"><span class="arithmatex">\(H=0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(P(D_2 = 1 \mid H)\)</span></td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(P(D_2 = 0 \mid H)\)</span></td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.97</td>
+</tr>
+</tbody>
+</table>
+<p>Thật không may, xét nghiệm thứ hai cũng trả về dương tính.
+Hãy tính các xác suất cần thiết để áp dụng định lý Bayes
+bằng cách giả định độc lập có điều kiện:</p>
+<div class="arithmatex">\[\begin{aligned}
+P(D_1 = 1, D_2 = 1 \mid H = 0)
+&amp; = P(D_1 = 1 \mid H = 0) P(D_2 = 1 \mid H = 0)
+=&amp; 0.0003, \\
+P(D_1 = 1, D_2 = 1 \mid H = 1)
+&amp; = P(D_1 = 1 \mid H = 1) P(D_2 = 1 \mid H = 1)
+=&amp; 0.98.
+\end{aligned}
+\]</div>
+<p>Bây giờ ta có thể áp dụng lề hóa để thu được xác suất
+cả hai xét nghiệm đều trả về dương tính:</p>
+<div class="arithmatex">\[\begin{aligned}
+&amp;P(D_1 = 1, D_2 = 1)\\
+&amp;= P(D_1 = 1, D_2 = 1, H = 0) + P(D_1 = 1, D_2 = 1, H = 1)  \\
+&amp;= P(D_1 = 1, D_2 = 1 \mid H = 0)P(H=0) + P(D_1 = 1, D_2 = 1 \mid H = 1)P(H=1)\\
+&amp;= 0.00176955.
+\end{aligned}
+\]</div>
+<p>Cuối cùng, xác suất bệnh nhân có HIV khi cả hai xét nghiệm đều dương tính là</p>
+<div class="arithmatex">\[P(H = 1 \mid D_1 = 1, D_2 = 1)
+= \frac{P(D_1 = 1, D_2 = 1 \mid H=1) P(H=1)}{P(D_1 = 1, D_2 = 1)}
+= 0.8307.\]</div>
+<p>Tức là, xét nghiệm thứ hai giúp ta đạt được độ tin cậy cao hơn nhiều rằng không phải mọi thứ đều ổn.
+Mặc dù xét nghiệm thứ hai kém chính xác hơn đáng kể so với xét nghiệm đầu tiên,
+nó vẫn cải thiện đáng kể ước lượng của ta.
+Giả định cả hai xét nghiệm độc lập có điều kiện với nhau
+là rất quan trọng cho khả năng tạo ra ước lượng chính xác hơn của ta.
+Hãy lấy trường hợp cực đoan khi ta chạy cùng một xét nghiệm hai lần.
+Trong tình huống này ta sẽ kỳ vọng cùng kết quả cả hai lần,
+do đó không có thêm thông tin nào từ việc chạy lại cùng xét nghiệm.
+Người đọc sắc sảo có thể nhận thấy rằng chẩn đoán hoạt động
+như một bộ phân loại ẩn mình ngay trước mắt
+trong đó khả năng của ta để quyết định liệu bệnh nhân có khỏe mạnh không
+tăng lên khi ta thu được nhiều đặc trưng hơn (kết quả xét nghiệm).</p>
+<h2 id="ky-vong">Kỳ vọng<a class="headerlink" href="#ky-vong" title="Permanent link">&para;</a></h2>
+<p>Thường thì, việc ra quyết định đòi hỏi không chỉ nhìn vào
+các xác suất được gán cho các sự kiện riêng lẻ
+mà còn kết hợp chúng thành các tổng hợp hữu ích
+có thể cung cấp cho ta sự hướng dẫn.
+Ví dụ, khi biến ngẫu nhiên nhận giá trị vô hướng liên tục,
+ta thường muốn biết giá trị nào để kỳ vọng <em>trung bình</em>.
+Đại lượng này được gọi chính thức là <em>kỳ vọng</em>.
+Nếu ta đang thực hiện đầu tư,
+đại lượng quan tâm đầu tiên
+có thể là lợi nhuận ta có thể kỳ vọng,
+lấy trung bình qua tất cả kết quả có thể
+(và tính trọng số theo xác suất thích hợp).
+Ví dụ, giả sử với xác suất 50%,
+một khoản đầu tư có thể thất bại hoàn toàn,
+với xác suất 40% nó có thể cung cấp lợi nhuận <span class="arithmatex">\(2\times\)</span>,
+và với xác suất 10% nó có thể cung cấp lợi nhuận <span class="arithmatex">\(10\times\)</span>.
+Để tính lợi nhuận kỳ vọng,
+ta tổng qua tất cả các lợi nhuận, nhân mỗi
+với xác suất chúng sẽ xảy ra.
+Điều này tạo ra kỳ vọng
+<span class="arithmatex">\(0.5 \cdot 0 + 0.4 \cdot 2 + 0.1 \cdot 10 = 1.8\)</span>.
+Do đó lợi nhuận kỳ vọng là <span class="arithmatex">\(1.8\times\)</span>.</p>
+<p>Nói chung, <em>kỳ vọng</em> (hoặc trung bình)
+của biến ngẫu nhiên <span class="arithmatex">\(X\)</span> được định nghĩa là</p>
+<div class="arithmatex">\[E[X] = E_{x \sim P}[x] = \sum_{x} x P(X = x).\]</div>
+<p>Tương tự, với mật độ ta thu được <span class="arithmatex">\(E[X] = \int x \;dp(x)\)</span>.
+Đôi khi ta quan tâm đến giá trị kỳ vọng
+của một hàm nào đó của <span class="arithmatex">\(x\)</span>.
+Ta có thể tính các kỳ vọng này như sau</p>
+<div class="arithmatex">\[E_{x \sim P}[f(x)] = \sum_x f(x) P(x) \textrm{ và } E_{x \sim P}[f(x)] = \int f(x) p(x) \;dx\]</div>
+<p>cho xác suất rời rạc và mật độ tương ứng.
+Quay lại ví dụ đầu tư ở trên,
+<span class="arithmatex">\(f\)</span> có thể là <em>tiện ích</em> (hạnh phúc)
+liên quan đến lợi nhuận.
+Các nhà kinh tế học hành vi từ lâu đã nhận thấy
+rằng con người liên quan đến sự bất tiện lớn hơn
+với việc mất tiền so với tiện ích thu được
+từ việc kiếm một đô la so với mức cơ sở của họ.
+Hơn nữa, giá trị của tiền có xu hướng dưới tuyến tính.
+Có 100 nghìn đô la so với không có đồng nào
+có thể tạo ra sự khác biệt giữa trả tiền thuê,
+ăn uống tốt và hưởng chăm sóc y tế chất lượng
+so với chịu đựng cảnh vô gia cư.
+Mặt khác, lợi ích từ việc có
+200 nghìn so với 100 nghìn ít ấn tượng hơn.
+Suy luận như vậy thúc đẩy câu nói sáo rỗng
+rằng "tiện ích của tiền là logarit".</p>
+<p>Nếu tiện ích liên quan đến mất toàn bộ là <span class="arithmatex">\(-1\)</span>,
+và các tiện ích liên quan đến lợi nhuận <span class="arithmatex">\(1\)</span>, <span class="arithmatex">\(2\)</span> và <span class="arithmatex">\(10\)</span>
+lần lượt là <span class="arithmatex">\(1\)</span>, <span class="arithmatex">\(2\)</span> và <span class="arithmatex">\(4\)</span>,
+thì hạnh phúc kỳ vọng của đầu tư
+sẽ là <span class="arithmatex">\(0.5 \cdot (-1) + 0.4 \cdot 2 + 0.1 \cdot 4 = 0.7\)</span>
+(tổn thất tiện ích kỳ vọng 30%).
+Nếu đây thực sự là hàm tiện ích của bạn,
+bạn có thể tốt nhất là để tiền trong ngân hàng.</p>
+<p>Đối với các quyết định tài chính,
+ta cũng có thể muốn đo
+mức độ <em>rủi ro</em> của khoản đầu tư.
+Ở đây, ta không chỉ quan tâm đến giá trị kỳ vọng
+mà còn đến mức độ biến động của các giá trị thực tế
+so với giá trị này.
+Lưu ý rằng ta không thể chỉ lấy
+kỳ vọng của hiệu
+giữa giá trị thực và giá trị kỳ vọng.
+Đó là vì kỳ vọng của hiệu
+là hiệu của kỳ vọng,
+tức là <span class="arithmatex">\(E[X - E[X]] = E[X] - E[E[X]] = 0\)</span>.
+Tuy nhiên, ta có thể xét kỳ vọng
+của bất kỳ hàm không âm nào của hiệu này.
+<em>Phương sai</em> của biến ngẫu nhiên được tính bằng cách xét
+giá trị kỳ vọng của bình phương hiệu:</p>
+<div class="arithmatex">\[\textrm{Var}[X] = E\left[(X - E[X])^2\right] = E[X^2] - E[X]^2.\]</div>
+<p>Ở đây đẳng thức được suy từ việc khai triển
+<span class="arithmatex">\((X - E[X])^2 = X^2 - 2 X E[X] + E[X]^2\)</span>
+và lấy kỳ vọng cho từng số hạng.
+Căn bậc hai của phương sai là một đại lượng hữu ích khác
+gọi là <em>độ lệch chuẩn</em>.
+Mặc dù nó và phương sai
+truyền đạt cùng một thông tin (cái này có thể tính từ cái kia),
+độ lệch chuẩn có thuộc tính tốt
+là được biểu diễn cùng đơn vị
+với đại lượng gốc được biểu diễn
+bởi biến ngẫu nhiên.</p>
+<p>Cuối cùng, phương sai của một hàm
+của biến ngẫu nhiên
+được định nghĩa tương tự là</p>
+<div class="arithmatex">\[\textrm{Var}_{x \sim P}[f(x)] = E_{x \sim P}[f^2(x)] - E_{x \sim P}[f(x)]^2.\]</div>
+<p>Quay lại ví dụ đầu tư của ta,
+bây giờ ta có thể tính phương sai của khoản đầu tư.
+Nó được cho bởi <span class="arithmatex">\(0.5 \cdot 0 + 0.4 \cdot 2^2 + 0.1 \cdot 10^2 - 1.8^2 = 8.36\)</span>.
+Về mọi mục đích thực tế đây là một khoản đầu tư rủi ro.
+Lưu ý rằng theo quy ước toán học, trung bình và phương sai
+thường được tham chiếu là <span class="arithmatex">\(\mu\)</span> và <span class="arithmatex">\(\sigma^2\)</span>.
+Điều này đặc biệt đúng khi ta dùng chúng
+để tham số hóa phân phối Gaussian.</p>
+<p>Giống như ta đã giới thiệu kỳ vọng
+và phương sai cho các biến ngẫu nhiên <em>vô hướng</em>,
+ta có thể làm như vậy cho các biến có giá trị vector.
+Kỳ vọng dễ dàng, vì ta có thể áp dụng chúng theo từng phần tử.
+Ví dụ, <span class="arithmatex">\(\boldsymbol{\mu} \stackrel{\textrm{def}}{=} E_{\mathbf{x} \sim P}[\mathbf{x}]\)</span>
+có tọa độ <span class="arithmatex">\(\mu_i = E_{\mathbf{x} \sim P}[x_i]\)</span>.
+<em>Hiệp phương sai</em> phức tạp hơn.
+Ta định nghĩa chúng bằng cách lấy kỳ vọng của <em>tích ngoài</em>
+của hiệu giữa biến ngẫu nhiên và trung bình của chúng:</p>
+<div class="arithmatex">\[\boldsymbol{\Sigma} \stackrel{\textrm{def}}{=} \textrm{Cov}_{\mathbf{x} \sim P}[\mathbf{x}] = E_{\mathbf{x} \sim P}\left[(\mathbf{x} - \boldsymbol{\mu}) (\mathbf{x} - \boldsymbol{\mu})^\top\right].\]</div>
+<p>Ma trận <span class="arithmatex">\(\boldsymbol{\Sigma}\)</span> này được gọi là ma trận hiệp phương sai.
+Một cách dễ dàng để thấy tác dụng của nó là xét một vector <span class="arithmatex">\(\mathbf{v}\)</span> nào đó
+có cùng kích thước với <span class="arithmatex">\(\mathbf{x}\)</span>.
+Từ đó suy ra</p>
+<div class="arithmatex">\[\mathbf{v}^\top \boldsymbol{\Sigma} \mathbf{v} = E_{\mathbf{x} \sim P}\left[\mathbf{v}^\top(\mathbf{x} - \boldsymbol{\mu}) (\mathbf{x} - \boldsymbol{\mu})^\top \mathbf{v}\right] = \textrm{Var}_{x \sim P}[\mathbf{v}^\top \mathbf{x}].\]</div>
+<p>Như vậy, <span class="arithmatex">\(\boldsymbol{\Sigma}\)</span> cho phép ta tính phương sai
+cho bất kỳ hàm tuyến tính nào của <span class="arithmatex">\(\mathbf{x}\)</span>
+bằng phép nhân ma trận đơn giản.
+Các phần tử ngoài đường chéo cho ta biết các tọa độ tương quan như thế nào:
+giá trị 0 có nghĩa là không có tương quan,
+trong khi giá trị dương lớn hơn
+có nghĩa là chúng tương quan mạnh hơn.</p>
+<h2 id="thao-luan">Thảo luận<a class="headerlink" href="#thao-luan" title="Permanent link">&para;</a></h2>
+<p>Trong machine learning, có nhiều điều không chắc chắn!
+Ta có thể không chắc chắn về giá trị của nhãn khi cho đặc trưng.
+Ta có thể không chắc chắn về giá trị ước lượng của tham số.
+Ta thậm chí có thể không chắc chắn liệu dữ liệu đến trong quá trình triển khai
+có từ cùng phân phối như dữ liệu huấn luyện không.</p>
+<p>Bởi <em>bất định aleatoric</em>, ta có nghĩa là sự không chắc chắn
+vốn có trong bài toán,
+và do tính ngẫu nhiên thực sự
+không được tính bởi các biến quan sát.
+Bởi <em>bất định epistemic</em>, ta có nghĩa là sự không chắc chắn
+về các tham số của mô hình, loại không chắc chắn
+mà ta có thể hy vọng giảm bằng cách thu thập thêm dữ liệu.
+Ta có thể có bất định epistemic
+về xác suất
+đồng xu ra ngửa,
+nhưng ngay cả khi ta biết xác suất này,
+ta vẫn còn bất định aleatoric
+về kết quả của bất kỳ lần tung nào trong tương lai.
+Dù ta xem ai đó tung đồng xu cân bằng bao lâu,
+ta sẽ không bao giờ chắc chắn hơn hoặc ít hơn 50%
+rằng lần tung tiếp theo sẽ ra ngửa.
+Các thuật ngữ này xuất phát từ mô hình hóa cơ học,
+(xem ví dụ Der-Kiureghian.Ditlevsen.2009 để có bài đánh giá về khía cạnh này của <a href="https://en.wikipedia.org/wiki/Uncertainty_quantification">lượng hóa bất định</a>).
+Đáng chú ý là, tuy nhiên, rằng các thuật ngữ này cấu thành một sự lạm dụng nhẹ ngôn ngữ.
+Thuật ngữ <em>epistemic</em> đề cập đến bất cứ điều gì liên quan đến <em>kiến thức</em>
+và do đó, theo nghĩa triết học, tất cả sự không chắc chắn đều là epistemic.</p>
+<p>Ta đã thấy rằng lấy mẫu dữ liệu từ phân phối xác suất chưa biết nào đó
+có thể cung cấp cho ta thông tin có thể được dùng để ước lượng
+các tham số của phân phối tạo dữ liệu.
+Điều đó nói, tốc độ mà điều này có thể xảy ra có thể khá chậm.
+Trong ví dụ tung đồng xu của ta (và nhiều ví dụ khác)
+ta không thể làm tốt hơn là thiết kế các ước lượng
+hội tụ ở tốc độ <span class="arithmatex">\(1/\sqrt{n}\)</span>,
+trong đó <span class="arithmatex">\(n\)</span> là cỡ mẫu (ví dụ: số lần tung).
+Điều này có nghĩa là bằng cách đi từ 10 đến 1000 quan sát (thường là nhiệm vụ rất có thể đạt được)
+ta thấy giảm mười lần sự không chắc chắn,
+trong khi 1000 quan sát tiếp theo ít giúp đỡ hơn theo tỷ lệ,
+chỉ giảm 1.41 lần.
+Đây là tính năng bền vững của machine learning:
+trong khi thường có những lợi ích dễ dàng, cần một lượng dữ liệu rất lớn,
+và thường kèm theo đó là một lượng tính toán khổng lồ, để đạt được thêm lợi ích.
+Để có đánh giá thực nghiệm về thực tế này cho các mô hình ngôn ngữ quy mô lớn, xem Revels.Lubin.Papamarkou.2016.</p>
+<p>Ta cũng đã làm sắc nét ngôn ngữ và công cụ của mình cho mô hình hóa thống kê.
+Trong quá trình đó, ta đã học về xác suất có điều kiện
+và về một trong những phương trình quan trọng nhất trong thống kê---định lý Bayes.
+Đây là công cụ hiệu quả để tách rời thông tin được truyền đạt bởi dữ liệu
+qua số hạng khả năng <span class="arithmatex">\(P(B \mid A)\)</span> giải quyết
+các quan sát <span class="arithmatex">\(B\)</span> khớp với lựa chọn tham số <span class="arithmatex">\(A\)</span> tốt như thế nào,
+và xác suất tiên nghiệm <span class="arithmatex">\(P(A)\)</span> điều chỉnh mức độ hợp lý
+một lựa chọn cụ thể của <span class="arithmatex">\(A\)</span> như thế nào ngay từ đầu.
+Đặc biệt, ta đã thấy cách quy tắc này có thể được áp dụng
+để gán xác suất cho các chẩn đoán,
+dựa trên hiệu quả của xét nghiệm <em>và</em>
+tỷ lệ phổ biến của chính bệnh đó (tức là tiên nghiệm của ta).</p>
+<p>Cuối cùng, ta đã giới thiệu tập câu hỏi không tầm thường đầu tiên
+về tác dụng của một phân phối xác suất cụ thể,
+cụ thể là kỳ vọng và phương sai.
+Mặc dù có nhiều hơn chỉ kỳ vọng tuyến tính và bậc hai
+cho một phân phối xác suất,
+hai đại lượng này đã cung cấp khá nhiều kiến thức
+về hành vi có thể của phân phối.
+Ví dụ, <a href="https://en.wikipedia.org/wiki/Chebyshev%27s_inequality">bất đẳng thức Chebyshev</a>
+phát biểu rằng <span class="arithmatex">\(P(|X - \mu| \geq k \sigma) \leq 1/k^2\)</span>,
+trong đó <span class="arithmatex">\(\mu\)</span> là kỳ vọng, <span class="arithmatex">\(\sigma^2\)</span> là phương sai của phân phối,
+và <span class="arithmatex">\(k &gt; 1\)</span> là tham số tin cậy do ta chọn.
+Nó cho ta biết rằng các lần rút từ phân phối nằm
+với xác suất ít nhất 50%
+trong khoảng <span class="arithmatex">\([-\sqrt{2} \sigma, \sqrt{2} \sigma]\)</span>
+căn giữa theo kỳ vọng.</p>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Cho ví dụ về quan sát thêm dữ liệu có thể giảm lượng không chắc chắn về kết quả xuống mức tùy ý thấp.</li>
+<li>Cho ví dụ về việc quan sát thêm dữ liệu chỉ giảm lượng không chắc chắn đến một điểm nhất định và sau đó không giảm thêm. Giải thích tại sao điều này xảy ra và bạn kỳ vọng điểm này ở đâu.</li>
+<li>Ta đã minh họa thực nghiệm sự hội tụ về giá trị trung bình đối với lần tung đồng xu. Hãy tính phương sai của ước lượng xác suất ta thấy mặt ngửa sau khi rút <span class="arithmatex">\(n\)</span> mẫu.<ol>
+<li>Phương sai biến đổi như thế nào theo số quan sát?</li>
+<li>Dùng bất đẳng thức Chebyshev để giới hạn độ lệch so với kỳ vọng.</li>
+<li>Nó liên quan đến định lý giới hạn trung tâm như thế nào?</li>
+</ol>
+</li>
+<li>Giả sử ta rút <span class="arithmatex">\(m\)</span> mẫu <span class="arithmatex">\(x_i\)</span> từ phân phối xác suất với trung bình bằng không và phương sai đơn vị. Tính trung bình <span class="arithmatex">\(z_m \stackrel{\textrm{def}}{=} m^{-1} \sum_{i=1}^m x_i\)</span>. Ta có thể áp dụng bất đẳng thức Chebyshev cho từng <span class="arithmatex">\(z_m\)</span> một cách độc lập không? Tại sao không?</li>
+<li>Cho hai sự kiện với xác suất <span class="arithmatex">\(P(\mathcal{A})\)</span> và <span class="arithmatex">\(P(\mathcal{B})\)</span>, hãy tính cận trên và cận dưới của <span class="arithmatex">\(P(\mathcal{A} \cup \mathcal{B})\)</span> và <span class="arithmatex">\(P(\mathcal{A} \cap \mathcal{B})\)</span>. Gợi ý: hình dung tình huống bằng <a href="https://en.wikipedia.org/wiki/Venn_diagram">biểu đồ Venn</a>.</li>
+<li>Giả sử ta có dãy biến ngẫu nhiên, chẳng hạn <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(B\)</span> và <span class="arithmatex">\(C\)</span>, trong đó <span class="arithmatex">\(B\)</span> chỉ phụ thuộc vào <span class="arithmatex">\(A\)</span>, và <span class="arithmatex">\(C\)</span> chỉ phụ thuộc vào <span class="arithmatex">\(B\)</span>, bạn có thể đơn giản hóa xác suất kết hợp <span class="arithmatex">\(P(A, B, C)\)</span> không? Gợi ý: đây là <a href="https://en.wikipedia.org/wiki/Markov_chain">chuỗi Markov</a>.</li>
+<li>Trong <a href="#subsec_probability_hiv_app">subsec_probability_hiv_app</a>, giả sử rằng các kết quả của hai xét nghiệm không độc lập. Đặc biệt giả sử rằng mỗi xét nghiệm riêng lẻ có tỷ lệ dương tính giả 10% và tỷ lệ âm tính giả 1%. Tức là, giả sử <span class="arithmatex">\(P(D =1 \mid H=0) = 0.1\)</span> và <span class="arithmatex">\(P(D = 0 \mid H=1) = 0.01\)</span>. Hơn nữa, giả sử rằng với <span class="arithmatex">\(H = 1\)</span> (nhiễm) các kết quả xét nghiệm độc lập có điều kiện, tức là <span class="arithmatex">\(P(D_1, D_2 \mid H=1) = P(D_1 \mid H=1) P(D_2 \mid H=1)\)</span> nhưng với bệnh nhân khỏe mạnh các kết quả được liên kết qua <span class="arithmatex">\(P(D_1 = D_2 = 1 \mid H=0) = 0.02\)</span>.<ol>
+<li>Hãy xây dựng bảng xác suất kết hợp cho <span class="arithmatex">\(D_1\)</span> và <span class="arithmatex">\(D_2\)</span>, với <span class="arithmatex">\(H=0\)</span> dựa trên thông tin bạn có cho đến nay.</li>
+<li>Tính xác suất bệnh nhân bị bệnh (<span class="arithmatex">\(H=1\)</span>) sau khi một xét nghiệm trả về dương tính. Bạn có thể giả sử xác suất cơ sở giống như trước <span class="arithmatex">\(P(H=1) = 0.0015\)</span>.</li>
+<li>Tính xác suất bệnh nhân bị bệnh (<span class="arithmatex">\(H=1\)</span>) sau khi cả hai xét nghiệm trả về dương tính.</li>
+</ol>
+</li>
+<li>Giả sử bạn là quản lý tài sản cho ngân hàng đầu tư và bạn có lựa chọn cổ phiếu <span class="arithmatex">\(s_i\)</span> để đầu tư. Danh mục đầu tư của bạn cần có tổng bằng <span class="arithmatex">\(1\)</span> với trọng số <span class="arithmatex">\(\alpha_i\)</span> cho mỗi cổ phiếu. Các cổ phiếu có lợi nhuận trung bình <span class="arithmatex">\(\boldsymbol{\mu} = E_{\mathbf{s} \sim P}[\mathbf{s}]\)</span> và hiệp phương sai <span class="arithmatex">\(\boldsymbol{\Sigma} = \textrm{Cov}_{\mathbf{s} \sim P}[\mathbf{s}]\)</span>.<ol>
+<li>Tính lợi nhuận kỳ vọng cho danh mục <span class="arithmatex">\(\boldsymbol{\alpha}\)</span> đã cho.</li>
+<li>Nếu bạn muốn tối đa hóa lợi nhuận của danh mục, bạn nên chọn đầu tư như thế nào?</li>
+<li>Tính <em>phương sai</em> của danh mục.</li>
+<li>Hãy phát biểu bài toán tối ưu hóa tối đa hóa lợi nhuận trong khi giữ phương sai bị ràng buộc ở cận trên. Đây là <a href="https://en.wikipedia.org/wiki/Markowitz_model">danh mục Markovitz</a> đoạt giải Nobel [Mangram.2013]. Để giải quyết nó, bạn sẽ cần bộ giải quy hoạch bậc hai, điều gì đó nằm ngoài phạm vi của cuốn sách này.</li>
+</ol>
+</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/37">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

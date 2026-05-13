@@ -99,7 +99,6 @@ phụ thuộc giữa các bước khác nhau trong đồ thị tính toán.
 Do đó, không thể song song hóa các thao tác phụ thuộc lẫn nhau.
 
 ![Frontend ngôn ngữ lập trình và backend framework deep learning.](../img/frontends.png)
-:width:`300px`
 <a id="fig_frontends"></a>
 
 Hãy xem một ví dụ đồ chơi khác để hiểu đồ thị phụ thuộc rõ hơn một chút.

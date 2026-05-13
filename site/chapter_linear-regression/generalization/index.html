@@ -1,0 +1,2430 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_linear-regression/generalization/">
+      
+      
+        <link rel="prev" href="../linear-regression-concise/">
+      
+      
+        <link rel="next" href="../weight-decay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Tổng quát hóa - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tong-quat-hoa" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tổng quát hóa
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hồi quy tuyến tính
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../synthetic-regression-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dữ liệu hồi quy tổng hợp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-regression-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../linear-regression-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sai-so-huan-luyen-va-sai-so-tong-quat-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sai số Huấn luyện và Sai số Tổng quát hóa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sai số Huấn luyện và Sai số Tổng quát hóa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-phuc-tap-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Độ Phức tạp Mô hình
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duoi-khop-hay-qua-khop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dưới khớp hay Quá khớp?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dưới khớp hay Quá khớp?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#khop-uong-cong-a-thuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khớp Đường Cong Đa thức
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kich-thuoc-tap-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kích thước Tập dữ liệu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lua-chon-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lựa chọn Mô hình
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lựa chọn Mô hình">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kiem-inh-cheo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kiểm định Chéo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../weight-decay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weight Decay
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oo-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thiết kế hướng đối tượng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sai-so-huan-luyen-va-sai-so-tong-quat-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sai số Huấn luyện và Sai số Tổng quát hóa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sai số Huấn luyện và Sai số Tổng quát hóa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-phuc-tap-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Độ Phức tạp Mô hình
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duoi-khop-hay-qua-khop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dưới khớp hay Quá khớp?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dưới khớp hay Quá khớp?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#khop-uong-cong-a-thuc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khớp Đường Cong Đa thức
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kich-thuoc-tap-du-lieu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kích thước Tập dữ liệu
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lua-chon-mo-hinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lựa chọn Mô hình
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lựa chọn Mô hình">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kiem-inh-cheo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kiểm định Chéo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="tong-quat-hoa">Tổng quát hóa<a class="headerlink" href="#tong-quat-hoa" title="Permanent link">&para;</a></h1>
+<p><a id="sec_generalization_basics"></a></p>
+<p>Hãy xem xét hai sinh viên đại học đang ôn thi cuối kỳ một cách chăm chỉ.
+Thông thường, việc ôn thi này bao gồm
+luyện tập và kiểm tra khả năng của họ
+bằng cách làm các đề thi từ các năm trước.
+Tuy nhiên, làm tốt các bài thi cũ không đảm bảo
+rằng họ sẽ xuất sắc khi đến lúc thực sự thi.
+Chẳng hạn, hãy tưởng tượng một sinh viên, Ellie Phi thường,
+việc ôn thi của cô hoàn toàn bao gồm
+việc ghi nhớ các câu trả lời
+cho các câu hỏi thi từ các năm trước.
+Dù Ellie có
+một trí nhớ phi thường,
+và do đó có thể nhớ lại hoàn hảo câu trả lời
+cho bất kỳ câu hỏi <em>đã thấy trước đó</em> nào,
+cô vẫn có thể bị đóng băng
+khi đối mặt với một câu hỏi mới (<em>chưa từng thấy trước đó</em>).
+Để so sánh, hãy tưởng tượng một sinh viên khác,
+Irene Quy nạp, có kỹ năng ghi nhớ
+tương đối kém,
+nhưng có năng khiếu nhận ra các mẫu.
+Lưu ý rằng nếu bài thi thực sự bao gồm
+các câu hỏi tái sử dụng từ năm trước,
+Ellie sẽ dễ dàng vượt trội hơn Irene.
+Ngay cả khi các mẫu Irene suy ra
+cho độ chính xác dự đoán 90%,
+chúng không bao giờ có thể cạnh tranh với
+100% nhớ lại của Ellie.
+Tuy nhiên, ngay cả khi bài thi bao gồm
+toàn bộ các câu hỏi mới,
+Irene vẫn có thể duy trì trung bình 90% của mình.</p>
+<p>Là các nhà khoa học machine learning,
+mục tiêu của ta là khám phá <em>các mẫu</em>.
+Nhưng làm sao ta có thể chắc chắn rằng ta đã
+thực sự khám phá một mẫu <em>tổng quát</em>
+và không chỉ đơn giản là ghi nhớ dữ liệu?
+Hầu hết thời gian, dự đoán của ta chỉ hữu ích
+nếu mô hình khám phá được mẫu như vậy.
+Ta không muốn dự đoán giá cổ phiếu hôm qua, mà là ngày mai.
+Ta không cần nhận dạng
+các bệnh đã được chẩn đoán
+cho những bệnh nhân đã từng gặp,
+mà là các bệnh chưa được chẩn đoán trước đó
+ở những bệnh nhân chưa từng gặp trước đó.
+Vấn đề này---làm thế nào để khám phá các mẫu có thể <em>tổng quát hóa</em>---là
+bài toán cơ bản của machine learning,
+và có thể nói là của toàn bộ thống kê.
+Ta có thể đặt bài toán này chỉ là một phần
+của một câu hỏi vĩ đại hơn
+bao trùm toàn bộ khoa học:
+khi nào ta được biện hộ
+để thực hiện bước nhảy từ những quan sát cụ thể
+đến những tuyên bố tổng quát hơn?</p>
+<p>Trong cuộc sống thực, ta phải khớp mô hình
+bằng cách sử dụng một tập dữ liệu hữu hạn.
+Quy mô điển hình của dữ liệu đó
+thay đổi rất nhiều giữa các lĩnh vực.
+Với nhiều bài toán y tế quan trọng,
+ta chỉ có thể tiếp cận vài nghìn điểm dữ liệu.
+Khi nghiên cứu các bệnh hiếm gặp,
+ta có thể may mắn tiếp cận được vài trăm điểm.
+Ngược lại, các tập dữ liệu công khai lớn nhất
+bao gồm ảnh có nhãn,
+ví dụ, ImageNet [Deng.Dong.Socher.ea.2009],
+chứa hàng triệu ảnh.
+Và một số bộ sưu tập ảnh không có nhãn
+như tập dữ liệu Flickr YFC100M
+thậm chí còn lớn hơn, chứa
+hơn 100 triệu ảnh [thomee2016yfcc100m].
+Tuy nhiên, ngay cả ở quy mô cực đoan này,
+số điểm dữ liệu có sẵn
+vẫn là cực kỳ nhỏ
+so với không gian của tất cả các ảnh có thể có
+ở độ phân giải megapixel.
+Bất cứ khi nào ta làm việc với các mẫu hữu hạn,
+ta phải ghi nhớ nguy cơ
+rằng ta có thể khớp dữ liệu huấn luyện,
+chỉ để phát hiện ra rằng ta đã thất bại
+trong việc khám phá một mẫu có thể tổng quát hóa.</p>
+<p>Hiện tượng khớp gần với dữ liệu huấn luyện hơn
+so với phân phối nền tảng được gọi là <em>quá khớp</em>,
+và các kỹ thuật chống lại quá khớp
+thường được gọi là các phương pháp <em>chuẩn hóa</em>.
+Mặc dù đây không phải là sự thay thế cho một giới thiệu đúng đắn
+về lý thuyết học thống kê (xem Vapnik98,boucheron2005theory),
+ta sẽ cho bạn đủ trực giác để bắt đầu.
+Ta sẽ xem lại tổng quát hóa trong nhiều chương
+xuyên suốt cuốn sách,
+khám phá cả những gì đã biết về
+các nguyên tắc nền tảng tổng quát hóa
+trong các mô hình khác nhau,
+cũng như các kỹ thuật heuristic
+đã được tìm thấy (theo kinh nghiệm)
+mang lại tổng quát hóa tốt hơn
+cho các tác vụ quan tâm thực tế.</p>
+<h2 id="sai-so-huan-luyen-va-sai-so-tong-quat-hoa">Sai số Huấn luyện và Sai số Tổng quát hóa<a class="headerlink" href="#sai-so-huan-luyen-va-sai-so-tong-quat-hoa" title="Permanent link">&para;</a></h2>
+<p>Trong thiết lập học có giám sát tiêu chuẩn,
+ta giả định rằng dữ liệu huấn luyện và dữ liệu kiểm tra
+được rút ra <em>độc lập</em> từ các phân phối <em>giống hệt</em>.
+Điều này thường được gọi là <em>giả định IID</em>.
+Mặc dù giả định này mạnh,
+đáng lưu ý rằng, nếu không có giả định như vậy,
+ta sẽ hoàn toàn bất lực.
+Tại sao ta nên tin rằng dữ liệu huấn luyện
+được lấy mẫu từ phân phối <span class="arithmatex">\(P(X,Y)\)</span>
+nên cho ta biết cách đưa ra dự đoán trên
+dữ liệu kiểm tra được tạo bởi <em>phân phối khác</em> <span class="arithmatex">\(Q(X,Y)\)</span>?
+Thực hiện những bước nhảy như vậy hóa ra đòi hỏi
+các giả định mạnh về cách <span class="arithmatex">\(P\)</span> và <span class="arithmatex">\(Q\)</span> liên quan.
+Về sau ta sẽ thảo luận về một số giả định
+cho phép phân phối dịch chuyển
+nhưng trước tiên ta cần hiểu trường hợp IID,
+trong đó <span class="arithmatex">\(P(\cdot) = Q(\cdot)\)</span>.</p>
+<p>Để bắt đầu, ta cần phân biệt giữa
+<em>sai số huấn luyện</em> <span class="arithmatex">\(R_\textrm{emp}\)</span>,
+là một <em>thống kê</em>
+được tính trên tập dữ liệu huấn luyện,
+và <em>sai số tổng quát hóa</em> <span class="arithmatex">\(R\)</span>,
+là một <em>kỳ vọng</em>
+theo phân phối nền tảng.
+Ta có thể nghĩ sai số tổng quát hóa là
+những gì bạn sẽ thấy nếu bạn áp dụng mô hình của mình
+cho một dòng vô tận các mẫu dữ liệu bổ sung
+được rút ra từ cùng phân phối dữ liệu nền tảng.
+Chính thức, sai số huấn luyện được biểu diễn là một <em>tổng</em> (với ký hiệu tương tự như <a href="#sec_linear_regression">sec_linear_regression</a>):</p>
+<div class="arithmatex">\[R_\textrm{emp}[\mathbf{X}, \mathbf{y}, f] = \frac{1}{n} \sum_{i=1}^n l(\mathbf{x}^{(i)}, y^{(i)}, f(\mathbf{x}^{(i)})),\]</div>
+<p>trong khi sai số tổng quát hóa được biểu diễn là một tích phân:</p>
+<div class="arithmatex">\[R[p, f] = E_{(\mathbf{x}, y) \sim P} [l(\mathbf{x}, y, f(\mathbf{x}))] =
+\int \int l(\mathbf{x}, y, f(\mathbf{x})) p(\mathbf{x}, y) \;d\mathbf{x} dy.\]</div>
+<p>Vấn đề là ta không bao giờ có thể tính chính xác
+sai số tổng quát hóa <span class="arithmatex">\(R\)</span>.
+Không ai bao giờ cho ta biết dạng chính xác
+của hàm mật độ <span class="arithmatex">\(p(\mathbf{x}, y)\)</span>.
+Hơn nữa, ta không thể lấy mẫu vô tận các điểm dữ liệu.
+Do đó, trong thực tế, ta phải <em>ước lượng</em> sai số tổng quát hóa
+bằng cách áp dụng mô hình của ta cho một tập kiểm tra độc lập
+bao gồm một lựa chọn ngẫu nhiên các mẫu
+<span class="arithmatex">\(\mathbf{X}'\)</span> và nhãn <span class="arithmatex">\(\mathbf{y}'\)</span>
+được giữ lại khỏi tập huấn luyện của ta.
+Điều này bao gồm áp dụng cùng công thức
+được dùng để tính sai số huấn luyện thực nghiệm
+nhưng cho tập kiểm tra <span class="arithmatex">\(\mathbf{X}', \mathbf{y}'\)</span>.</p>
+<p>Điều quan trọng là, khi ta đánh giá bộ phân loại trên tập kiểm tra,
+ta đang làm việc với bộ phân loại <em>cố định</em>
+(nó không phụ thuộc vào mẫu của tập kiểm tra),
+và do đó ước lượng sai số của nó
+đơn giản chỉ là bài toán ước lượng trung bình.
+Tuy nhiên điều tương tự không thể nói về
+tập huấn luyện.
+Lưu ý rằng mô hình ta kết thúc với
+phụ thuộc rõ ràng vào lựa chọn tập huấn luyện
+và do đó sai số huấn luyện nói chung
+sẽ là ước lượng lệch của sai số thực sự
+trên quần thể nền tảng.
+Câu hỏi trung tâm của tổng quát hóa
+là khi nào ta nên kỳ vọng sai số huấn luyện của mình
+gần với sai số quần thể
+(và do đó sai số tổng quát hóa).</p>
+<h3 id="o-phuc-tap-mo-hinh">Độ Phức tạp Mô hình<a class="headerlink" href="#o-phuc-tap-mo-hinh" title="Permanent link">&para;</a></h3>
+<p>Trong lý thuyết cổ điển, khi ta có
+các mô hình đơn giản và dữ liệu phong phú,
+sai số huấn luyện và tổng quát hóa có xu hướng gần nhau.
+Tuy nhiên, khi ta làm việc với
+các mô hình phức tạp hơn và/hoặc ít mẫu hơn,
+ta kỳ vọng sai số huấn luyện giảm xuống
+nhưng khoảng cách tổng quát hóa tăng lên.
+Điều này không nên gây ngạc nhiên.
+Hãy tưởng tượng một lớp mô hình biểu cảm đến mức
+với bất kỳ tập dữ liệu nào gồm <span class="arithmatex">\(n\)</span> mẫu,
+ta có thể tìm thấy một tập tham số
+có thể khớp hoàn hảo với các nhãn tùy ý,
+ngay cả khi được gán ngẫu nhiên.
+Trong trường hợp này, ngay cả khi ta khớp dữ liệu huấn luyện hoàn hảo,
+làm sao ta có thể kết luận bất cứ điều gì về sai số tổng quát hóa?
+Theo những gì ta biết, sai số tổng quát hóa của ta
+có thể không tốt hơn đoán ngẫu nhiên.</p>
+<p>Nói chung, nếu không có bất kỳ hạn chế nào về lớp mô hình,
+ta không thể kết luận, chỉ dựa trên khớp dữ liệu huấn luyện,
+rằng mô hình của ta đã khám phá bất kỳ mẫu nào có thể tổng quát hóa [vapnik1994measuring].
+Mặt khác, nếu lớp mô hình của ta
+không có khả năng khớp với các nhãn tùy ý,
+thì nó phải đã khám phá ra một mẫu.
+Các ý tưởng lý thuyết học về độ phức tạp mô hình
+lấy một số cảm hứng từ ý tưởng
+của Karl Popper, một nhà triết học khoa học có ảnh hưởng,
+người đã chính thức hóa tiêu chí của khả năng bác bỏ.
+Theo Popper, một lý thuyết
+có thể giải thích bất kỳ và tất cả quan sát
+hoàn toàn không phải là một lý thuyết khoa học!
+Dù sao, nó đã cho ta biết gì về thế giới
+nếu nó không loại trừ bất kỳ khả năng nào?
+Tóm lại, điều ta muốn là một giả thuyết
+<em>không thể</em> giải thích bất kỳ quan sát nào
+ta có thể hình dung sẽ thực hiện
+nhưng vẫn tương thích
+với những quan sát ta <em>thực tế</em> thực hiện.</p>
+<p>Bây giờ, điều gì chính xác tạo thành khái niệm phù hợp
+về độ phức tạp mô hình là một vấn đề phức tạp.
+Thường thì, các mô hình có nhiều tham số hơn
+có thể khớp với số lượng lớn hơn
+các nhãn được gán tùy ý.
+Tuy nhiên, điều này không nhất thiết đúng.
+Chẳng hạn, các phương pháp kernel hoạt động trong không gian
+với số lượng tham số vô hạn,
+nhưng độ phức tạp của chúng được kiểm soát
+bằng các phương tiện khác [Scholkopf.Smola.2002].
+Một khái niệm về độ phức tạp thường tỏ ra hữu ích
+là phạm vi giá trị mà các tham số có thể nhận.
+Ở đây, một mô hình mà các tham số được phép
+nhận các giá trị tùy ý
+sẽ phức tạp hơn.
+Ta sẽ xem lại ý tưởng này trong phần tiếp theo,
+khi ta giới thiệu <em>suy giảm trọng số</em>,
+kỹ thuật chuẩn hóa thực tế đầu tiên của bạn.
+Đáng chú ý, việc so sánh
+độ phức tạp giữa các thành viên của các lớp mô hình khác biệt đáng kể
+(chẳng hạn, cây quyết định so với mạng nơ-ron) có thể khó.</p>
+<p>Tại thời điểm này, ta phải nhấn mạnh một điểm quan trọng khác
+mà ta sẽ xem lại khi giới thiệu các mạng nơ-ron sâu.
+Khi một mô hình có khả năng khớp với các nhãn tùy ý,
+sai số huấn luyện thấp không nhất thiết
+ngụ ý sai số tổng quát hóa thấp.
+<em>Tuy nhiên, nó cũng không nhất thiết
+ngụ ý sai số tổng quát hóa cao!</em>
+Tất cả những gì ta có thể khẳng định chắc chắn là
+sai số huấn luyện thấp một mình là không đủ
+để chứng nhận sai số tổng quát hóa thấp.
+Các mạng nơ-ron sâu hóa ra là những mô hình như vậy:
+trong khi chúng tổng quát hóa tốt trong thực tế,
+chúng quá mạnh để cho phép ta kết luận
+nhiều điều chỉ dựa trên sai số huấn luyện.
+Trong những trường hợp này ta phải dựa nhiều hơn
+vào dữ liệu giữ lại để chứng nhận tổng quát hóa
+sau thực tế.
+Sai số trên dữ liệu giữ lại, tức là tập kiểm định,
+được gọi là <em>sai số kiểm định</em>.</p>
+<h2 id="duoi-khop-hay-qua-khop">Dưới khớp hay Quá khớp?<a class="headerlink" href="#duoi-khop-hay-qua-khop" title="Permanent link">&para;</a></h2>
+<p>Khi ta so sánh sai số huấn luyện và kiểm định,
+ta muốn chú ý đến hai tình huống phổ biến.
+Đầu tiên, ta muốn cảnh giác với các trường hợp
+khi cả sai số huấn luyện và kiểm định của ta đều đáng kể
+nhưng có một khoảng cách nhỏ giữa chúng.
+Nếu mô hình không thể giảm sai số huấn luyện,
+điều đó có thể có nghĩa là mô hình của ta quá đơn giản
+(tức là không đủ biểu cảm)
+để nắm bắt mẫu ta đang cố mô hình.
+Hơn nữa, vì <em>khoảng cách tổng quát hóa</em> (<span class="arithmatex">\(R_\textrm{emp} - R\)</span>)
+giữa sai số huấn luyện và tổng quát hóa của ta nhỏ,
+ta có lý do để tin rằng ta có thể sử dụng một mô hình phức tạp hơn.
+Hiện tượng này được gọi là <em>dưới khớp</em>.</p>
+<p>Mặt khác, như đã thảo luận ở trên,
+ta muốn cảnh giác với các trường hợp
+khi sai số huấn luyện của ta thấp hơn đáng kể
+so với sai số kiểm định, cho thấy <em>quá khớp</em> nghiêm trọng.
+Lưu ý rằng quá khớp không phải lúc nào cũng là điều xấu.
+Trong deep learning đặc biệt,
+các mô hình dự đoán tốt nhất thường hoạt động
+tốt hơn nhiều trên dữ liệu huấn luyện so với dữ liệu giữ lại.
+Cuối cùng, ta thường quan tâm đến
+việc đưa sai số tổng quát hóa xuống thấp hơn,
+và chỉ quan tâm đến khoảng cách ở mức độ
+nó trở thành một trở ngại cho mục tiêu đó.
+Lưu ý rằng nếu sai số huấn luyện bằng không,
+thì khoảng cách tổng quát hóa chính xác bằng sai số tổng quát hóa
+và ta chỉ có thể tiến bộ bằng cách giảm khoảng cách.</p>
+<h3 id="khop-uong-cong-a-thuc">Khớp Đường Cong Đa thức<a class="headerlink" href="#khop-uong-cong-a-thuc" title="Permanent link">&para;</a></h3>
+<p><a id="subsec_polynomial-curve-fitting"></a></p>
+<p>Để minh họa một số trực giác cổ điển
+về quá khớp và độ phức tạp mô hình,
+hãy xem xét điều sau:
+cho dữ liệu huấn luyện bao gồm một đặc trưng duy nhất <span class="arithmatex">\(x\)</span>
+và một nhãn có giá trị thực tương ứng <span class="arithmatex">\(y\)</span>,
+ta cố gắng tìm đa thức bậc <span class="arithmatex">\(d\)</span></p>
+<div class="arithmatex">\[\hat{y}= \sum_{i=0}^d x^i w_i\]</div>
+<p>để ước lượng nhãn <span class="arithmatex">\(y\)</span>.
+Đây chỉ là bài toán hồi quy tuyến tính
+trong đó các đặc trưng của ta được cho bởi lũy thừa của <span class="arithmatex">\(x\)</span>,
+trọng số của mô hình được cho bởi <span class="arithmatex">\(w_i\)</span>,
+và hệ số chặn được cho bởi <span class="arithmatex">\(w_0\)</span> vì <span class="arithmatex">\(x^0 = 1\)</span> với mọi <span class="arithmatex">\(x\)</span>.
+Vì đây chỉ là bài toán hồi quy tuyến tính,
+ta có thể dùng sai số bình phương làm hàm mất mát.</p>
+<p>Hàm đa thức bậc cao hơn phức tạp hơn
+hàm đa thức bậc thấp hơn,
+vì đa thức bậc cao hơn có nhiều tham số hơn
+và phạm vi lựa chọn hàm mô hình rộng hơn.
+Cố định tập dữ liệu huấn luyện,
+các hàm đa thức bậc cao hơn luôn phải
+đạt được sai số huấn luyện thấp hơn (ở mức tệ nhất là bằng nhau)
+so với các đa thức bậc thấp hơn.
+Thực tế, bất cứ khi nào mỗi mẫu dữ liệu
+có giá trị <span class="arithmatex">\(x\)</span> khác nhau,
+một hàm đa thức với bậc
+bằng số mẫu dữ liệu
+có thể khớp hoàn hảo với tập huấn luyện.
+Ta so sánh mối quan hệ giữa bậc đa thức (độ phức tạp mô hình)
+và cả dưới khớp và quá khớp trong <a href="#fig_capacity_vs_error">fig_capacity_vs_error</a>.</p>
+<p><img alt="Ảnh hưởng của độ phức tạp mô hình đến dưới khớp và quá khớp." src="../../img/capacity-vs-error.svg" />
+<a id="fig_capacity_vs_error"></a></p>
+<h3 id="kich-thuoc-tap-du-lieu">Kích thước Tập dữ liệu<a class="headerlink" href="#kich-thuoc-tap-du-lieu" title="Permanent link">&para;</a></h3>
+<p>Như giới hạn trên đã chỉ ra,
+một xem xét quan trọng khác
+cần ghi nhớ là kích thước tập dữ liệu.
+Cố định mô hình, ta càng có ít mẫu
+trong tập dữ liệu huấn luyện,
+ta càng có nhiều khả năng (và nghiêm trọng hơn)
+gặp phải quá khớp.
+Khi ta tăng lượng dữ liệu huấn luyện,
+sai số tổng quát hóa thường giảm.
+Hơn nữa, nói chung, nhiều dữ liệu hơn không bao giờ gây hại.
+Với một tác vụ và phân phối dữ liệu cố định,
+độ phức tạp mô hình không nên tăng
+nhanh hơn lượng dữ liệu.
+Cho nhiều dữ liệu hơn, ta có thể thử
+khớp một mô hình phức tạp hơn.
+Khi không có đủ dữ liệu, các mô hình đơn giản hơn
+có thể khó vượt qua hơn.
+Với nhiều tác vụ, deep learning
+chỉ vượt trội so với các mô hình tuyến tính
+khi có hàng nghìn mẫu huấn luyện.
+Một phần, sự thành công hiện tại của deep learning
+phần lớn nhờ vào sự phong phú của các tập dữ liệu khổng lồ
+phát sinh từ các công ty internet, lưu trữ rẻ,
+các thiết bị kết nối, và số hóa rộng rãi của nền kinh tế.</p>
+<h2 id="lua-chon-mo-hinh">Lựa chọn Mô hình<a class="headerlink" href="#lua-chon-mo-hinh" title="Permanent link">&para;</a></h2>
+<p><a id="subsec_generalization-model-selection"></a></p>
+<p>Thông thường, ta chỉ chọn mô hình cuối cùng
+sau khi đánh giá nhiều mô hình
+khác nhau theo nhiều cách
+(kiến trúc khác nhau, mục tiêu huấn luyện,
+đặc trưng được chọn, tiền xử lý dữ liệu,
+tốc độ học, v.v.).
+Chọn trong số nhiều mô hình được gọi đúng đắn
+là <em>lựa chọn mô hình</em>.</p>
+<p>Về nguyên tắc, ta không nên chạm vào tập kiểm tra
+cho đến sau khi ta đã chọn tất cả các siêu tham số.
+Nếu ta dùng dữ liệu kiểm tra trong quá trình lựa chọn mô hình,
+có nguy cơ ta có thể quá khớp dữ liệu kiểm tra.
+Thì ta sẽ gặp rắc rối nghiêm trọng.
+Nếu ta quá khớp dữ liệu huấn luyện,
+luôn có đánh giá trên dữ liệu kiểm tra để giữ ta trung thực.
+Nhưng nếu ta quá khớp dữ liệu kiểm tra, làm sao ta biết được?
+Xem ong2005learning để xem ví dụ về cách
+điều này có thể dẫn đến kết quả vô lý ngay cả với các mô hình mà độ phức tạp
+có thể được kiểm soát chặt chẽ.</p>
+<p>Do đó, ta không bao giờ nên dựa vào dữ liệu kiểm tra để lựa chọn mô hình.
+Tuy nhiên ta cũng không thể chỉ dựa vào dữ liệu huấn luyện
+để lựa chọn mô hình vì
+ta không thể ước lượng sai số tổng quát hóa
+trên chính dữ liệu ta dùng để huấn luyện mô hình.</p>
+<p>Trong các ứng dụng thực tế, bức tranh trở nên mờ hơn.
+Trong khi lý tưởng ta chỉ chạm vào dữ liệu kiểm tra một lần,
+để đánh giá mô hình tốt nhất hoặc so sánh
+một số ít mô hình với nhau,
+dữ liệu kiểm tra thực tế hiếm khi bị loại bỏ sau chỉ một lần dùng.
+Ta hiếm khi có đủ khả năng có tập kiểm tra mới cho mỗi vòng thí nghiệm.
+Thực tế, việc tái sử dụng dữ liệu điểm chuẩn trong nhiều thập kỷ
+có thể có tác động đáng kể đến
+sự phát triển của các thuật toán,
+ví dụ, cho <a href="https://paperswithcode.com/sota/image-classification-on-imagenet">phân loại ảnh</a>
+và <a href="https://paperswithcode.com/sota/image-classification-on-mnist">nhận dạng ký tự quang học</a>.</p>
+<p>Thực hành phổ biến để giải quyết vấn đề <em>huấn luyện trên tập kiểm tra</em>
+là chia dữ liệu theo ba hướng,
+kết hợp <em>tập kiểm định</em>
+ngoài tập dữ liệu huấn luyện và kiểm tra.
+Kết quả là một tình huống mờ nhạt trong đó ranh giới
+giữa dữ liệu kiểm định và kiểm tra đáng lo ngại là mơ hồ.
+Trừ khi được nêu rõ khác, trong các thí nghiệm trong cuốn sách này
+ta thực sự đang làm việc với những gì đúng lẽ phải được gọi là
+dữ liệu huấn luyện và dữ liệu kiểm định, không có tập kiểm tra thực sự.
+Do đó, độ chính xác được báo cáo trong mỗi thí nghiệm của cuốn sách thực ra là
+độ chính xác kiểm định chứ không phải là độ chính xác tập kiểm tra thực sự.</p>
+<h3 id="kiem-inh-cheo">Kiểm định Chéo<a class="headerlink" href="#kiem-inh-cheo" title="Permanent link">&para;</a></h3>
+<p>Khi dữ liệu huấn luyện khan hiếm,
+ta thậm chí có thể không đủ khả năng để giữ lại
+đủ dữ liệu để tạo thành một tập kiểm định thích hợp.
+Một giải pháp phổ biến cho vấn đề này là dùng
+<em>kiểm định chéo <span class="arithmatex">\(K\)</span> phần</em>.
+Ở đây, dữ liệu huấn luyện ban đầu được chia thành <span class="arithmatex">\(K\)</span> tập con không chồng lên nhau.
+Sau đó huấn luyện và kiểm định mô hình được thực hiện <span class="arithmatex">\(K\)</span> lần,
+mỗi lần huấn luyện trên <span class="arithmatex">\(K-1\)</span> tập con và kiểm định
+trên một tập con khác (tập con không được dùng cho huấn luyện trong vòng đó).
+Cuối cùng, sai số huấn luyện và kiểm định được ước lượng
+bằng cách lấy trung bình các kết quả từ <span class="arithmatex">\(K\)</span> thí nghiệm.</p>
+<h2 id="tom-tat">Tóm tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<p>Phần này đã khám phá một số nền tảng của
+tổng quát hóa trong machine learning.
+Một số ý tưởng trong số này trở nên phức tạp
+và phản trực giác khi ta đến các mô hình sâu hơn; ở đây, các mô hình có khả năng quá khớp dữ liệu tệ,
+và các khái niệm liên quan về độ phức tạp
+có thể vừa ngầm định vừa phản trực giác
+(ví dụ, các kiến trúc lớn hơn với nhiều tham số hơn
+tổng quát hóa tốt hơn).
+Ta để lại cho bạn một vài quy tắc ngón tay cái:</p>
+<ol>
+<li>Dùng tập kiểm định (hoặc <em>kiểm định chéo <span class="arithmatex">\(K\)</span> phần</em>) để lựa chọn mô hình;</li>
+<li>Các mô hình phức tạp hơn thường cần nhiều dữ liệu hơn;</li>
+<li>Các khái niệm liên quan về độ phức tạp bao gồm cả số lượng tham số và phạm vi giá trị mà chúng được phép nhận;</li>
+<li>Giữ nguyên các yếu tố khác, nhiều dữ liệu hơn hầu như luôn dẫn đến tổng quát hóa tốt hơn;</li>
+<li>Toàn bộ cuộc trò chuyện về tổng quát hóa này đều dựa trên giả định IID. Nếu ta nới lỏng giả định này, cho phép phân phối dịch chuyển giữa các giai đoạn huấn luyện và kiểm tra, thì ta không thể nói gì về tổng quát hóa nếu không có giả định thêm (có thể nhẹ hơn).</li>
+</ol>
+<h2 id="bai-tap">Bài tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Khi nào bạn có thể giải bài toán hồi quy đa thức một cách chính xác?</li>
+<li>Cho ít nhất năm ví dụ mà các biến ngẫu nhiên phụ thuộc khiến việc coi bài toán là dữ liệu IID là không nên.</li>
+<li>Bạn có thể mong đợi thấy sai số huấn luyện bằng không không? Trong hoàn cảnh nào bạn sẽ thấy sai số tổng quát hóa bằng không?</li>
+<li>Tại sao kiểm định chéo <span class="arithmatex">\(K\)</span> phần rất tốn kém để tính toán?</li>
+<li>Tại sao ước lượng sai số kiểm định chéo <span class="arithmatex">\(K\)</span> phần bị lệch?</li>
+<li>Chiều VC được định nghĩa là số điểm tối đa có thể được phân loại với các nhãn tùy ý <span class="arithmatex">\(\{\pm 1\}\)</span> bởi một hàm của một lớp hàm. Tại sao điều này có thể không phải là ý tưởng hay để đo mức độ phức tạp của lớp hàm? Gợi ý: xem xét độ lớn của các hàm.</li>
+<li>Người quản lý của bạn cung cấp cho bạn một tập dữ liệu khó mà thuật toán hiện tại của bạn hoạt động không tốt lắm. Bạn sẽ biện hộ với anh ấy rằng bạn cần nhiều dữ liệu hơn như thế nào? Gợi ý: bạn không thể tăng dữ liệu nhưng có thể giảm nó.</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/97">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

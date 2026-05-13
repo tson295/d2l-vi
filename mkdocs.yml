@@ -1,4 +1,5 @@
 site_name: Đắm mình vào Deep Learning (Tiếng Việt)
+site_url: https://tson295.github.io/d2l-vi/
 docs_dir: d2l-vi
 site_dir: site
 
@@ -15,8 +16,8 @@ theme:
         icon: material/brightness-4
         name: Chuyển sang sáng
   features:
-    - navigation.sections
     - navigation.top
+    - navigation.prune
     - search.highlight
     - search.suggest
     - content.code.copy

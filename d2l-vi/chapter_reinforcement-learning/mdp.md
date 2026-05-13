@@ -7,7 +7,6 @@ Trong phần này, chúng ta sẽ thảo luận cách mô hình hóa các bài t
 Markov decision process (MDP) [BellmanMDP] là một mô hình về cách trạng thái của một hệ thống tiến hóa khi các hành động khác nhau được áp dụng lên hệ thống. Một vài đại lượng khác nhau kết hợp lại để tạo thành một MDP.
 
 ![Một tác vụ điều hướng gridworld đơn giản, trong đó robot không chỉ phải tìm đường đến vị trí mục tiêu (hiển thị bằng ngôi nhà màu xanh lá) mà còn phải tránh các vị trí bẫy (hiển thị bằng dấu thập đỏ).](../img/mdp.png)
-:width:`250px`
 <a id="fig_mdp"></a>
 
 * Gọi $\mathcal{S}$ là tập các trạng thái trong MDP. Như một ví dụ cụ thể, xem [fig_mdp](#fig_mdp) về một robot đang điều hướng trong gridworld. Trong trường hợp này, $\mathcal{S}$ tương ứng với tập các vị trí mà robot có thể ở tại bất kỳ bước thời gian nào.

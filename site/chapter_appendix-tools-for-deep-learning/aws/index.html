@@ -1,0 +1,2265 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://tson295.github.io/d2l-vi/chapter_appendix-tools-for-deep-learning/aws/">
+      
+      
+        <link rel="prev" href="../d2l/">
+      
+      
+        <link rel="next" href="../utils/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>AWS - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#su-dung-aws-ec2-instances" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AWS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_preliminaries/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-regression/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_linear-classification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_builders-guide/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computational-performance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_computer-vision/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_recommender-systems/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_24" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_24" id="__nav_24_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_24_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_24">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Công cụ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sagemaker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SageMaker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../colab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../selecting-servers-gpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chọn Server/GPU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đóng góp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../d2l/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thư viện d2l
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tao-va-chay-mot-ec2-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tạo Và Chạy Một EC2 Instance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tạo Và Chạy Một EC2 Instance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thiet-lap-truoc-vi-tri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thiết Lập Trước Vị Trí
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tang-gioi-han" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tăng Giới Hạn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#khoi-chay-mot-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi Chạy Một Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ket-noi-en-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kết Nối Đến Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài Đặt CUDA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-thu-vien-e-chay-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài Đặt Thư Viện Để Chạy Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chay-jupyter-notebook-tu-xa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chạy Jupyter Notebook Từ Xa
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ong-cac-instance-khong-dung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Đóng Các Instance Không Dùng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tao-va-chay-mot-ec2-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tạo Và Chạy Một EC2 Instance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tạo Và Chạy Một EC2 Instance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thiet-lap-truoc-vi-tri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thiết Lập Trước Vị Trí
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tang-gioi-han" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tăng Giới Hạn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#khoi-chay-mot-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Khởi Chạy Một Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ket-noi-en-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kết Nối Đến Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài Đặt CUDA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cai-at-thu-vien-e-chay-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cài Đặt Thư Viện Để Chạy Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chay-jupyter-notebook-tu-xa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chạy Jupyter Notebook Từ Xa
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ong-cac-instance-khong-dung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Đóng Các Instance Không Dùng
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="su-dung-aws-ec2-instances">Sử Dụng AWS EC2 Instances<a class="headerlink" href="#su-dung-aws-ec2-instances" title="Permanent link">&para;</a></h1>
+<p><a id="sec_aws"></a></p>
+<p>Trong phần này, chúng tôi sẽ chỉ cho bạn cách cài đặt tất cả thư viện trên một máy Linux thô. Nhắc lại rằng trong <a href="#sec_sagemaker">sec_sagemaker</a>, chúng ta đã thảo luận cách sử dụng Amazon SageMaker, trong khi tự xây dựng một instance trên AWS sẽ ít tốn kém hơn. Hướng dẫn này bao gồm ba bước:</p>
+<ol>
+<li>Yêu cầu một instance Linux có GPU từ AWS EC2.</li>
+<li>Cài đặt CUDA (hoặc dùng Amazon Machine Image đã cài sẵn CUDA).</li>
+<li>Cài đặt framework deep learning và các thư viện khác để chạy code của cuốn sách.</li>
+</ol>
+<p>Quy trình này cũng áp dụng cho các instance khác (và các đám mây khác), dù có một số sửa đổi nhỏ. Trước khi tiếp tục, bạn cần tạo một tài khoản AWS; xem <a href="#sec_sagemaker">sec_sagemaker</a> để biết thêm chi tiết.</p>
+<h2 id="tao-va-chay-mot-ec2-instance">Tạo Và Chạy Một EC2 Instance<a class="headerlink" href="#tao-va-chay-mot-ec2-instance" title="Permanent link">&para;</a></h2>
+<p>Sau khi đăng nhập vào tài khoản AWS, nhấp "EC2" (<a href="#fig_aws">fig_aws</a>) để đi đến bảng EC2.</p>
+<p><img alt="Mở bảng điều khiển EC2." src="../../img/aws.png" />
+<a id="fig_aws"></a></p>
+<p><a href="#fig_ec2">fig_ec2</a> hiển thị bảng EC2.</p>
+<p><img alt="Bảng EC2." src="../../img/ec2.png" />
+<a id="fig_ec2"></a></p>
+<h3 id="thiet-lap-truoc-vi-tri">Thiết Lập Trước Vị Trí<a class="headerlink" href="#thiet-lap-truoc-vi-tri" title="Permanent link">&para;</a></h3>
+<p>Chọn một trung tâm dữ liệu gần để giảm độ trễ, ví dụ "Oregon" (được đánh dấu bằng khung đỏ ở góc trên bên phải của <a href="#fig_ec2">fig_ec2</a>). Nếu bạn ở Trung Quốc,
+bạn có thể chọn một khu vực Châu Á Thái Bình Dương gần đó, chẳng hạn Seoul hoặc Tokyo. Xin lưu ý
+rằng một số trung tâm dữ liệu có thể không có instance GPU.</p>
+<h3 id="tang-gioi-han">Tăng Giới Hạn<a class="headerlink" href="#tang-gioi-han" title="Permanent link">&para;</a></h3>
+<p>Trước khi chọn một instance, hãy kiểm tra xem có
+hạn chế số lượng hay không bằng cách nhấp nhãn "Limits" trên thanh bên trái như minh họa trong
+<a href="#fig_ec2">fig_ec2</a>.
+<a href="#fig_limits">fig_limits</a> hiển thị một ví dụ về
+giới hạn như vậy. Tài khoản hiện không thể mở instance "p2.xlarge" theo khu vực. Nếu
+bạn cần mở một hoặc nhiều instance, hãy nhấp vào liên kết "Request limit increase" để
+đăng ký quota instance cao hơn.
+Thông thường, cần một ngày làm việc để
+xử lý một đơn đăng ký.</p>
+<p><img alt="Hạn chế số lượng instance." src="../../img/limits.png" />
+<a id="fig_limits"></a></p>
+<h3 id="khoi-chay-mot-instance">Khởi Chạy Một Instance<a class="headerlink" href="#khoi-chay-mot-instance" title="Permanent link">&para;</a></h3>
+<p>Tiếp theo, nhấp nút "Launch Instance" được đánh dấu bằng khung đỏ trong <a href="#fig_ec2">fig_ec2</a> để khởi chạy instance của bạn.</p>
+<p>Ta bắt đầu bằng cách chọn một Amazon Machine Image (AMI) phù hợp. Chọn một instance Ubuntu (<a href="#fig_ubuntu">fig_ubuntu</a>).</p>
+<p><img alt="Chọn một AMI." src="../../img/ubuntu-new.png" />
+<a id="fig_ubuntu"></a></p>
+<p>EC2 cung cấp nhiều cấu hình instance khác nhau để lựa chọn. Điều này đôi khi có thể khiến người mới bắt đầu thấy choáng ngợp. <a href="#tab_ec2">tab_ec2</a> liệt kê các máy phù hợp khác nhau.</p>
+<p>:Các loại EC2 instance khác nhau
+<a id="tab_ec2"></a></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>GPU</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>g2</td>
+<td>Grid K520</td>
+<td>ancient</td>
+</tr>
+<tr>
+<td>p2</td>
+<td>Kepler K80</td>
+<td>old but often cheap as spot</td>
+</tr>
+<tr>
+<td>g3</td>
+<td>Maxwell M60</td>
+<td>good trade-off</td>
+</tr>
+<tr>
+<td>p3</td>
+<td>Volta V100</td>
+<td>high performance for FP16</td>
+</tr>
+<tr>
+<td>p4</td>
+<td>Ampere A100</td>
+<td>high performance for large-scale training</td>
+</tr>
+<tr>
+<td>g4</td>
+<td>Turing T4</td>
+<td>inference optimized FP16/INT8</td>
+</tr>
+</tbody>
+</table>
+<p>Tất cả các máy chủ này có nhiều biến thể, cho biết số GPU được dùng. Ví dụ, p2.xlarge có 1 GPU còn p2.16xlarge có 16 GPU và nhiều bộ nhớ hơn. Để biết thêm chi tiết, xem <a href="https://aws.amazon.com/ec2/instance-types/">tài liệu AWS EC2</a> hoặc một <a href="https://www.ec2instances.info">trang tóm tắt</a>. Để minh họa, p2.xlarge là đủ (được đánh dấu trong khung đỏ của <a href="#fig_p2x">fig_p2x</a>).</p>
+<p><img alt="Chọn một instance." src="../../img/p2x.png" />
+<a id="fig_p2x"></a></p>
+<p>Lưu ý rằng bạn nên dùng một instance hỗ trợ GPU với driver phù hợp và framework deep learning hỗ trợ GPU. Nếu không, bạn sẽ không thấy lợi ích nào từ việc dùng GPU.</p>
+<p>Ta tiếp tục chọn cặp khóa dùng để truy cập
+instance. Nếu bạn chưa có cặp khóa, nhấp "Create new key pair" trong <a href="#fig_keypair">fig_keypair</a> để tạo một cặp khóa. Sau đó,
+bạn có thể chọn cặp khóa
+đã tạo trước đó.
+Hãy chắc chắn rằng bạn tải xuống cặp khóa và lưu nó ở một vị trí an toàn nếu bạn
+tạo một cặp mới. Đây là cách duy nhất để bạn SSH vào máy chủ.</p>
+<p><img alt="Chọn một cặp khóa." src="../../img/keypair.png" />
+<a id="fig_keypair"></a></p>
+<p>Trong ví dụ này, ta sẽ giữ cấu hình mặc định cho "Network settings" (nhấp nút "Edit" để cấu hình các mục như subnet và security groups). Ta chỉ tăng kích thước ổ cứng mặc định lên 64 GB (<a href="#fig_disk">fig_disk</a>). Lưu ý rằng chỉ riêng CUDA đã chiếm 4 GB.</p>
+<p><img alt="Sửa kích thước ổ cứng." src="../../img/disk.png" />
+<a id="fig_disk"></a></p>
+<p>Nhấp "Launch Instance" để khởi chạy
+instance đã tạo. Nhấp vào
+ID instance hiển thị trong <a href="#fig_launching">fig_launching</a> để xem trạng thái của instance này.</p>
+<p><img alt="Nhấp vào ID instance." src="../../img/launching.png" />
+<a id="fig_launching"></a></p>
+<h3 id="ket-noi-en-instance">Kết Nối Đến Instance<a class="headerlink" href="#ket-noi-en-instance" title="Permanent link">&para;</a></h3>
+<p>Như minh họa trong <a href="#fig_connect">fig_connect</a>, sau khi trạng thái instance chuyển sang màu xanh, nhấp chuột phải vào instance và chọn <code>Connect</code> để xem phương thức truy cập instance.</p>
+<p><img alt="Xem phương thức truy cập instance." src="../../img/connect.png" />
+<a id="fig_connect"></a></p>
+<p>Nếu đây là khóa mới, nó không được phép hiển thị công khai để SSH hoạt động. Đi đến thư mục nơi bạn lưu <code>D2L_key.pem</code> và
+thực thi lệnh sau
+để làm cho khóa không hiển thị công khai:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>chmod<span class="w"> </span><span class="m">400</span><span class="w"> </span>D2L_key.pem
+</code></pre></div>
+<p><img alt="Xem phương thức truy cập và khởi động instance." src="../../img/chmod.png" />
+<a id="fig_chmod"></a></p>
+<p>Bây giờ, sao chép lệnh SSH trong khung đỏ phía dưới của <a href="#fig_chmod">fig_chmod</a> và dán vào dòng lệnh:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ssh<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;D2L_key.pem&quot;</span><span class="w"> </span>ubuntu@ec2-xx-xxx-xxx-xxx.y.compute.amazonaws.com
+</code></pre></div>
+<p>Khi dòng lệnh hỏi "Are you sure you want to continue connecting (yes/no)", nhập "yes" và nhấn Enter để đăng nhập vào instance.</p>
+<p>Máy chủ của bạn giờ đã sẵn sàng.</p>
+<h2 id="cai-at-cuda">Cài Đặt CUDA<a class="headerlink" href="#cai-at-cuda" title="Permanent link">&para;</a></h2>
+<p>Trước khi cài đặt CUDA, hãy chắc chắn cập nhật instance với các driver mới nhất.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>git<span class="w"> </span>libgfortran3
+</code></pre></div>
+<p>Ở đây ta tải CUDA 12.1. Truy cập <a href="https://developer.nvidia.com/cuda-toolkit-archive">kho chính thức</a> của NVIDIA để tìm liên kết tải xuống như minh họa trong <a href="#fig_cuda">fig_cuda</a>.</p>
+<p><img alt="Tìm địa chỉ tải xuống CUDA 12.1." src="../../img/cuda121.png" />
+<a id="fig_cuda"></a></p>
+<p>Sao chép hướng dẫn và dán chúng vào terminal để cài đặt CUDA 12.1.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># The link and file name are subject to changes</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>wget<span class="w"> </span>https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>cuda-ubuntu2204.pin<span class="w"> </span>/etc/apt/preferences.d/cuda-repository-pin-600
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>wget<span class="w"> </span>https://developer.download.nvidia.com/compute/cuda/12.1.0/local_installers/cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>dpkg<span class="w"> </span>-i<span class="w"> </span>cuda-repo-ubuntu2204-12-1-local_12.1.0-530.30.02-1_amd64.deb
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>sudo<span class="w"> </span>cp<span class="w"> </span>/var/cuda-repo-ubuntu2204-12-1-local/cuda-*-keyring.gpg<span class="w"> </span>/usr/share/keyrings/
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>cuda
+</code></pre></div>
+<p>Sau khi cài đặt chương trình, chạy lệnh sau để xem GPU:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>nvidia-smi
+</code></pre></div>
+<p>Cuối cùng, thêm CUDA vào đường dẫn thư viện để giúp các thư viện khác tìm thấy nó, chẳng hạn thêm các dòng sau vào cuối <code>~/.bashrc</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/cuda-12.1/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">LD_LIBRARY_PATH</span><span class="si">}</span>:/usr/local/cuda-12.1/lib64
+</code></pre></div>
+<h2 id="cai-at-thu-vien-e-chay-code">Cài Đặt Thư Viện Để Chạy Code<a class="headerlink" href="#cai-at-thu-vien-e-chay-code" title="Permanent link">&para;</a></h2>
+<p>Để chạy code của cuốn sách này,
+chỉ cần làm theo các bước trong :ref:<code>chap_installation</code>
+dành cho người dùng Linux trên EC2 instance
+và dùng các mẹo sau
+để làm việc trên một máy chủ Linux từ xa:</p>
+<ul>
+<li>Để tải script bash trên trang cài đặt Miniconda, nhấp chuột phải vào liên kết tải xuống và chọn "Copy Link Address", sau đó thực thi <code>wget [copied link address]</code>.</li>
+<li>Sau khi chạy <code>~/miniconda3/bin/conda init</code>, bạn có thể thực thi <code>source ~/.bashrc</code> thay vì đóng và mở lại shell hiện tại.</li>
+</ul>
+<h2 id="chay-jupyter-notebook-tu-xa">Chạy Jupyter Notebook Từ Xa<a class="headerlink" href="#chay-jupyter-notebook-tu-xa" title="Permanent link">&para;</a></h2>
+<p>Để chạy Jupyter Notebook từ xa, bạn cần dùng chuyển tiếp cổng SSH. Dù sao, máy chủ trên đám mây không có màn hình hay bàn phím. Để làm điều này, đăng nhập vào máy chủ từ desktop (hoặc laptop) của bạn như sau:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a># This command must be run in the local command line
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>ssh -i &quot;/path/to/key.pem&quot; ubuntu@ec2-xx-xxx-xxx-xxx.y.compute.amazonaws.com -L 8889:localhost:8888
+</code></pre></div>
+<p>Tiếp theo, đi đến vị trí
+của code cuốn sách đã tải xuống
+trên EC2 instance,
+rồi chạy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>conda activate d2l
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>jupyter notebook
+</code></pre></div>
+<p><a href="#fig_jupyter">fig_jupyter</a> hiển thị đầu ra có thể có sau khi bạn chạy Jupyter Notebook. Hàng cuối cùng là URL cho cổng 8888.</p>
+<p><img alt="Đầu ra sau khi chạy Jupyter Notebook. Hàng cuối cùng là URL cho cổng 8888." src="../../img/jupyter.png" />
+<a id="fig_jupyter"></a></p>
+<p>Vì bạn đã dùng chuyển tiếp cổng đến cổng 8889,
+hãy sao chép hàng cuối trong khung đỏ của <a href="#fig_jupyter">fig_jupyter</a>,
+thay "8888" bằng "8889" trong URL,
+và mở nó trong trình duyệt cục bộ của bạn.</p>
+<h2 id="ong-cac-instance-khong-dung">Đóng Các Instance Không Dùng<a class="headerlink" href="#ong-cac-instance-khong-dung" title="Permanent link">&para;</a></h2>
+<p>Vì dịch vụ đám mây được tính phí theo thời gian sử dụng, bạn nên đóng các instance không được dùng. Lưu ý rằng có các lựa chọn thay thế:</p>
+<ul>
+<li>"Stopping" một instance nghĩa là bạn sẽ có thể khởi động lại nó. Điều này giống như tắt nguồn máy chủ thông thường của bạn. Tuy nhiên, các instance đã dừng vẫn sẽ bị tính một khoản nhỏ cho không gian ổ cứng được giữ lại.</li>
+<li>"Terminating" một instance sẽ xóa mọi dữ liệu liên quan đến nó. Điều này bao gồm ổ đĩa, nên bạn không thể khởi động lại nó. Chỉ làm điều này nếu bạn biết rằng mình sẽ không cần nó trong tương lai.</li>
+</ul>
+<p>Nếu bạn muốn dùng instance làm mẫu cho nhiều instance khác,
+nhấp chuột phải vào ví dụ trong <a href="#fig_connect">fig_connect</a> và chọn "Image" <span class="arithmatex">\(\rightarrow\)</span>
+"Create" để tạo một image của instance. Khi việc này hoàn tất, chọn
+"Instance State" <span class="arithmatex">\(\rightarrow\)</span> "Terminate" để terminate instance. Lần tiếp theo
+bạn muốn dùng instance này, bạn có thể làm theo các bước trong phần này
+để tạo một instance dựa trên
+image đã lưu. Khác biệt duy nhất là trong "1. Choose AMI" hiển thị trong
+<a href="#fig_ubuntu">fig_ubuntu</a>, bạn phải dùng tùy chọn "My AMIs" ở bên trái để chọn
+image đã lưu. Instance được tạo sẽ giữ thông tin được lưu trên ổ cứng của image.
+Ví dụ, bạn sẽ không phải cài đặt lại CUDA và các môi trường runtime khác.</p>
+<h2 id="tom-tat">Tóm Tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Ta có thể khởi chạy và dừng instance theo nhu cầu mà không cần mua và tự xây dựng máy tính.</li>
+<li>Ta cần cài đặt CUDA trước khi dùng framework deep learning hỗ trợ GPU.</li>
+<li>Ta có thể dùng chuyển tiếp cổng để chạy Jupyter Notebook trên máy chủ từ xa.</li>
+</ul>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Đám mây mang lại sự tiện lợi, nhưng không rẻ. Tìm hiểu cách khởi chạy <a href="https://aws.amazon.com/ec2/spot/">spot instances</a> để xem cách giảm chi phí.</li>
+<li>Thử nghiệm với các máy chủ GPU khác nhau. Chúng nhanh đến mức nào?</li>
+<li>Thử nghiệm với máy chủ nhiều GPU. Bạn có thể mở rộng tốt đến đâu?</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/423">Thảo luận</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.prune", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

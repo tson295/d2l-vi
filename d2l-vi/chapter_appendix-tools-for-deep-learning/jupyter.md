@@ -17,7 +17,6 @@ Nếu bạn muốn biết thêm về Jupyter, hãy xem hướng dẫn rất tố
 Giả sử đường dẫn cục bộ của code cuốn sách là `xx/yy/d2l-en/`. Dùng shell để chuyển thư mục đến đường dẫn này (`cd xx/yy/d2l-en`) và chạy lệnh `jupyter notebook`. Nếu trình duyệt của bạn không tự động làm điều này, hãy mở http://localhost:8888 và bạn sẽ thấy giao diện Jupyter cùng tất cả các thư mục chứa code của cuốn sách, như minh họa trong [fig_jupyter00](#fig_jupyter00).
 
 ![Các thư mục chứa code của cuốn sách này.](../img/jupyter00.png)
-:width:`600px`
 <a id="fig_jupyter00"></a>
 
 
@@ -30,7 +29,6 @@ Notebook này bao gồm một ô markdown và một ô code. Nội dung trong ô
 Ô code chứa hai dòng code Python.
 
 ![Các ô markdown và code trong file "text.ipynb".](../img/jupyter01.png)
-:width:`600px`
 <a id="fig_jupyter01"></a>
 
 
@@ -38,7 +36,6 @@ Nhấp đúp vào ô markdown để vào chế độ chỉnh sửa.
 Thêm một chuỗi văn bản mới "Hello world." vào cuối ô, như minh họa trong [fig_jupyter02](#fig_jupyter02).
 
 ![Chỉnh sửa ô markdown.](../img/jupyter02.png)
-:width:`600px`
 <a id="fig_jupyter02"></a>
 
 
@@ -46,27 +43,23 @@ Như minh họa trong [fig_jupyter03](#fig_jupyter03),
 nhấp "Cell" $\rightarrow$ "Run Cells" trên thanh menu để chạy ô đã chỉnh sửa.
 
 ![Chạy ô.](../img/jupyter03.png)
-:width:`600px`
 <a id="fig_jupyter03"></a>
 
 Sau khi chạy, ô markdown được hiển thị trong [fig_jupyter04](#fig_jupyter04).
 
 ![Ô markdown sau khi chạy.](../img/jupyter04.png)
-:width:`600px`
 <a id="fig_jupyter04"></a>
 
 
 Tiếp theo, nhấp vào ô code. Nhân các phần tử với 2 sau dòng code cuối cùng, như minh họa trong [fig_jupyter05](#fig_jupyter05).
 
 ![Chỉnh sửa ô code.](../img/jupyter05.png)
-:width:`600px`
 <a id="fig_jupyter05"></a>
 
 
 Bạn cũng có thể chạy ô bằng phím tắt ("Ctrl + Enter" theo mặc định) và thu được kết quả đầu ra từ [fig_jupyter06](#fig_jupyter06).
 
 ![Chạy ô code để thu được đầu ra.](../img/jupyter06.png)
-:width:`600px`
 <a id="fig_jupyter06"></a>
 
 
