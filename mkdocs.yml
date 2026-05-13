@@ -1,0 +1,250 @@
+site_name: Đắm mình vào Deep Learning (Tiếng Việt)
+docs_dir: d2l-vi
+site_dir: site
+
+theme:
+  name: material
+  language: vi
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Chuyển sang tối
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Chuyển sang sáng
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - admonition
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Lời nói đầu: chapter_preface/index.md
+  - Giới thiệu: chapter_introduction/index.md
+  - Kiến thức nền:
+    - Tổng quan: chapter_preliminaries/index.md
+    - Thao tác với dữ liệu: chapter_preliminaries/ndarray.md
+    - Tiền xử lý dữ liệu: chapter_preliminaries/pandas.md
+    - Đại số tuyến tính: chapter_preliminaries/linear-algebra.md
+    - Giải tích: chapter_preliminaries/calculus.md
+    - Tự động vi phân: chapter_preliminaries/autograd.md
+    - Xác suất: chapter_preliminaries/probability.md
+    - Tài liệu API: chapter_preliminaries/lookup-api.md
+  - Hồi quy tuyến tính:
+    - Tổng quan: chapter_linear-regression/index.md
+    - Hồi quy tuyến tính: chapter_linear-regression/linear-regression.md
+    - Dữ liệu hồi quy tổng hợp: chapter_linear-regression/synthetic-regression-data.md
+    - Triển khai từ đầu: chapter_linear-regression/linear-regression-scratch.md
+    - Triển khai súc tích: chapter_linear-regression/linear-regression-concise.md
+    - Tổng quát hóa: chapter_linear-regression/generalization.md
+    - Weight Decay: chapter_linear-regression/weight-decay.md
+    - Thiết kế hướng đối tượng: chapter_linear-regression/oo-design.md
+  - Phân loại tuyến tính:
+    - Tổng quan: chapter_linear-classification/index.md
+    - Softmax Regression: chapter_linear-classification/softmax-regression.md
+    - Tập dữ liệu phân loại ảnh: chapter_linear-classification/image-classification-dataset.md
+    - Triển khai từ đầu: chapter_linear-classification/softmax-regression-scratch.md
+    - Triển khai súc tích: chapter_linear-classification/softmax-regression-concise.md
+    - Tổng quát hóa: chapter_linear-classification/generalization-classification.md
+    - Phân phối và dịch chuyển: chapter_linear-classification/environment-and-distribution-shift.md
+    - Lớp phân loại: chapter_linear-classification/classification.md
+  - Mạng perceptron đa lớp:
+    - Tổng quan: chapter_multilayer-perceptrons/index.md
+    - MLP: chapter_multilayer-perceptrons/mlp.md
+    - Triển khai MLP: chapter_multilayer-perceptrons/mlp-implementation.md
+    - Lan truyền ngược: chapter_multilayer-perceptrons/backprop.md
+    - Ổn định số và khởi tạo: chapter_multilayer-perceptrons/numerical-stability-and-init.md
+    - Tổng quát hóa sâu: chapter_multilayer-perceptrons/generalization-deep.md
+    - Dropout: chapter_multilayer-perceptrons/dropout.md
+    - Kaggle - Giá nhà: chapter_multilayer-perceptrons/kaggle-house-price.md
+  - Hướng dẫn xây dựng mô hình:
+    - Tổng quan: chapter_builders-guide/index.md
+    - Xây dựng mô hình: chapter_builders-guide/model-construction.md
+    - Tham số: chapter_builders-guide/parameters.md
+    - Khởi tạo tham số: chapter_builders-guide/init-param.md
+    - Khởi tạo lazy: chapter_builders-guide/lazy-init.md
+    - Lớp tùy chỉnh: chapter_builders-guide/custom-layer.md
+    - Đọc/Ghi: chapter_builders-guide/read-write.md
+    - Dùng GPU: chapter_builders-guide/use-gpu.md
+  - Mạng tích chập:
+    - Tổng quan: chapter_convolutional-neural-networks/index.md
+    - Tại sao dùng tích chập: chapter_convolutional-neural-networks/why-conv.md
+    - Lớp tích chập: chapter_convolutional-neural-networks/conv-layer.md
+    - Padding và Strides: chapter_convolutional-neural-networks/padding-and-strides.md
+    - Đa kênh: chapter_convolutional-neural-networks/channels.md
+    - Pooling: chapter_convolutional-neural-networks/pooling.md
+    - LeNet: chapter_convolutional-neural-networks/lenet.md
+  - Mạng tích chập hiện đại:
+    - Tổng quan: chapter_convolutional-modern/index.md
+    - AlexNet: chapter_convolutional-modern/alexnet.md
+    - VGG: chapter_convolutional-modern/vgg.md
+    - NiN: chapter_convolutional-modern/nin.md
+    - GoogLeNet: chapter_convolutional-modern/googlenet.md
+    - Batch Normalization: chapter_convolutional-modern/batch-norm.md
+    - ResNet: chapter_convolutional-modern/resnet.md
+    - DenseNet: chapter_convolutional-modern/densenet.md
+    - Thiết kế CNN: chapter_convolutional-modern/cnn-design.md
+  - Mạng nơ-ron hồi tiếp:
+    - Tổng quan: chapter_recurrent-neural-networks/index.md
+    - Chuỗi: chapter_recurrent-neural-networks/sequence.md
+    - Chuỗi văn bản: chapter_recurrent-neural-networks/text-sequence.md
+    - Mô hình ngôn ngữ: chapter_recurrent-neural-networks/language-model.md
+    - RNN: chapter_recurrent-neural-networks/rnn.md
+    - Triển khai từ đầu: chapter_recurrent-neural-networks/rnn-scratch.md
+    - Triển khai súc tích: chapter_recurrent-neural-networks/rnn-concise.md
+    - BPTT: chapter_recurrent-neural-networks/bptt.md
+  - RNN hiện đại:
+    - Tổng quan: chapter_recurrent-modern/index.md
+    - GRU: chapter_recurrent-modern/gru.md
+    - LSTM: chapter_recurrent-modern/lstm.md
+    - RNN sâu: chapter_recurrent-modern/deep-rnn.md
+    - RNN hai chiều: chapter_recurrent-modern/bi-rnn.md
+    - Dịch máy: chapter_recurrent-modern/machine-translation-and-dataset.md
+    - Encoder-Decoder: chapter_recurrent-modern/encoder-decoder.md
+    - Seq2Seq: chapter_recurrent-modern/seq2seq.md
+    - Beam Search: chapter_recurrent-modern/beam-search.md
+  - Attention và Transformer:
+    - Tổng quan: chapter_attention-mechanisms-and-transformers/index.md
+    - Queries, Keys, Values: chapter_attention-mechanisms-and-transformers/queries-keys-values.md
+    - Attention Pooling: chapter_attention-mechanisms-and-transformers/attention-pooling.md
+    - Hàm tính điểm Attention: chapter_attention-mechanisms-and-transformers/attention-scoring-functions.md
+    - Bahdanau Attention: chapter_attention-mechanisms-and-transformers/bahdanau-attention.md
+    - Multi-Head Attention: chapter_attention-mechanisms-and-transformers/multihead-attention.md
+    - Self-Attention và Positional Encoding: chapter_attention-mechanisms-and-transformers/self-attention-and-positional-encoding.md
+    - Transformer: chapter_attention-mechanisms-and-transformers/transformer.md
+    - Vision Transformer: chapter_attention-mechanisms-and-transformers/vision-transformer.md
+    - Large Pretrained Transformers: chapter_attention-mechanisms-and-transformers/large-pretraining-transformers.md
+  - Tối ưu hóa:
+    - Tổng quan: chapter_optimization/index.md
+    - Giới thiệu tối ưu: chapter_optimization/optimization-intro.md
+    - Lồi: chapter_optimization/convexity.md
+    - Gradient Descent: chapter_optimization/gd.md
+    - SGD: chapter_optimization/sgd.md
+    - Minibatch SGD: chapter_optimization/minibatch-sgd.md
+    - Momentum: chapter_optimization/momentum.md
+    - Adagrad: chapter_optimization/adagrad.md
+    - RMSProp: chapter_optimization/rmsprop.md
+    - Adadelta: chapter_optimization/adadelta.md
+    - Adam: chapter_optimization/adam.md
+    - Learning Rate Scheduler: chapter_optimization/lr-scheduler.md
+  - Hiệu năng tính toán:
+    - Tổng quan: chapter_computational-performance/index.md
+    - Phần cứng: chapter_computational-performance/hardware.md
+    - Tính toán bất đồng bộ: chapter_computational-performance/async-computation.md
+    - Song song tự động: chapter_computational-performance/auto-parallelism.md
+    - Biên dịch: chapter_computational-performance/hybridize.md
+    - Nhiều GPU: chapter_computational-performance/multiple-gpus.md
+    - Nhiều GPU súc tích: chapter_computational-performance/multiple-gpus-concise.md
+    - Parameter Server: chapter_computational-performance/parameterserver.md
+  - Thị giác máy tính:
+    - Tổng quan: chapter_computer-vision/index.md
+    - Tăng cường ảnh: chapter_computer-vision/image-augmentation.md
+    - Fine-Tuning: chapter_computer-vision/fine-tuning.md
+    - Bounding Box: chapter_computer-vision/bounding-box.md
+    - Anchor Box: chapter_computer-vision/anchor.md
+    - Phát hiện đa tỉ lệ: chapter_computer-vision/multiscale-object-detection.md
+    - Tập dữ liệu phát hiện đối tượng: chapter_computer-vision/object-detection-dataset.md
+    - SSD: chapter_computer-vision/ssd.md
+    - R-CNN: chapter_computer-vision/rcnn.md
+    - Phân đoạn ngữ nghĩa: chapter_computer-vision/semantic-segmentation-and-dataset.md
+    - Tích chập chuyển vị: chapter_computer-vision/transposed-conv.md
+    - FCN: chapter_computer-vision/fcn.md
+    - Neural Style Transfer: chapter_computer-vision/neural-style.md
+    - Kaggle CIFAR-10: chapter_computer-vision/kaggle-cifar10.md
+    - Kaggle Dog: chapter_computer-vision/kaggle-dog.md
+  - NLP - Tiền huấn luyện:
+    - Tổng quan: chapter_natural-language-processing-pretraining/index.md
+    - Word2Vec: chapter_natural-language-processing-pretraining/word2vec.md
+    - Huấn luyện xấp xỉ: chapter_natural-language-processing-pretraining/approx-training.md
+    - Tập dữ liệu Word Embedding: chapter_natural-language-processing-pretraining/word-embedding-dataset.md
+    - Tiền huấn luyện Word2Vec: chapter_natural-language-processing-pretraining/word2vec-pretraining.md
+    - GloVe: chapter_natural-language-processing-pretraining/glove.md
+    - Subword Embedding: chapter_natural-language-processing-pretraining/subword-embedding.md
+    - Tương đồng và loại suy: chapter_natural-language-processing-pretraining/similarity-analogy.md
+    - BERT: chapter_natural-language-processing-pretraining/bert.md
+    - Tập dữ liệu BERT: chapter_natural-language-processing-pretraining/bert-dataset.md
+    - Tiền huấn luyện BERT: chapter_natural-language-processing-pretraining/bert-pretraining.md
+  - NLP - Ứng dụng:
+    - Tổng quan: chapter_natural-language-processing-applications/index.md
+    - Phân tích cảm xúc - Dataset: chapter_natural-language-processing-applications/sentiment-analysis-and-dataset.md
+    - Phân tích cảm xúc - CNN: chapter_natural-language-processing-applications/sentiment-analysis-cnn.md
+    - Phân tích cảm xúc - RNN: chapter_natural-language-processing-applications/sentiment-analysis-rnn.md
+    - NLI - Dataset: chapter_natural-language-processing-applications/natural-language-inference-and-dataset.md
+    - NLI - Attention: chapter_natural-language-processing-applications/natural-language-inference-attention.md
+    - Fine-tuning BERT: chapter_natural-language-processing-applications/finetuning-bert.md
+    - NLI - BERT: chapter_natural-language-processing-applications/natural-language-inference-bert.md
+  - Học tăng cường:
+    - Tổng quan: chapter_reinforcement-learning/index.md
+    - MDP: chapter_reinforcement-learning/mdp.md
+    - Value Iteration: chapter_reinforcement-learning/value-iter.md
+    - Q-Learning: chapter_reinforcement-learning/qlearning.md
+  - Gaussian Processes:
+    - Tổng quan: chapter_gaussian-processes/index.md
+    - Giới thiệu GP: chapter_gaussian-processes/gp-intro.md
+    - GP Priors: chapter_gaussian-processes/gp-priors.md
+    - GP Inference: chapter_gaussian-processes/gp-inference.md
+  - Tối ưu Siêu tham số:
+    - Tổng quan: chapter_hyperparameter-optimization/index.md
+    - Giới thiệu: chapter_hyperparameter-optimization/hyperopt-intro.md
+    - API: chapter_hyperparameter-optimization/hyperopt-api.md
+    - Random Search bất đồng bộ: chapter_hyperparameter-optimization/rs-async.md
+    - Successive Halving: chapter_hyperparameter-optimization/sh-intro.md
+    - SH bất đồng bộ: chapter_hyperparameter-optimization/sh-async.md
+  - Mạng đối kháng sinh tạo:
+    - Tổng quan: chapter_generative-adversarial-networks/index.md
+    - GAN: chapter_generative-adversarial-networks/gan.md
+    - DCGAN: chapter_generative-adversarial-networks/dcgan.md
+  - Hệ thống gợi ý:
+    - Tổng quan: chapter_recommender-systems/index.md
+    - Giới thiệu: chapter_recommender-systems/recsys-intro.md
+    - MovieLens: chapter_recommender-systems/movielens.md
+    - Matrix Factorization: chapter_recommender-systems/mf.md
+    - AutoRec: chapter_recommender-systems/autorec.md
+    - Ranking: chapter_recommender-systems/ranking.md
+    - NeuMF: chapter_recommender-systems/neumf.md
+    - Seq-Aware Rec: chapter_recommender-systems/seqrec.md
+    - CTR: chapter_recommender-systems/ctr.md
+    - Factorization Machines: chapter_recommender-systems/fm.md
+    - DeepFM: chapter_recommender-systems/deepfm.md
+  - Phụ lục - Toán học:
+    - Tổng quan: chapter_appendix-mathematics-for-deep-learning/index.md
+    - Hình học và Đại số tuyến tính: chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops.md
+    - Phân tích trị riêng: chapter_appendix-mathematics-for-deep-learning/eigendecomposition.md
+    - Giải tích một biến: chapter_appendix-mathematics-for-deep-learning/single-variable-calculus.md
+    - Giải tích nhiều biến: chapter_appendix-mathematics-for-deep-learning/multivariable-calculus.md
+    - Giải tích tích phân: chapter_appendix-mathematics-for-deep-learning/integral-calculus.md
+    - Biến ngẫu nhiên: chapter_appendix-mathematics-for-deep-learning/random-variables.md
+    - Maximum Likelihood: chapter_appendix-mathematics-for-deep-learning/maximum-likelihood.md
+    - Phân phối: chapter_appendix-mathematics-for-deep-learning/distributions.md
+    - Naive Bayes: chapter_appendix-mathematics-for-deep-learning/naive-bayes.md
+    - Thống kê: chapter_appendix-mathematics-for-deep-learning/statistics.md
+    - Lý thuyết thông tin: chapter_appendix-mathematics-for-deep-learning/information-theory.md
+  - Phụ lục - Công cụ:
+    - Tổng quan: chapter_appendix-tools-for-deep-learning/index.md
+    - Jupyter: chapter_appendix-tools-for-deep-learning/jupyter.md
+    - SageMaker: chapter_appendix-tools-for-deep-learning/sagemaker.md
+    - Colab: chapter_appendix-tools-for-deep-learning/colab.md
+    - Chọn Server/GPU: chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.md
+    - Đóng góp: chapter_appendix-tools-for-deep-learning/contributing.md
+    - Thư viện d2l: chapter_appendix-tools-for-deep-learning/d2l.md
+    - AWS: chapter_appendix-tools-for-deep-learning/aws.md
+    - Utils: chapter_appendix-tools-for-deep-learning/utils.md
+  - Ký hiệu: chapter_notation/index.md
+  - Cài đặt: chapter_installation/index.md

@@ -1,0 +1,182 @@
+# Tài Liệu API `d2l`
+<a id="sec_d2l"></a>
+
+Phần này hiển thị các lớp và hàm (được sắp xếp theo thứ tự bảng chữ cái) trong gói `d2l`, cho biết chúng được định nghĩa ở đâu trong cuốn sách để bạn có thể tìm các cài đặt và giải thích chi tiết hơn.
+Xem thêm mã nguồn trên [kho GitHub](https://github.com/d2l-ai/d2l-en/tree/master/d2l).
+
+
+```eval_rst
+
+.. currentmodule:: d2l.torch
+
+```
+
+:begin_tab:`mxnet`
+
+```eval_rst
+
+.. currentmodule:: d2l.mxnet
+
+```
+
+
+## Lớp
+
+```eval_rst 
+
+.. autoclass:: AdditiveAttention
+   :members:
+   
+.. autoclass:: AddNorm
+   :members:
+
+.. autoclass:: AttentionDecoder
+   :members: 
+
+.. autoclass:: Classifier
+   :members: 
+   
+.. autoclass:: DataModule
+   :members: 
+   
+.. autoclass:: Decoder
+   :members: 
+   
+.. autoclass:: DotProductAttention
+   :members:
+   
+.. autoclass:: Encoder
+   :members:
+   
+.. autoclass:: EncoderDecoder
+   :members:
+   
+.. autoclass:: FashionMNIST
+   :members: 
+   
+.. autoclass:: GRU
+   :members: 
+   
+.. autoclass:: HyperParameters
+   :members: 
+   
+.. autoclass:: LeNet
+   :members: 
+   
+.. autoclass:: LinearRegression
+   :members: 
+   
+.. autoclass:: LinearRegressionScratch
+   :members: 
+   
+.. autoclass:: Module
+   :members: 
+   
+.. autoclass:: MTFraEng
+   :members: 
+   
+.. autoclass:: MultiHeadAttention
+   :members:
+   
+.. autoclass:: PositionalEncoding
+   :members:
+   
+.. autoclass:: PositionWiseFFN
+   :members:
+   
+.. autoclass:: ProgressBoard
+   :members: 
+   
+.. autoclass:: Residual
+   :members: 
+   
+.. autoclass:: ResNeXtBlock
+   :members:
+   
+.. autoclass:: RNN
+   :members: 
+   
+.. autoclass:: RNNLM
+   :members:
+   
+.. autoclass:: RNNLMScratch
+   :members:
+   
+.. autoclass:: RNNScratch
+   :members: 
+   
+.. autoclass:: Seq2Seq
+   :members:  
+   
+.. autoclass:: Seq2SeqEncoder
+   :members:
+   
+.. autoclass:: SGD
+   :members: 
+   
+.. autoclass:: SoftmaxRegression
+   :members: 
+
+.. autoclass:: SyntheticRegressionData
+   :members: 
+
+.. autoclass:: TimeMachine
+   :members: 
+
+.. autoclass:: Trainer
+   :members: 
+
+.. autoclass:: TransformerEncoder 
+   :members:
+
+.. autoclass:: TransformerEncoderBlock
+   :members:
+
+.. autoclass:: Vocab
+   :members: 
+```
+
+
+## Hàm
+
+```eval_rst 
+
+.. autofunction:: add_to_class
+
+.. autofunction:: bleu
+
+.. autofunction:: check_len
+
+.. autofunction:: check_shape
+
+.. autofunction:: corr2d
+
+.. autofunction:: cpu
+
+.. autofunction:: gpu
+
+.. autofunction:: init_cnn
+
+.. autofunction:: init_seq2seq
+
+.. autofunction:: masked_softmax
+
+.. autofunction:: num_gpus
+
+.. autofunction:: plot
+
+.. autofunction:: set_axes
+
+.. autofunction:: set_figsize
+
+.. autofunction:: show_heatmaps
+
+.. autofunction:: show_list_len_pair_hist
+
+.. autofunction:: try_all_gpus
+
+.. autofunction:: try_gpu
+
+.. autofunction:: use_svg_display
+
+```
