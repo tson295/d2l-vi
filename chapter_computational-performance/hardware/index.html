@@ -1,0 +1,7695 @@
+
+<!doctype html>
+<html lang="vi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../async-computation/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Phần cứng - Đắm mình vào Deep Learning (Tiếng Việt)</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phan-cung" class="md-skip">
+          Bỏ qua
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Đầu trang">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-header__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Đắm mình vào Deep Learning (Tiếng Việt)
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phần cứng
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang tối"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang tối" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Chuyển sang sáng"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Chuyển sang sáng" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Tìm kiếm" placeholder="Tìm kiếm" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Tìm kiếm">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Xoá" aria-label="Xoá" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Thanh điều hướng" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Đắm mình vào Deep Learning (Tiếng Việt)" class="md-nav__button md-logo" aria-label="Đắm mình vào Deep Learning (Tiếng Việt)" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Đắm mình vào Deep Learning (Tiếng Việt)
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lời nói đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kiến thức nền
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kiến thức nền
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/ndarray/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thao tác với dữ liệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/pandas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiền xử lý dữ liệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/linear-algebra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/autograd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tự động vi phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/probability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xác suất
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_preliminaries/lookup-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tài liệu API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hồi quy tuyến tính
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/linear-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hồi quy tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/synthetic-regression-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dữ liệu hồi quy tổng hợp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/linear-regression-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/linear-regression-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/generalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/weight-decay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weight Decay
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-regression/oo-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thiết kế hướng đối tượng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân loại tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phân loại tuyến tính
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/softmax-regression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Softmax Regression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/image-classification-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu phân loại ảnh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/softmax-regression-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/softmax-regression-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/generalization-classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/environment-and-distribution-shift/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối và dịch chuyển
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_linear-classification/classification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lớp phân loại
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng perceptron đa lớp
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng perceptron đa lớp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/mlp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/mlp-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai MLP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/backprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lan truyền ngược
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/numerical-stability-and-init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ổn định số và khởi tạo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/generalization-deep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quát hóa sâu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/dropout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dropout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_multilayer-perceptrons/kaggle-house-price/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kaggle - Giá nhà
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hướng dẫn xây dựng mô hình
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/model-construction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Xây dựng mô hình
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tham số
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/init-param/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Khởi tạo tham số
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/lazy-init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Khởi tạo lazy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/custom-layer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lớp tùy chỉnh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/read-write/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đọc/Ghi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_builders-guide/use-gpu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dùng GPU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng tích chập
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-neural-networks/why-conv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tại sao dùng tích chập
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-neural-networks/conv-layer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lớp tích chập
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-neural-networks/padding-and-strides/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Padding và Strides
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-neural-networks/channels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đa kênh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-neural-networks/pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-neural-networks/lenet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LeNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng tích chập hiện đại
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng tích chập hiện đại
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/alexnet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AlexNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/vgg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VGG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/nin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NiN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/googlenet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GoogLeNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/batch-norm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Normalization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/resnet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ResNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/densenet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DenseNet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_convolutional-modern/cnn-design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thiết kế CNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng nơ-ron hồi tiếp
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chuỗi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/text-sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chuỗi văn bản
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/language-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mô hình ngôn ngữ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/rnn-scratch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai từ đầu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/rnn-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Triển khai súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-neural-networks/bptt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BPTT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hiện đại
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    RNN hiện đại
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/gru/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GRU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/lstm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LSTM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/deep-rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN sâu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/bi-rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RNN hai chiều
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/machine-translation-and-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dịch máy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/encoder-decoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encoder-Decoder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/seq2seq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seq2Seq
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recurrent-modern/beam-search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beam Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention và Transformer
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Attention và Transformer
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/queries-keys-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Queries, Keys, Values
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/attention-pooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Attention Pooling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/attention-scoring-functions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hàm tính điểm Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/bahdanau-attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bahdanau Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/multihead-attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Head Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/self-attention-and-positional-encoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Self-Attention và Positional Encoding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/vision-transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vision Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_attention-mechanisms-and-transformers/large-pretraining-transformers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Large Pretrained Transformers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu hóa
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tối ưu hóa
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/optimization-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu tối ưu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/convexity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lồi
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/gd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/sgd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SGD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/minibatch-sgd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Minibatch SGD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/momentum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Momentum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/adagrad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adagrad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/rmsprop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RMSProp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/adadelta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adadelta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/adam/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adam
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_optimization/lr-scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Rate Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hiệu năng tính toán
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hiệu năng tính toán
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phần cứng
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phần cứng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#may-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Máy Tính
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bo-nho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bộ Nhớ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#luu-tru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lưu Trữ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lưu Trữ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-ia-cung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ổ Đĩa Cứng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-ia-the-ran" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ổ Đĩa Thể Rắn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luu-tru-am-may" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lưu Trữ Đám Mây
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vi-kien-truc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vi Kiến Trúc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Hóa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bo-nho-em" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bộ Nhớ Đệm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu-va-cac-bo-tang-toc-khac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU và Các Bộ Tăng Tốc Khác
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mang-va-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mạng và Bus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#them-cac-con-so-o-tre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thêm Các Con Số Độ Trễ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../async-computation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tính toán bất đồng bộ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../auto-parallelism/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Song song tự động
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hybridize/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biên dịch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple-gpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nhiều GPU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multiple-gpus-concise/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nhiều GPU súc tích
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameterserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parameter Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thị giác máy tính
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Thị giác máy tính
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/image-augmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tăng cường ảnh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/fine-tuning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fine-Tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/bounding-box/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bounding Box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/anchor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anchor Box
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/multiscale-object-detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phát hiện đa tỉ lệ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/object-detection-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu phát hiện đối tượng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/rcnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    R-CNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/semantic-segmentation-and-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân đoạn ngữ nghĩa
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/transposed-conv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tích chập chuyển vị
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/fcn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FCN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/neural-style/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Style Transfer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/kaggle-cifar10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kaggle CIFAR-10
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_computer-vision/kaggle-dog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kaggle Dog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Tiền huấn luyện
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    NLP - Tiền huấn luyện
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/word2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Word2Vec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/approx-training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Huấn luyện xấp xỉ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/word-embedding-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu Word Embedding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/word2vec-pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiền huấn luyện Word2Vec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/glove/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GloVe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/subword-embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subword Embedding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/similarity-analogy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tương đồng và loại suy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/bert/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/bert-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tập dữ liệu BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-pretraining/bert-pretraining/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tiền huấn luyện BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLP - Ứng dụng
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    NLP - Ứng dụng
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/sentiment-analysis-and-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích cảm xúc - Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/sentiment-analysis-cnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích cảm xúc - CNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/sentiment-analysis-rnn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích cảm xúc - RNN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/natural-language-inference-and-dataset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLI - Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/natural-language-inference-attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLI - Attention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/finetuning-bert/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fine-tuning BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_natural-language-processing-applications/natural-language-inference-bert/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NLI - BERT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Học tăng cường
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Học tăng cường
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_reinforcement-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_reinforcement-learning/mdp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MDP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_reinforcement-learning/value-iter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Value Iteration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_reinforcement-learning/qlearning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q-Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Processes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gaussian Processes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_gaussian-processes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_gaussian-processes/gp-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu GP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_gaussian-processes/gp-priors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GP Priors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_gaussian-processes/gp-inference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GP Inference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tối ưu Siêu tham số
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tối ưu Siêu tham số
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_hyperparameter-optimization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_hyperparameter-optimization/hyperopt-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_hyperparameter-optimization/hyperopt-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_hyperparameter-optimization/rs-async/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Random Search bất đồng bộ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_hyperparameter-optimization/sh-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Successive Halving
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_hyperparameter-optimization/sh-async/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SH bất đồng bộ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mạng đối kháng sinh tạo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Mạng đối kháng sinh tạo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_generative-adversarial-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_generative-adversarial-networks/gan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GAN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_generative-adversarial-networks/dcgan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DCGAN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_22" >
+        
+          
+          <label class="md-nav__link" for="__nav_22" id="__nav_22_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hệ thống gợi ý
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_22_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_22">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Hệ thống gợi ý
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/recsys-intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giới thiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/movielens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MovieLens
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/mf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrix Factorization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/autorec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AutoRec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/ranking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ranking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/neumf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NeuMF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/seqrec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seq-Aware Rec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/ctr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CTR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/fm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factorization Machines
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_recommender-systems/deepfm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DeepFM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" >
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Toán học
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Toán học
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/geometry-linear-algebraic-ops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hình học và Đại số tuyến tính
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/eigendecomposition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân tích trị riêng
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/single-variable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích một biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/multivariable-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích nhiều biến
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/integral-calculus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Giải tích tích phân
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/random-variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Biến ngẫu nhiên
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/maximum-likelihood/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maximum Likelihood
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/distributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phân phối
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/naive-bayes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Naive Bayes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/statistics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thống kê
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-mathematics-for-deep-learning/information-theory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lý thuyết thông tin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_24" >
+        
+          
+          <label class="md-nav__link" for="__nav_24" id="__nav_24_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phụ lục - Công cụ
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_24">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Phụ lục - Công cụ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tổng quan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/jupyter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Jupyter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/sagemaker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SageMaker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/colab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/selecting-servers-gpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chọn Server/GPU
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Đóng góp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/d2l/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thư viện d2l
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/aws/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AWS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_appendix-tools-for-deep-learning/utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ký hiệu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter_installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cài đặt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Mục lục">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Mục lục
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#may-tinh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Máy Tính
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bo-nho" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bộ Nhớ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#luu-tru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lưu Trữ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lưu Trữ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#o-ia-cung" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ổ Đĩa Cứng
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#o-ia-the-ran" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ổ Đĩa Thể Rắn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luu-tru-am-may" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lưu Trữ Đám Mây
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vi-kien-truc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vi Kiến Trúc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-hoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Hóa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bo-nho-em" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bộ Nhớ Đệm
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu-va-cac-bo-tang-toc-khac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GPU và Các Bộ Tăng Tốc Khác
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mang-va-bus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mạng và Bus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#them-cac-con-so-o-tre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thêm Các Con Số Độ Trễ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tom-tat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tóm Tắt
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bai-tap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bài Tập
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="phan-cung">Phần Cứng<a class="headerlink" href="#phan-cung" title="Permanent link">&para;</a></h1>
+<p><a id="sec_hardware"></a></p>
+<p>Xây dựng các hệ thống có hiệu năng cao đòi hỏi hiểu rõ các thuật toán và mô hình để nắm bắt các khía cạnh thống kê của bài toán. Đồng thời, việc có ít nhất một chút kiến thức về phần cứng bên dưới cũng là điều không thể thiếu. Phần hiện tại không thay thế cho một khóa học đúng nghĩa về phần cứng và thiết kế hệ thống. Thay vào đó, nó có thể đóng vai trò là điểm khởi đầu để hiểu vì sao một số thuật toán hiệu quả hơn các thuật toán khác và cách đạt thông lượng tốt. Một thiết kế tốt có thể dễ dàng tạo ra khác biệt ở mức một bậc độ lớn, và đến lượt nó, điều này có thể tạo ra khác biệt giữa việc có thể huấn luyện một mạng (ví dụ trong một tuần) và hoàn toàn không thể (trong 3 tháng, do đó lỡ hạn chót).
+Chúng ta sẽ bắt đầu bằng cách xem xét máy tính. Sau đó, chúng ta sẽ phóng to để xem xét kỹ hơn CPU và GPU. Cuối cùng, chúng ta thu nhỏ lại để xem cách nhiều máy tính được kết nối trong một trung tâm máy chủ hoặc trên đám mây.</p>
+<p><img alt="Các con số độ trễ mà mọi lập trình viên nên biết." src="../../img/latencynumbers.png" />
+<a id="fig_latencynumbers"></a></p>
+<p>Độc giả nóng vội có thể chỉ cần xem <a href="#fig_latencynumbers">fig_latencynumbers</a>. Hình này được lấy từ <a href="https://people.eecs.berkeley.edu/%7Ercs/research/interactive_latency.html">bài viết tương tác</a> của Colin Scott, cung cấp một tổng quan tốt về tiến bộ trong thập kỷ qua. Các con số gốc đến từ <a href="https://static.googleusercontent.com/media/research.google.com/en//people/jeff/Stanford-DL-Nov-2010.pdf">bài nói chuyện Stanford năm 2010</a> của Jeff Dean.
+Thảo luận dưới đây giải thích một phần cơ sở của các con số này và cách chúng có thể hướng dẫn chúng ta thiết kế thuật toán. Thảo luận bên dưới ở mức rất cao và sơ lược. Nó rõ ràng <em>không thay thế</em> cho một khóa học đúng nghĩa mà chỉ nhằm cung cấp đủ thông tin để một người xây dựng mô hình thống kê đưa ra các quyết định thiết kế phù hợp. Để có tổng quan sâu về kiến trúc máy tính, chúng tôi giới thiệu độc giả đến [Hennessy.Patterson.2011] hoặc một khóa học gần đây về chủ đề này, chẳng hạn khóa của <a href="http://inst.eecs.berkeley.edu/%7Ecs152/sp19/">Arste Asanovic</a>.</p>
+<h2 id="may-tinh">Máy Tính<a class="headerlink" href="#may-tinh" title="Permanent link">&para;</a></h2>
+<p>Hầu hết các nhà nghiên cứu và người thực hành deep learning đều có quyền truy cập vào một máy tính có lượng bộ nhớ, năng lực tính toán kha khá, một dạng bộ tăng tốc như GPU, hoặc nhiều bộ tăng tốc như vậy. Một máy tính gồm các thành phần chính sau:</p>
+<ul>
+<li>Một bộ xử lý (còn gọi là CPU) có khả năng thực thi các chương trình mà chúng ta đưa cho nó (ngoài việc chạy hệ điều hành và nhiều thứ khác), thường gồm 8 lõi trở lên.</li>
+<li>Bộ nhớ (RAM) để lưu và truy xuất kết quả từ tính toán, chẳng hạn các vector trọng số và activation, cũng như dữ liệu huấn luyện.</li>
+<li>Một kết nối mạng Ethernet (đôi khi nhiều kết nối) với tốc độ từ 1 GB/s đến 100 GB/s. Trên các máy chủ cao cấp, có thể tìm thấy các liên kết nâng cao hơn.</li>
+<li>Một bus mở rộng tốc độ cao (PCIe) để kết nối hệ thống với một hoặc nhiều GPU. Máy chủ có tối đa 8 bộ tăng tốc, thường được kết nối theo một topology nâng cao, trong khi hệ thống desktop có 1 hoặc 2, tùy ngân sách của người dùng và kích thước bộ nguồn.</li>
+<li>Lưu trữ bền vững, chẳng hạn ổ đĩa cứng từ tính hoặc ổ đĩa thể rắn, trong nhiều trường hợp được kết nối bằng bus PCIe. Nó cung cấp khả năng truyền dữ liệu huấn luyện hiệu quả vào hệ thống và lưu các checkpoint trung gian khi cần.</li>
+</ul>
+<p><img alt="Kết nối giữa các thành phần của một máy tính." src="../../img/mobo-symbol.svg" />
+<a id="fig_mobo-symbol"></a></p>
+<p>Như <a href="#fig_mobo-symbol">fig_mobo-symbol</a> chỉ ra, hầu hết các thành phần (mạng, GPU và lưu trữ) được kết nối với CPU qua bus PCIe. Bus này gồm nhiều lane được gắn trực tiếp với CPU. Chẳng hạn, Threadripper 3 của AMD có 64 lane PCIe 4.0, mỗi lane có khả năng truyền dữ liệu 16 Gbit/s theo cả hai hướng. Bộ nhớ được gắn trực tiếp với CPU với tổng băng thông lên tới 100 GB/s.</p>
+<p>Khi chạy mã trên máy tính, chúng ta cần chuyển dữ liệu đến các bộ xử lý (CPU hoặc GPU), thực hiện tính toán, rồi chuyển kết quả ra khỏi bộ xử lý trở lại RAM và lưu trữ bền vững. Do đó, để đạt hiệu năng tốt, chúng ta cần đảm bảo rằng việc này diễn ra trơn tru mà không có hệ thống nào trở thành nút thắt lớn. Chẳng hạn, nếu không thể tải ảnh đủ nhanh, bộ xử lý sẽ không có việc để làm. Tương tự, nếu không thể chuyển ma trận đủ nhanh đến CPU (hoặc GPU), các phần tử xử lý của nó sẽ bị thiếu dữ liệu. Cuối cùng, nếu muốn đồng bộ nhiều máy tính qua mạng, mạng không nên làm chậm tính toán. Một lựa chọn là xen kẽ giao tiếp và tính toán. Hãy xem xét chi tiết hơn các thành phần khác nhau.</p>
+<h2 id="bo-nho">Bộ Nhớ<a class="headerlink" href="#bo-nho" title="Permanent link">&para;</a></h2>
+<p>Ở mức cơ bản nhất, bộ nhớ được dùng để lưu dữ liệu cần truy cập sẵn. Hiện nay RAM CPU thường thuộc loại <a href="https://en.wikipedia.org/wiki/DDR4_SDRAM">DDR4</a>, cung cấp băng thông 20--25 GB/s cho mỗi module. Mỗi module có bus rộng 64 bit. Thông thường các cặp module bộ nhớ được dùng để cho phép nhiều kênh. CPU có từ 2 đến 4 kênh bộ nhớ, tức là có băng thông bộ nhớ đỉnh từ 40 GB/s đến 100 GB/s. Thường có hai bank trên mỗi kênh. Chẳng hạn Zen 3 Threadripper của AMD có 8 khe.</p>
+<p>Mặc dù những con số này ấn tượng, chúng thực ra chỉ kể một phần câu chuyện. Khi muốn đọc một phần từ bộ nhớ, trước tiên chúng ta cần cho module bộ nhớ biết thông tin nằm ở đâu. Tức là, trước hết chúng ta cần gửi <em>địa chỉ</em> đến RAM. Khi việc này hoàn tất, chúng ta có thể chọn đọc chỉ một bản ghi 64 bit hoặc một chuỗi bản ghi dài. Trường hợp sau được gọi là <em>đọc burst</em>. Tóm lại, gửi địa chỉ đến bộ nhớ và thiết lập truyền dữ liệu mất khoảng 100 ns (chi tiết phụ thuộc vào các hệ số thời gian cụ thể của chip nhớ được dùng), mỗi lần truyền tiếp theo chỉ mất 0.2 ns. Nói ngắn gọn, lần đọc đầu tiên đắt gấp 500 lần các lần sau! Lưu ý rằng chúng ta có thể thực hiện tới 10,000,000 lần đọc ngẫu nhiên mỗi giây. Điều này gợi ý rằng nên tránh truy cập bộ nhớ ngẫu nhiên hết mức có thể và dùng đọc (và ghi) burst thay vào đó.</p>
+<p>Vấn đề phức tạp hơn một chút khi tính đến việc chúng ta có nhiều <em>bank</em>. Mỗi bank có thể đọc bộ nhớ phần lớn độc lập. Điều này có hai ý nghĩa.
+Một mặt, số lần đọc ngẫu nhiên hiệu dụng có thể cao hơn tới 4 lần, miễn là chúng được phân bố đều trên bộ nhớ. Nó cũng có nghĩa rằng thực hiện đọc ngẫu nhiên vẫn là ý tưởng tệ vì đọc burst cũng nhanh hơn 4 lần. Mặt khác, do căn chỉnh bộ nhớ theo ranh giới 64 bit, nên căn chỉnh mọi cấu trúc dữ liệu theo cùng các ranh giới là một ý tưởng tốt. Trình biên dịch làm việc này gần như <a href="https://en.wikipedia.org/wiki/Data_structure_alignment">tự động</a> khi đặt các cờ phù hợp. Độc giả tò mò được khuyến khích xem một bài giảng về DRAM, chẳng hạn bài của <a href="http://web.cecs.pdx.edu/%7Ezeshan/ece585_lec5.pdf">Zeshan Chishti</a>.</p>
+<p>Bộ nhớ GPU chịu yêu cầu băng thông còn cao hơn vì chúng có nhiều phần tử xử lý hơn CPU. Nhìn chung có hai lựa chọn để đáp ứng chúng. Thứ nhất là làm bus bộ nhớ rộng hơn đáng kể. Chẳng hạn, RTX 2080 Ti của NVIDIA có bus rộng 352 bit. Điều này cho phép truyền nhiều thông tin hơn cùng lúc. Thứ hai, GPU dùng bộ nhớ hiệu năng cao chuyên biệt. Các thiết bị phổ thông, chẳng hạn dòng RTX và Titan của NVIDIA, thường dùng chip <a href="https://en.wikipedia.org/wiki/GDDR6_SDRAM">GDDR6</a> với băng thông tổng hợp trên 500 GB/s. Một lựa chọn khác là dùng các module HBM (high bandwidth memory). Chúng dùng giao diện rất khác và kết nối trực tiếp với GPU trên một wafer silicon chuyên dụng. Điều này khiến chúng rất đắt và việc dùng chúng thường giới hạn ở các chip máy chủ cao cấp, chẳng hạn dòng bộ tăng tốc NVIDIA Volta V100. Không có gì ngạc nhiên khi bộ nhớ GPU nói chung <em>nhỏ hơn nhiều</em> so với bộ nhớ CPU do chi phí cao hơn của loại trước. Với mục đích của chúng ta, nhìn chung đặc tính hiệu năng của chúng tương tự, chỉ nhanh hơn rất nhiều. Chúng ta có thể an toàn bỏ qua chi tiết cho mục đích của cuốn sách này. Chúng chỉ quan trọng khi tinh chỉnh kernel GPU để đạt thông lượng cao.</p>
+<h2 id="luu-tru">Lưu Trữ<a class="headerlink" href="#luu-tru" title="Permanent link">&para;</a></h2>
+<p>Chúng ta đã thấy rằng một số đặc tính chính của RAM là <em>băng thông</em> và <em>độ trễ</em>. Điều tương tự cũng đúng với các thiết bị lưu trữ, chỉ là khác biệt có thể còn cực đoan hơn.</p>
+<h3 id="o-ia-cung">Ổ Đĩa Cứng<a class="headerlink" href="#o-ia-cung" title="Permanent link">&para;</a></h3>
+<p><em>Ổ đĩa cứng</em> (HDD) đã được dùng hơn nửa thế kỷ. Tóm lại, chúng chứa một số đĩa quay với các đầu đọc có thể được định vị để đọc hoặc ghi tại bất kỳ track nào. Các đĩa cao cấp chứa tới 16 TB trên 9 platter. Một trong những lợi ích chính của HDD là chúng tương đối rẻ. Một trong nhiều nhược điểm của chúng là các chế độ hỏng hóc thường rất nghiêm trọng và độ trễ đọc tương đối cao.</p>
+<p>Để hiểu điều sau, hãy xét sự kiện rằng HDD quay ở khoảng 7,200 RPM (vòng mỗi phút). Nếu quay nhanh hơn nhiều, chúng sẽ vỡ do lực ly tâm tác dụng lên platter. Điều này có một nhược điểm lớn khi truy cập một sector cụ thể trên đĩa: chúng ta cần đợi cho đến khi platter quay đến vị trí (chúng ta có thể di chuyển đầu đọc nhưng không thể tăng tốc các đĩa thực sự). Do đó có thể mất hơn 8 ms cho đến khi dữ liệu được yêu cầu sẵn sàng. Một cách phổ biến để diễn đạt điều này là nói rằng HDD có thể hoạt động ở khoảng 100 IOPs (thao tác vào/ra mỗi giây). Con số này về cơ bản không thay đổi trong hai thập kỷ qua. Tệ hơn nữa, việc tăng băng thông cũng khó không kém (ở mức khoảng 100--200 MB/s). Sau cùng, mỗi đầu đọc một track bit, nên tốc độ bit chỉ tăng theo căn bậc hai của mật độ thông tin. Kết quả là HDD nhanh chóng bị đẩy về vai trò lưu trữ lưu trữ lâu dài và lưu trữ cấp thấp cho các tập dữ liệu rất lớn.</p>
+<h3 id="o-ia-the-ran">Ổ Đĩa Thể Rắn<a class="headerlink" href="#o-ia-the-ran" title="Permanent link">&para;</a></h3>
+<p>Ổ đĩa thể rắn (SSD) dùng bộ nhớ flash để lưu thông tin bền vững. Điều này cho phép truy cập các bản ghi đã lưu <em>nhanh hơn nhiều</em>. SSD hiện đại có thể hoạt động ở 100,000 đến 500,000 IOPs, tức là nhanh hơn HDD tới 3 bậc độ lớn. Hơn nữa, băng thông của chúng có thể đạt 1--3GB/s, tức là nhanh hơn HDD một bậc độ lớn. Những cải thiện này nghe gần như quá tốt để là thật. Thực vậy, chúng đi kèm các lưu ý sau do cách SSD được thiết kế.</p>
+<ul>
+<li>SSD lưu thông tin theo block (256 KB hoặc lớn hơn). Chúng chỉ có thể được ghi nguyên block, việc này mất thời gian đáng kể. Do đó, ghi ngẫu nhiên theo bit trên SSD có hiệu năng rất kém. Tương tự, ghi dữ liệu nói chung mất thời gian đáng kể vì block phải được đọc, xóa rồi ghi lại với thông tin mới. Đến nay, bộ điều khiển và firmware SSD đã phát triển các thuật toán để giảm nhẹ điều này. Tuy vậy, ghi có thể chậm hơn nhiều, đặc biệt với SSD QLC (quad level cell). Chìa khóa để cải thiện hiệu năng là duy trì một <em>hàng đợi</em> thao tác, ưu tiên đọc và ghi theo block lớn nếu có thể.</li>
+<li>Các ô nhớ trong SSD hao mòn tương đối nhanh (thường chỉ sau vài nghìn lần ghi). Các thuật toán bảo vệ cân bằng hao mòn có thể phân tán sự suy giảm trên nhiều ô. Dù vậy, không nên dùng SSD cho file swap hoặc cho các tập hợp file log lớn.</li>
+<li>Cuối cùng, mức tăng băng thông rất lớn đã buộc các nhà thiết kế máy tính gắn SSD trực tiếp vào bus PCIe. Các ổ có khả năng xử lý điều này, gọi là NVMe (Non Volatile Memory enhanced), có thể dùng tới 4 lane PCIe. Điều này tương ứng tới 8GB/s trên PCIe 4.0.</li>
+</ul>
+<h3 id="luu-tru-am-may">Lưu Trữ Đám Mây<a class="headerlink" href="#luu-tru-am-may" title="Permanent link">&para;</a></h3>
+<p>Lưu trữ đám mây cung cấp một dải hiệu năng có thể cấu hình. Tức là, việc gán lưu trữ cho máy ảo là động, cả về số lượng lẫn tốc độ, theo lựa chọn của người dùng. Chúng tôi khuyến nghị người dùng tăng số IOPs được cấp phát bất cứ khi nào độ trễ quá cao, ví dụ trong quá trình huấn luyện với nhiều bản ghi nhỏ.</p>
+<h2 id="cpu">CPU<a class="headerlink" href="#cpu" title="Permanent link">&para;</a></h2>
+<p>Bộ xử lý trung tâm (CPU) là trung tâm của mọi máy tính. Chúng gồm một số thành phần chính: <em>lõi xử lý</em> có khả năng thực thi mã máy, một <em>bus</em> kết nối chúng (topology cụ thể khác biệt đáng kể giữa các mẫu, thế hệ và nhà cung cấp bộ xử lý), và <em>bộ nhớ đệm</em> để cho phép truy cập bộ nhớ với băng thông cao hơn và độ trễ thấp hơn so với đọc từ bộ nhớ chính. Cuối cùng, gần như tất cả CPU hiện đại đều chứa <em>đơn vị xử lý vector</em> để hỗ trợ đại số tuyến tính và tích chập hiệu năng cao, vốn phổ biến trong xử lý phương tiện và machine learning.</p>
+<p><img alt="CPU Intel Skylake bốn lõi cấp phổ thông." src="../../img/skylake.svg" />
+<a id="fig_skylake"></a></p>
+<p><a href="#fig_skylake">fig_skylake</a> mô tả một CPU Intel Skylake bốn lõi cấp phổ thông. Nó có GPU tích hợp, bộ nhớ đệm và ringbus kết nối bốn lõi. Các thiết bị ngoại vi, chẳng hạn Ethernet, WiFi, Bluetooth, bộ điều khiển SSD và USB, hoặc là một phần của chipset hoặc được gắn trực tiếp (PCIe) vào CPU.</p>
+<h3 id="vi-kien-truc">Vi Kiến Trúc<a class="headerlink" href="#vi-kien-truc" title="Permanent link">&para;</a></h3>
+<p>Mỗi lõi xử lý gồm một tập thành phần khá tinh vi. Mặc dù chi tiết khác nhau giữa các thế hệ và nhà cung cấp, chức năng cơ bản gần như chuẩn. Front-end tải lệnh và cố dự đoán đường đi nào sẽ được chọn (ví dụ với luồng điều khiển). Sau đó, các lệnh được giải mã từ mã assembly thành vi lệnh. Mã assembly thường không phải là mã cấp thấp nhất mà bộ xử lý thực thi. Thay vào đó, các lệnh phức tạp có thể được giải mã thành một tập các thao tác cấp thấp hơn. Các thao tác này sau đó được xử lý bởi lõi thực thi thực sự. Thường thì lõi này có khả năng thực hiện nhiều thao tác đồng thời. Chẳng hạn, lõi ARM Cortex A77 trong <a href="#fig_cortexa77">fig_cortexa77</a> có thể thực hiện tới 8 thao tác đồng thời.</p>
+<p><img alt="Vi kiến trúc ARM Cortex A77." src="../../img/a77.svg" />
+<a id="fig_cortexa77"></a></p>
+<p>Điều này có nghĩa là các chương trình hiệu quả có thể thực hiện hơn một lệnh trên mỗi chu kỳ xung nhịp, miễn là chúng có thể được thực hiện độc lập. Không phải mọi đơn vị đều giống nhau. Một số chuyên về lệnh số nguyên trong khi những đơn vị khác được tối ưu cho hiệu năng dấu phẩy động. Để tăng thông lượng, bộ xử lý cũng có thể theo nhiều đường mã đồng thời trong một lệnh rẽ nhánh rồi loại bỏ kết quả của các nhánh không được chọn. Đây là lý do các đơn vị dự đoán nhánh quan trọng (ở front-end), để chỉ các đường hứa hẹn nhất được theo đuổi.</p>
+<h3 id="vector-hoa">Vector Hóa<a class="headerlink" href="#vector-hoa" title="Permanent link">&para;</a></h3>
+<p>Deep learning cực kỳ đói tính toán. Vì vậy, để CPU phù hợp với machine learning, cần thực hiện nhiều phép toán trong một chu kỳ xung nhịp. Điều này đạt được thông qua các đơn vị vector. Chúng có các tên khác nhau: trên ARM chúng được gọi là NEON, trên x86 chúng (một thế hệ gần đây) được gọi là các đơn vị <a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX2</a>. Một điểm chung là chúng có thể thực hiện các phép toán SIMD (single instruction multiple data). <a href="#fig_neon128">fig_neon128</a> cho thấy cách 8 số nguyên ngắn có thể được cộng trong một chu kỳ xung nhịp trên ARM.</p>
+<p><img alt="Vector hóa NEON 128 bit." src="../../img/neon128.svg" />
+<a id="fig_neon128"></a></p>
+<p>Tùy lựa chọn kiến trúc, các thanh ghi như vậy dài tới 512 bit, cho phép kết hợp tới 64 cặp số. Chẳng hạn, chúng ta có thể nhân hai số và cộng chúng vào số thứ ba, điều này còn được gọi là fused multiply-add. <a href="https://01.org/openvinotoolkit">OpenVino</a> của Intel dùng chúng để đạt thông lượng đáng nể cho deep learning trên CPU cấp máy chủ. Tuy nhiên, lưu ý rằng con số này hoàn toàn bị lu mờ bởi những gì GPU có thể đạt được. Chẳng hạn, RTX 2080 Ti của NVIDIA có 4,352 lõi CUDA, mỗi lõi có khả năng xử lý một thao tác như vậy tại bất kỳ thời điểm nào.</p>
+<h3 id="bo-nho-em">Bộ Nhớ Đệm<a class="headerlink" href="#bo-nho-em" title="Permanent link">&para;</a></h3>
+<p>Xét tình huống sau: chúng ta có một lõi CPU khiêm tốn với 4 lõi như mô tả trong <a href="#fig_skylake">fig_skylake</a> ở trên, chạy ở tần số 2 GHz.
+Hơn nữa, giả sử chúng ta có số IPC (instructions per clock) là 1 và các đơn vị có AVX2 với độ rộng 256 bit được bật. Hãy giả sử thêm rằng ít nhất một trong các thanh ghi dùng cho thao tác AVX2 cần được lấy từ bộ nhớ. Điều này có nghĩa CPU tiêu thụ <span class="arithmatex">\(4 \times 256 \textrm{ bit} = 128 \textrm{ bytes}\)</span> dữ liệu mỗi chu kỳ xung nhịp. Trừ khi chúng ta có thể truyền <span class="arithmatex">\(2 \times 10^9 \times 128 = 256 \times 10^9\)</span> byte đến bộ xử lý mỗi giây, các phần tử xử lý sẽ bị thiếu dữ liệu. Đáng tiếc là giao diện bộ nhớ của một chip như vậy chỉ hỗ trợ truyền dữ liệu 20--40 GB/s, tức là thấp hơn một bậc độ lớn. Cách sửa là tránh tải dữ liệu <em>mới</em> từ bộ nhớ càng nhiều càng tốt và thay vào đó lưu đệm cục bộ trên CPU. Đây là lúc bộ nhớ đệm trở nên hữu ích. Thường các tên hoặc khái niệm sau được dùng:</p>
+<ul>
+<li><strong>Thanh ghi</strong> nói nghiêm ngặt không phải là một phần của bộ nhớ đệm. Chúng giúp dàn dựng lệnh. Dù vậy, thanh ghi CPU là các vị trí bộ nhớ mà CPU có thể truy cập ở tốc độ xung nhịp mà không chịu phạt độ trễ. CPU có hàng chục thanh ghi. Việc dùng thanh ghi hiệu quả phụ thuộc vào trình biên dịch (hoặc lập trình viên). Chẳng hạn ngôn ngữ lập trình C có từ khóa <code>register</code>.</li>
+<li><strong>Bộ nhớ đệm L1</strong> là tuyến phòng thủ đầu tiên chống lại yêu cầu băng thông bộ nhớ cao. Bộ nhớ đệm L1 rất nhỏ (kích thước điển hình có thể là 32--64 KB) và thường tách thành cache dữ liệu và cache lệnh. Khi dữ liệu được tìm thấy trong L1 cache, truy cập rất nhanh. Nếu không tìm thấy ở đó, quá trình tìm kiếm tiếp tục xuống hệ phân cấp cache.</li>
+<li><strong>Bộ nhớ đệm L2</strong> là điểm dừng tiếp theo. Tùy thiết kế kiến trúc và kích thước bộ xử lý, chúng có thể là độc quyền. Chúng có thể chỉ truy cập được bởi một lõi nhất định hoặc được chia sẻ giữa nhiều lõi. Bộ nhớ đệm L2 lớn hơn (thường 256--512 KB mỗi lõi) và chậm hơn L1. Hơn nữa, để truy cập thứ gì đó trong L2, trước hết chúng ta cần kiểm tra để nhận ra rằng dữ liệu không nằm trong L1, điều này thêm một lượng độ trễ nhỏ.</li>
+<li><strong>Bộ nhớ đệm L3</strong> được chia sẻ giữa nhiều lõi và có thể khá lớn. CPU máy chủ Epyc 3 của AMD có tới 256 MB cache trải trên nhiều chiplet. Các con số điển hình hơn nằm trong khoảng 4--8 MB.</li>
+</ul>
+<p>Dự đoán phần tử bộ nhớ nào sẽ cần tiếp theo là một trong những tham số tối ưu hóa chính trong thiết kế chip. Chẳng hạn, nên duyệt bộ nhớ theo hướng <em>tiến</em> vì hầu hết thuật toán cache sẽ cố <em>đọc trước</em> theo hướng tiến thay vì lùi. Tương tự, giữ các mẫu truy cập bộ nhớ cục bộ là một cách tốt để cải thiện hiệu năng.</p>
+<p>Thêm bộ nhớ đệm là con dao hai lưỡi. Một mặt, chúng đảm bảo các lõi xử lý không bị thiếu dữ liệu. Đồng thời, chúng làm tăng kích thước chip, dùng diện tích mà lẽ ra có thể dành cho việc tăng năng lực xử lý. Hơn nữa, <em>cache miss</em> có thể tốn kém. Xét trường hợp xấu nhất, <em>false sharing</em>, như mô tả trong <a href="#fig_falsesharing">fig_falsesharing</a>. Một vị trí bộ nhớ được cache trên bộ xử lý 0 khi một luồng trên bộ xử lý 1 yêu cầu dữ liệu. Để lấy nó, bộ xử lý 0 cần dừng việc đang làm, ghi thông tin trở lại bộ nhớ chính rồi cho phép bộ xử lý 1 đọc nó từ bộ nhớ. Trong thao tác này, cả hai bộ xử lý đều chờ. Rất có thể mã như vậy chạy <em>chậm hơn</em> trên nhiều bộ xử lý so với một cài đặt một bộ xử lý hiệu quả. Đây là một lý do nữa vì sao có giới hạn thực tế cho kích thước cache (bên cạnh kích thước vật lý của chúng).</p>
+<p><img alt="False sharing (hình ảnh do Intel cung cấp)." src="../../img/falsesharing.svg" />
+<a id="fig_falsesharing"></a></p>
+<h2 id="gpu-va-cac-bo-tang-toc-khac">GPU và Các Bộ Tăng Tốc Khác<a class="headerlink" href="#gpu-va-cac-bo-tang-toc-khac" title="Permanent link">&para;</a></h2>
+<p>Không quá lời khi nói rằng deep learning sẽ không thành công nếu không có GPU. Tương tự, hoàn toàn hợp lý khi lập luận rằng vận may của các nhà sản xuất GPU đã tăng đáng kể nhờ deep learning. Sự đồng tiến hóa này của phần cứng và thuật toán đã dẫn đến tình huống mà dù tốt hay xấu, deep learning là mô hình thống kê được ưu tiên. Do đó, việc hiểu các lợi ích cụ thể mà GPU và các bộ tăng tốc liên quan như TPU [Jouppi.Young.Patil.ea.2017] mang lại là đáng giá.</p>
+<p>Đáng chú ý là một phân biệt thường được đưa ra trong thực tế: bộ tăng tốc được tối ưu hoặc cho huấn luyện hoặc cho inference. Với inference, chúng ta chỉ cần tính lan truyền tiến trong mạng. Không cần lưu dữ liệu trung gian cho lan truyền ngược. Hơn nữa, chúng ta có thể không cần tính toán rất chính xác (FP16 hoặc INT8 thường đủ). Mặt khác, trong quá trình huấn luyện, tất cả kết quả trung gian cần được lưu để tính gradient. Hơn nữa, tích lũy gradient đòi hỏi độ chính xác cao hơn để tránh tràn dưới (hoặc tràn trên) số học. Điều này có nghĩa FP16 (hoặc mixed precision với FP32) là yêu cầu tối thiểu. Tất cả những điều này đòi hỏi bộ nhớ nhanh hơn và lớn hơn (HBM2 so với GDDR6) cùng nhiều năng lực xử lý hơn. Chẳng hạn, GPU <a href="https://devblogs.nvidia.com/nvidia-turing-architecture-in-depth/">Turing</a> T4 của NVIDIA được tối ưu cho inference trong khi GPU V100 phù hợp hơn cho huấn luyện.</p>
+<p>Nhớ lại vector hóa như minh họa trong <a href="#fig_neon128">fig_neon128</a>. Thêm các đơn vị vector vào lõi xử lý cho phép chúng ta tăng thông lượng đáng kể. Ví dụ, trong <a href="#fig_neon128">fig_neon128</a>, chúng ta có thể thực hiện 16 phép toán đồng thời.
+Thứ nhất,
+nếu chúng ta thêm các thao tác tối ưu không chỉ cho phép toán giữa các vector mà còn giữa các ma trận thì sao? Chiến lược này dẫn đến tensor core (sẽ được đề cập ngay sau đây).
+Thứ hai, nếu chúng ta thêm nhiều lõi hơn nữa thì sao? Tóm lại, hai chiến lược này tóm tắt các quyết định thiết kế trong GPU. <a href="#fig_turing_processing_block">fig_turing_processing_block</a> cung cấp tổng quan về một khối xử lý cơ bản. Nó chứa 16 đơn vị số nguyên và 16 đơn vị dấu phẩy động. Ngoài ra, hai tensor core tăng tốc một tập con hẹp các thao tác bổ sung liên quan đến deep learning. Mỗi streaming multiprocessor gồm bốn khối như vậy.</p>
+<p><img alt="Khối xử lý NVIDIA Turing (hình ảnh do NVIDIA cung cấp)." src="../../img/turing-processing-block.png" />
+:width:<code>150px</code>
+<a id="fig_turing_processing_block"></a></p>
+<p>Tiếp theo, 12 streaming multiprocessor được nhóm thành các cụm xử lý đồ họa, tạo nên các bộ xử lý TU102 cao cấp. Nhiều kênh bộ nhớ và một cache L2 bổ sung cho thiết lập này. <a href="#fig_turing">fig_turing</a> có các chi tiết liên quan. Một trong những lý do thiết kế một thiết bị như vậy là các khối riêng lẻ có thể được thêm hoặc loại bỏ khi cần để cho phép chip gọn hơn và xử lý vấn đề yield (các module lỗi có thể không được kích hoạt). May mắn là việc lập trình các thiết bị như vậy được che giấu khá tốt khỏi nhà nghiên cứu deep learning thông thường bên dưới các lớp CUDA và mã framework. Cụ thể, nhiều hơn một chương trình hoàn toàn có thể được thực thi đồng thời trên GPU, miễn là có tài nguyên sẵn. Dù vậy, nên nhận thức các giới hạn của thiết bị để tránh chọn các mô hình không vừa với bộ nhớ thiết bị.</p>
+<p><img alt="Kiến trúc NVIDIA Turing (hình ảnh do NVIDIA cung cấp)" src="../../img/turing.png" />
+:width:<code>350px</code>
+<a id="fig_turing"></a></p>
+<p>Một khía cạnh cuối cùng đáng đề cập chi tiết hơn là <em>tensor core</em>. Chúng là một ví dụ của xu hướng gần đây: thêm các mạch tối ưu hơn đặc biệt hiệu quả cho deep learning. Chẳng hạn, TPU thêm một systolic array [Kung.1988] để nhân ma trận nhanh. Ở đó, thiết kế nhằm hỗ trợ một số rất nhỏ (một trong thế hệ TPU đầu tiên) các thao tác lớn. Tensor core nằm ở đầu kia. Chúng được tối ưu cho các thao tác nhỏ liên quan đến ma trận từ <span class="arithmatex">\(4 \times 4\)</span> đến <span class="arithmatex">\(16 \times 16\)</span>, tùy độ chính xác số. <a href="#fig_tensorcore">fig_tensorcore</a> cung cấp tổng quan về các tối ưu hóa.</p>
+<p><img alt="Tensor core NVIDIA trong Turing (hình ảnh do NVIDIA cung cấp)." src="../../img/tensorcore.jpg" />
+:width:<code>400px</code>
+<a id="fig_tensorcore"></a></p>
+<p>Rõ ràng khi tối ưu cho tính toán, chúng ta phải thực hiện một số thỏa hiệp. Một trong số đó là GPU không giỏi xử lý ngắt và dữ liệu thưa. Mặc dù có các ngoại lệ đáng chú ý, chẳng hạn <a href="https://github.com/gunrock/gunrock">Gunrock</a> [Wang.Davidson.Pan.ea.2016], mẫu truy cập của ma trận và vector thưa không phù hợp với các thao tác đọc burst băng thông cao nơi GPU vượt trội. Kết hợp cả hai mục tiêu là một lĩnh vực nghiên cứu đang hoạt động. Xem ví dụ <a href="http://dgl.ai">DGL</a>, một thư viện được tinh chỉnh cho deep learning trên đồ thị.</p>
+<h2 id="mang-va-bus">Mạng và Bus<a class="headerlink" href="#mang-va-bus" title="Permanent link">&para;</a></h2>
+<p>Bất cứ khi nào một thiết bị đơn lẻ không đủ cho tối ưu hóa, chúng ta cần truyền dữ liệu đến và từ nó để đồng bộ xử lý. Đây là lúc mạng và bus trở nên hữu ích. Chúng ta có một số tham số thiết kế: băng thông, chi phí, khoảng cách và tính linh hoạt.
+Ở một đầu, chúng ta có WiFi với phạm vi khá tốt, rất dễ dùng (dù sao cũng không có dây), rẻ nhưng cung cấp băng thông và độ trễ tương đối tầm thường. Không nhà nghiên cứu machine learning tỉnh táo nào sẽ dùng nó để xây dựng một cụm máy chủ. Trong phần sau, chúng ta tập trung vào các kết nối phù hợp cho deep learning.</p>
+<ul>
+<li><strong>PCIe</strong> là một bus chuyên dụng cho các kết nối điểm-điểm băng thông rất cao (tới 32 GB/s trên PCIe 4.0 trong một khe 16 lane) trên mỗi lane. Độ trễ ở mức vài micro giây một chữ số (5 μs). Các liên kết PCIe rất quý. Bộ xử lý chỉ có số lượng giới hạn: EPYC 3 của AMD có 128 lane, Xeon của Intel có tới 48 lane mỗi chip; trên CPU cấp desktop, các con số tương ứng là 20 (Ryzen 9) và 16 (Core i9). Vì GPU thường có 16 lane, điều này giới hạn số GPU có thể kết nối với CPU ở băng thông đầy đủ. Sau cùng, chúng cần chia sẻ các liên kết với thiết bị ngoại vi băng thông cao khác như lưu trữ và Ethernet. Giống như truy cập RAM, truyền khối lớn được ưu tiên do giảm chi phí phụ của gói.</li>
+<li><strong>Ethernet</strong> là cách phổ biến nhất để kết nối máy tính. Mặc dù chậm hơn đáng kể so với PCIe, nó rất rẻ, bền khi lắp đặt và bao phủ khoảng cách dài hơn nhiều. Băng thông điển hình cho máy chủ cấp thấp là 1 GBit/s. Thiết bị cao cấp hơn (ví dụ các <a href="https://aws.amazon.com/ec2/instance-types/c5/">instance C5</a> trên đám mây) cung cấp băng thông từ 10 đến 100 GBit/s. Như trong mọi trường hợp trước, truyền dữ liệu có chi phí phụ đáng kể. Lưu ý rằng chúng ta gần như không bao giờ dùng Ethernet thô trực tiếp mà dùng một giao thức được thực thi trên kết nối vật lý (chẳng hạn UDP hoặc TCP/IP). Điều này thêm chi phí phụ. Giống PCIe, Ethernet được thiết kế để kết nối hai thiết bị, ví dụ một máy tính và một switch.</li>
+<li><strong>Switch</strong> cho phép chúng ta kết nối nhiều thiết bị theo cách mà bất kỳ cặp nào cũng có thể thực hiện kết nối điểm-điểm (thường là băng thông đầy đủ) đồng thời. Chẳng hạn, các switch Ethernet có thể kết nối 40 máy chủ ở băng thông mặt cắt ngang cao. Lưu ý rằng switch không chỉ có trong mạng máy tính truyền thống. Ngay cả các lane PCIe cũng có thể được <a href="https://www.broadcom.com/products/pcie-switches-bridges/pcie-switches">switch</a>. Điều này xảy ra, ví dụ để kết nối số lượng lớn GPU với một bộ xử lý chủ, như trường hợp các <a href="https://aws.amazon.com/ec2/instance-types/p2/">instance P2</a>.</li>
+<li><strong>NVLink</strong> là một lựa chọn thay cho PCIe khi nói đến các kết nối băng thông rất cao. Nó cung cấp tốc độ truyền dữ liệu tới 300 Gbit/s mỗi liên kết. GPU máy chủ (Volta V100) có sáu liên kết trong khi GPU cấp phổ thông (RTX 2080 Ti) chỉ có một liên kết, hoạt động ở tốc độ giảm còn 100 Gbit/s. Chúng tôi khuyến nghị dùng <a href="https://github.com/NVIDIA/nccl">NCCL</a> để đạt truyền dữ liệu cao giữa các GPU.</li>
+</ul>
+<h2 id="them-cac-con-so-o-tre">Thêm Các Con Số Độ Trễ<a class="headerlink" href="#them-cac-con-so-o-tre" title="Permanent link">&para;</a></h2>
+<p>Tóm tắt trong <a href="#table_latency_numbers">table_latency_numbers</a> và <a href="#table_latency_numbers_tesla">table_latency_numbers_tesla</a> lấy từ <a href="https://gist.github.com/eshelman">Eliot Eshelman</a>, người duy trì phiên bản cập nhật của các con số dưới dạng một <a href="https://gist.github.com/eshelman/343a1c46cb3fba142c1afdcdeec17646">GitHub gist</a>.</p>
+<p>:Các con số độ trễ phổ biến.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Hành động</th>
+<th style="text-align: right;">Thời gian</th>
+<th style="text-align: left;">Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Tham chiếu/trúng L1 cache</td>
+<td style="text-align: right;">1.5 ns</td>
+<td style="text-align: left;">4 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cộng/nhân/FMA dấu phẩy động</td>
+<td style="text-align: right;">1.5 ns</td>
+<td style="text-align: left;">4 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tham chiếu/trúng L2 cache</td>
+<td style="text-align: right;">5 ns</td>
+<td style="text-align: left;">12 ~ 17 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Dự đoán sai nhánh</td>
+<td style="text-align: right;">6 ns</td>
+<td style="text-align: left;">15 ~ 20 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trúng L3 cache (cache không chia sẻ)</td>
+<td style="text-align: right;">16 ns</td>
+<td style="text-align: left;">42 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trúng L3 cache (chia sẻ ở lõi khác)</td>
+<td style="text-align: right;">25 ns</td>
+<td style="text-align: left;">65 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Khóa/mở khóa mutex</td>
+<td style="text-align: right;">25 ns</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Trúng L3 cache (đã sửa ở lõi khác)</td>
+<td style="text-align: right;">29 ns</td>
+<td style="text-align: left;">75 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trúng L3 cache (trên socket CPU từ xa)</td>
+<td style="text-align: right;">40 ns</td>
+<td style="text-align: left;">100 ~ 300 chu kỳ (40 ~ 116 ns)</td>
+</tr>
+<tr>
+<td style="text-align: left;">QPI hop đến CPU khác (mỗi hop)</td>
+<td style="text-align: right;">40 ns</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Tham chiếu bộ nhớ 64MB (CPU cục bộ)</td>
+<td style="text-align: right;">46 ns</td>
+<td style="text-align: left;">TinyMemBench trên Broadwell E5-2690v4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tham chiếu bộ nhớ 64MB (CPU từ xa)</td>
+<td style="text-align: right;">70 ns</td>
+<td style="text-align: left;">TinyMemBench trên Broadwell E5-2690v4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tham chiếu bộ nhớ 256MB (CPU cục bộ)</td>
+<td style="text-align: right;">75 ns</td>
+<td style="text-align: left;">TinyMemBench trên Broadwell E5-2690v4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ghi ngẫu nhiên Intel Optane</td>
+<td style="text-align: right;">94 ns</td>
+<td style="text-align: left;">UCSD Non-Volatile Systems Lab</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tham chiếu bộ nhớ 256MB (CPU từ xa)</td>
+<td style="text-align: right;">120 ns</td>
+<td style="text-align: left;">TinyMemBench trên Broadwell E5-2690v4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Đọc ngẫu nhiên Intel Optane</td>
+<td style="text-align: right;">305 ns</td>
+<td style="text-align: left;">UCSD Non-Volatile Systems Lab</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gửi 4KB qua fabric HPC 100 Gbps</td>
+<td style="text-align: right;">1 μs</td>
+<td style="text-align: left;">MVAPICH2 qua Intel Omni-Path</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nén 1KB bằng Google Snappy</td>
+<td style="text-align: right;">3 μs</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Gửi 4KB qua ethernet 10 Gbps</td>
+<td style="text-align: right;">10 μs</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Ghi ngẫu nhiên 4KB vào NVMe SSD</td>
+<td style="text-align: right;">30 μs</td>
+<td style="text-align: left;">DC P3608 NVMe SSD (QOS 99% là 500μs)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Truyền 1MB đến/từ GPU NVLink</td>
+<td style="text-align: right;">30 μs</td>
+<td style="text-align: left;">~33GB/s trên NVIDIA 40GB NVLink</td>
+</tr>
+<tr>
+<td style="text-align: left;">Truyền 1MB đến/từ GPU PCI-E</td>
+<td style="text-align: right;">80 μs</td>
+<td style="text-align: left;">~12GB/s trên liên kết PCIe 3.0 x16</td>
+</tr>
+<tr>
+<td style="text-align: left;">Đọc ngẫu nhiên 4KB từ NVMe SSD</td>
+<td style="text-align: right;">120 μs</td>
+<td style="text-align: left;">DC P3608 NVMe SSD (QOS 99%)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Đọc tuần tự 1MB từ NVMe SSD</td>
+<td style="text-align: right;">208 μs</td>
+<td style="text-align: left;">~4.8GB/s DC P3608 NVMe SSD</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ghi ngẫu nhiên 4KB vào SATA SSD</td>
+<td style="text-align: right;">500 μs</td>
+<td style="text-align: left;">DC S3510 SATA SSD (QOS 99.9%)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Đọc ngẫu nhiên 4KB từ SATA SSD</td>
+<td style="text-align: right;">500 μs</td>
+<td style="text-align: left;">DC S3510 SATA SSD (QOS 99.9%)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Khứ hồi trong cùng trung tâm dữ liệu</td>
+<td style="text-align: right;">500 μs</td>
+<td style="text-align: left;">Ping một chiều là ~250μs</td>
+</tr>
+<tr>
+<td style="text-align: left;">Đọc tuần tự 1MB từ SATA SSD</td>
+<td style="text-align: right;">2 ms</td>
+<td style="text-align: left;">~550MB/s DC S3510 SATA SSD</td>
+</tr>
+<tr>
+<td style="text-align: left;">Đọc tuần tự 1MB từ đĩa</td>
+<td style="text-align: right;">5 ms</td>
+<td style="text-align: left;">~200MB/s HDD máy chủ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Truy cập đĩa ngẫu nhiên (seek+rotation)</td>
+<td style="text-align: right;">10 ms</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Gửi gói CA-&gt;Hà Lan-&gt;CA</td>
+<td style="text-align: right;">150 ms</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><a id="table_latency_numbers"></a></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>:Các con số độ trễ cho GPU NVIDIA Tesla.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Hành động</th>
+<th style="text-align: right;">Thời gian</th>
+<th style="text-align: left;">Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Truy cập bộ nhớ chia sẻ GPU</td>
+<td style="text-align: right;">30 ns</td>
+<td style="text-align: left;">30~90 chu kỳ (xung đột bank thêm độ trễ)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Truy cập bộ nhớ toàn cục GPU</td>
+<td style="text-align: right;">200 ns</td>
+<td style="text-align: left;">200~800 chu kỳ</td>
+</tr>
+<tr>
+<td style="text-align: left;">Khởi chạy kernel CUDA trên GPU</td>
+<td style="text-align: right;">10 μs</td>
+<td style="text-align: left;">CPU chủ ra lệnh cho GPU bắt đầu kernel</td>
+</tr>
+<tr>
+<td style="text-align: left;">Truyền 1MB đến/từ GPU NVLink</td>
+<td style="text-align: right;">30 μs</td>
+<td style="text-align: left;">~33GB/s trên NVIDIA 40GB NVLink</td>
+</tr>
+<tr>
+<td style="text-align: left;">Truyền 1MB đến/từ GPU PCI-E</td>
+<td style="text-align: right;">80 μs</td>
+<td style="text-align: left;">~12GB/s trên liên kết PCI-Express x16</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a id="table_latency_numbers_tesla"></a></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tom-tat">Tóm Tắt<a class="headerlink" href="#tom-tat" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Thiết bị có chi phí phụ cho các thao tác. Do đó, điều quan trọng là nhắm đến số lượng nhỏ các lần truyền lớn thay vì nhiều lần truyền nhỏ. Điều này áp dụng cho RAM, SSD, mạng và GPU.</li>
+<li>Vector hóa là chìa khóa cho hiệu năng. Hãy đảm bảo bạn biết các khả năng cụ thể của bộ tăng tốc của mình. Ví dụ, một số CPU Intel Xeon đặc biệt tốt cho các thao tác INT8, GPU NVIDIA Volta vượt trội ở các thao tác ma trận-ma trận FP16, và NVIDIA Turing tỏa sáng ở FP16, INT8 và INT4.</li>
+<li>Tràn số do kiểu dữ liệu nhỏ có thể là vấn đề trong quá trình huấn luyện (và ở mức độ ít hơn trong inference).</li>
+<li>Aliasing có thể làm suy giảm hiệu năng đáng kể. Chẳng hạn, căn chỉnh bộ nhớ trên CPU 64 bit nên được thực hiện theo các ranh giới 64 bit. Trên GPU, nên giữ kích thước tích chập được căn chỉnh, ví dụ theo tensor core.</li>
+<li>Hãy khớp thuật toán với phần cứng (ví dụ footprint bộ nhớ và băng thông). Có thể đạt tăng tốc lớn (nhiều bậc độ lớn) khi các tham số vừa trong cache.</li>
+<li>Chúng tôi khuyến nghị bạn phác thảo hiệu năng của một thuật toán mới trên giấy trước khi xác minh kết quả thí nghiệm. Chênh lệch ở mức một bậc độ lớn hoặc hơn là lý do đáng lo.</li>
+<li>Dùng profiler để gỡ lỗi các nút thắt hiệu năng.</li>
+<li>Phần cứng huấn luyện và inference có các điểm tối ưu khác nhau về giá và hiệu năng.</li>
+</ul>
+<h2 id="bai-tap">Bài Tập<a class="headerlink" href="#bai-tap" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Viết mã C để kiểm tra liệu có khác biệt tốc độ nào giữa truy cập bộ nhớ được căn chỉnh hoặc không căn chỉnh so với giao diện bộ nhớ ngoài hay không. Gợi ý: hãy cẩn thận với hiệu ứng cache.</li>
+<li>Kiểm tra khác biệt tốc độ giữa truy cập bộ nhớ theo tuần tự hoặc với một stride cho trước.</li>
+<li>Làm thế nào bạn có thể đo kích thước cache trên CPU?</li>
+<li>Bạn sẽ bố trí dữ liệu trên nhiều kênh bộ nhớ như thế nào để đạt băng thông tối đa? Bạn sẽ bố trí thế nào nếu có nhiều luồng nhỏ?</li>
+<li>Một HDD cấp doanh nghiệp quay ở 10,000 rpm. Thời gian tối thiểu tuyệt đối mà một HDD cần bỏ ra trong trường hợp xấu nhất trước khi có thể đọc dữ liệu là bao nhiêu (bạn có thể giả sử đầu đọc di chuyển gần như tức thời)? Vì sao HDD 2.5" đang trở nên phổ biến cho máy chủ thương mại (so với ổ 3.5" và 5.25")?</li>
+<li>Giả sử một nhà sản xuất HDD tăng mật độ lưu trữ từ 1 Tbit trên inch vuông lên 5 Tbit trên inch vuông. Bạn có thể lưu bao nhiêu thông tin trên một vòng của HDD 2.5"? Có khác biệt giữa các track trong và ngoài không?</li>
+<li>Chuyển từ kiểu dữ liệu 8 bit sang 16 bit làm lượng silicon tăng xấp xỉ bốn lần. Vì sao? Vì sao NVIDIA có thể đã thêm thao tác INT4 vào GPU Turing của họ?</li>
+<li>Đọc tiến qua bộ nhớ nhanh hơn bao nhiêu so với đọc lùi? Con số này có khác nhau giữa các máy tính và nhà cung cấp CPU khác nhau không? Vì sao? Hãy viết mã C và thí nghiệm với nó.</li>
+<li>Bạn có thể đo kích thước cache của đĩa không? Với một HDD điển hình thì nó là bao nhiêu? SSD có cần cache không?</li>
+<li>Đo chi phí phụ của gói khi gửi thông điệp qua Ethernet. Tra cứu khác biệt giữa kết nối UDP và TCP/IP.</li>
+<li>Truy cập bộ nhớ trực tiếp cho phép các thiết bị ngoài CPU ghi (và đọc) trực tiếp vào (từ) bộ nhớ. Vì sao đây là một ý tưởng tốt?</li>
+<li>Xem các con số hiệu năng của GPU Turing T4. Vì sao hiệu năng "chỉ" tăng gấp đôi khi chuyển từ FP16 sang INT8 và INT4?</li>
+<li>Thời gian ngắn nhất mà một gói tin nên mất cho chuyến khứ hồi giữa San Francisco và Amsterdam là bao nhiêu? Gợi ý: bạn có thể giả sử khoảng cách là 10,000 km.</li>
+</ol>
+<p><a href="https://discuss.d2l.ai/t/363">Discussions</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Trở lại mục lục
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0110\u00e3 sao ch\u00e9p", "clipboard.copy": "Sao ch\u00e9p v\u00e0o b\u1ed9 nh\u1edb t\u1ea1m", "search.result.more.one": "1 t\u1eeb kh\u00e1c trong trang", "search.result.more.other": "# t\u1eeb kh\u00e1c trong trang", "search.result.none": "Kh\u00f4ng t\u00ecm th\u1ea5y t\u00e0i li\u1ec7u li\u00ean quan", "search.result.one": "1 t\u00e0i li\u1ec7u li\u00ean quan", "search.result.other": "# t\u00e0i li\u1ec7u li\u00ean quan", "search.result.placeholder": "Nh\u1eadp \u0111\u1ec3 b\u1eaft \u0111\u1ea7u t\u00ecm ki\u1ebfm", "search.result.term.missing": "Kh\u00f4ng", "select.version": "Ch\u1ecdn phi\u00ean b\u1ea3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
