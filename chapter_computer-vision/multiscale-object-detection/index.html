@@ -2051,6 +2051,7 @@ Chiều cao và chiều rộng của ảnh lần lượt là 561 và 728 pixel.<
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">h</span><span class="p">,</span> <span class="n">w</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-multiscale-object-detection-1.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
@@ -2060,6 +2061,7 @@ Chiều cao và chiều rộng của ảnh lần lượt là 561 và 728 pixel.<
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">h</span><span class="p">,</span> <span class="n">w</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-multiscale-object-detection-2.svg" /></p>
 <p>Nhắc lại rằng trong <a href="#sec_conv_layer">sec_conv_layer</a>,
 chúng ta gọi đầu ra dạng mảng hai chiều của
 một tầng tích chập là một feature map.
@@ -2095,6 +2097,7 @@ sẽ được sinh ra.</p>
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">show_bboxes</span><span class="p">(</span><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>                    <span class="n">anchors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">bbox_scale</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-multiscale-object-detection-3.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">display_anchors</span><span class="p">(</span><span class="n">fmap_w</span><span class="p">,</span> <span class="n">fmap_h</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>

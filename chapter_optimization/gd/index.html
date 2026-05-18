@@ -2118,18 +2118,21 @@ Hãy bắt đầu với một trường hợp đặc biệt đơn giản.</p>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">mxnet</span><span class="w"> </span><span class="kn">import</span> <span class="n">np</span><span class="p">,</span> <span class="n">npx</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-1.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-2.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab tensorflow</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">d2l</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-3.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab all</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>  <span class="c1"># Objective function</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="k">return</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
@@ -2137,6 +2140,7 @@ Hãy bắt đầu với một trường hợp đặc biệt đơn giản.</p>
 <a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">f_grad</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>  <span class="c1"># Gradient (derivative) of the objective function</span>
 <a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-4.svg" /></p>
 <p>Tiếp theo, chúng ta dùng <span class="arithmatex">\(x=10\)</span> làm giá trị khởi tạo và giả sử <span class="arithmatex">\(\eta=0.2\)</span>. Dùng gradient descent để lặp <span class="arithmatex">\(x\)</span> 10 lần, chúng ta có thể thấy rằng cuối cùng giá trị của <span class="arithmatex">\(x\)</span> tiến gần đến nghiệm tối ưu.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab all</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">gd</span><span class="p">(</span><span class="n">eta</span><span class="p">,</span> <span class="n">f_grad</span><span class="p">):</span>
@@ -2150,6 +2154,7 @@ Hãy bắt đầu với một trường hợp đặc biệt đơn giản.</p>
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">results</span> <span class="o">=</span> <span class="n">gd</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">f_grad</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-5.svg" /></p>
 <p>Quá trình tối ưu hóa theo <span class="arithmatex">\(x\)</span> có thể được vẽ như sau.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab all</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">show_trace</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
@@ -2161,16 +2166,19 @@ Hãy bắt đầu với một trường hợp đặc biệt đơn giản.</p>
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="n">show_trace</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-6.svg" /></p>
 <h3 id="toc-o-hoc">Tốc Độ Học<a class="headerlink" href="#toc-o-hoc" title="Permanent link">&para;</a></h3>
 <p><a id="subsec_gd-learningrate"></a></p>
 <p>Tốc độ học <span class="arithmatex">\(\eta\)</span> có thể do người thiết kế thuật toán đặt. Nếu chúng ta dùng tốc độ học quá nhỏ, nó sẽ khiến <span class="arithmatex">\(x\)</span> cập nhật rất chậm, đòi hỏi nhiều vòng lặp hơn để có nghiệm tốt hơn. Để minh họa điều gì xảy ra trong trường hợp như vậy, hãy xét quá trình trong cùng bài toán tối ưu hóa với <span class="arithmatex">\(\eta = 0.05\)</span>. Như chúng ta có thể thấy, ngay cả sau 10 bước, chúng ta vẫn còn rất xa nghiệm tối ưu.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">#@tab all</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">show_trace</span><span class="p">(</span><span class="n">gd</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">f_grad</span><span class="p">),</span> <span class="n">f</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-7.svg" /></p>
 <p>Ngược lại, nếu chúng ta dùng tốc độ học quá cao, <span class="arithmatex">\(\left|\eta f'(x)\right|\)</span> có thể quá lớn đối với công thức khai triển Taylor bậc nhất. Tức là, hạng <span class="arithmatex">\(\mathcal{O}(\eta^2 f'^2(x))\)</span> trong :eqref:<code>gd-taylor-2</code> có thể trở nên đáng kể. Trong trường hợp này, chúng ta không thể đảm bảo rằng phép lặp của <span class="arithmatex">\(x\)</span> sẽ có thể hạ thấp giá trị của <span class="arithmatex">\(f(x)\)</span>. Ví dụ, khi đặt tốc độ học là <span class="arithmatex">\(\eta=1.1\)</span>, <span class="arithmatex">\(x\)</span> vượt quá nghiệm tối ưu <span class="arithmatex">\(x=0\)</span> và dần phân kỳ.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab all</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">show_trace</span><span class="p">(</span><span class="n">gd</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">f_grad</span><span class="p">),</span> <span class="n">f</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_optimization-gd-8.svg" /></p>
 <h3 id="cuc-tieu-cuc-bo">Cực Tiểu Cục Bộ<a class="headerlink" href="#cuc-tieu-cuc-bo" title="Permanent link">&para;</a></h3>
 <p>Để minh họa điều gì xảy ra với các hàm không lồi, hãy xét trường hợp <span class="arithmatex">\(f(x) = x \cdot \cos(cx)\)</span> với một hằng số <span class="arithmatex">\(c\)</span> nào đó. Hàm này có vô số cực tiểu cục bộ. Tùy thuộc vào lựa chọn tốc độ học và mức độ điều kiện tốt của bài toán, chúng ta có thể kết thúc ở một trong nhiều nghiệm. Ví dụ dưới đây minh họa cách một tốc độ học cao (không thực tế) sẽ dẫn đến một cực tiểu cục bộ kém.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab all</span>

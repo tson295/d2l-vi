@@ -2186,6 +2186,7 @@ P(\textrm{distance is in an}\; \epsilon\textrm{-sized interval around}\; 2 ) \ap
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-1.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
@@ -2200,6 +2201,7 @@ P(\textrm{distance is in an}\; \epsilon\textrm{-sized interval around}\; 2 ) \ap
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-2.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab tensorflow</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">d2l</span>
@@ -2214,6 +2216,7 @@ P(\textrm{distance is in an}\; \epsilon\textrm{-sized interval around}\; 2 ) \ap
 <a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-3.svg" /></p>
 <p>Những vị trí mà giá trị hàm lớn cho biết các vùng nơi ta có nhiều khả năng tìm thấy giá trị ngẫu nhiên hơn. Những phần thấp là các vùng nơi ta ít có khả năng tìm thấy giá trị ngẫu nhiên.</p>
 <h3 id="ham-mat-o-xac-suat">Hàm Mật Độ Xác Suất<a class="headerlink" href="#ham-mat-o-xac-suat" title="Permanent link">&para;</a></h3>
 <p>Bây giờ hãy khảo sát điều này kỹ hơn. Ta đã thấy trực giác về hàm mật độ xác suất của một biến ngẫu nhiên <span class="arithmatex">\(X\)</span>: hàm mật độ là một hàm <span class="arithmatex">\(p(x)\)</span> sao cho</p>
@@ -2255,6 +2258,7 @@ P(X\in(a, b]) = \int _ {a}^{b} p(x) \; dx.
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="sa">f</span><span class="s1">&#39;approximate Probability: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-4.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># Approximate probability using numerical integration</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
@@ -2269,6 +2273,7 @@ P(X\in(a, b]) = \int _ {a}^{b} p(x) \; dx.
 <a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="sa">f</span><span class="s1">&#39;approximate Probability: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-5.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab tensorflow</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># Approximate probability using numerical integration</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
@@ -2283,6 +2288,7 @@ P(X\in(a, b]) = \int _ {a}^{b} p(x) \; dx.
 <a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="sa">f</span><span class="s1">&#39;approximate Probability: </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">epsilon</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">300</span><span class="p">:</span><span class="mi">800</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-6.svg" /></p>
 <p>Hóa ra hai tính chất này mô tả chính xác không gian của các hàm mật độ xác suất có thể có (hay <em>p.d.f.</em> theo cách viết tắt thường gặp). Chúng là các hàm không âm <span class="arithmatex">\(p(x) \ge 0\)</span> sao cho</p>
 <div class="arithmatex">\[\int_{-\infty}^{\infty} p(x) \; dx = 1.\]</div>
 <p>Ta diễn giải hàm này bằng cách dùng tích phân để thu được xác suất biến ngẫu nhiên của ta nằm trong một khoảng cụ thể:</p>
@@ -2389,6 +2395,7 @@ P\left(X \not\in [a - 4\sqrt{2p}, a + 4\sqrt{2p}]\right) \le \frac{1}{4}.
 <a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="c1"># Plot interval when p &gt; 1/8</span>
 <a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-7.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Define a helper to plot these figures</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_chebyshev</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
@@ -2409,6 +2416,7 @@ P\left(X \not\in [a - 4\sqrt{2p}, a + 4\sqrt{2p}]\right) \le \frac{1}{4}.
 <a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="c1"># Plot interval when p &gt; 1/8</span>
 <a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-8.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab tensorflow</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># Define a helper to plot these figures</span>
 <a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">plot_chebyshev</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
@@ -2429,6 +2437,7 @@ P\left(X \not\in [a - 4\sqrt{2p}, a + 4\sqrt{2p}]\right) \le \frac{1}{4}.
 <a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="c1"># Plot interval when p &gt; 1/8</span>
 <a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="n">plot_chebyshev</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-9.svg" /></p>
 <p>Biểu đồ thứ hai cho thấy rằng tại <span class="arithmatex">\(p = 1/8\)</span>, khoảng chạm đúng hai điểm. Điều này cho thấy bất đẳng thức là <em>sắc</em>, vì không thể lấy một khoảng nhỏ hơn mà vẫn giữ bất đẳng thức đúng.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">#@tab mxnet</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># Plot interval when p = 1/8</span>

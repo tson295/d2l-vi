@@ -1894,6 +1894,7 @@ thực thi các bước sau:</p>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_recurrent-neural-networks-text-sequence-1.svg" /></p>
 <h2 id="oc-tap-du-lieu">Đọc Tập dữ liệu<a class="headerlink" href="#oc-tap-du-lieu" title="Permanent link">&para;</a></h2>
 <p>Ở đây, chúng ta sẽ làm việc với
 <a href="http://www.gutenberg.org/ebooks/35">The Time Machine</a> của H. G. Wells,
@@ -1916,6 +1917,7 @@ Phương thức <code>_download</code> dưới đây
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">raw_text</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">_download</span><span class="p">()</span>
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">raw_text</span><span class="p">[:</span><span class="mi">60</span><span class="p">]</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_recurrent-neural-networks-text-sequence-2.svg" /></p>
 <p>Để đơn giản, chúng ta bỏ qua dấu câu và chữ hoa khi tiền xử lý văn bản thô.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nd">@d2l</span><span class="o">.</span><span class="n">add_to_class</span><span class="p">(</span><span class="n">TimeMachine</span><span class="p">)</span>  
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">_preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
