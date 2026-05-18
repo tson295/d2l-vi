@@ -2144,6 +2144,7 @@ Trong phần này, chúng ta sẽ thảo luận kỹ thuật được dùng rộ
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">npx</span><span class="o">.</span><span class="n">set_np</span><span class="p">()</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-1.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">d2l</span><span class="w"> </span><span class="kn">import</span> <span class="n">torch</span> <span class="k">as</span> <span class="n">d2l</span>
@@ -2151,6 +2152,7 @@ Trong phần này, chúng ta sẽ thảo luận kỹ thuật được dùng rộ
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torchvision</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-2.svg" /></p>
 <h2 id="cac-phuong-phap-tang-cuong-anh-thuong-dung">Các Phương Pháp Tăng Cường Ảnh Thường Dùng<a class="headerlink" href="#cac-phuong-phap-tang-cuong-anh-thuong-dung" title="Permanent link">&para;</a></h2>
 <p>Trong khảo sát các phương pháp tăng cường ảnh thường dùng, chúng ta sẽ dùng ảnh <span class="arithmatex">\(400\times 500\)</span> sau làm ví dụ.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">#@tab mxnet</span>
@@ -2158,17 +2160,20 @@ Trong phần này, chúng ta sẽ thảo luận kỹ thuật được dùng rộ
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">img</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../img/cat1.jpg&#39;</span><span class="p">)</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">());</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-3.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">d2l</span><span class="o">.</span><span class="n">set_figsize</span><span class="p">()</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">img</span> <span class="o">=</span> <span class="n">d2l</span><span class="o">.</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../img/cat1.jpg&#39;</span><span class="p">)</span>
 <a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">d2l</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-4.svg" /></p>
 <p>Hầu hết các phương pháp tăng cường ảnh có một mức độ ngẫu nhiên nhất định. Để giúp chúng ta quan sát hiệu ứng của tăng cường ảnh dễ hơn, tiếp theo chúng ta định nghĩa một hàm phụ trợ <code>apply</code>. Hàm này chạy phương pháp tăng cường ảnh <code>aug</code> nhiều lần trên ảnh đầu vào <code>img</code> và hiển thị tất cả kết quả.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">#@tab all</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">aug</span><span class="p">,</span> <span class="n">num_rows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">num_cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">):</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">Y</span> <span class="o">=</span> <span class="p">[</span><span class="n">aug</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rows</span> <span class="o">*</span> <span class="n">num_cols</span><span class="p">)]</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">d2l</span><span class="o">.</span><span class="n">show_images</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">num_rows</span><span class="p">,</span> <span class="n">num_cols</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-5.svg" /></p>
 <h3 id="lat-va-cat">Lật và Cắt<a class="headerlink" href="#lat-va-cat" title="Permanent link">&para;</a></h3>
 <p>[<strong>Lật ảnh trái và phải</strong>] thường không làm thay đổi hạng mục của đối tượng.
 Đây là một trong những phương pháp tăng cường ảnh sớm nhất và được dùng rộng rãi nhất.
@@ -2177,18 +2182,22 @@ Tiếp theo, chúng ta dùng module <code>transforms</code> để tạo thể hi
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">#@tab mxnet</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">apply</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">RandomFlipLeftRight</span><span class="p">())</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-6.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">apply</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">RandomHorizontalFlip</span><span class="p">())</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-7.svg" /></p>
 <p>[<strong>Lật lên và xuống</strong>] không phổ biến bằng lật trái và phải. Nhưng ít nhất với ảnh ví dụ này, lật lên và xuống không cản trở nhận dạng.
 Tiếp theo, chúng ta tạo một thể hiện <code>RandomVerticalFlip</code> để lật
 ảnh lên và xuống với xác suất 50%.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">#@tab mxnet</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">apply</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">gluon</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">RandomFlipTopBottom</span><span class="p">())</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-8.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">apply</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">RandomVerticalFlip</span><span class="p">())</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-9.svg" /></p>
 <p>Trong ảnh ví dụ đã dùng, con mèo nằm ở giữa ảnh, nhưng nói chung điều này có thể không đúng.
 Trong <a href="#sec_pooling">sec_pooling</a>, chúng ta đã giải thích rằng lớp gộp có thể giảm độ nhạy của lớp tích chập với vị trí mục tiêu.
 Ngoài ra, chúng ta cũng có thể cắt ngẫu nhiên ảnh để làm cho đối tượng xuất hiện ở các vị trí khác nhau trong ảnh với các thang đo khác nhau, điều này cũng có thể giảm độ nhạy của mô hình với vị trí mục tiêu.</p>
@@ -2199,6 +2208,7 @@ Trừ khi có quy định khác, số ngẫu nhiên giữa <span class="arithmat
 <a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ratio</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">apply</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">shape_aug</span><span class="p">)</span>
 </code></pre></div>
+<p><img alt="" src="../../img/output-chapter_computer-vision-image-augmentation-10.svg" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">#@tab pytorch</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">shape_aug</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">RandomResizedCrop</span><span class="p">(</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ratio</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
