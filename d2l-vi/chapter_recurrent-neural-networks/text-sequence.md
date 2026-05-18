@@ -25,6 +25,9 @@ import torch
 import random
 ```
 
+![](../img/output-chapter_recurrent-neural-networks-text-sequence-1.svg)
+
+
 
 ## Đọc Tập dữ liệu
 
@@ -51,6 +54,9 @@ data = TimeMachine()
 raw_text = data._download()
 raw_text[:60]
 ```
+
+![](../img/output-chapter_recurrent-neural-networks-text-sequence-2.svg)
+
 
 Để đơn giản, chúng ta bỏ qua dấu câu và chữ hoa khi tiền xử lý văn bản thô.
 

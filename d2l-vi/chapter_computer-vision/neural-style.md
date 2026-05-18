@@ -95,6 +95,9 @@ content_img = image.imread('../img/rainier.jpg')
 d2l.plt.imshow(content_img.asnumpy());
 ```
 
+![](../img/output-chapter_computer-vision-neural-style-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -108,11 +111,17 @@ content_img = d2l.Image.open('../img/rainier.jpg')
 d2l.plt.imshow(content_img);
 ```
 
+![](../img/output-chapter_computer-vision-neural-style-2.svg)
+
+
 ```python
 #@tab mxnet
 style_img = image.imread('../img/autumn-oak.jpg')
 d2l.plt.imshow(style_img.asnumpy());
 ```
+
+![](../img/output-chapter_computer-vision-neural-style-3.svg)
+
 
 ```python
 #@tab pytorch

@@ -29,6 +29,9 @@ import torch
 from torch import nn
 ```
 
+![](../img/output-chapter_attention-mechanisms-and-transformers-self-attention-and-positional-encoding-1.svg)
+
+
 
 ## [**Self-Attention**]
 
@@ -57,6 +60,9 @@ X = d2l.ones((batch_size, num_queries, num_hiddens))
 d2l.check_shape(attention(X, X, X, valid_lens),
                 (batch_size, num_queries, num_hiddens))
 ```
+
+![](../img/output-chapter_attention-mechanisms-and-transformers-self-attention-and-positional-encoding-2.svg)
+
 
 
 ## So Sánh CNN, RNN và Self-Attention

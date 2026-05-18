@@ -26,6 +26,9 @@ d2l.plt.fill_between(x.tolist(), f.tolist())
 d2l.plt.show()
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-integral-calculus-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -42,6 +45,9 @@ d2l.plt.plot(x, f, color='black')
 d2l.plt.fill_between(x.tolist(), f.tolist())
 d2l.plt.show()
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-integral-calculus-2.svg)
+
 
 ```python
 #@tab tensorflow
@@ -60,6 +66,9 @@ d2l.plt.fill_between(x.numpy(), f.numpy())
 d2l.plt.show()
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-integral-calculus-3.svg)
+
+
 Trong hầu hết trường hợp, diện tích này sẽ vô hạn hoặc không xác định (hãy xét diện tích dưới $f(x) = x^{2}$), nên người ta thường nói về diện tích giữa một cặp điểm biên, chẳng hạn $a$ và $b$.
 
 ```python
@@ -72,6 +81,9 @@ d2l.plt.plot(x, f, color='black')
 d2l.plt.fill_between(x.tolist()[50:250], f.tolist()[50:250])
 d2l.plt.show()
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-integral-calculus-4.svg)
+
 
 ```python
 #@tab pytorch

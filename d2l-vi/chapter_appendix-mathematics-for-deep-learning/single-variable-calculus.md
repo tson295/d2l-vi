@@ -28,6 +28,9 @@ ys = np.sin(x_big**x_big)
 d2l.plot(x_big, ys, 'x', 'f(x)')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-single-variable-calculus-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -41,6 +44,9 @@ x_big = torch.arange(0.01, 3.01, 0.01)
 ys = torch.sin(x_big**x_big)
 d2l.plot(x_big, ys, 'x', 'f(x)')
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-single-variable-calculus-2.svg)
+
 
 ```python
 #@tab tensorflow
@@ -56,6 +62,9 @@ ys = tf.sin(x_big**x_big)
 d2l.plot(x_big, ys, 'x', 'f(x)')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-single-variable-calculus-3.svg)
+
+
 Ở thang đo lớn này, hành vi của hàm không đơn giản. Tuy nhiên, nếu thu hẹp khoảng xuống một đoạn nhỏ hơn như $[1.75,2.25]$, ta thấy đồ thị trở nên đơn giản hơn nhiều.
 
 ```python
@@ -66,6 +75,9 @@ ys = np.sin(x_med**x_med)
 d2l.plot(x_med, ys, 'x', 'f(x)')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-single-variable-calculus-4.svg)
+
+
 ```python
 #@tab pytorch
 # Plot a the same function in a tiny range
@@ -74,6 +86,9 @@ ys = torch.sin(x_med**x_med)
 d2l.plot(x_med, ys, 'x', 'f(x)')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-single-variable-calculus-5.svg)
+
+
 ```python
 #@tab tensorflow
 # Plot a the same function in a tiny range
@@ -81,6 +96,9 @@ x_med = tf.range(1.75, 2.25, 0.001)
 ys = tf.sin(x_med**x_med)
 d2l.plot(x_med, ys, 'x', 'f(x)')
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-single-variable-calculus-6.svg)
+
 
 Đẩy điều này tới cực hạn, nếu ta phóng to vào một đoạn rất nhỏ, hành vi trở nên đơn giản hơn nhiều: nó chỉ là một đường thẳng.
 

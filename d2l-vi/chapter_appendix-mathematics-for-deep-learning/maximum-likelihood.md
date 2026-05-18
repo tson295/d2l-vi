@@ -56,6 +56,9 @@ p = theta**9 * (1 - theta)**4.
 d2l.plot(theta, p, 'theta', 'likelihood')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-maximum-likelihood-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline

@@ -48,6 +48,9 @@ B = np.random.normal(0, 1, (256, 256))
 C = np.random.normal(0, 1, (256, 256))
 ```
 
+![](../img/output-chapter_optimization-minibatch-sgd-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -62,6 +65,9 @@ B = torch.randn(256, 256)
 C = torch.randn(256, 256)
 ```
 
+![](../img/output-chapter_optimization-minibatch-sgd-2.svg)
+
+
 ```python
 #@tab tensorflow
 %matplotlib inline
@@ -74,6 +80,9 @@ A = tf.Variable(d2l.zeros((256, 256)))
 B = tf.Variable(d2l.normal([256, 256], 0, 1))
 C = tf.Variable(d2l.normal([256, 256], 0, 1))
 ```
+
+![](../img/output-chapter_optimization-minibatch-sgd-3.svg)
+
 
 Vì chúng ta sẽ thường xuyên đo benchmark thời gian chạy trong phần còn lại của cuốn sách, hãy định nghĩa một bộ đếm thời gian.
 
@@ -109,6 +118,9 @@ class Timer:
 timer = Timer()
 ```
 
+![](../img/output-chapter_optimization-minibatch-sgd-4.svg)
+
+
 Gán theo từng phần tử đơn giản là lặp qua tất cả các hàng và cột của $\mathbf{B}$ và $\mathbf{C}$ tương ứng để gán giá trị cho $\mathbf{A}$.
 
 ```python
@@ -122,6 +134,9 @@ A.wait_to_read()
 timer.stop()
 ```
 
+![](../img/output-chapter_optimization-minibatch-sgd-5.svg)
+
+
 ```python
 #@tab pytorch
 # Compute A = BC one element at a time
@@ -131,6 +146,9 @@ for i in range(256):
         A[i, j] = torch.dot(B[i, :], C[:, j])
 timer.stop()
 ```
+
+![](../img/output-chapter_optimization-minibatch-sgd-6.svg)
+
 
 ```python
 #@tab tensorflow

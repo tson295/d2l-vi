@@ -56,6 +56,9 @@ h, w = img.shape[:2]
 h, w
 ```
 
+![](../img/output-chapter_computer-vision-multiscale-object-detection-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -66,6 +69,9 @@ img = d2l.plt.imread('../img/catdog.jpg')
 h, w = img.shape[:2]
 h, w
 ```
+
+![](../img/output-chapter_computer-vision-multiscale-object-detection-2.svg)
+
 
 Nhắc lại rằng trong [sec_conv_layer](#sec_conv_layer),
 chúng ta gọi đầu ra dạng mảng hai chiều của
@@ -107,6 +113,9 @@ def display_anchors(fmap_w, fmap_h, s):
     d2l.show_bboxes(d2l.plt.imshow(img.asnumpy()).axes,
                     anchors[0] * bbox_scale)
 ```
+
+![](../img/output-chapter_computer-vision-multiscale-object-detection-3.svg)
+
 
 ```python
 #@tab pytorch

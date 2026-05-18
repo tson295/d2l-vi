@@ -12,6 +12,9 @@ from math import erf, factorial
 import numpy as np
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -22,6 +25,9 @@ import torch
 
 torch.pi = torch.acos(torch.zeros(1)) * 2  # Define pi in torch
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-2.svg)
+
 
 ```python
 #@tab tensorflow
@@ -34,6 +40,9 @@ import tensorflow_probability as tfp
 
 tf.pi = tf.acos(tf.zeros(1)) * 2  # Define pi in TensorFlow
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-3.svg)
+
 
 ## Bernoulli
 
@@ -60,6 +69,9 @@ d2l.plt.ylabel('p.m.f.')
 d2l.plt.show()
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-4.svg)
+
+
 Bây giờ, hãy vẽ hàm phân phối tích lũy :eqref:`eq_bernoulli_cdf`.
 
 ```python
@@ -72,6 +84,9 @@ def F(x):
 d2l.plot(x, np.array([F(y) for y in x]), 'x', 'c.d.f.')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-5.svg)
+
+
 ```python
 #@tab pytorch
 x = torch.arange(-1, 2, 0.01)
@@ -82,6 +97,9 @@ def F(x):
 d2l.plot(x, torch.tensor([F(y) for y in x]), 'x', 'c.d.f.')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-6.svg)
+
+
 ```python
 #@tab tensorflow
 x = tf.range(-1, 2, 0.01)
@@ -91,6 +109,9 @@ def F(x):
 
 d2l.plot(x, tf.constant([F(y) for y in x]), 'x', 'c.d.f.')
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-7.svg)
+
 
 Nếu $X \sim \textrm{Bernoulli}(p)$, thì:
 
@@ -104,15 +125,24 @@ Ta có thể lấy mẫu một mảng với hình dạng tùy ý từ một bi�
 1*(np.random.rand(10, 10) < p)
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-8.svg)
+
+
 ```python
 #@tab pytorch
 1*(torch.rand(10, 10) < p)
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-9.svg)
+
+
 ```python
 #@tab tensorflow
 tf.cast(tf.random.uniform((10, 10)) < p, dtype=tf.float32)
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-10.svg)
+
 
 ## Đều Rời Rạc
 
@@ -138,6 +168,9 @@ d2l.plt.ylabel('p.m.f.')
 d2l.plt.show()
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-11.svg)
+
+
 Bây giờ, hãy vẽ hàm phân phối tích lũy :eqref:`eq_discrete_uniform_cdf`.
 
 ```python
@@ -150,6 +183,9 @@ def F(x):
 d2l.plot(x, np.array([F(y) for y in x]), 'x', 'c.d.f.')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-12.svg)
+
+
 ```python
 #@tab pytorch
 x = torch.arange(-1, 6, 0.01)
@@ -159,6 +195,9 @@ def F(x):
 
 d2l.plot(x, torch.tensor([F(y) for y in x]), 'x', 'c.d.f.')
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-distributions-13.svg)
+
 
 ```python
 #@tab tensorflow

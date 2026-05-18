@@ -53,6 +53,9 @@ import os
 d2l.set_figsize()
 ```
 
+![](../img/output-chapter_gaussian-processes-gp-inference-1.svg)
+
+
 ## Các phương trình để dự đoán và học siêu tham số kernel trong hồi quy GP
 
 Ở đây chúng ta liệt kê các phương trình bạn sẽ dùng để học siêu tham số và dự đoán trong hồi quy Gaussian process. Một lần nữa, ta giả định một vector các mục tiêu hồi quy $\textbf{y}$, được đánh chỉ mục bởi các đầu vào $X = \{x_1,\dots,x_n\}$, và ta muốn dự đoán tại một đầu vào kiểm tra $x_*$. Chúng ta giả định nhiễu Gaussian cộng i.i.d. có trung bình không và phương sai $\sigma^2$. Ta dùng một Gaussian process prior $f(x) \sim \mathcal{GP}(m,k)$ cho hàm ẩn không nhiễu, với hàm trung bình $m$ và hàm kernel $k$. Bản thân kernel có các tham số $\theta$ mà chúng ta muốn học. Ví dụ, nếu dùng RBF kernel, $k(x_i,x_j) = a^2\exp\left(-\frac{1}{2\ell^2}||x-x'||^2\right)$, ta muốn học $\theta = \{a^2, \ell^2\}$. Gọi $K(X,X)$ là ma trận $n \times n$ tương ứng với việc đánh giá kernel cho mọi cặp khả dĩ của $n$ đầu vào huấn luyện. Gọi $K(x_*,X)$ là vector $1 \times n$ được tạo bằng cách đánh giá $k(x_*, x_i)$, $i=1,\dots,n$. Gọi $\mu$ là vector trung bình được tạo bằng cách đánh giá hàm trung bình $m(x)$ tại mọi điểm huấn luyện $x$.
@@ -107,6 +110,9 @@ d2l.plt.ylabel("Observations y", fontsize=20)
 d2l.plt.show()
 ```
 
+![](../img/output-chapter_gaussian-processes-gp-inference-2.svg)
+
+
 Ở đây ta thấy các quan sát nhiễu dưới dạng các vòng tròn, và hàm không nhiễu màu xanh mà chúng ta muốn tìm.
 
 Bây giờ, hãy chỉ định một GP prior trên hàm ẩn không nhiễu, $f(x)\sim \mathcal{GP}(m,k)$. Chúng ta sẽ dùng hàm trung bình $m(x) = 0$, và một hàm hiệp phương sai (kernel) RBF
@@ -116,6 +122,9 @@ $$k(x_i,x_j) = a^2\exp\left(-\frac{1}{2\ell^2}||x-x'||^2\right).$$
 mean = np.zeros(test_x.shape[0])
 cov = d2l.rbfkernel(test_x, test_x, ls=0.2)
 ```
+
+![](../img/output-chapter_gaussian-processes-gp-inference-3.svg)
+
 
 Chúng ta đã bắt đầu với length-scale bằng 0.2. Trước khi khớp dữ liệu, điều quan trọng là xem liệu ta đã chỉ định một prior hợp lý chưa. Hãy trực quan hóa một số hàm mẫu từ prior này, cũng như tập tin cậy 95\% (ta tin có 95\% khả năng hàm thật nằm trong vùng này).
 
@@ -127,6 +136,9 @@ d2l.plt.fill_between(test_x, mean - 2 * np.diag(cov), mean + 2 * np.diag(cov),
                  alpha=0.25)
 d2l.plt.show()
 ```
+
+![](../img/output-chapter_gaussian-processes-gp-inference-4.svg)
+
 
 Các mẫu này trông có hợp lý không? Các tính chất cấp cao của hàm có phù hợp với loại dữ liệu mà chúng ta đang cố mô hình hóa không?
 
@@ -174,6 +186,9 @@ learned_hypers = optimize.minimize(neg_MLL, x0=np.array([ell_est,post_sig_est]),
 ell = learned_hypers.x[0]
 post_sig_est = learned_hypers.x[1]
 ```
+
+![](../img/output-chapter_gaussian-processes-gp-inference-5.svg)
+
 
 Trong trường hợp này, chúng ta học được length-scale là 0.299 và độ lệch chuẩn nhiễu là 0.24. Lưu ý rằng nhiễu đã học cực kỳ gần với nhiễu thật, điều này giúp chỉ ra rằng GP của chúng ta được đặc tả rất tốt cho bài toán này.
 

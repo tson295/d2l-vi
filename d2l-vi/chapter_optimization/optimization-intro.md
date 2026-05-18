@@ -34,6 +34,9 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
+![](../img/output-chapter_optimization-optimization-intro-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -43,6 +46,9 @@ from mpl_toolkits import mplot3d
 import torch
 ```
 
+![](../img/output-chapter_optimization-optimization-intro-2.svg)
+
+
 ```python
 #@tab tensorflow
 %matplotlib inline
@@ -51,6 +57,9 @@ import numpy as np
 from mpl_toolkits import mplot3d
 import tensorflow as tf
 ```
+
+![](../img/output-chapter_optimization-optimization-intro-3.svg)
+
 
 Để minh họa các mục tiêu khác nhau đã đề cập,
 hãy xem xét
@@ -77,6 +86,9 @@ def g(x):
     return f(x) + 0.2 * d2l.cos(5 * np.pi * x)
 ```
 
+![](../img/output-chapter_optimization-optimization-intro-4.svg)
+
+
 Đồ thị dưới đây minh họa rằng cực tiểu của rủi ro thực nghiệm trên một tập dữ liệu huấn luyện có thể ở một vị trí khác so với cực tiểu của rủi ro (lỗi tổng quát hóa).
 
 ```python
@@ -91,6 +103,9 @@ d2l.plot(x, [f(x), g(x)], 'x', 'risk')
 annotate('min of\nempirical risk', (1.0, -1.2), (0.5, -1.1))
 annotate('min of risk', (1.1, -1.05), (0.95, -0.5))
 ```
+
+![](../img/output-chapter_optimization-optimization-intro-5.svg)
+
 
 ## Những Thách Thức Tối Ưu Hóa trong Deep Learning
 

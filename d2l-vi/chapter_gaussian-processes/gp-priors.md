@@ -12,6 +12,9 @@ from scipy.spatial import distance_matrix
 d2l.set_figsize()
 ```
 
+![](../img/output-chapter_gaussian-processes-gp-priors-1.svg)
+
+
 ## Định nghĩa
 
 Một Gaussian process được định nghĩa là _một tập hợp các biến ngẫu nhiên, trong đó bất kỳ số hữu hạn biến nào cũng có một phân phối Gaussian chung_. Nếu một hàm $f(x)$ là một Gaussian process, với _hàm trung bình_ $m(x)$ và _hàm hiệp phương sai_ hoặc _kernel_ $k(x,x')$, $f(x) \sim \mathcal{GP}(m, k)$, thì bất kỳ tập hợp giá trị hàm nào được truy vấn tại bất kỳ tập hợp điểm đầu vào $x$ nào (thời điểm, vị trí không gian, điểm ảnh, v.v.) đều có một phân phối Gaussian đa biến chung với vector trung bình $\mu$ và ma trận hiệp phương sai $K$: $f(x_1),\dots,f(x_n) \sim \mathcal{N}(\mu, K)$, trong đó $\mu_i = E[f(x_i)] = m(x_i)$ và $K_{ij} = \textrm{Cov}(f(x_i),f(x_j)) = k(x_i,x_j)$.
@@ -52,6 +55,9 @@ d2l.plt.xlabel("x", fontsize=20)
 d2l.plt.ylabel("f(x)", fontsize=20)
 d2l.plt.show()
 ```
+
+![](../img/output-chapter_gaussian-processes-gp-priors-2.svg)
+
 
 Nếu thay vào đó $w_0$ và $w_1$ được rút từ $\mathcal{N}(0,\alpha^2)$, bạn hình dung việc thay đổi $\alpha$ ảnh hưởng thế nào đến phân phối trên các hàm?
 

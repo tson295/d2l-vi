@@ -33,6 +33,9 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
+![](../img/output-chapter_computer-vision-image-augmentation-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -41,6 +44,9 @@ import torch
 import torchvision
 from torch import nn
 ```
+
+![](../img/output-chapter_computer-vision-image-augmentation-2.svg)
+
 
 ## Các Phương Pháp Tăng Cường Ảnh Thường Dùng
 
@@ -53,12 +59,18 @@ img = image.imread('../img/cat1.jpg')
 d2l.plt.imshow(img.asnumpy());
 ```
 
+![](../img/output-chapter_computer-vision-image-augmentation-3.svg)
+
+
 ```python
 #@tab pytorch
 d2l.set_figsize()
 img = d2l.Image.open('../img/cat1.jpg')
 d2l.plt.imshow(img);
 ```
+
+![](../img/output-chapter_computer-vision-image-augmentation-4.svg)
+
 
 Hầu hết các phương pháp tăng cường ảnh có một mức độ ngẫu nhiên nhất định. Để giúp chúng ta quan sát hiệu ứng của tăng cường ảnh dễ hơn, tiếp theo chúng ta định nghĩa một hàm phụ trợ `apply`. Hàm này chạy phương pháp tăng cường ảnh `aug` nhiều lần trên ảnh đầu vào `img` và hiển thị tất cả kết quả.
 
@@ -68,6 +80,9 @@ def apply(img, aug, num_rows=2, num_cols=4, scale=1.5):
     Y = [aug(img) for _ in range(num_rows * num_cols)]
     d2l.show_images(Y, num_rows, num_cols, scale=scale)
 ```
+
+![](../img/output-chapter_computer-vision-image-augmentation-5.svg)
+
 
 ### Lật và Cắt
 
@@ -82,10 +97,16 @@ Tiếp theo, chúng ta dùng module `transforms` để tạo thể hiện `Rando
 apply(img, gluon.data.vision.transforms.RandomFlipLeftRight())
 ```
 
+![](../img/output-chapter_computer-vision-image-augmentation-6.svg)
+
+
 ```python
 #@tab pytorch
 apply(img, torchvision.transforms.RandomHorizontalFlip())
 ```
+
+![](../img/output-chapter_computer-vision-image-augmentation-7.svg)
+
 
 
 [**Lật lên và xuống**] không phổ biến bằng lật trái và phải. Nhưng ít nhất với ảnh ví dụ này, lật lên và xuống không cản trở nhận dạng.
@@ -97,10 +118,16 @@ Tiếp theo, chúng ta tạo một thể hiện `RandomVerticalFlip` để lật
 apply(img, gluon.data.vision.transforms.RandomFlipTopBottom())
 ```
 
+![](../img/output-chapter_computer-vision-image-augmentation-8.svg)
+
+
 ```python
 #@tab pytorch
 apply(img, torchvision.transforms.RandomVerticalFlip())
 ```
+
+![](../img/output-chapter_computer-vision-image-augmentation-9.svg)
+
 
 Trong ảnh ví dụ đã dùng, con mèo nằm ở giữa ảnh, nhưng nói chung điều này có thể không đúng.
 Trong [sec_pooling](#sec_pooling), chúng ta đã giải thích rằng lớp gộp có thể giảm độ nhạy của lớp tích chập với vị trí mục tiêu.
@@ -115,6 +142,9 @@ shape_aug = gluon.data.vision.transforms.RandomResizedCrop(
     (200, 200), scale=(0.1, 1), ratio=(0.5, 2))
 apply(img, shape_aug)
 ```
+
+![](../img/output-chapter_computer-vision-image-augmentation-10.svg)
+
 
 ```python
 #@tab pytorch

@@ -16,6 +16,9 @@ import os
 import pandas as pd
 ```
 
+![](../img/output-chapter_recommender-systems-movielens-1.png)
+
+
 Sau đó, chúng ta tải bộ dữ liệu MovieLens 100k và nạp các tương tác dưới dạng `DataFrame`.
 
 ```python

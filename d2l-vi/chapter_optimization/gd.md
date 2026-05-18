@@ -37,6 +37,9 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
+![](../img/output-chapter_optimization-gd-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -44,6 +47,9 @@ from d2l import torch as d2l
 import numpy as np
 import torch
 ```
+
+![](../img/output-chapter_optimization-gd-2.svg)
+
 
 ```python
 #@tab tensorflow
@@ -53,6 +59,9 @@ import numpy as np
 import tensorflow as tf
 ```
 
+![](../img/output-chapter_optimization-gd-3.svg)
+
+
 ```python
 #@tab all
 def f(x):  # Objective function
@@ -61,6 +70,9 @@ def f(x):  # Objective function
 def f_grad(x):  # Gradient (derivative) of the objective function
     return 2 * x
 ```
+
+![](../img/output-chapter_optimization-gd-4.svg)
+
 
 Tiếp theo, chúng ta dùng $x=10$ làm giá trị khởi tạo và giả sử $\eta=0.2$. Dùng gradient descent để lặp $x$ 10 lần, chúng ta có thể thấy rằng cuối cùng giá trị của $x$ tiến gần đến nghiệm tối ưu.
 
@@ -78,6 +90,9 @@ def gd(eta, f_grad):
 results = gd(0.2, f_grad)
 ```
 
+![](../img/output-chapter_optimization-gd-5.svg)
+
+
 Quá trình tối ưu hóa theo $x$ có thể được vẽ như sau.
 
 ```python
@@ -92,6 +107,9 @@ def show_trace(results, f):
 show_trace(results, f)
 ```
 
+![](../img/output-chapter_optimization-gd-6.svg)
+
+
 ### Tốc Độ Học
 <a id="subsec_gd-learningrate"></a>
 
@@ -102,12 +120,18 @@ Tốc độ học $\eta$ có thể do người thiết kế thuật toán đặt
 show_trace(gd(0.05, f_grad), f)
 ```
 
+![](../img/output-chapter_optimization-gd-7.svg)
+
+
 Ngược lại, nếu chúng ta dùng tốc độ học quá cao, $\left|\eta f'(x)\right|$ có thể quá lớn đối với công thức khai triển Taylor bậc nhất. Tức là, hạng $\mathcal{O}(\eta^2 f'^2(x))$ trong :eqref:`gd-taylor-2` có thể trở nên đáng kể. Trong trường hợp này, chúng ta không thể đảm bảo rằng phép lặp của $x$ sẽ có thể hạ thấp giá trị của $f(x)$. Ví dụ, khi đặt tốc độ học là $\eta=1.1$, $x$ vượt quá nghiệm tối ưu $x=0$ và dần phân kỳ.
 
 ```python
 #@tab all
 show_trace(gd(1.1, f_grad), f)
 ```
+
+![](../img/output-chapter_optimization-gd-8.svg)
+
 
 ### Cực Tiểu Cục Bộ
 

@@ -42,12 +42,18 @@ from mxnet import image, npx, np
 npx.set_np()
 ```
 
+![](../img/output-chapter_computer-vision-bounding-box-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
 from d2l import torch as d2l
 import torch
 ```
+
+![](../img/output-chapter_computer-vision-bounding-box-2.svg)
+
 
 ```python
 #@tab tensorflow

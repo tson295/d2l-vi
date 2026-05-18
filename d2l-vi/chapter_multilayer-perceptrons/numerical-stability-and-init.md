@@ -30,6 +30,9 @@ from d2l import torch as d2l
 import torch
 ```
 
+![](../img/output-chapter_multilayer-perceptrons-numerical-stability-and-init-1.svg)
+
+
 
 ## Gradient Tiêu biến và Gradient Bùng nổ
 

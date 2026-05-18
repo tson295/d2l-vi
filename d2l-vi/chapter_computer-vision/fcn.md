@@ -36,6 +36,9 @@ from mxnet.gluon import nn
 npx.set_np()
 ```
 
+![](../img/output-chapter_computer-vision-fcn-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -45,6 +48,9 @@ import torchvision
 from torch import nn
 from torch.nn import functional as F
 ```
+
+![](../img/output-chapter_computer-vision-fcn-2.svg)
+
 
 ## Mô Hình
 
@@ -81,6 +87,9 @@ trong mạng tích chập đầy đủ.
 pretrained_net = gluon.model_zoo.vision.resnet18_v2(pretrained=True)
 pretrained_net.features[-3:], pretrained_net.output
 ```
+
+![](../img/output-chapter_computer-vision-fcn-3.svg)
+
 
 ```python
 #@tab pytorch

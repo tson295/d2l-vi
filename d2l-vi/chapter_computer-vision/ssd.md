@@ -141,6 +141,9 @@ def cls_predictor(num_anchors, num_classes):
                      padding=1)
 ```
 
+![](../img/output-chapter_computer-vision-ssd-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -155,6 +158,9 @@ def cls_predictor(num_inputs, num_anchors, num_classes):
                      kernel_size=3, padding=1)
 ```
 
+![](../img/output-chapter_computer-vision-ssd-2.svg)
+
+
 ### (**Tầng Dự Đoán Bounding Box**)
 
 Thiết kế của tầng dự đoán bounding box tương tự như tầng dự đoán lớp.
@@ -167,11 +173,17 @@ def bbox_predictor(num_anchors):
     return nn.Conv2D(num_anchors * 4, kernel_size=3, padding=1)
 ```
 
+![](../img/output-chapter_computer-vision-ssd-3.svg)
+
+
 ```python
 #@tab pytorch
 def bbox_predictor(num_inputs, num_anchors):
     return nn.Conv2d(num_inputs, num_anchors * 4, kernel_size=3, padding=1)
 ```
+
+![](../img/output-chapter_computer-vision-ssd-4.svg)
+
 
 ### [**Nối Các Dự Đoán Cho Nhiều Tỉ Lệ**]
 

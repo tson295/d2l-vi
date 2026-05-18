@@ -55,6 +55,9 @@ p = 0.2*np.exp(-(x - 3)**2 / 2)/np.sqrt(2 * np.pi) + \
 d2l.plot(x, p, 'x', 'Density')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -71,6 +74,9 @@ p = 0.2*torch.exp(-(x - 3)**2 / 2)/torch.sqrt(2 * torch.tensor(torch.pi)) + \
 d2l.plot(x, p, 'x', 'Density')
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-2.svg)
+
+
 ```python
 #@tab tensorflow
 %matplotlib inline
@@ -86,6 +92,9 @@ p = 0.2*tf.exp(-(x - 3)**2 / 2)/tf.sqrt(2 * tf.constant(tf.pi)) + \
 
 d2l.plot(x, p, 'x', 'Density')
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-3.svg)
+
 
 Những vị trí mà giá trị hàm lớn cho biết các vùng nơi ta có nhiều khả năng tìm thấy giá trị ngẫu nhiên hơn. Những phần thấp là các vùng nơi ta ít có khả năng tìm thấy giá trị ngẫu nhiên.
 
@@ -147,6 +156,9 @@ d2l.plt.show()
 f'approximate Probability: {np.sum(epsilon*p[300:800])}'
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-4.svg)
+
+
 ```python
 #@tab pytorch
 # Approximate probability using numerical integration
@@ -163,6 +175,9 @@ d2l.plt.show()
 f'approximate Probability: {torch.sum(epsilon*p[300:800])}'
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-5.svg)
+
+
 ```python
 #@tab tensorflow
 # Approximate probability using numerical integration
@@ -178,6 +193,9 @@ d2l.plt.show()
 
 f'approximate Probability: {tf.reduce_sum(epsilon*p[300:800])}'
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-6.svg)
+
 
 Hóa ra hai tính chất này mô tả chính xác không gian của các hàm mật độ xác suất có thể có (hay *p.d.f.* theo cách viết tắt thường gặp). Chúng là các hàm không âm $p(x) \ge 0$ sao cho
 
@@ -331,6 +349,9 @@ def plot_chebyshev(a, p):
 plot_chebyshev(0.0, 0.2)
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-7.svg)
+
+
 ```python
 #@tab pytorch
 # Define a helper to plot these figures
@@ -353,6 +374,9 @@ def plot_chebyshev(a, p):
 plot_chebyshev(0.0, torch.tensor(0.2))
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-8.svg)
+
+
 ```python
 #@tab tensorflow
 # Define a helper to plot these figures
@@ -374,6 +398,9 @@ def plot_chebyshev(a, p):
 # Plot interval when p > 1/8
 plot_chebyshev(0.0, tf.constant(0.2))
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-random-variables-9.svg)
+
 
 Biểu đồ thứ hai cho thấy rằng tại $p = 1/8$, khoảng chạm đúng hai điểm. Điều này cho thấy bất đẳng thức là *sắc*, vì không thể lấy một khoảng nhỏ hơn mà vẫn giữ bất đẳng thức đúng.
 

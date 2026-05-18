@@ -52,6 +52,9 @@ d2l.plt.title(f'sample mean: {float(np.mean(xs)):.2f}')
 d2l.plt.show()
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-statistics-1.svg)
+
+
 ```python
 #@tab pytorch
 from d2l import torch as d2l

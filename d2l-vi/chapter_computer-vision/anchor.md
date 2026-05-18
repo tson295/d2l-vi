@@ -29,6 +29,9 @@ np.set_printoptions(2)  # Simplify printing accuracy
 npx.set_np()
 ```
 
+![](../img/output-chapter_computer-vision-anchor-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -37,6 +40,9 @@ import torch
 
 torch.set_printoptions(2)  # Simplify printing accuracy
 ```
+
+![](../img/output-chapter_computer-vision-anchor-2.svg)
+
 
 ## Sinh Nhiều Anchor Box
 
@@ -104,6 +110,9 @@ def multibox_prior(data, sizes, ratios):
     return np.expand_dims(output, axis=0)
 ```
 
+![](../img/output-chapter_computer-vision-anchor-3.svg)
+
+
 ```python
 #@tab pytorch
 def multibox_prior(data, sizes, ratios):
@@ -143,6 +152,9 @@ def multibox_prior(data, sizes, ratios):
     output = out_grid + anchor_manipulations
     return output.unsqueeze(0)
 ```
+
+![](../img/output-chapter_computer-vision-anchor-4.svg)
+
 
 Chúng ta có thể thấy rằng [**hình dạng của biến anchor box trả về `Y`**] là
 (kích thước batch, số anchor box, 4).

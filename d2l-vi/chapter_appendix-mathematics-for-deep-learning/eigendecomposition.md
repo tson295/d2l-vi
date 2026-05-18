@@ -68,6 +68,9 @@ import numpy as np
 np.linalg.eig(np.array([[2, 1], [2, 3]]))
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-eigendecomposition-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -78,6 +81,9 @@ import torch
 torch.linalg.eig(torch.tensor([[2, 1], [2, 3]], dtype=torch.float64))
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-eigendecomposition-2.svg)
+
+
 ```python
 #@tab tensorflow
 %matplotlib inline
@@ -87,6 +93,9 @@ import tensorflow as tf
 
 tf.linalg.eig(tf.constant([[2, 1], [2, 3]], dtype=tf.float64))
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-eigendecomposition-3.svg)
+
 
 Lưu ý rằng `numpy` chuẩn hóa các vector riêng để có độ dài bằng một, trong khi ta đã lấy chúng với độ dài tùy ý. Ngoài ra, lựa chọn dấu là tùy ý. Tuy nhiên, các vector được tính song song với những vector ta tìm bằng tay với cùng các trị riêng.
 
@@ -205,6 +214,9 @@ A = np.array([[1.0, 0.1, 0.1, 0.1],
 v, _ = np.linalg.eig(A)
 v
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-eigendecomposition-4.svg)
+
 
 ```python
 #@tab pytorch

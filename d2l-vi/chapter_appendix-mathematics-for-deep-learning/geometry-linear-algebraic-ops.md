@@ -11,6 +11,9 @@ Trước hết, chúng ta cần thảo luận hai cách diễn giải hình họ
 v = [1, 7, 0, 1]
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-geometry-linear-algebraic-ops-1.svg)
+
+
 Các nhà toán học thường viết nó dưới dạng vector *cột* hoặc vector *hàng*, tức là một trong hai dạng
 
 $$
@@ -102,6 +105,9 @@ def angle(v, w):
 
 angle(np.array([0, 1, 2]), np.array([2, 3, 4]))
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-geometry-linear-algebraic-ops-2.svg)
+
 
 ```python
 #@tab pytorch

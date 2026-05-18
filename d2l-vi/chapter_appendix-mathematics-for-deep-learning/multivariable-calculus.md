@@ -87,6 +87,9 @@ true_value = f(0 + epsilon[0], np.log(2) + epsilon[1])
 f'approximation: {grad_approx}, true Value: {true_value}'
 ```
 
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-multivariable-calculus-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -110,6 +113,9 @@ true_value = f(torch.tensor([0.]) + epsilon[0], torch.log(
     torch.tensor([2.])) + epsilon[1])
 f'approximation: {grad_approx}, true Value: {true_value}'
 ```
+
+![](../img/output-chapter_appendix-mathematics-for-deep-learning-multivariable-calculus-2.svg)
+
 
 ```python
 #@tab tensorflow

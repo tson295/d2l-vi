@@ -64,6 +64,9 @@ def train(net, train_iter, test_iter, num_epochs, loss, trainer, device):
           f'test acc {test_acc:.3f}')
 ```
 
+![](../img/output-chapter_optimization-lr-scheduler-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -134,6 +137,9 @@ def train(net, train_iter, test_iter, num_epochs, loss, trainer, device,
           f'test acc {test_acc:.3f}')
 ```
 
+![](../img/output-chapter_optimization-lr-scheduler-2.svg)
+
+
 ```python
 #@tab tensorflow
 %matplotlib inline
@@ -181,6 +187,9 @@ def train(net_fn, train_iter, test_iter, num_epochs, lr,
     return net
 ```
 
+![](../img/output-chapter_optimization-lr-scheduler-3.svg)
+
+
 Hãy xem điều gì xảy ra nếu chúng ta gọi thuật toán này với các thiết lập mặc định, chẳng hạn tốc độ học $0.3$ và huấn luyện trong $30$ vòng lặp. Lưu ý rằng độ chính xác huấn luyện tiếp tục tăng, trong khi tiến triển về độ chính xác kiểm tra bị đình trệ sau một điểm. Khoảng cách giữa hai đường cong cho thấy hiện tượng quá khớp.
 
 ```python
@@ -191,6 +200,9 @@ trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
+![](../img/output-chapter_optimization-lr-scheduler-4.svg)
+
+
 ```python
 #@tab pytorch
 lr, num_epochs = 0.3, 30
@@ -199,11 +211,17 @@ trainer = torch.optim.SGD(net.parameters(), lr=lr)
 train(net, train_iter, test_iter, num_epochs, loss, trainer, device)
 ```
 
+![](../img/output-chapter_optimization-lr-scheduler-5.svg)
+
+
 ```python
 #@tab tensorflow
 lr, num_epochs = 0.3, 30
 train(net, train_iter, test_iter, num_epochs, lr)
 ```
+
+![](../img/output-chapter_optimization-lr-scheduler-6.svg)
+
 
 ## Bộ Lập Lịch
 
@@ -215,12 +233,18 @@ trainer.set_learning_rate(0.1)
 print(f'learning rate is now {trainer.learning_rate:.2f}')
 ```
 
+![](../img/output-chapter_optimization-lr-scheduler-7.svg)
+
+
 ```python
 #@tab pytorch
 lr = 0.1
 trainer.param_groups[0]["lr"] = lr
 print(f'learning rate is now {trainer.param_groups[0]["lr"]:.2f}')
 ```
+
+![](../img/output-chapter_optimization-lr-scheduler-8.svg)
+
 
 ```python
 #@tab tensorflow
@@ -229,6 +253,9 @@ dummy_model = tf.keras.models.Sequential([tf.keras.layers.Dense(10)])
 dummy_model.compile(tf.keras.optimizers.SGD(learning_rate=lr), loss='mse')
 print(f'learning rate is now ,', dummy_model.optimizer.lr.numpy())
 ```
+
+![](../img/output-chapter_optimization-lr-scheduler-9.svg)
+
 
 Tổng quát hơn, chúng ta muốn định nghĩa một bộ lập lịch. Khi được gọi với số cập nhật, nó trả về giá trị tốc độ học phù hợp. Hãy định nghĩa một bộ đơn giản đặt tốc độ học thành $\eta = \eta_0 (t + 1)^{-\frac{1}{2}}$.
 
@@ -241,6 +268,9 @@ class SquareRootScheduler:
     def __call__(self, num_update):
         return self.lr * pow(num_update + 1.0, -0.5)
 ```
+
+![](../img/output-chapter_optimization-lr-scheduler-10.svg)
+
 
 Hãy vẽ hành vi của nó trên một khoảng giá trị.
 

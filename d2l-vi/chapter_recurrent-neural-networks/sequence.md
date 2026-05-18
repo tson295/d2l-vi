@@ -102,6 +102,9 @@ import torch
 from torch import nn
 ```
 
+![](../img/output-chapter_recurrent-neural-networks-sequence-1.svg)
+
+
 
 ## Mô hình Tự hồi quy
 
@@ -383,10 +386,16 @@ class Data(d2l.DataModule):
                                                                    [T]) * 0.2
 ```
 
+![](../img/output-chapter_recurrent-neural-networks-sequence-2.svg)
+
+
 ```python
 data = Data()
 d2l.plot(data.time, data.x, 'time', 'x', xlim=[1, 1000], figsize=(6, 3))
 ```
+
+![](../img/output-chapter_recurrent-neural-networks-sequence-3.svg)
+
 
 Để bắt đầu, chúng ta thử một mô hình hoạt động như thể
 dữ liệu thỏa mãn điều kiện Markov bậc $\tau^{\textrm{th}}$,
@@ -414,6 +423,9 @@ def get_dataloader(self, train):
     return self.get_tensorloader([self.features, self.labels], train, i)
 ```
 
+![](../img/output-chapter_recurrent-neural-networks-sequence-4.svg)
+
+
 Trong ví dụ này, mô hình của chúng ta sẽ là hồi quy tuyến tính chuẩn.
 
 ```python
@@ -421,6 +433,9 @@ model = d2l.LinearRegression(lr=0.01)
 trainer = d2l.Trainer(max_epochs=5)
 trainer.fit(model, data)
 ```
+
+![](../img/output-chapter_recurrent-neural-networks-sequence-5.svg)
+
 
 ## Dự đoán
 

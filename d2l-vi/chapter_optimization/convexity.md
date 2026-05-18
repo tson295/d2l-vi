@@ -17,6 +17,9 @@ from mxnet import np, npx
 npx.set_np()
 ```
 
+![](../img/output-chapter_optimization-convexity-1.svg)
+
+
 ```python
 #@tab pytorch
 %matplotlib inline
@@ -25,6 +28,9 @@ import numpy as np
 from mpl_toolkits import mplot3d
 import torch
 ```
+
+![](../img/output-chapter_optimization-convexity-2.svg)
+
 
 ```python
 #@tab tensorflow

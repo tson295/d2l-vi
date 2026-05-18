@@ -29,6 +29,9 @@ import numpy as np
 d2l.use_svg_display()
 ```
 
+![](../img/output-chapter_attention-mechanisms-and-transformers-attention-pooling-1.svg)
+
+
 
 ## [**Các Kernel và Dữ Liệu**]
 
@@ -59,6 +62,9 @@ if tab.selected('jax'):
         return jnp.maximum(1 - d2l.abs(x), 0)
 ```
 
+![](../img/output-chapter_attention-mechanisms-and-transformers-attention-pooling-2.svg)
+
+
 ```python
 fig, axes = d2l.plt.subplots(1, 4, sharey=True, figsize=(12, 3))
 
@@ -74,6 +80,9 @@ for kernel, name, ax in zip(kernels, names, axes):
 
 d2l.plt.show()
 ```
+
+![](../img/output-chapter_attention-mechanisms-and-transformers-attention-pooling-3.svg)
+
 
 Các kernel khác nhau tương ứng với các khái niệm khác nhau về phạm vi và độ mượt. Ví dụ, kernel boxcar chỉ chú ý đến các quan sát trong khoảng cách $1$ (hoặc một siêu tham số được định nghĩa khác) và làm vậy một cách không phân biệt.
 
@@ -104,6 +113,9 @@ x_val = d2l.arange(0, 5, 0.1)
 y_val = f(x_val)
 ```
 
+![](../img/output-chapter_attention-mechanisms-and-transformers-attention-pooling-4.svg)
+
+
 ## [**Attention Pooling qua Hồi Quy Nadaraya--Watson**]
 
 Bây giờ chúng ta đã có dữ liệu và kernel, tất cả những gì chúng ta cần là một hàm tính toán các ước lượng hồi quy kernel. Lưu ý rằng chúng ta cũng muốn thu được các trọng số kernel tương đối để thực hiện một số chẩn đoán nhỏ. Do đó trước tiên chúng ta tính toán kernel giữa tất cả các đặc trưng huấn luyện (hiệp biến) `x_train` và tất cả các đặc trưng kiểm định `x_val`. Điều này cho ra một ma trận, mà sau đó chúng ta chuẩn hóa. Khi nhân với nhãn huấn luyện `y_train` chúng ta thu được các ước lượng.
@@ -127,6 +139,9 @@ def nadaraya_watson(x_train, y_train, x_val, kernel):
         y_hat = y_train@attention_w
     return y_hat, attention_w
 ```
+
+![](../img/output-chapter_attention-mechanisms-and-transformers-attention-pooling-5.svg)
+
 
 Hãy xem loại ước lượng mà các kernel khác nhau tạo ra.
 

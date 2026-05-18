@@ -25,6 +25,9 @@ from d2l import torch as d2l
 import torch
 ```
 
+![](../img/output-chapter_multilayer-perceptrons-mlp-1.svg)
+
+
 
 ## Lớp Ẩn
 
@@ -301,6 +304,9 @@ y = torch.relu(x)
 d2l.plot(x.detach(), y.detach(), 'x', 'relu(x)', figsize=(5, 2.5))
 ```
 
+![](../img/output-chapter_multilayer-perceptrons-mlp-2.svg)
+
+
 
 Khi đầu vào âm,
 đạo hàm của hàm ReLU là 0,
@@ -324,6 +330,9 @@ Chúng ta vẽ đạo hàm của hàm ReLU bên dưới.
 y.backward(torch.ones_like(x), retain_graph=True)
 d2l.plot(x.detach(), x.grad, 'x', 'grad of relu', figsize=(5, 2.5))
 ```
+
+![](../img/output-chapter_multilayer-perceptrons-mlp-3.svg)
+
 
 
 Lý do sử dụng ReLU là
@@ -394,6 +403,9 @@ y = torch.sigmoid(x)
 d2l.plot(x.detach(), y.detach(), 'x', 'sigmoid(x)', figsize=(5, 2.5))
 ```
 
+![](../img/output-chapter_multilayer-perceptrons-mlp-4.svg)
+
+
 
 Đạo hàm của hàm sigmoid được cho bởi phương trình sau:
 
@@ -415,6 +427,9 @@ y.backward(torch.ones_like(x),retain_graph=True)
 d2l.plot(x.detach(), x.grad, 'x', 'grad of sigmoid', figsize=(5, 2.5))
 ```
 
+![](../img/output-chapter_multilayer-perceptrons-mlp-5.svg)
+
+
 
 ### Hàm Tanh
 <a id="subsec_tanh"></a>
@@ -432,6 +447,9 @@ Chúng ta vẽ hàm tanh bên dưới. Lưu ý khi đầu vào tiến gần 0, h
 y = torch.tanh(x)
 d2l.plot(x.detach(), y.detach(), 'x', 'tanh(x)', figsize=(5, 2.5))
 ```
+
+![](../img/output-chapter_multilayer-perceptrons-mlp-6.svg)
+
 
 
 Đạo hàm của hàm tanh là:

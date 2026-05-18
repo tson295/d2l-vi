@@ -35,6 +35,9 @@ import numpy as np
 import time
 ```
 
+![](../img/output-chapter_linear-regression-linear-regression-1.svg)
+
+
 
 ## Kiến thức Cơ bản
 
